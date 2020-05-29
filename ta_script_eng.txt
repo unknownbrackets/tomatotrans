@@ -2916,7 +2916,7 @@
 
 5B2-E:The machine's name[BREAK]is...[SIMPLEWAIT][END]
 
-5B3-E:[CENTER_HV][SIZE_TALL]...the Super...[WAIT][CENTER_HV][SIZE_TALL]...Cara-cooker![SIMPLEWAIT][END]
+5B3-E:[CENTER_HV][SIZE_TALL]...the Super...[WAIT][CENTER_HV][SIZE_TALL]...Tomaytor![SIMPLEWAIT][END]
 
 5B4-E:
 

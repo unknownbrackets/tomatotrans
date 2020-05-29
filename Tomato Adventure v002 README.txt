@@ -1,6 +1,31 @@
 TOMATO ADVENTURE TRANSLATION DEV STUFF
+
+===============================================================================
+NEWEST RELEASE v.002
+===============================================================================
+By Mato, Dec. 29, 2016
+http://legendsoflocalization.com
+
+After playing/streaming my original proof-of-concept patch this year, I went
+and updated many of the item and enemy name localizations. The tool and most
+of the text files remain the same, but I've included the updated text files in
+this new .zip archive. I've also included the latest .ips patch.
+
+IF YOU'RE NOT FAMILIAR WITH HOW TO USE IPS PATCHES, SEE HERE:
+http://www.romhacking.net/faq/
+
+Very little of the script itself has changed from the last release. In other
+words, it's still about 99.5% in Japanese. As this toolset is out there for
+anyone to use, feel free to use these files and the tool as the basis for a
+better project. As mentioned previously, the script insertion tool is very
+likely to have issues at some point, so the tool should only be used for
+experimental purposes to be built off of.
+
+
+===============================================================================
+ORIGINAL RELEASE v.001
+===============================================================================
 By Mato, Dec. 4, 2010
-http://matotree.com
 
 After finishing Mother 3 a few years ago, I was still interested in hacking/translating old neglected GBA games. Tomato Adventure fit the bill perfectly, so I jumped in and started pulling the game apart. I managed to get a lot of the technical stuff out of the way, but I quickly realized the game was going to be a ton more work than I had time for. So I'm releasing these notes and dev files for anyone who's interested in starting their own translation of the game.
 
