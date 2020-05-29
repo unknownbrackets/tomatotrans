@@ -1,0 +1,336 @@
+main font 642772
+little font 648758
+
+ta 643D6E
+
+806F7C8 font loading/copying
+
+tadaima yori
+13CAB
+
+6DEA0 prepares for vvvv
+6DF12 main ROM->RAM stuff
+
+3004188 holds address of line to load
+6BDB2 is where the line address is loaded and then stored to ^^^
+
+6A866 gets the pointer address?
+2F97C loads pointer from pointer (+ misc table)!!!
+
+
+pointer table layout
+address 4 bytes
+...
+are the text pointers mixed in with other data?
+
+8100E75 is start of far right girl's text pointery stuff
+8140330 points to the above
+862D414 points to base text block address of above
+
+34F10 copies stuff from super pointer table to memory?
+
+
+6974E loads line #, multiplies by 16, adds to base in r1
+3f8CE determines start of text pointer block
+
+
+
+862D3E4 is start of super blocks
+
+each block is 28 bytes?
+
+
+super blocks
++0C: 4 bytes
++10: 4 bytes address thingy?
++14: 4 bytes, add 0x70 to get start of block address
++18: 4 bytes, some sort of address??
+
+
+
+sub block, 0x10 bytes
+
+byte 0: control byte? and with 0x82, if non-zero, skip some stuff?
+byte 1: control byte? and with 0x80, if 0, skip stuff
+byte 2: character palette?
+byte 3: x location
+byte 4: y location
+byte 5: unknown
+byte 6-9: some sort of address?
+byte A-D: text address
+byte E-F: text ID/line ID
+
+
+2F97C loads stuff from sub-sub block (8100E75 for example)
+
+0802F97C 4A08     ldr     r2,=30018BCh                            ;12 185
+  r2 = 30018BC
+
+0802F97E 6891     ldr     r1,[r2,8h]                              ;5  190
+  r1 = 30039D9
+
+0802F980 68D0     ldr     r0,[r2,0Ch]                             ;5  195
+  r0 = 8100E75, curr spot in our sub-sub block
+
+0802F982 7800     ldrb    r0,[r0]                                 ;5  200
+0802F984 7008     strb    r0,[r1]                                 ;6  206
+  load byte, copy to r1 RAM
+
+0802F986 68D0     ldr     r0,[r2,0Ch]                             ;5  211
+0802F988 3001     add     r0,1h                                   ;3  214
+0802F98A 60D0     str     r0,[r2,0Ch]                             ;6  220
+  reload curr spot in sub-sub block
+  increment to next byte
+
+0802F98C 6890     ldr     r0,[r2,8h]                              ;5  225
+0802F98E 3001     add     r0,1h                                   ;3  228
+0802F990 6090     str     r0,[r2,8h]                              ;6  234
+  increment copy spot in RAM
+
+0802F992 8890     ldrh    r0,[r2,4h]                              ;5  239
+0802F994 3801     sub     r0,1h                                   ;3  242
+0802F996 8090     strh    r0,[r2,4h]                              ;6  248
+  decrement this loop counter, was 2, is now 1
+
+
+0802F998 0400     lsl     r0,r0,10h                               ;3  251
+0802F99A 2800     cmp     r0,0h                                   ;3  254
+0802F99C D1EF     bne     802F97Eh                                ;11 265
+  shift things over, if still non-zero, loop back and repeat
+
+0802F99E 4770     bx      r14                                     ;11 276
+
+
+
+
+2245E stores # of bytes to process?
+080223E6 F047FE11 bl      806A00Ch                                ;14 225
+080223EA 7E78     ldrb    r0,[r7,19h]                             ;5  230
+080223EC 7070     strb    r0,[r6,1h]                              ;6  236
+080223EE 7638     strb    r0,[r7,18h]                             ;6  242
+080223F0 6820     ldr     r0,[r4]                                 ;5  247
+080223F2 3801     sub     r0,1h                                   ;3  250
+080223F4 6020     str     r0,[r4]                                 ;6  256
+080223F6 0080     lsl     r0,r0,2h                                ;3  259
+080223F8 1940     add     r0,r0,r5                                ;3  262
+080223FA 6800     ldr     r0,[r0]                                 ;12 274
+080223FC 3001     add     r0,1h                                   ;3  277
+080223FE 60B0     str     r0,[r6,8h]                              ;6  283
+
+08022400 4948     ldr     r1,=3000600h                            ;12 295
+08022402 7870     ldrb    r0,[r6,1h]                              ;5  300
+08022404 38FD     sub     r0,0FDh                                 ;3  303
+08022406 8008     strh    r0,[r1]                                 ;6  309
+  r0 was FD, r0 is now 0
+  store at r1, 3000600
+
+08022408 4947     ldr     r1,=862B6C4h                            ;12 321
+0802240A 60F1     str     r1,[r6,0Ch]                             ;6  327
+  store 862B6C4 at 30018C8
+
+0802240C 1C01     mov     r1,r0                                   ;3  330
+0802240E 2900     cmp     r1,0h                                   ;3  333
+08022410 DB0C     blt     802242Ch                                ;11 344
+  r1 = r0
+  r1 = 0
+  if r1 < 0, goto 2242C, else continue
+  we're not < 0, so continue
+
+08022412 4846     ldr     r0,=862B815h                            ;12 356
+08022414 60F0     str     r0,[r6,0Ch]                             ;6  362
+  store 862B815 at 30018C8 instead
+
+08022416 2900     cmp     r1,0h                                   ;3  365
+08022418 D001     beq     802241Eh                                ;11 376
+  if r1 == 0, goto 2241E
+  it does equal 0, so we jump
+
+0802241A 4845     ldr     r0,=862B736h                            ;12 388
+0802241C 60F0     str     r0,[r6,0Ch]                             ;6  394
+  otherwise store 862B736 at 30018C8 if r1 > 0
+
+0802241E 68B0     ldr     r0,[r6,8h]                              ;5  399
+08022420 3001     add     r0,1h                                   ;3  402
+08022422 60B0     str     r0,[r6,8h]                              ;6  408
+  increment the read address at 30018C4
+
+08022424 7EB8     ldrb    r0,[r7,1Ah]                             ;5  413
+08022426 7638     strb    r0,[r7,18h]                             ;6  419
+  [30039DA] -> [30039D8] (0x35)
+
+08022428 7E78     ldrb    r0,[r7,19h]                             ;5  424
+0802242A 7070     strb    r0,[r6,1h]                              ;6  430
+  [30039D9] -> [30018BD] (0xFD)
+
+0802242C 4F38     ldr     r7,=3000608h                            ;12 442
+0802242E 4E39     ldr     r6,=3000604h                            ;12 454
+08022430 6832     ldr     r2,[r6]                                 ;5  459
+  r2 = 3
+
+08022432 0090     lsl     r0,r2,2h                                ;3  462
+  r0 = r2 * 4
+  r0 = C
+
+08022434 19C0     add     r0,r0,r7                                ;3  465
+  r0 += r7
+  r0 = 3000614
+
+08022436 4D38     ldr     r5,=30018BCh                            ;12 477
+08022438 6829     ldr     r1,[r5]                                 ;5  482
+  r1 = FD00
+
+0802243A 6001     str     r1,[r0]                                 ;13 495
+  store FD00 at 3000614
+
+0802243C 3201     add     r2,1h                                   ;3  498
+0802243E 6032     str     r2,[r6]                                 ;6  504
+  r2++
+  r2 = 4
+  store at 3000604
+
+08022440 0090     lsl     r0,r2,2h                                ;3  507
+  r0 = r2 * 4
+  r0 = 0x10
+
+08022442 19C4     add     r4,r0,r7                                ;3  510
+  r4 = r0 + r7
+  r4 = 3000618
+
+08022444 68A8     ldr     r0,[r5,8h]                              ;5  515
+  r0 = 8100E77, our current read address
+
+08022446 6020     str     r0,[r4]                                 ;6  521
+  store read address at [r4]
+
+08022448 1C53     add     r3,r2,1                                 ;3  524
+0802244A 6033     str     r3,[r6]                                 ;6  530
+  r3 = r2 + 1
+  r3 = 5
+  store at [r6]
+
+0802244C 4834     ldr     r0,=30039C0h                            ;12 542
+0802244E 4680     mov     r8,r0                                   ;3  545
+08022450 7E00     ldrb    r0,[r0,18h]                             ;9  554
+  r0 = 35
+
+08022452 8128     strh    r0,[r5,8h]                              ;6  560
+  store at [r5 + 8]
+
+08022454 8929     ldrh    r1,[r5,8h]                              ;5  565
+  load r1 with that same value
+
+08022456 68E8     ldr     r0,[r5,0Ch]                             ;5  570
+  r0 = 862B815
+
+08022458 1840     add     r0,r0,r1                                ;3  573
+0802245A 60E8     str     r0,[r5,0Ch]                             ;6  579
+  r0 = r0 + r1
+  r0 = 862B815 + 35
+  store that value back
+
+0802245C 7800     ldrb    r0,[r0]                                 ;9  588
+  r0 = [r0]
+  r0 = 6
+
+0802245E 6068     str     r0,[r5,4h]                              ;6  594
+  stores # of arguments to process for later
+
+
+< FD    62B6C4 
+= FD    62B815
+> FD    62B736
+
+
+
+FD 35: XX YY TABLEADDR
+FD 36: XX YY TABLEADDR
+FD 49: XX YY
+FD 7D: [END]?
+
+
+FE 07: XX TABLEADDR
+FE OE: XX
+FE OF: XX
+FE C8: TEXTADDR
+FE C9: TEXTADDR
+FE D2: TEXTADDR
+FE 7A: TEXTADDR
+
+
+62BC30 + (arg * 4)
+8029F59 (
+
+
+
+223E6 calls 6A00C to copy # of args over
+  this call is when the thing is FD
+22488 calls 6A00C to copy # of args over
+  this call is when the thing is FE
+
+
+
+2250c
+
+
+
+FIGURE OUT HOW THE GAME KNOWS WHERE TO STOP PROCESSING THE SUB-SUB BLOCK DATA!!!
+
+
+
+00   [BREAK]
+FF00 [END]
+FF01 [WAIT] waits for input and starts a new window after
+FF02 [NEWWIN] - kind of like making a new paragraph, moves text to next window
+FF04 ?????
+FF05 [BREAK]
+FF06 ???? closes window right away when testing, doesn't even print text
+FF11 [PAUSE XX]
+FF12 [SETPAUSE] - pauses for a set length, no arguments?
+FF1C [SIZE_WIDE] - prints letters stretched out very wide
+FF1D [SIZE_TALL] - prints letters very tall, fills entire window
+FF1E [SIZE_BIG] - prints letters very wide and tall
+FF1F [SIZE_NORMAL] - sets text size back to normal
+FF24 [CENTER_H] - centers text horizontally until another CC
+FF25 [CENTER_V] - centers text vertically until another CC?
+FF26 [CENTER_HV] - centers text horizontally and vertically
+FF30 [COLOR_OFF]
+FF32 [COLOR_ON]
+FF40 [SIMPLEWAIT] - just waits for input, nothing else
+FF41 [MENU1] - menu option 1?
+FF42 [MENU2] - menu option 2?
+FF43 [MENU_END] - end menu options, what's after is parsed normally
+FF80 some number code
+FF81 MAIN CHARACTER'S NAME
+FF82 some character's name
+FF83 some character's name
+FF84 some character's name
+FF85 item name code?
+
+
+45BBCC-ish, naming screen data?
+
+8459CAC, start of menu selection description text, 18 bytes per entry?
+846FB68, 8 bytes each, 00 string terminator
+846FBE7-8470C84 starts some in-menu text, variable length, card battle stuff?
+848069A-8480B5B some more card battle stuff (1 player?)
+862C090-8062C21A, naming screen stuff
+862C2B0 there's misc. stuff in this area, but mixed in with other random data?
+8630F1C gimmick stuff around here
+86310BC a bunch of chichikaba stuff, item names seem to start around here?
+8632E08-634072 in-battle text, might be other stuff in here too
+863958B item descriptions?
+8639713-ish, some strange text (totsuzen desuga, tenki news, etc), some gimmic names and descs around here?
+8639C24-ish, run, can't run, failed!
+
+4559E0 points to 8634FE8, kanshikid's name, 0x28 bytes per block, first four bytes point to name?
+       actually, this points to the full datablock, the name just happens to be at the start of the blocks
+
+enemy names 634F9C, 8 bytes, 00 terminates, each block is 4C bytes apart
+
+some misc text after enemies?
+
+8490470->8459F00, menu options
+
+4903C0 - start of some huge table
+
+62C050-ish, naming screen stuff
