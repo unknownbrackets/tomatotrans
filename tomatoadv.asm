@@ -1,15 +1,17 @@
-arch gba.thumb
+.gba
+.open "ta.gba","test.gba",0x08000000
 
-
-org $8078038; db $0B0         // move menu option text left 1 block
-org $8490470; dd $87F0000    // repoint item option text block pointer
-org $8490474; db $07          // make each item option text 7 letters long
+org 0x08078038 :: db 0xB0          // move menu option text left 1 block
+org 0x08490470 :: dw 0x087F0000    // repoint item option text block pointer
+org 0x08490474 :: db 0x07          // make each item option text 7 letters long
 
 // make a blank space in the fonts
-org $8649636; db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
-org $864453A; db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+org 0x08649636 :: db 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00
+org 0x0864453A :: db 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00
 
 // insert two fonts (8x8, 8x16) with fixed punctuation
 // insert their width tables
-org $8642748
-incbin fontdata.bin
+org 0x08642748
+.incbin "fontdata.bin"
+
+.close

@@ -1,4 +1,3 @@
-copy ta.gba test.gba
-xkas test.gba tomatoadv.asm
+armips tomatoadv.asm
 insert
 scriptinsert
