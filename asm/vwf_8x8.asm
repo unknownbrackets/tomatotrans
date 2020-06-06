@@ -1,9 +1,9 @@
 ; The 8x8 VWF font is already partially implemented in the game.
 ; The drawing func (080713D0) doesn't blend correctly, so it's not used.
-; widthIndex is stored as 0xFD (means normal char) in 0806fA50.
+; widthIndex is stored as 0xFD (means normal char) in 0806FA50.
 ; This patches both of those functions.
 
-; Inside 0806fA50, we just rewrite some registers to save the right value.
+; Inside 0806FA50, we just rewrite some registers to save the right value.
 ; Don't clobber code in r0 so we can avoid reloading it.  Switches r0 to r2.
 .org 0x0806FA84
 ldr r2,[r3,12]
@@ -185,21 +185,20 @@ bne copyOffsetTile1Row
 
 ; Okay, tile1 is done, now we blend tile0.  Reset to workarea start.
 mov r4,r8
-; r1 has zero, so use that to make 0xFFFFFFFF, which becomes the src mask.
+; r1 has zero, so use that to make 0xFFFFFFFF, which becomes the dst mask.
 sub r5,r1,1
-lsl r5,r3
-; Inverse that mask to get the dst mask.
-mvn r6,r5
+lsr r5,r7
+
 mov r1,8
 
 copyOffsetTile0Row:
 ; Read and translate tile0 content into r0.
 ldmia r4!,r0
 lsl r0,r3
-and r0,r5 ;; TODO can skip and, shift is enough
 ; Read old content into r7 and blend.
 ldr r7,[r2]
-and r7,r6
+; Mask out the bits we're overwriting.
+and r7,r5
 orr r0,r7
 ; Now we write the row, done.
 stmia r2!, r0
