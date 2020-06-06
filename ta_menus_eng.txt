@@ -607,15 +607,15 @@ BLOCKSTART 459DF8 16 0C
 0A-E:
 0B-E:
 
-BLOCKSTART 7F0000 0A 08
-00-J:Gimmicks
-01-J:Items
-02-J:Equipment
-03-J:Friends
-04-J:Key[00]Items
-05-J:Gimica
-06-J:Save
-07-J:Back
+BLOCKFIXED 490470 0A 08
+00-E:Gimmicks
+01-E:Items
+02-E:Equipment
+03-E:Friends
+04-E:Key Items
+05-E:Gimica
+06-E:Save
+07-E:Back
 
 BLOCKSTART 459F30 08 01
 00-E:KeyItems

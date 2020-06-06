@@ -1,6 +1,9 @@
-#include <stdio.h>
-#include <string.h>
-#include <ctype.h>
+#include <cctype>
+#include <cstdint>
+#include <cstdio>
+#include <cstring>
+
+static const uint32_t TOMATO_END_POS = 0x64B4EC;
 
 struct tableEntry
 {
@@ -14,7 +17,7 @@ int        tableLen = 0;
 void 		  LoadTable(void);
 void          PrepString(char[], char[], int);
 unsigned char ConvChar(unsigned char);
-void          ConvComplexString(char[], int&);
+void          ConvComplexString(char s[], int &l, bool spaceIsZero);
 void          CompileCC(char[], int&, unsigned char[], int&);
 int           CharToHex(char);
 unsigned int  hstrtoi(char*);
@@ -22,7 +25,28 @@ void          UpdatePointers(int, int, FILE*, char*);
 void          InsertEnemies(FILE*);
 void          InsertMenuStuff1(FILE*);
 void          InsertStuff(FILE*, char[], int, int, int);
-void          InsertMenuStuff2(FILE*);
+void          InsertMenuStuff2(FILE *, uint32_t afterTextPos);
+
+//=================================================================================================
+
+bool WriteLE32(FILE *fout, uint32_t value) {
+	uint8_t parts[4];
+	parts[0] = (value & 0x000000FF) >> 0;
+	parts[1] = (value & 0x0000FF00) >> 8;
+	parts[2] = (value & 0x00FF0000) >> 16;
+	parts[3] = (value & 0xFF000000) >> 24;
+
+	return fwrite(parts, 1, 4, fout) == 4;
+}
+
+bool ReadLE32(FILE *fin, uint32_t &value) {
+	uint8_t parts[4];
+	if (fread(parts, 1, 4, fin) != 4)
+		return false;
+
+	value = parts[0] | (parts[1] << 8) | (parts[2] << 16) | (parts[3] << 24);
+	return true;
+}
 
 //=================================================================================================
 
@@ -49,7 +73,7 @@ int main(void)
    }
 
    i = 0;
-   fseek(fout, 0x64B4EC, SEEK_SET);
+   fseek(fout, TOMATO_END_POS, SEEK_SET);
    fgets(str, 5000, fin);
    while(strstr(str, "-E:") == NULL)
    {
@@ -61,7 +85,7 @@ int main(void)
 
   	  if (str2[0] != '\n')
   	  {
-	  	ConvComplexString(str2, len);
+	  	ConvComplexString(str2, len, false);
 
       	loc = ftell(fout);
 	  	for (j = 0; j < len; j++)
@@ -79,11 +103,12 @@ int main(void)
    }
    fclose(fin);
 
+   uint32_t afterTextPos = (uint32_t)ftell(fout);
 
    InsertEnemies(fout);
    //InsertMenuStuff1(fout);
    //InsertStuff(fout, "ta_items_eng.txt", 0x4573F2, 5, 8);
-   InsertMenuStuff2(fout);
+   InsertMenuStuff2(fout, afterTextPos);
 
    fclose(fout);
    return 0;
@@ -91,7 +116,7 @@ int main(void)
 
 //=================================================================================================
 
-void ConvComplexString(char str[5000], int& newLen)
+void ConvComplexString(char str[5000], int &newLen, bool spaceIsZero)
 {
 	char          newStr[5000] = "";
 	unsigned char newStream[100];
@@ -115,6 +140,12 @@ void ConvComplexString(char str[5000], int& newLen)
 		   }
 		   counter++; // to skip past the ]
 		}
+		else if (str[counter] == ' ' && spaceIsZero)
+		{
+			newStr[newLen] = '\0';
+			newLen++;
+			counter++;
+		}
 		else
 		{
 		   newStr[newLen] = ConvChar(str[counter]);
@@ -124,8 +155,7 @@ void ConvComplexString(char str[5000], int& newLen)
 		}
 	}
 
-    for (i = 0; i < 5000; i++)
-       str[i] = '\0';
+	memset(str, '\0', 5000);
 	for (i = 0; i < newLen; i++)
 	   str[i] = newStr[i];
 }
@@ -605,14 +635,10 @@ void UpdatePointers(int lineNum, int loc, FILE* fout, char* pointersFile)
    readOK = fscanf(fptrs, "%X", &address);
    while ((readOK != 0) && (address != 0xFFFFFFFF))
    {
-	  loc += 0x8000000;
+	  loc |= 0x08000000;
 	  printf("loc:%08X    %08X", loc, address);
 	  fseek(fout, address, SEEK_SET);
-
-	  fputc(loc & 0x000000FF, fout);
-      fputc((loc & 0x0000FF00) >> 8, fout);
-	  fputc((loc & 0x00FF0000) >> 16, fout);
-      fputc(loc >> 24, fout);
+	  WriteLE32(fout, loc);
 
       readOK = fscanf(fptrs, "%X", &address);
    }
@@ -659,7 +685,7 @@ void InsertEnemies(FILE* fout)
 		//for (j = 0; j < strlen(str2); j++)
 		//   printf("%c ", str2[j]);
 
-	  	ConvComplexString(str2, len);
+	  	ConvComplexString(str2, len, false);
 
 	  	if (len > 8)
 	  	{
@@ -720,7 +746,7 @@ void InsertMenuStuff1(FILE* fout)
 		for (j = 0; j < (int)strlen(str2); j++)
 		   printf("%c ", str2[j]);
 
-	  	ConvComplexString(str2, len);
+	  	ConvComplexString(str2, len, false);
 
 	  	if (len > 7)
 	  	{
@@ -781,7 +807,7 @@ void InsertStuff(FILE* fout, char inFile[], int address, int startPos, int maxLe
 		//for (j = 0; j < strlen(str2); j++)
 		//   printf("%c ", str2[j]);
 
-	  	ConvComplexString(str2, len);
+	  	ConvComplexString(str2, len, false);
 
 	  	if (len > maxLen)
 	  	{
@@ -811,9 +837,8 @@ void InsertStuff(FILE* fout, char inFile[], int address, int startPos, int maxLe
 
 //=================================================================================================
 
-void InsertMenuStuff2(FILE* fout)
+void InsertMenuStuff2(FILE *fout, uint32_t afterTextPos)
 {
-	FILE* fin;
 	char  str[5000];
 	char  str2[5000];
 	int   address;
@@ -823,18 +848,57 @@ void InsertMenuStuff2(FILE* fout)
 	int   i;
 	int   j;
 
-	fin = fopen("ta_menus_eng.txt", "r");
-	if (fin == NULL)
+	FILE *fin = fopen("ta_menus_eng.txt", "r");
+	if (!fin)
 	{
 		printf("Couldn't open ta_menus_eng.txt!\n");
 		return;
 	}
 
+	// Just in case, let's make sure it's aligned.
+	uint32_t nextPos = (afterTextPos + 1) & ~1;
+
 	fgets(str, 5000, fin);
 	while (!feof(fin))
 	{
-		//printf(str);
-		if (strstr(str, "BLOCKSTART") != NULL)
+		// New format: BLOCKFIXED PointerLoc NewLen Count
+		if (strstr(str, "BLOCKFIXED") != NULL)
+		{
+			sscanf(str, "%*s %X %X %X", &address, &maxLen, &lines);
+			if (maxLen <= 0 || maxLen > 255)
+			{
+				printf("Bad size for BLOCKFIXED %08x: %02x\n", address, maxLen);
+				maxLen = 1;
+			}
+
+			uint8_t lenByte = (uint8_t)maxLen;
+			fseek(fout, address, SEEK_SET);
+			WriteLE32(fout, nextPos | 0x08000000);
+			// The block has the length at + 4.
+			fwrite(&lenByte, 1, 1, fout);
+
+			for (i = 0; i < lines; ++i)
+			{
+				fgets(str, 5000, fin);
+				PrepString(str, str2, 5);
+
+				ConvComplexString(str2, len, true);
+				if (len > maxLen) {
+					printf("too long: %s\n", str);
+					len = maxLen;
+				}
+
+				fseek(fout, nextPos, SEEK_SET);
+				for (j = 0; j < maxLen; ++j)
+				{
+					char c = j < len ? str2[j] : '\0';
+					fputc(c, fout);
+				}
+				nextPos += maxLen;
+			}
+		}
+		// Old format: BLOCKSTART TextLoc Len Count
+		else if (strstr(str, "BLOCKSTART") != NULL)
 		{
 		   sscanf(str, "%*s %X %X %X", &address, &maxLen, &lines);
 		   //printf("block address:%X  line len:%02X  line count:%02X\n", address, maxLen, lines);
@@ -847,7 +911,7 @@ void InsertMenuStuff2(FILE* fout)
  		       //for (j = 0; j < strlen(str2); j++)
 		   	   //   printf("%c ", str2[j]);
 
-	  		   ConvComplexString(str2, len);
+	  		   ConvComplexString(str2, len, false);
 	  		   if (len > maxLen)
 	  		   {
 			      printf("too long: %s\n", str);
