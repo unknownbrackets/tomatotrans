@@ -871,11 +871,27 @@ void InsertMenuStuff2(FILE *fout, uint32_t afterTextPos)
 				maxLen = 1;
 			}
 
-			uint8_t lenByte = (uint8_t)maxLen;
-			fseek(fout, address, SEEK_SET);
-			WriteLE32(fout, nextPos | 0x08000000);
-			// The block has the length at + 4.
-			fwrite(&lenByte, 1, 1, fout);
+			uint8_t lenByte = 0;
+			// The block has the length at + 4.  Can it fit?
+			fseek(fout, address + 4, SEEK_SET);
+			fread(&lenByte, 1, 1, fout);
+
+			uint32_t blockPos = nextPos;
+			bool updateNext = true;
+			if (lenByte == maxLen)
+			{
+				fseek(fout, address, SEEK_SET);
+				ReadLE32(fout, blockPos);
+				blockPos &= ~0x08000000;
+				updateNext = false;
+			}
+			else
+			{
+				lenByte = (uint8_t)maxLen;
+				fseek(fout, address, SEEK_SET);
+				WriteLE32(fout, blockPos | 0x08000000);
+				fwrite(&lenByte, 1, 1, fout);
+			}
 
 			for (i = 0; i < lines; ++i)
 			{
@@ -888,14 +904,17 @@ void InsertMenuStuff2(FILE *fout, uint32_t afterTextPos)
 					len = maxLen;
 				}
 
-				fseek(fout, nextPos, SEEK_SET);
+				fseek(fout, blockPos, SEEK_SET);
 				for (j = 0; j < maxLen; ++j)
 				{
 					char c = j < len ? str2[j] : '\0';
 					fputc(c, fout);
 				}
-				nextPos += maxLen;
+				blockPos += maxLen;
 			}
+
+			if (updateNext)
+				nextPos = (blockPos + 1) & ~1;
 		}
 		// Old format: BLOCKSTART TextLoc Len Count
 		else if (strstr(str, "BLOCKSTART") != NULL)
