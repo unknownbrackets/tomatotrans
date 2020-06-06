@@ -141,7 +141,6 @@ void CompileCC(char str[5000], int& strLoc, unsigned char newStream[100], int& s
    int   totalLength = strlen(str);
    int   i;
    int   j;
-   FILE* fin;
    char  hexVal[100] = "";
    char  specialStr[100] = "";
    int   retVal = 0;
@@ -170,7 +169,7 @@ void CompileCC(char str[5000], int& strLoc, unsigned char newStream[100], int& s
    // Capitalize all the arguments for ease of use
    for (i = 0; i < ptrCount; i++)
    {
-      for (j = 0; j < strlen(ptr[i]); j++)
+      for (j = 0; j < (int)strlen(ptr[i]); j++)
          ptr[i][j] = toupper(ptr[i][j]);
    }
 
@@ -354,7 +353,7 @@ void CompileCC(char str[5000], int& strLoc, unsigned char newStream[100], int& s
        newStream[streamLen++] = 0xFB;
    }
 
-   else if ((isalpha(ptr[0][0]) == true) && (strlen(ptr[0]) != 2))
+   else if (isalpha((int)ptr[0][0]) && strlen(ptr[0]) != 2)
    {
 	    i = 0;
 
@@ -455,7 +454,7 @@ unsigned int hstrtoi(char* string)
 {
    unsigned int retval = 0;
 
-   for (int i = 0; i < strlen(string); i++)
+   for (int i = 0; i < (int)strlen(string); i++)
    {
       retval <<= 4;
       retval += CharToHex(string[i]);
@@ -572,7 +571,7 @@ void PrepString(char str[5000], char str2[5000], int startPoint)
 	    str2[j] = '\0';
 
     ctr = 0;
-	for (j = startPoint; j < strlen(str); j++)
+	for (j = startPoint; j < (int)strlen(str); j++)
 	{
 	   str2[ctr] = str[j];
 	   ctr++;
@@ -590,7 +589,6 @@ void UpdatePointers(int lineNum, int loc, FILE* fout, char* pointersFile)
    int   address;
    int   readOK;
    int   tempLoc = ftell(fout);
-   int   ch;
 
    fptrs = fopen(pointersFile, "r");
    if (fptrs == NULL)
@@ -719,7 +717,7 @@ void InsertMenuStuff1(FILE* fout)
 
   	  if (str2[0] != '\n')
   	  {
-		for (j = 0; j < strlen(str2); j++)
+		for (j = 0; j < (int)strlen(str2); j++)
 		   printf("%c ", str2[j]);
 
 	  	ConvComplexString(str2, len);
