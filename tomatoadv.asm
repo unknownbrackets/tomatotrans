@@ -3,5 +3,6 @@
 
 .include "asm/menu.asm"
 .include "asm/fontmap.asm"
+.include "asm/vwf_8x8.asm"
 
 .close
