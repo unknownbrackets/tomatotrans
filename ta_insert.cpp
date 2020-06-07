@@ -851,8 +851,6 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 	char  str2[5000];
 	int   address;
 	int   len;
-	int   maxLen;
-	int   lines;
 
 	FILE *fin = fopen("ta_menus_eng.txt", "r");
 	if (!fin)
@@ -868,10 +866,16 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 	fgets(str, 5000, fin);
 	while (!feof(fin))
 	{
-		// New format: BLOCKFIXED PointerLoc NewLen Count
-		if (strstr(str, "BLOCKFIXED") != NULL)
+		// It's a comment if it starts with #.
+		bool comment = str[0] == '#';
+
+		// New format: BLOCKFIXED PointerLoc NewLen Count [ClearLen]
+		if (!comment && strstr(str, "BLOCKFIXED") != NULL)
 		{
-			sscanf(str, "%*s %X %X %X", &address, &maxLen, &lines);
+			int maxLen = 0;
+			int lines = 0;
+			int clearLen = 0;
+			sscanf(str, "%*s %X %X %X %X", &address, &maxLen, &lines, &clearLen);
 			if (maxLen <= 0 || maxLen > 255)
 			{
 				printf("Bad size for BLOCKFIXED %08x: %02x\n", address, maxLen);
@@ -899,6 +903,16 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 				fseek(fout, address, SEEK_SET);
 				WriteLE32(fout, blockPos | 0x08000000);
 				fwrite(&lenByte, 1, 1, fout);
+				// Default to clearing the original width, less surprises.
+				if (clearLen == 0)
+					clearLen = origLen;
+			}
+
+			if (clearLen != 0)
+			{
+				// Let's also write the original width - hack for our VWF.
+				fseek(fout, address + 6, SEEK_SET);
+				fputc((uint8_t)clearLen, fout);
 			}
 
 			for (int i = 0; i < lines; ++i)
@@ -933,14 +947,21 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 			if (updateNext)
 				nextPos = (blockPos + 1) & ~1;
 		}
-		// Alternate for just a pointer: BLOCKPOINTER PointerLoc
-		else if (strstr(str, "BLOCKPOINTER") != NULL)
+		// Alternate for just a pointer: BLOCKPOINTER PointerLoc [MaxLen]
+		else if (!comment && strstr(str, "BLOCKPOINTER") != NULL)
 		{
-			sscanf(str, "%*s %X", &address);
+			int maxLen = 0;
+			sscanf(str, "%*s %X %X", &address, &maxLen);
 
 			fgets(str, 5000, fin);
 			PrepString(str, str2, 5);
 			ConvComplexString(str2, len, true);
+
+			if (maxLen != 0 && len > maxLen)
+			{
+				printf("too long: %s\n", str);
+				len = maxLen;
+			}
 
 			if (len != 0)
 			{
@@ -958,10 +979,12 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 			}
 		}
 		// Old format: BLOCKSTART TextLoc Len Count
-		else if (strstr(str, "BLOCKSTART") != NULL)
+		else if (!comment && strstr(str, "BLOCKSTART") != NULL)
 		{
-		   sscanf(str, "%*s %X %X %X", &address, &maxLen, &lines);
-		   //printf("block address:%X  line len:%02X  line count:%02X\n", address, maxLen, lines);
+			int maxLen = 0;
+			int lines = 0;
+			sscanf(str, "%*s %X %X %X", &address, &maxLen, &lines);
+			//printf("block address:%X  line len:%02X  line count:%02X\n", address, maxLen, lines);
 
 		   for (int i = 0; i < lines; i++)
 		   {

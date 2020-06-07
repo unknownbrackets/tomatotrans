@@ -632,8 +632,11 @@ BLOCKFIXED 490478 08 02
 01-J:トイパ-ツ
 
 # Some code references this directly, same as Parts above.
-BLOCKPOINTER 0781D8
-00-E:トイパ-ツ
+BLOCKPOINTER 0781D8 08
+00-J:トイパ-ツ
+
+BLOCKPOINTER 0781DC 08
+00-J:おしゃぶり
 
 BLOCKFIXED 490480 12 03
 00-J:もどりますか?

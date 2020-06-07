@@ -217,3 +217,171 @@ bx r0
 .pool
 .endfunc
 .endarea
+
+
+; This is the function that typically draws indexed fixed strings.
+; blockSize actually has the full 32 bits in the ROM, which we take advantage of.
+.org 0x080748BC
+.area 0x080749B8-.,0x00
+; Args: uint8_t index, void *dest, uint8_t color, const char *str, uint16_t blockSize
+.func Draw8x8FixedStrIndexed
+push r4-r7,r14
+mov r7,r10
+mov r6,r9
+mov r5,r8
+push r5-r7
+
+; Customization mode: 0=original, 1=maxWidth (buggy), 2=from blockSize
+@@mode equ 2
+
+; Truncate r2 (color) and then truncate-and-move index to r4.
+mov r4,0xFF
+and r2,r4
+and r4,r0
+
+; Save dest and str which we'll need later, about to make a call.
+mov r10,r1
+mov r9,r3
+; About to call some funcs, saved regs: (sp+0x20 still has blockSize...)
+; r4=index, r5=FREE, r6=FREE, r7=FREE, r8=FREE, r9=str, r10=dest
+
+cmp r2,1
+beq @@handleColor1
+bgt @@handleColors23
+cmp r2,0
+beq @@handleColorWhite
+b @@colorDone
+
+@@handleColors23:
+cmp r2,2
+beq @@handleColorGray
+cmp r2,3
+beq @@handleColorRed
+b @@colorDone
+
+@@handleColorWhite:
+bl 0x08071A20
+b @@colorDone
+
+@@handleColor1:
+bl 0x08071A38
+b @@colorDone
+
+@@handleColorGray:
+bl 0x08071A60
+b @@colorDone
+
+@@handleColorRed:
+bl 0x08071A4C
+
+@@colorDone:
+
+; Low byte of blockSize is w, next byte is h.  Just read as bytes.
+add r5,sp,0x20
+ldrb r6,[r5,0]
+ldrb r7,[r5,1]
+.if @@mode == 2
+	ldrb r5,[r5,2]
+.endif
+
+; Offset string by w*h*i to get the ith entry.
+mul r4,r6
+mul r4,r7
+add r9,r4
+; We only need h for cmp now, so free a low reg.
+mov r8,r7
+
+; If height is 0, we're wasting our time.
+mov r4,0
+cmp r8,r4
+beq @@skipDrawing
+
+.if @@mode == 1
+	; Track what this mode needs: max xpos (actually bytes.)
+	mov r5,0
+.endif
+; Font drawing parameters are set here.
+ldr r7,=0x030018BC
+
+@@drawNextLine:
+strb r6,[r7,5]
+mov r2,r6
+mul r2,r4
+; Offset workarea by y * w * 32 bytes.
+ldr r1,=0x030041DC
+lsl r3,r2,5
+add r3,r1
+str r3,[r7,8]
+add r2,r9
+str r2,[r7,12]
+; All set, now we draw the string to workarea.
+bl 0x08071748
+
+.if @@mode == 1
+	;; Grab the bytes written (accounting for VWF.)
+	ldr r0,[r7,4]
+	cmp r0,r5
+	blo @@skipXUpdate
+	mov r5,r0
+	@@skipXUpdate:
+.endif
+
+add r4,r4,1
+cmp r4,r8
+blo @@drawNextLine
+
+; At this point, we've drawn the index-offset lines into workarea,
+; and we have the max line width.  Now for the DMA3 transfer.
+
+; Prepare the DMA3 transfer params for 32-bit.
+ldr r1,=0x040000D4
+.if @@mode == 0
+	; Original mode, use max length.
+	lsl r5,r6,3
+.elseif @@mode == 1
+	; Convert maxXPos from bytes to words.  This is the amount for each copy.
+	lsr r5,r5,3
+.elseif @@mode == 2
+	; In this mode, when r5 is not 0, override the max length.
+	lsl r5,r5,3 ; Sets Z=1 if zero.
+	bne @@haveOverride
+	lsl r5,r6,3
+	@@haveOverride:
+.endif
+mov r2,0x84
+lsl r2,r2,24
+orr r2,r5
+ldr r3,=0x030041DC
+
+; Trade width for the byte offset so we don't recalc each line.
+lsl r6,r6,5
+
+mov r4,0
+@@copyNextLine:
+str r3,[r1,0]
+add r3,r6
+; Each line is offset by 0x400.
+lsl r0,r4,10
+add r0,r10
+str r0,[r1,4]
+str r2,[r1,8]
+ldr r0,[r1,8]
+
+add r4,r4,1
+cmp r4,r8
+blo @@copyNextLine
+
+@@skipDrawing:
+; Restore color to white.
+bl 0x08071A20
+
+pop r5-r7
+mov r10,r7
+mov r9,r6
+mov r8,r5
+pop r4-r7
+pop r3
+bx r3
+.pool
+.endfunc
+.endarea
