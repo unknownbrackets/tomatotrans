@@ -3,7 +3,8 @@
 #include <cstdio>
 #include <cstring>
 
-static const uint32_t TOMATO_END_POS = 0x64B4EC;
+static const uint32_t TOMATO_END_POS = 0x0064B4EC;
+static const uint32_t TOMATO_SIZE = 0x007F0000;
 
 struct tableEntry
 {
@@ -21,11 +22,11 @@ void          ConvComplexString(char s[], int &l, bool spaceIsZero);
 void          CompileCC(char[], int&, unsigned char[], int&);
 int           CharToHex(char);
 unsigned int  hstrtoi(char*);
-void          UpdatePointers(int, int, FILE*, char*);
-void          InsertEnemies(FILE*);
+uint32_t UpdatePointers(int, int, FILE *, const char *);
+uint32_t InsertEnemies(FILE*);
 void          InsertMenuStuff1(FILE*);
 void          InsertStuff(FILE*, char[], int, int, int);
-void          InsertMenuStuff2(FILE *, uint32_t afterTextPos);
+uint32_t InsertMenuStuff2(FILE *, uint32_t &afterTextPos);
 
 //=================================================================================================
 
@@ -72,6 +73,8 @@ int main(void)
 	   return -1;
    }
 
+   int totalInsertions = 0;
+
    i = 0;
    fseek(fout, TOMATO_END_POS, SEEK_SET);
    fgets(str, 5000, fin);
@@ -91,7 +94,7 @@ int main(void)
 	  	for (j = 0; j < len; j++)
  	  	   fputc(str2[j], fout);
 
-      	UpdatePointers(i, loc, fout, "pointers1.dat");
+		totalInsertions += UpdatePointers(i, loc, fout, "pointers1.dat");
   	  }
 
       i++;
@@ -105,10 +108,14 @@ int main(void)
 
    uint32_t afterTextPos = (uint32_t)ftell(fout);
 
-   InsertEnemies(fout);
+   totalInsertions += InsertEnemies(fout);
    //InsertMenuStuff1(fout);
    //InsertStuff(fout, "ta_items_eng.txt", 0x4573F2, 5, 8);
-   InsertMenuStuff2(fout, afterTextPos);
+   totalInsertions += InsertMenuStuff2(fout, afterTextPos);
+
+   uint32_t usedBytes = afterTextPos - TOMATO_END_POS;
+   uint32_t usedPercent = 100 * usedBytes / (TOMATO_SIZE - TOMATO_END_POS);
+   printf("Inserted %u strings, using %u extra bytes (%03u%%)\n", totalInsertions, usedBytes, usedPercent);
 
    fclose(fout);
    return 0;
@@ -611,62 +618,63 @@ void PrepString(char str[5000], char str2[5000], int startPoint)
 
 //=================================================================================================
 
-void UpdatePointers(int lineNum, int loc, FILE* fout, char* pointersFile)
+uint32_t UpdatePointers(int lineNum, int loc, FILE *fout, const char *pointersFile)
 {
-   FILE* fptrs;
    char  str[5000];
-   int   i;
    int   address;
    int   readOK;
    int   tempLoc = ftell(fout);
 
-   fptrs = fopen(pointersFile, "r");
+   FILE *fptrs = fopen(pointersFile, "r");
    if (fptrs == NULL)
    {
 	   printf("Couldn't open %s!\n", pointersFile);
-	   return;
+	   return 0;
    }
 
-   for (i = 0; i < lineNum; i++)
+   for (int i = 0; i < lineNum; i++)
       fgets(str, 5000, fptrs);
 
-   printf("\nline %03X:", lineNum);
+   //printf("\nline %03X:", lineNum);
 
+   uint32_t insertions = 0;
    readOK = fscanf(fptrs, "%X", &address);
    while ((readOK != 0) && (address != 0xFFFFFFFF))
    {
 	  loc |= 0x08000000;
-	  printf("loc:%08X    %08X", loc, address);
+	  //printf("loc:%08X    %08X", loc, address);
 	  fseek(fout, address, SEEK_SET);
 	  WriteLE32(fout, loc);
 
       readOK = fscanf(fptrs, "%X", &address);
+	  insertions++;
    }
    //printf("\n");
 
    fclose(fptrs);
 
    fseek(fout, tempLoc, SEEK_SET);
+   return insertions;
 }
 
 //=================================================================================================
 
-void InsertEnemies(FILE* fout)
+uint32_t InsertEnemies(FILE* fout)
 {
-	FILE* fin;
 	char  str[5000];
 	char  str2[5000];
 	int   i = 0;
 	int   j;
 	int   len;
 
-    fin = fopen("ta_enemies_eng.txt", "r");
+    FILE *fin = fopen("ta_enemies_eng.txt", "r");
     if (fin == NULL)
     {
 		printf("Couldn't open ta_enemies_eng.txt!\n");
-		return;
+		return 0;
 	}
 
+	uint32_t insertions = 0;
 
    fgets(str, 5000, fin);
    while(strstr(str, "-E:") == NULL)
@@ -675,9 +683,6 @@ void InsertEnemies(FILE* fout)
    }
    while(!feof(fin))
    {
-      //offset[i] = currOffset;
-      // copy string minus the number and -E: stuff
-
   	  PrepString(str, str2, 5);
 
   	  if (str2[0] != '\n')
@@ -700,6 +705,8 @@ void InsertEnemies(FILE* fout)
       	fseek(fout, 0x634F9C + 0x4C * i, SEEK_SET);
 	  	for (j = 0; j < len; j++)
  	  	   fputc(str2[j], fout);
+
+		insertions++;
   	  }
 
       i++;
@@ -711,6 +718,7 @@ void InsertEnemies(FILE* fout)
    }
 
    fclose(fin);
+   return insertions;
 }
 
 //=================================================================================================
@@ -837,7 +845,7 @@ void InsertStuff(FILE* fout, char inFile[], int address, int startPos, int maxLe
 
 //=================================================================================================
 
-void InsertMenuStuff2(FILE *fout, uint32_t afterTextPos)
+uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 {
 	char  str[5000];
 	char  str2[5000];
@@ -845,18 +853,17 @@ void InsertMenuStuff2(FILE *fout, uint32_t afterTextPos)
 	int   len;
 	int   maxLen;
 	int   lines;
-	int   i;
-	int   j;
 
 	FILE *fin = fopen("ta_menus_eng.txt", "r");
 	if (!fin)
 	{
 		printf("Couldn't open ta_menus_eng.txt!\n");
-		return;
+		return 0;
 	}
 
 	// Just in case, let's make sure it's aligned.
 	uint32_t nextPos = (afterTextPos + 1) & ~1;
+	uint32_t insertions = 0;
 
 	fgets(str, 5000, fin);
 	while (!feof(fin))
@@ -893,7 +900,7 @@ void InsertMenuStuff2(FILE *fout, uint32_t afterTextPos)
 				fwrite(&lenByte, 1, 1, fout);
 			}
 
-			for (i = 0; i < lines; ++i)
+			for (int i = 0; i < lines; ++i)
 			{
 				fgets(str, 5000, fin);
 				PrepString(str, str2, 5);
@@ -905,12 +912,13 @@ void InsertMenuStuff2(FILE *fout, uint32_t afterTextPos)
 				}
 
 				fseek(fout, blockPos, SEEK_SET);
-				for (j = 0; j < maxLen; ++j)
+				for (int j = 0; j < maxLen; ++j)
 				{
 					char c = j < len ? str2[j] : '\0';
 					fputc(c, fout);
 				}
 				blockPos += maxLen;
+				insertions++;
 			}
 
 			if (updateNext)
@@ -929,12 +937,13 @@ void InsertMenuStuff2(FILE *fout, uint32_t afterTextPos)
 			ConvComplexString(str2, len, true);
 
 			fseek(fout, nextPos, SEEK_SET);
-			for (j = 0; j < len + 1; ++j) {
+			for (int j = 0; j < len + 1; ++j) {
 				char c = j < len ? str2[j] : '\0';
 				fputc(c, fout);
 			}
 			nextPos += len + 1;
 			nextPos = (nextPos + 1) & ~1;
+			insertions++;
 		}
 		// Old format: BLOCKSTART TextLoc Len Count
 		else if (strstr(str, "BLOCKSTART") != NULL)
@@ -942,12 +951,12 @@ void InsertMenuStuff2(FILE *fout, uint32_t afterTextPos)
 		   sscanf(str, "%*s %X %X %X", &address, &maxLen, &lines);
 		   //printf("block address:%X  line len:%02X  line count:%02X\n", address, maxLen, lines);
 
-		   for (i = 0; i < lines; i++)
+		   for (int i = 0; i < lines; i++)
 		   {
 			   fgets(str, 5000, fin);
   	  		   PrepString(str, str2, 5);
 
- 		       //for (j = 0; j < strlen(str2); j++)
+ 		       //for (int j = 0; j < strlen(str2); j++)
 		   	   //   printf("%c ", str2[j]);
 
 	  		   ConvComplexString(str2, len, false);
@@ -960,19 +969,21 @@ void InsertMenuStuff2(FILE *fout, uint32_t afterTextPos)
 			   if (str2[0] != 0x0)
 			   {
 				   fseek(fout, address + maxLen * i, SEEK_SET);
-			       for (j = 0; j < maxLen; j++)
+			       for (int j = 0; j < maxLen; j++)
 			          fputc(0x00, fout);
 
 			   	   fseek(fout, address + maxLen * i, SEEK_SET);
-			       for (j = 0; j < len; j++)
+			       for (int j = 0; j < len; j++)
 			         fputc(str2[j], fout);
+				   insertions++;
 		   	   }
 		   }
 		}
 
 		fgets(str, 5000, fin);
 	}
-
+	afterTextPos = (nextPos + 1) & ~1;
 
 	fclose(fin);
+	return insertions;
 }
