@@ -81,7 +81,7 @@ mov r5,r0
 mov r6,8
 
 ; It's 8 tall, this draws each row to workarea (r4).
-drawRow:
+@@drawRow:
 ldrh r2,[r5]
 strh r2,[r7,0]
 add r5,2
@@ -90,7 +90,7 @@ str r5,[r7,12]
 ;; need to fix regs
 bl 0x080710A8
 sub r6,1 ; sets Z/eq on 0
-bne drawRow
+bne @@drawRow
 
 ; Since we're done calling funcs, let's restore stack0608.
 ; This restores charBitmap and puts the old [r7,4] at [r7,12].
@@ -144,7 +144,7 @@ strb r3,[r7,1]
 ; At this point, r2=destTile0, r3=bitStartX, r4=workarea, flags=r3==0.  Everything else free.
 
 ; If the offset above != 0 (eq/Z flag), jump to where we do the offset.
-bne copyOffsetChar
+bne @@copyOffsetChar
 
 ; No offset, we just need to copy the 8 words (8x8 4bpp) over.
 ldmia r4!,r3,r5,r6,r7
@@ -153,12 +153,12 @@ ldmia r4!,r3,r5,r6,r7
 stmia r2!,r3,r5,r6,r7
 
 ; That's it, the tile is ready to go.
-b copyDone
+b @@copyDone
 
 ; Here's a good place for the literal pool...
 .pool
 
-copyOffsetChar:
+@@copyOffsetChar:
 ; Each row is neatly 32 bits, the first pixel is the least significant.
 ; So we can just shift by the bits calculated above to translate the image.
 
@@ -175,13 +175,13 @@ mov r1,8
 ; Save workarea for tile0.
 mov r8,r4
 
-copyOffsetTile1Row:
+@@copyOffsetTile1Row:
 ldmia r4!,r0
 lsr r0,r7
 orr r0,r6
 stmia r5!,r0
 sub r1,1 ; sets Z/eq on 0
-bne copyOffsetTile1Row
+bne @@copyOffsetTile1Row
 
 ; Okay, tile1 is done, now we blend tile0.  Reset to workarea start.
 mov r4,r8
@@ -191,7 +191,7 @@ lsr r5,r7
 
 mov r1,8
 
-copyOffsetTile0Row:
+@@copyOffsetTile0Row:
 ; Read and translate tile0 content into r0.
 ldmia r4!,r0
 lsl r0,r3
@@ -203,9 +203,9 @@ orr r0,r7
 ; Now we write the row, done.
 stmia r2!, r0
 sub r1,1 ; sets Z/eq on 0
-bne copyOffsetTile0Row
+bne @@copyOffsetTile0Row
 
-copyDone:
+@@copyDone:
 
 add sp,4
 pop r0-r2,r4-r7
