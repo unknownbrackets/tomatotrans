@@ -1,4 +1,4 @@
-﻿BLOCKSTART 457226 06 17
+﻿BLOCKFIXED 4903C0 06 17
 00-E:Demi
 01-E:Ales
 02-E:Sofi
@@ -23,20 +23,20 @@
 15-E:Shadup
 16-E:Cheki
 
-BLOCKSTART 457220 06 01
+BLOCKFIXED 4903C8 06 01
 00-E:??????
 
-BLOCKSTART 457350 0C 01
-00-E:No items
+BLOCKFIXED 4903D0 18 01
+00-E:Don't have any items
 
-BLOCKSTART 45735C 08 05
+BLOCKFIXED 4903D8 08 05
 00-E:Speed Up
 01-E:HP Up
 02-E:walkHP
 03-E:EXP Up
 04-E:NoStatus
 
-BLOCKSTART 457384 08 0A
+BLOCKFIXED 4903E0 08 0A
 00-E:
 01-E:Poison
 02-E:Sleep
@@ -48,7 +48,7 @@ BLOCKSTART 457384 08 0A
 08-E:HP Suck
 09-E:All
 
-BLOCKSTART 4573D4 05 06
+BLOCKFIXED 4903E8 05 06
 00-E:Bolt
 01-E:Gear
 02-E:Sprng
@@ -56,8 +56,10 @@ BLOCKSTART 4573D4 05 06
 04-E:Body
 05-E:Bttry
 
-
-BLOCKSTART 4573F2 08 B7
+# This must be the same size as 4903F8.
+BLOCKFIXED 4903F0 0C 01
+00-E:
+BLOCKFIXED 4903F8 0C 61
 00-E:
 01-E:
 02-E:
@@ -68,184 +70,193 @@ BLOCKSTART 4573F2 08 B7
 07-E:
 08-E:
 09-E:
-0A-E:
+0S-E:
 0B-E:
-0C-E:
-0D-E:TBattery
-0E-E:CBattery
-0F-E:NBattery
-10-E:SBattery
-11-E:T.Volt
-12-E:C.Volt
-13-E:E.Volt
-14-E:S.Volt
-15-E:T.Star
-16-E:C.Star
-17-E:E.Star
-18-E:S.Star
-19-E:
-1A-E:R.Drop
-1B-E:A.Drop
-1C-E:Coffee
-1D-E:WakeBell
-1E-E:Whisper
-1F-E:M.Apple
-20-E:B.Apple
-21-E:D.Apple
-22-E:Cologne
-23-E:C.Killer
-24-E:T.Killer
-25-E:S.Killer
-26-E:E.Killer
-27-E:Fruit
-28-E:R.Gummy
-29-E:W.Gummy
-2A-E:P.Gummy
-2B-E:G.Gummy
-2C-E:Cookie
-2D-E:Milk
-2E-E:Pudding
-2F-E:
-30-E:Parts
-31-E:
-32-E:SpeedJar
-33-E:LifeJar
-34-E:
-35-E:Modring
-36-E:
-37-E:Pacifier
-38-E:P.Key 1
-39-E:P.Key 2
-3A-E:P.Key 3
-3B-E:Gold Pot
-3C-E:Pillow
-3D-E:Last Pin
-3E-E:G.Memory
-3F-E:B.Memory
-40-E:R.Memory
-41-E:Sheep 1
-42-E:Sheep 2
-43-E:Sheep 3
-44-E:Look
-45-E:BakuKey
-46-E:D.Pillow
-47-E:StartPin
-48-E:Sesakey
-49-E:Contract
-4A-E:Tickets
-4B-E:License
-4C-E:Candy
-4D-E:Music
-4E-E:ChrchKey
-4F-E:GTicket2
-50-E:S.Diamnd
-51-E:Mask
-52-E:GTicket
-53-E:Letter
-54-E:Doll
-55-E:G.Banana
-56-E:R.Banana
-57-E:Coupon
-58-E:B.Banana
-59-E:Gold Key
-5A-E:Gum
-5B-E:L.Ticket
-5C-E:MusicBox
-5D-E:Bellmush
+0C-E:TBattery
+0D-E:CBattery
+0E-E:NBattery
+0F-E:SBattery
+10-E:T.Volt
+11-E:C.Volt
+12-E:E.Volt
+13-E:S.Volt
+14-E:T.Star
+15-E:C.Star
+16-E:E.Star
+17-E:S.Star
+18-E:
+19-E:R.Drop
+1A-E:A.Drop
+1B-E:Coffee
+1C-E:WakeBell
+1D-E:Whisper
+1E-E:M.Apple
+1F-E:B.Apple
+20-E:D.Apple
+21-E:Cologne
+22-E:C.Killer
+23-E:T.Killer
+24-E:S.Killer
+25-E:E.Killer
+26-E:Fruit
+27-E:R.Gummy
+28-E:W.Gummy
+29-E:P.Gummy
+2A-E:G.Gummy
+2B-E:Cookie
+2C-E:Milk
+2D-E:Pudding
+2E-E:
+2F-E:Parts
+30-E:
+31-E:SpeedJar
+32-E:LifeJar
+33-E:
+34-E:Modring
+35-E:
+36-E:Pacifier
+37-E:P.Key 1
+38-E:P.Key 2
+39-E:P.Key 3
+3A-E:Gold Pot
+3B-E:Pillow
+3C-E:Last Pin
+3D-E:G.Memory
+3E-E:B.Memory
+3F-E:R.Memory
+40-E:Sheep 1
+41-E:Sheep 2
+42-E:Sheep 3
+43-E:Look
+44-E:BakuKey
+45-E:D.Pillow
+46-E:StartPin
+47-E:Sesakey
+48-E:Contract
+49-E:Tickets
+4A-E:License
+4B-E:Candy
+4C-E:Music
+4D-E:ChrchKey
+4E-E:GTicket2
+4F-E:S.Diamnd
+50-E:Mask
+51-E:GTicket
+52-E:Letter
+53-E:Doll
+54-E:G.Banana
+55-E:R.Banana
+56-E:Coupon
+57-E:B.Banana
+58-E:Gold Key
+59-E:Gum
+5A-E:L.Ticket
+5B-E:MusicBox
+5C-E:Bellmush
+5D-E:Hotpot
 5E-E:Hotpot
-5F-E:Hotpot
-60-E:Battery
-61-E:Spring
-62-E:Nothing
-63-E:
-64-E:V.Shirt
-65-E:P.Jacket
-66-E:M.Jacket
-67-E:ThrnShrt
-68-E:Go Shirt
-69-E:SkulShrt
-6A-E:T.Jacket
-6B-E:4D Shirt
-6C-E:S.Jacket
-6D-E:N.Skirt
-6E-E:Fur
-6F-E:Apron
-70-E:Dress
-71-E:GhstRobe
-72-E:M.Skirt
-73-E:D.Collar
-74-E:StarRobe
-75-E:LardSuit
-76-E:Bat Suit
-77-E:Digisuit
-78-E:H.Suit
-79-E:StarSuit
-7A-E:NinjaCot
-7B-E:Skirt
-7C-E:LitSkirt
-7D-E:StarCoat
-7E-E:Diaper
-7F-E:M.Jersey
-80-E:MoonGown
-81-E:CsmoCape
-82-E:SumoJckt
-83-E:Plt.Cape
-84-E:
-85-E:GearYoYo
-86-E:NoisFace
-87-E:Chomper
-88-E:Crane
-89-E:TurtGlov
-8A-E:DualSwrd
-8B-E:RabShoes
-8C-E:Hopper
-8D-E:CupidBow
-8E-E:Judgemnt
-8F-E:Elec.Eel
-90-E:SlotBzka
-91-E:SeedBomb
-92-E:BoyPeach
-93-E:Maghand
-94-E:LinGlove
-95-E:TailWag
-96-E:Cannon
-97-E:Fumigatr
-98-E:H.Vulcan
-99-E:SuperFan
-9A-E:Cyclooka
-9B-E:Zapper
-9C-E:Popocon
-9D-E:Yokozuna
-9E-E:Blazer
-9F-E:Volcano
-A0-E:Piramet
-A1-E:SneaCar
-A2-E:Train
-A3-E:Balloon
-A4-E:Pole UFO
-A5-E:SpdrShot
-A6-E:LndRockt
-A7-E:SunLaser
-A8-E:Bouncer
-A9-E:Firehog
-AA-E:Sesame
-AB-E:Bananer
-AC-E:Riceball
-AD-E:KarateDg
-AE-E:Meowzer
-AF-E:BubblHrn
-B0-E:Flatuler
-B1-E:LoveSong
-B2-E:StarScop
-B3-E:Hotafant
-B4-E:Mansnow
-B5-E:ShuriGun
-B6-E:Shadow
+5F-E:Battery
+60-E:Spring
 
-BLOCKSTART 4579AA 24 01
+# For now assuming this needs the same size as 490410.
+BLOCKFIXED 490400 0A 01
+00-E:Nothing
+# This must be the same size as 490410.
+BLOCKFIXED 490408 0A 01
+00-E:
+BLOCKFIXED 490410 0A 20
+00-E:V.Shirt
+01-E:P.Jacket
+02-E:M.Jacket
+03-E:ThrnShrt
+04-E:Go Shirt
+05-E:SkulShrt
+06-E:T.Jacket
+07-E:4D Shirt
+08-E:S.Jacket
+09-E:N.Skirt
+0A-E:Fur
+0B-E:Apron
+0C-E:Dress
+0D-E:GhstRobe
+0E-E:M.Skirt
+0F-E:D.Collar
+10-E:StarRobe
+11-E:LardSuit
+12-E:Bat Suit
+13-E:Digisuit
+14-E:H.Suit
+15-E:StarSuit
+16-E:NinjaCot
+17-E:Skirt
+18-E:LitSkirt
+19-E:StarCoat
+1A-E:Diaper
+1B-E:M.Jersey
+1C-E:MoonGown
+1D-E:CsmoCape
+1E-E:SumoJckt
+1F-E:Plt.Cape
+
+# This must be the same size as 490420.
+BLOCKFIXED 490418 0C 01
+00-E:
+BLOCKFIXED 490420 0C 32
+00-E:GearYoYo
+01-E:NoisFace
+02-E:Chomper
+03-E:Crane
+04-E:TurtGlov
+05-E:DualSwrd
+06-E:RabShoes
+07-E:Hopper
+08-E:CupidBow
+09-E:Judgemnt
+0A-E:Elec.Eel
+0B-E:SlotBzka
+0C-E:SeedBomb
+0D-E:BoyPeach
+0E-E:Maghand
+0F-E:LinGlove
+10-E:TailWag
+11-E:Cannon
+12-E:Fumigatr
+13-E:H.Vulcan
+14-E:SuperFan
+15-E:Cyclooka
+16-E:Zapper
+17-E:Popocon
+18-E:Yokozuna
+19-E:Blazer
+1A-E:Volcano
+1B-E:Piramet
+1C-E:SneaCar
+1D-E:Train
+1E-E:Balloon
+1F-E:Pole UFO
+20-E:SpdrShot
+21-E:LndRockt
+22-E:SunLaser
+23-E:Bouncer
+24-E:Firehog
+25-E:Sesame
+26-E:Bananer
+27-E:Riceball
+28-E:KarateDg
+29-E:Meowzer
+2A-E:BubblHrn
+2B-E:Flatuler
+2C-E:LoveSong
+2D-E:StarScop
+2E-E:Hotafant
+2F-E:Mansnow
+30-E:ShuriGun
+31-E:Shadow
+
+BLOCKFIXED 490428 1A 01
 00-E:Set difficulty: [FB][F9] Done: [F5]
 
-BLOCKSTART 4579CE 1A 64
+BLOCKFIXED 490430 24 64
 00-E:Press [F5] to stop the bar in
 01-E:the red zone.
 02-E:
@@ -347,7 +358,7 @@ BLOCKSTART 4579CE 1A 64
 62-E:
 63-E:
 
-BLOCKSTART 4583F6 08 12
+BLOCKFIXED 490438 0C 12
 00-E:Spill
 01-E:Forest
 02-E:Ruins
@@ -367,12 +378,12 @@ BLOCKSTART 4583F6 08 12
 10-E:Lab
 11-E:CLEAR
 
-BLOCKSTART 458486 12 03
+BLOCKFIXED 490440 12 03
 00-E:Erase file?
 01-E:
 02-E:Yes No
 
-BLOCKSTART 4584BC 1C C2
+BLOCKFIXED 490448 24 C2
 00-E:
 01-E:
 02-E:
@@ -398,11 +409,11 @@ BLOCKSTART 4584BC 1C C2
 16-E:
 17-E:
 18-E:Gimmick power item
-19-E:Timing gimmick attks up 1
+19-E:Timing gimmick attacks up 1
 1A-E:Gimmick power item
-1B-E:Tapping gimmick attks up 1
+1B-E:Tapping gimmick attacks up 1
 1C-E:Gimmick power item
-1D-E:Excite gimmick attks up 1
+1D-E:Excite gimmick attacks up 1
 1E-E:
 1F-E:
 20-E:
@@ -568,7 +579,7 @@ BF-E:
 C0-E:
 C1-E:
 
-BLOCKSTART 459CAC 12 10
+BLOCKFIXED 490450 20 10
 00-E:
 01-E:
 02-E:
@@ -586,14 +597,17 @@ BLOCKSTART 459CAC 12 10
 0E-E:
 0F-E:
 
-BLOCKSTART 459C64 12 01
+BLOCKFIXED 490458 14 04
 00-E:Adjust Gimmicks
+01-E:
+02-E:
+03-E:
 
-BLOCKSTART 459DCC 16 02
+BLOCKFIXED 490460 16 02
 00-E:
 01-E:
 
-BLOCKSTART 459DF8 16 0C
+BLOCKFIXED 490468 16 0C
 00-E:
 01-E:
 02-E:
@@ -621,11 +635,11 @@ BLOCKFIXED 490478 0A 02
 00-E:Key Items
 01-E:Parts
 
-# Not sure if this is referenced separately, but it's the same as Parts above.
+# Some code references this directly, same as Parts above.
 BLOCKPOINTER 0781D8
 00-E:Parts
 
-BLOCKSTART 459F40 12 03
+BLOCKFIXED 490480 12 03
 00-E:Go back?
 01-E:
 02-E:YesNo
@@ -633,13 +647,13 @@ BLOCKSTART 459F40 12 03
 BLOCKFIXED 490488 08 01
 00-E:Gimmick
 
-BLOCKSTART 459F7A 07 01
+BLOCKFIXED 490490 0A 01
 00-E:Current
 
-BLOCKSTART 459F81 04 01
+BLOCKFIXED 490498 06 01
 00-E:Uses
 
-BLOCKSTART 459F85 04 01
+BLOCKFIXED 4904A0 04 01
 00-E:ATK
 
 BLOCKFIXED 4904A8 08 01
@@ -648,32 +662,32 @@ BLOCKFIXED 4904A8 08 01
 BLOCKFIXED 4904B0 0A 01
 00-E:Difficulty
 
-BLOCKSTART 459F91 1B 01
-00-E:  's can be modified here!
+BLOCKFIXED 4904B8 24 01
+00-E:[EF][EF][EF][EF]'s can be modified here!
 
-BLOCKSTART 459FAC 1B 03
+BLOCKFIXED 4904C0 1B 03
 00-E:L/R:    Select difficulty
 01-E:START:  Test Gimmick
 02-E:SELECT: Show description
 
-BLOCKSTART 459FFD 1B 02
-00-E:L/R:Select diff. START:Try
+BLOCKFIXED 4904C8 24 02
+00-E:L/R: Adjust difficulty  START: Try
 01-E:SELECT: Show description
 
-BLOCKSTART 45A033 04 01
+BLOCKFIXED 4904D0 04 01
 00-E:SPD
 
-BLOCKSTART 45A037 04 01
+BLOCKFIXED 4904D8 04 01
 00-E:DEF
 
-BLOCKSTART 45A03B 1C 03
+BLOCKFIXED 4904E0 1C 03
 00-E:Put this on?
-01-E:
+01-E: 
 02-E:          Yes No
 
-BLOCKSTART 45A08F 09 02
-00-E:L/R: Pick
-01-E:diff.
+BLOCKFIXED 4904E8 0C 02
+00-E:L/R: Adjust
+01-E:difficulty
 
 BLOCKFIXED 4904F0 06 01
 00-E:Save
@@ -688,40 +702,41 @@ BLOCKFIXED 490508 08 06
 00-E:Pick a
 01-E:slot
 02-E:Saving[9F]
-03-E:
+03-E: 
 04-E:Erasing[9F]
-05-E:
+05-E: 
 
-BLOCKSTART 45A0CA 10 03
+BLOCKFIXED 490510 10 03
 00-E:EMPTY
 01-E:Overwritten
 02-E:SAVING!
 
-BLOCKSTART 45A0FD 12 04
-00-E:Replace[00]old[00]data?
-01-E:   Yes      No
-02-E:You're[00]sure?
-03-E:   Yes      No
+BLOCKFIXED 490518 12 04
+00-E:Replace old data?
+01-E:[EF][EF][EF]Yes[EF][EF][EF][EF][EF][EF]No
+02-E:You're sure?
+03-E:[EF][EF][EF]Yes[EF][EF][EF][EF][EF][EF]No
 
-BLOCKSTART 45A0FA 03 01
+# We can make this longer if we want.
+BLOCKFIXED 490520 03 01
 00-E:LV
 
 BLOCKFIXED 490528 10 01
 00-E:Special Item
 
-BLOCKSTART 45A14D 05 01
+BLOCKFIXED 490530 05 01
 00-E:Parts
 
-BLOCKSTART 45A152 07 01
+BLOCKFIXED 490538 07 01
 00-E:GmkCard
 
-BLOCKSTART 45A159 03 01
+BLOCKFIXED 490540 03 01
 00-E:EFF
 
-BLOCKSTART 45A15C 04 01
+BLOCKFIXED 490548 04 01
 00-E:NUM
 
-BLOCKSTART 45A160 03 01
+BLOCKFIXED 490550 03 01
 00-E:LV
 
 BLOCKSTART 45A163 05 01
@@ -832,10 +847,10 @@ BLOCKSTART 45A20F 01 0A
 BLOCKSTART 45A219 1C 01
 00-J:Already equipped!
 
-BLOCKSTART 45A235 1C 03
-00-E:Test:   Start
-01-E:Cancel: Start
-02-E:[F7]:      Back
+BLOCKFIXED 490648 1C 03
+00-E:START: Begin or cancel
+01-E:[F7]: Back to menu
+02-E:
 
 BLOCKSTART 45A289 1C 02
 00-E:Choose character!
