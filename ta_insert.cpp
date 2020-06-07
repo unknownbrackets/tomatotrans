@@ -916,6 +916,26 @@ void InsertMenuStuff2(FILE *fout, uint32_t afterTextPos)
 			if (updateNext)
 				nextPos = (blockPos + 1) & ~1;
 		}
+		// Alternate for just a pointer: BLOCKPOINTER PointerLoc
+		else if (strstr(str, "BLOCKPOINTER") != NULL)
+		{
+			sscanf(str, "%*s %X", &address);
+
+			fseek(fout, address, SEEK_SET);
+			WriteLE32(fout, nextPos | 0x08000000);
+
+			fgets(str, 5000, fin);
+			PrepString(str, str2, 5);
+			ConvComplexString(str2, len, true);
+
+			fseek(fout, nextPos, SEEK_SET);
+			for (j = 0; j < len + 1; ++j) {
+				char c = j < len ? str2[j] : '\0';
+				fputc(c, fout);
+			}
+			nextPos += len + 1;
+			nextPos = (nextPos + 1) & ~1;
+		}
 		// Old format: BLOCKSTART TextLoc Len Count
 		else if (strstr(str, "BLOCKSTART") != NULL)
 		{
