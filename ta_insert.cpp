@@ -878,23 +878,24 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 				maxLen = 1;
 			}
 
-			uint8_t lenByte = 0;
+			uint32_t origAddress = 0;
+			uint8_t origLen = 0;
 			// The block has the length at + 4.  Can it fit?
-			fseek(fout, address + 4, SEEK_SET);
-			fread(&lenByte, 1, 1, fout);
+			fseek(fout, address, SEEK_SET);
+			ReadLE32(fout, origAddress);
+			origAddress &= ~0x08000000;
+			fread(&origLen, 1, 1, fout);
 
 			uint32_t blockPos = nextPos;
 			bool updateNext = true;
-			if (lenByte == maxLen)
+			if (origLen == maxLen)
 			{
-				fseek(fout, address, SEEK_SET);
-				ReadLE32(fout, blockPos);
-				blockPos &= ~0x08000000;
+				blockPos = origAddress;
 				updateNext = false;
 			}
 			else
 			{
-				lenByte = (uint8_t)maxLen;
+				uint8_t lenByte = (uint8_t)maxLen;
 				fseek(fout, address, SEEK_SET);
 				WriteLE32(fout, blockPos | 0x08000000);
 				fwrite(&lenByte, 1, 1, fout);
@@ -906,9 +907,17 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 				PrepString(str, str2, 5);
 
 				ConvComplexString(str2, len, true);
-				if (len > maxLen) {
+				if (len > maxLen)
+				{
 					printf("too long: %s\n", str);
 					len = maxLen;
+				}
+
+				// Let's read it in from the original position if blank (use a space to prevent.)
+				if (len == 0 && origLen <= maxLen && updateNext)
+				{
+					fseek(fout, origAddress + i * origLen, SEEK_SET);
+					len = (int)fread(str2, 1, origLen, fout);
 				}
 
 				fseek(fout, blockPos, SEEK_SET);
@@ -929,21 +938,24 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 		{
 			sscanf(str, "%*s %X", &address);
 
-			fseek(fout, address, SEEK_SET);
-			WriteLE32(fout, nextPos | 0x08000000);
-
 			fgets(str, 5000, fin);
 			PrepString(str, str2, 5);
 			ConvComplexString(str2, len, true);
 
-			fseek(fout, nextPos, SEEK_SET);
-			for (int j = 0; j < len + 1; ++j) {
-				char c = j < len ? str2[j] : '\0';
-				fputc(c, fout);
+			if (len != 0)
+			{
+				fseek(fout, address, SEEK_SET);
+				WriteLE32(fout, nextPos | 0x08000000);
+
+				fseek(fout, nextPos, SEEK_SET);
+				for (int j = 0; j < len + 1; ++j) {
+					char c = j < len ? str2[j] : '\0';
+					fputc(c, fout);
+				}
+				nextPos += len + 1;
+				nextPos = (nextPos + 1) & ~1;
+				insertions++;
 			}
-			nextPos += len + 1;
-			nextPos = (nextPos + 1) & ~1;
-			insertions++;
 		}
 		// Old format: BLOCKSTART TextLoc Len Count
 		else if (strstr(str, "BLOCKSTART") != NULL)
