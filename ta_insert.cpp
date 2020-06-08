@@ -947,11 +947,12 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 			if (updateNext)
 				nextPos = (blockPos + 1) & ~1;
 		}
-		// Alternate for just a pointer: BLOCKPOINTER PointerLoc [MaxLen]
-		else if (!comment && strstr(str, "BLOCKPOINTER") != NULL)
+		// Alternate for just a pointer: FIXEDPOINTER PointerLoc MaxLen
+		else if (!comment && strstr(str, "FIXEDPOINTER") != NULL)
 		{
+			int oldLen = 0;
 			int maxLen = 0;
-			sscanf(str, "%*s %X %X", &address, &maxLen);
+			sscanf(str, "%*s %X %X %X", &address, &maxLen, &oldLen);
 
 			fgets(str, 5000, fin);
 			PrepString(str, str2, 5);

@@ -636,10 +636,12 @@ BLOCKFIXED 490478 0A 02 08
 01-E:Parts
 
 # Some code references this directly, same as Parts above.
-BLOCKPOINTER 0781D8 08
+# Can be made longer with changes to game code (not sure what fits.)
+FIXEDPOINTER 0781D8 08  #459F38
 00-E:Parts
 
-BLOCKPOINTER 0781DC 08
+# Can be made longer with changes to game code (not sure what fits.)
+FIXEDPOINTER 0781DC 08  #4575AA
 00-J:Pacifier
 
 BLOCKFIXED 490480 12 03
