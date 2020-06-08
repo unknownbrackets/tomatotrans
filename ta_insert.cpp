@@ -950,9 +950,8 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 		// Alternate for just a pointer: FIXEDPOINTER PointerLoc MaxLen
 		else if (!comment && strstr(str, "FIXEDPOINTER") != NULL)
 		{
-			int oldLen = 0;
 			int maxLen = 0;
-			sscanf(str, "%*s %X %X %X", &address, &maxLen, &oldLen);
+			sscanf(str, "%*s %X %X", &address, &maxLen);
 
 			fgets(str, 5000, fin);
 			PrepString(str, str2, 5);
@@ -970,12 +969,71 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 				WriteLE32(fout, nextPos | 0x08000000);
 
 				fseek(fout, nextPos, SEEK_SET);
-				for (int j = 0; j < len + 1; ++j) {
+				for (int j = 0; j < len + 1; ++j)
+				{
 					char c = j < len ? str2[j] : '\0';
 					fputc(c, fout);
 				}
 				nextPos += len + 1;
 				nextPos = (nextPos + 1) & ~1;
+				insertions++;
+			}
+		}
+		// Alternate for pointer with byte specifying length: DYNPOINTER PointerLoc MaxLen SizeLoc SizeLoc2
+		else if (!comment && strstr(str, "DYNPOINTER") != NULL)
+		{
+			int maxLen = 0;
+			int sizeAddress = 0;
+			int sizeAddress2 = 0;
+			sscanf(str, "%*s %X %X %X %X", &address, &maxLen, &sizeAddress, &sizeAddress2);
+
+			fgets(str, 5000, fin);
+			PrepString(str, str2, 5);
+			ConvComplexString(str2, len, true);
+
+			if (maxLen != 0 && len > maxLen)
+			{
+				printf("too long: %s\n", str);
+				len = maxLen;
+			}
+
+			if (len != 0)
+			{
+				fseek(fout, sizeAddress, SEEK_SET);
+				int oldLen = fgetc(fout);
+				if (oldLen >= len)
+				{
+					// Let's just keep the old length and overwrite.
+					uint32_t oldPtr = 0;
+					fseek(fout, address, SEEK_SET);
+					ReadLE32(fout, oldPtr);
+					fseek(fout, oldPtr & ~0x08000000, SEEK_SET);
+					for (int j = 0; j < oldLen; ++j)
+					{
+						char c = j < len ? str2[j] : '\0';
+						fputc(c, fout);
+					}
+				}
+				else
+				{
+					// Write the actual size.  No need for padding or terminators.
+					fseek(fout, sizeAddress, SEEK_SET);
+					fputc((uint8_t)len, fout);
+					if (sizeAddress2 != 0)
+					{
+						fseek(fout, sizeAddress2, SEEK_SET);
+						fputc((uint8_t)len, fout);
+					}
+
+					fseek(fout, address, SEEK_SET);
+					WriteLE32(fout, nextPos | 0x08000000);
+
+					fseek(fout, nextPos, SEEK_SET);
+					fwrite(str2, 1, len, fout);
+
+					nextPos += len;
+					nextPos = (nextPos + 1) & ~1;
+				}
 				insertions++;
 			}
 		}

@@ -1097,6 +1097,8 @@ BLOCKFIXED 49F61C 10 11 08
 0F-E:
 10-E:Coliseum
 
+# There may be some nearby Gimica text but it looks off, needs testing.
+
 # Probably can be made longer.
 BLOCKFIXED 49F634 1C 02
 00-E:
@@ -1109,10 +1111,14 @@ BLOCKSTART 7F0000 06 04
 02-E:Run
 03-E:Cool
 
-BLOCKSTART 639C20 10 03
-00-J:    Run!
-01-J:    Can't run!
-02-J:    Failed!
+# Centering is a bit broken with the VWF...
+# For annoying reasons, hard limit of 1A in length.
+DYNPOINTER 04F7EC 1A 04F7C8 04F7C0 #639C20
+00-E:[EF][EF][EF][EF][EF][EF][EF][EF][EF][EF][EF] Run!
+DYNPOINTER 04F878 1A 04F852 04F85A #639C30
+00-E:[EF][EF][EF][EF][EF][EF][EF][EF][EF] Can't run!
+DYNPOINTER 04F9E0 1A 04F9BA 04F9C2 #639C40
+00-E:[EF][EF][EF][EF][EF][EF][EF][EF][EF][EF][EF]Failed!
 
 BLOCKSTART 62C250 08 01
 00-E:GearYoYo
