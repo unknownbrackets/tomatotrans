@@ -2,7 +2,7 @@
 ; Was at 0x08639BA8.
 
 ; We need a blank string afterward.
-.org 0x087F0018
+.org org(BattleMenuText) + 24
 .fill 6
 
 ; Here we replace the length of 4 with 8
@@ -17,7 +17,7 @@ add r0,18
 .org 0x0804A69E
 add r0,24
 .org 0x0804A688
-dw 0x087F0000
+dw org(BattleMenuText)
 
 ; Basically the same pattern here, but skips Item.
 .org 0x0804EC12
@@ -29,7 +29,7 @@ add r0,18
 .org 0x0804EC5E
 add r0,24
 .org 0x0804EC4C
-dw 0x087F0000
+dw org(BattleMenuText)
 
 ; And one more time.
 .org 0x0804FAA6
@@ -41,13 +41,13 @@ add r0,12
 .org 0x0804FADE
 add r0,18
 .org 0x0804FB1C
-dw 0x087F0000
+dw org(BattleMenuText)
 
 ; This one is only Cool which was at 0x08639BB4.
 .org 0x0804AE4A
 mov r0,6
 .org 0x0804EA68
-dw 0x087F0018
+dw org(BattleMenuText) + 18
 
 ; Another Cool only, have to reuse an and for cmp.
 .org 0x0804090A
@@ -59,7 +59,7 @@ and r1,r5
 .org 0x0804091C
 strb r4,[r0,5]
 .org 0x0804095C
-dw 0x087F0018
+dw org(BattleMenuText) + 18
 
 ; Almost exactly like the above one.
 .org 0x0804DCC6
@@ -70,4 +70,4 @@ and r1,r4
 .org 0x0804DCD8
 strb r2,[r0,5]
 .org 0x0804DD08
-dw 0x087F0018
+dw org(BattleMenuText) + 18
