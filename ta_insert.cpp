@@ -1037,6 +1037,39 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 				insertions++;
 			}
 		}
+		// Rewrite a structure size: RESTRUCT OldAddress OldSize OldStride NewAddress NewSize NewStride Count
+		else if (!comment && strstr(str, "RESTRUCT") != NULL)
+		{
+			int oldAddress = 0, oldLen = 0, oldStride = 0;
+			int newAddress = 0, newLen = 0, newStride = 0;
+			int lines = 0;
+			sscanf(str, "%*s %X %X %X %X %X %X %X", &oldAddress, &oldLen, &oldStride, &newAddress, &newLen, &newStride, &lines);
+
+			for (int i = 0; i < lines; ++i)
+			{
+				fgets(str, 5000, fin);
+				PrepString(str, str2, 5);
+				ConvComplexString(str2, len, true);
+
+				if (len > newLen) {
+					printf("too long: %s\n", str);
+					len = newLen;
+				}
+
+				// Let's read it in from the original position if blank (use a space to prevent.)
+				if (len == 0) {
+					fseek(fout, oldAddress + i * oldStride, SEEK_SET);
+					len = (int)fread(str2, 1, oldLen, fout);
+				}
+
+				fseek(fout, newAddress + i * newStride, SEEK_SET);
+				for (int j = 0; j < newLen; ++j) {
+					char c = j < len ? str2[j] : '\0';
+					fputc(c, fout);
+				}
+				insertions++;
+			}
+		}
 		// Old format: BLOCKSTART TextLoc Len Count
 		else if (!comment && strstr(str, "BLOCKSTART") != NULL)
 		{

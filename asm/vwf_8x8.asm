@@ -87,7 +87,6 @@ strh r2,[r7,0]
 add r5,2
 ; Not sure if something needs this stored already, original code did.
 str r5,[r7,12]
-;; need to fix regs
 bl 0x080710A8
 sub r6,1 ; sets Z/eq on 0
 bne @@drawRow
