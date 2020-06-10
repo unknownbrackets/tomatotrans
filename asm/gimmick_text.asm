@@ -2,6 +2,26 @@
 ; Normally, name is 0x08 bytes at i * 0x58 + 0, and description is 0x1A bytes at i * 0x58 + 8.
 ; Original data was at 0x0862C250.
 
+; Original struct guesses:
+; char name[8];
+; char desc[26];
+; uint8_t atk;
+; uint8_t maxBattery;
+; uint8_t unk24;
+; uint8_t uses;
+; uint8_t unk26;
+; uint8_t flags;
+; struct { uint8_t d0; uint8_t d1; } levels[9];
+; uint8_t unk3a;
+; uint8_t unk3b;
+; void *unk3c;
+; void *somePalette;
+; void *someImage;
+; void **unk48;
+; void **unk4c;
+; void *unk50;
+; void *unk54;
+
 @NameOffset equ 0
 @NameLen equ 0x10
 @DescOffset equ @NameLen
@@ -23,6 +43,8 @@ db @NameLen
 ; TODO: 0806AD60 stores the name pointer, but doesn't do length directly.
 ; 0806B27C, its only caller, does calculate the length but needs more investigation.
 
+; TODO: 08065518 copies the gimmick to a buffer (0x03003F34), and then checks its length.
+; After that, 0802B7F0 draws the text.  Need to find this too.
 
 ; Descriptions are copied to a fixed size buffer at 0x03000BFC, but we want longer.
 ; Really, they don't need to be there - we can read directly from the ROM.
