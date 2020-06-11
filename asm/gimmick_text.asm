@@ -22,9 +22,8 @@
 ; void *unk50;
 ; void *unk54;
 
-@NameOffset equ 0
+; These values are assumed the same in dialog_item.asm.
 @NameLen equ 0x10
-@DescOffset equ @NameLen
 @DescLen equ 0x30
 @Stride equ @NameLen + @DescLen
 
@@ -40,8 +39,8 @@ db @Stride
 .org 0x0804AAD0
 db @NameLen
 
-; TODO: 0806AD60 stores the name pointer, but doesn't do length directly.
-; 0806B27C, its only caller, does calculate the length but needs more investigation.
+; 0806AD60 is used to draw text in dialogs, but is handled in dialog_item.asm.
+; That's called when [ITEM] is used in dialog text.
 
 ; TODO: 08065518 copies the gimmick to a buffer (0x03003F34), and then checks its length.
 ; After that, 0802B7F0 draws the text.  Need to find this too.

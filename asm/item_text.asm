@@ -17,7 +17,8 @@ dw org(ItemTextName)
 .org 0x0804AC32
 db @NameLen
 
-; TODO: 0806B27C is used to draw text in dialogs.
+; 0806B27C is used to draw text in dialogs, but is handled in dialog_item.asm.
+; That's called when [ITEM] is used in dialog text.
 
 ; 0804EBF0 has all four description reads, each into a buffer as noted above.
 .org 0x0804ECD4
