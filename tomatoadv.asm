@@ -8,6 +8,7 @@
 
 .include "asm/menu.asm"
 .include "asm/battle_menu.asm"
+.include "asm/battle_spoils.asm"
 .include "asm/gimmick_text.asm"
 
 .close
