@@ -1,7 +1,11 @@
+; Could move these.
 @ItemTextPtr equ 0x08639CAD
 @ItemTextLen equ 4
 @FoundTextPtr equ 0x08639CB1
 @FoundTextLen equ 6
+
+; See also item_text.asm.
+@NameLen equ 0x10
 
 ; This is part of the larger function, 08050E2C, and shows the spoils.
 ; All regs are free at this point.
@@ -38,9 +42,8 @@ lsr r4,r0,31
 cmp r5,0
 beq @spoilsDone
 
-; TODO: Move this to make longer?  Other places to check...
 ; Prepare the pointer to item names/info, but subtract one item since we're 1 indexed.
-ldr r3,=0x08630E5C - 0x10
+ldr r3,=ItemTextName - @NameLen
 mov r8,r3
 
 @nextSpoil:
@@ -60,8 +63,8 @@ lsl r1,r4,10
 add r1,r9
 str r1,[r7,8]
 
-; TODO: Increase item name length?
-mov r1,8
+; This is the length of the item names.
+mov r1,@NameLen
 ; This calculates length skipping trailing zeros.
 bl 0x080484A8
 strb r0,[r7,5]

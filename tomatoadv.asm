@@ -11,5 +11,6 @@
 .include "asm/battle_message.asm"
 .include "asm/battle_spoils.asm"
 .include "asm/gimmick_text.asm"
+.include "asm/item_text.asm"
 
 .close
