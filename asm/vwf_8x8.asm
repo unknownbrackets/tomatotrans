@@ -34,7 +34,7 @@ mov r0,r8
 mov r1,r9
 mov r2,r10
 push r0-r2,r4-r7,r14
-ldr r0,=0x9999
+ldr r0,=0x99999999
 push r0
 
 ; Trade around some state values.
@@ -72,6 +72,8 @@ lsl r3,r3,24
 add r3,0x20
 str r3,[r1,8]
 ldr r3,[r1,8]
+; Technically that made us unaligned, temporarily.
+add sp,4
 
 ; Update pointer to workarea.
 str r4,[r7,4]
@@ -206,7 +208,6 @@ bne @@copyOffsetTile0Row
 
 @@copyDone:
 
-add sp,4
 pop r0-r2,r4-r7
 mov r8,r0
 mov r9,r1
@@ -381,6 +382,147 @@ mov r8,r5
 pop r4-r7
 pop r3
 bx r3
+.pool
+.endfunc
+.endarea
+
+; We modify this func to adjust the start xpos on misaligned tiles.
+; There's no reason to allow text rotating wrong on tiles, so we treat that as an x offset for VWF.
+org 0x08071748
+.area 0x0807184C-.,0x00
+.func CopyString8x8ToVRAM
+push r4-r7,r14
+ldr r0,=0x99999999
+push r0
+
+; Draw char parameters struct.
+ldr r2,=0x0300198C
+mov r1,0
+; Not sure if this is ypos or something?  12 is xpos.
+strb r1,[r2,13]
+
+; Grab the destination address into r3.
+ldr r4,=0x030018BC
+ldr r3,[r4,8]
+; Grab the top nibble - 6 means vram, so we apply our offset.
+lsr r0,r3,24
+cmp r0,6
+bne @@normalAlign
+
+; Down align to the tile.
+mov r1,31
+and r1,r3
+bic r3,r1
+; 8 pixels per tile, so divide 31 by 4.
+lsr r1,r1,2
+b @@alignDone
+
+@@normalAlign:
+; x = (x + 3) & ~3;
+mov r0,3
+add r3,3
+bic r3,r0
+; r1 is still 0 from above, that will be x also.
+
+@@alignDone:
+; Now store that as the starting xpos and store the dest.
+strb r1,[r2,12]
+str r3,[r2,4]
+
+; Load the string length.
+ldrb r7,[r4,5]
+
+; We're about to clear, but we need to cap that to 0x1A since this always draws a single line.
+; The VWF makes longer strings take less than 32 bytes each char, so this may still be too much.
+mov r2,0x1A
+cmp r7,r2
+bgt @cappedWidth
+mov r2,r7
+@cappedWidth:
+lsl r2,r2,4
+
+; Okay, use DMA3 to clear those bytes.
+ldr r0,=0x040000D4
+mov r1,sp
+str r1,[r0,0]
+str r3,[r0,4]
+mov r1,0x81
+lsl r1,r1,24
+orr r1,r2
+str r1,[r0,8]
+ldr r1,[r0,8]
+
+ldr r5,=0x03000604
+ldr r6,=0x03000608
+
+@@nextChar:
+; The old code saves/restores len in 03000608, we just keep it in r7.
+; Nothing we call reads it from there.
+
+; This grabs the next character and bitmap, accounting for FF codes.
+bl 0x0806FA50
+ldrb r0,[r4,1]
+
+; If we hit 0, 1, 3, 4 (END, WAITBREAK, PAUSEBREAK, CLEAR), stop.
+cmp r0,2
+beq @@skipCharDraw
+cmp r0,4
+bls @@done
+
+; We only draw if it was > 0xFB (primarily 0xFD...)
+cmp r0,0xFB
+bls @@skipCharDraw
+
+; Save the current string pointer, because this func overwrites it.
+ldr r0,[r5]
+lsl r1,r0,2
+ldr r2,[r4,12]
+str r2,[r6,r1]
+add r0,r0,1
+str r0,[r5]
+
+; Draw the character
+bl CopyChar8x8ToVRAM
+
+; Restore that string pointer.
+ldr r0,[r5]
+sub r0,r0,1
+lsl r1,r0,2
+ldr r2,[r6,r1]
+str r2,[r4,12]
+str r0,[r5]
+
+@@skipCharDraw:
+; One less char left.  We mask 0xFF in case it started with 0 and becomes -1.
+; That'd be a bug anyway, but I'd rather not break worse than the original code.
+sub r7,r7,1
+lsl r0,r7,24
+lsr r0,r0,24
+
+; This is a straight bx r14, but let's call it anyway.
+bl 0x0802FEF0
+
+ldr r1,=0x03000600
+strh r0,[r1]
+
+cmp r0,0
+bne @@nextChar
+
+@@done:
+; Grab the final x position.
+ldr r2,=0x0300198C
+ldrb r0,[r2,12]
+
+; Store directly in fontInfo's 1 offset, and times 8 (pixels?) in 4.
+; Note that the word at 4 is twice the number of bytes.
+strb r0,[r4,1]
+lsl r0,r0,3
+str r0,[r4,4]
+
+add sp,4
+pop r4-r7
+pop r0
+bx r0
 .pool
 .endfunc
 .endarea
