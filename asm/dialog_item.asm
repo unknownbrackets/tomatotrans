@@ -83,9 +83,9 @@ bne @@gimmick
 
 ; In this case, it's clothing.  The bic above cleared the high bit.
 lsl r0,r0,4
-; TODO: Rewrite this?
-ldr r1,=0x0863145C
-mov r4,8
+; This is actually the only place the name in this struct was used, and we replace it.
+ldr r1,=ClothesText - 0x10
+mov r4,0x10
 b @@nameReady
 
 @@gimmick:
