@@ -501,7 +501,7 @@ bic r3,r0
 
 ; Since we're clearing, let's just assume we have at most 0x1A tiles of space.
 ; The VWF makes longer strings take less than 32 bytes each char, so this may still be too much.
-mov r5,0x1A
+mov r5,0x1C
 cmp r7,r5
 bhi @@cappedWidth
 mov r5,r7
