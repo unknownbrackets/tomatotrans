@@ -454,12 +454,16 @@ push r0
 
 ; Draw char parameters struct.
 ldr r2,=0x0300198C
+; Drawing parameters struct.
+ldr r4,=0x030018BC
 mov r1,0
 ; Not sure if this is ypos or something?  12 is xpos.
 strb r1,[r2,13]
 
+; Load the string length.
+ldrb r7,[r4,5]
+
 ; Grab the destination address into r3.
-ldr r4,=0x030018BC
 ldr r3,[r4,8]
 ; Grab the top nibble - 6 means vram, so we apply our offset.
 lsr r0,r3,24
@@ -472,6 +476,20 @@ and r1,r3
 bic r3,r1
 ; 8 pixels per tile, so divide 31 by 4.
 lsr r1,r1,2
+
+; Now let's figure the next Y position so we don't overflow our clear.
+lsr r5,r3,10
+add r5,r5,1
+lsl r5,r5,10
+; This is the max bytes to clear now, convert to shorts.
+sub r5,r3
+lsr r5,r5,1
+; And what we intend to clear, in shorts.
+lsl r6,r7,4
+
+cmp r6,r5
+bls @@alignDone
+mov r6,r5
 b @@alignDone
 
 @@normalAlign:
@@ -481,22 +499,19 @@ add r3,3
 bic r3,r0
 ; r1 is still 0 from above, that will be x also.
 
+; Since we're clearing, let's just assume we have at most 0x1A tiles of space.
+; The VWF makes longer strings take less than 32 bytes each char, so this may still be too much.
+mov r5,0x1A
+cmp r7,r5
+bhi @@cappedWidth
+mov r5,r7
+@@cappedWidth:
+lsl r6,r5,4
+
 @@alignDone:
 ; Now store that as the starting xpos and store the dest.
 strb r1,[r2,12]
 str r3,[r2,4]
-
-; Load the string length.
-ldrb r7,[r4,5]
-
-; We're about to clear, but we need to cap that to 0x1A since this always draws a single line.
-; The VWF makes longer strings take less than 32 bytes each char, so this may still be too much.
-mov r2,0x1A
-cmp r7,r2
-bgt @cappedWidth
-mov r2,r7
-@cappedWidth:
-lsl r2,r2,4
 
 ; Okay, use DMA3 to clear those bytes.
 ldr r0,=0x040000D4
@@ -505,7 +520,8 @@ str r1,[r0,0]
 str r3,[r0,4]
 mov r1,0x81
 lsl r1,r1,24
-orr r1,r2
+; We put the shorts to clear in r6.
+orr r1,r6
 str r1,[r0,8]
 ldr r1,[r0,8]
 
