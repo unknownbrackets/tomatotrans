@@ -685,10 +685,11 @@ BLOCKFIXED 4904D0 04 01
 BLOCKFIXED 4904D8 04 01
 00-E:DEF
 
-BLOCKFIXED 4904E0 1C 03
-00-E:Put this on?
+# This is centered originally, lining up the Yes/No.
+BLOCKFIXED 4904E0 1C 03 1A
+00-E:[EF][EF][EF][EF][EF][EF][EF][EF][EF]Put this on?
 01-E: 
-02-E:          Yes No
+02-E:[EF][EF][EF][EF][EF][EF][EF][EF][EF][EF]Yes[EF][EF] No
 
 BLOCKFIXED 4904E8 0C 02
 00-E:L/R: Adjust
@@ -865,7 +866,7 @@ BLOCKFIXED 490648 1C 03
 
 BLOCKFIXED 490650 24 02
 00-E:Choose character!
-01-E:Who'll equip this?
+01-E:What'll they wear?
 
 BLOCKFIXED 490658 09 02
 00-E:See Cards
