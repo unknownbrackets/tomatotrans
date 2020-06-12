@@ -223,15 +223,31 @@ void CompileCC(char str[5000], int& strLoc, unsigned char newStream[100], int& s
        newStream[streamLen++] = 0xFF;
        newStream[streamLen++] = 0x01;
    }
-   else if (strcmp(ptr[0], "NEWWIN") == 0)
+   else if (strcmp(ptr[0], "NEWWIN") == 0 || strcmp(ptr[0], "CONTINUE") == 0)
    {
        newStream[streamLen++] = 0xFF;
        newStream[streamLen++] = 0x02;
+   }
+   else if (strcmp(ptr[0], "PAUSEBREAK") == 0)
+   {
+       newStream[streamLen++] = 0xFF;
+       newStream[streamLen++] = 0x03;
+	   newStream[streamLen++] = hstrtoi(ptr[1]);
+   }
+   else if (strcmp(ptr[0], "CLEAR") == 0)
+   {
+       newStream[streamLen++] = 0xFF;
+       newStream[streamLen++] = 0x04;
    }
    else if (strcmp(ptr[0], "BREAK") == 0)
    {
        newStream[streamLen++] = 0xFF;
        newStream[streamLen++] = 0x05;
+   }
+   else if (strcmp(ptr[0], "TICKEROFF") == 0)
+   {
+       newStream[streamLen++] = 0xFF;
+       newStream[streamLen++] = 0x06;
    }
    else if (strcmp(ptr[0], "PAUSE") == 0)
    {
@@ -243,6 +259,18 @@ void CompileCC(char str[5000], int& strLoc, unsigned char newStream[100], int& s
    {
        newStream[streamLen++] = 0xFF;
        newStream[streamLen++] = 0x12;
+   }
+   else if (strcmp(ptr[0], "PAD_H") == 0)
+   {
+       newStream[streamLen++] = 0xFF;
+       newStream[streamLen++] = 0x18;
+	   newStream[streamLen++] = hstrtoi(ptr[1]);
+   }
+   else if (strcmp(ptr[0], "PAD_V") == 0)
+   {
+       newStream[streamLen++] = 0xFF;
+       newStream[streamLen++] = 0x19;
+	   newStream[streamLen++] = hstrtoi(ptr[1]);
    }
    else if (strcmp(ptr[0], "SIZE_WIDE") == 0)
    {
@@ -279,6 +307,11 @@ void CompileCC(char str[5000], int& strLoc, unsigned char newStream[100], int& s
        newStream[streamLen++] = 0xFF;
        newStream[streamLen++] = 0x26;
    }
+   else if (strcmp(ptr[0], "TIME") == 0)
+   {
+       newStream[streamLen++] = 0xFF;
+       newStream[streamLen++] = 0x27;
+   }
    else if (strcmp(ptr[0], "COLOR_OFF") == 0)
    {
        newStream[streamLen++] = 0xFF;
@@ -288,6 +321,11 @@ void CompileCC(char str[5000], int& strLoc, unsigned char newStream[100], int& s
    {
        newStream[streamLen++] = 0xFF;
        newStream[streamLen++] = 0x32;
+   }
+   else if (strcmp(ptr[0], "COLOR2_ON") == 0)
+   {
+       newStream[streamLen++] = 0xFF;
+       newStream[streamLen++] = 0x39;
    }
    else if (strcmp(ptr[0], "SIMPLEWAIT") == 0)
    {
@@ -309,6 +347,11 @@ void CompileCC(char str[5000], int& strLoc, unsigned char newStream[100], int& s
        newStream[streamLen++] = 0xFF;
        newStream[streamLen++] = 0x43;
    }
+   else if (strcmp(ptr[0], "MONEY") == 0)
+   {
+       newStream[streamLen++] = 0xFF;
+       newStream[streamLen++] = 0x80;
+   }
    else if (strcmp(ptr[0], "NAME1") == 0)
    {
        newStream[streamLen++] = 0xFF;
@@ -328,6 +371,11 @@ void CompileCC(char str[5000], int& strLoc, unsigned char newStream[100], int& s
    {
        newStream[streamLen++] = 0xFF;
        newStream[streamLen++] = 0x84;
+   }
+   else if (strcmp(ptr[0], "ITEM") == 0)
+   {
+       newStream[streamLen++] = 0xFF;
+       newStream[streamLen++] = 0x85;
    }
    else if (strcmp(ptr[0], "UP") == 0)
    {
@@ -845,6 +893,24 @@ void InsertStuff(FILE* fout, char inFile[], int address, int startPos, int maxLe
 
 //=================================================================================================
 
+int DetectScriptLen(const char *str, int maxLen)
+{
+	int pos = 0;
+	while (pos < maxLen)
+	{
+		// Did we find FF 00 (END)?
+		if (pos != 0 && str[pos] == 0)
+			return pos + 1;
+		const char *next = (const char *)memchr(str + pos, 0xFF, maxLen - pos);
+		if (!next)
+			break;
+
+		pos = next - str + 1;
+	}
+
+	return maxLen;
+}
+
 uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 {
 	char  str[5000];
@@ -1051,22 +1117,67 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 				PrepString(str, str2, 5);
 				ConvComplexString(str2, len, true);
 
-				if (len > newLen) {
+				if (len > newLen)
+				{
 					printf("too long: %s\n", str);
 					len = newLen;
 				}
 
 				// Let's read it in from the original position if blank (use a space to prevent.)
-				if (len == 0) {
+				if (len == 0)
+				{
 					fseek(fout, oldAddress + i * oldStride, SEEK_SET);
 					len = (int)fread(str2, 1, oldLen, fout);
 				}
 
 				fseek(fout, newAddress + i * newStride, SEEK_SET);
-				for (int j = 0; j < newLen; ++j) {
+				for (int j = 0; j < newLen; ++j)
+				{
 					char c = j < len ? str2[j] : '\0';
 					fputc(c, fout);
 				}
+				insertions++;
+			}
+		}
+		// A list of pointers: POINTERLIST PointerLoc Stride MaxLen Count
+		else if (!comment && strstr(str, "POINTERLIST") != NULL)
+		{
+			int stride = 0;
+			int maxLen = 0;
+			int lines = 0;
+			sscanf(str, "%*s %X %X %X %X", &address, &stride, &maxLen, &lines);
+
+			for (int i = 0; i < lines; ++i)
+			{
+				fgets(str, 5000, fin);
+				PrepString(str, str2, 5);
+				ConvComplexString(str2, len, true);
+
+				if (len > maxLen)
+				{
+					printf("too long: %s\n", str);
+					len = maxLen;
+				}
+
+				// Let's read it in from the original position if blank (use a space to prevent.)
+				if (len == 0)
+				{
+					uint32_t oldPointer = 0;
+					fseek(fout, address + i * stride, SEEK_SET);
+					ReadLE32(fout, oldPointer);
+					fseek(fout, oldPointer, SEEK_SET);
+					len = (int)fread(str2, 1, maxLen, fout);
+					len = DetectScriptLen(str2, len);
+				}
+
+				fseek(fout, address + i * stride, SEEK_SET);
+				WriteLE32(fout, nextPos | 0x08000000);
+
+				fseek(fout, nextPos, SEEK_SET);
+				fwrite(str2, 1, len, fout);
+
+				nextPos += len;
+				nextPos = (nextPos + 1) & ~1;
 				insertions++;
 			}
 		}
