@@ -861,7 +861,7 @@ BLOCKFIXED 490640 1C 01
 BLOCKFIXED 490648 1C 03
 00-E:START: Begin or cancel
 01-E:[F7]: Back to menu
-02-E:
+02-E: 
 
 BLOCKFIXED 490650 24 02
 00-E:Choose character!
