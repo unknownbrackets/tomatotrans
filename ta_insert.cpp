@@ -969,12 +969,12 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 				WriteLE32(fout, nextPos | 0x08000000);
 
 				fseek(fout, nextPos, SEEK_SET);
-				for (int j = 0; j < len + 1; ++j)
+				for (int j = 0; j < maxLen; ++j)
 				{
 					char c = j < len ? str2[j] : '\0';
 					fputc(c, fout);
 				}
-				nextPos += len + 1;
+				nextPos += maxLen;
 				nextPos = (nextPos + 1) & ~1;
 				insertions++;
 			}
