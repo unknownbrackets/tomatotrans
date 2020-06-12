@@ -1172,60 +1172,6 @@ RESTRUCT 62C250 08 58 7F001E 10 40 32
 30-E:ShuriGun
 31-E:Shadow
 
-# TODO: Some code still reads the short name, not sure where in game.
-# Might remove this and see.  Maybe when you get the Gimmick or something?
-RESTRUCT 62C250 08 58 62C250 08 58 32
-00-E:GearYoYo
-01-E:NoisFace
-02-E:Chomper
-03-E:Crane
-04-E:TurtGlov
-05-E:DualSwrd
-06-E:RabShoes
-07-E:Hopper
-08-E:CupidBow
-09-E:Judgment
-0A-E:Elec.Eel
-0B-E:SlotBzka
-0C-E:SeedBomb
-0D-E:BoyPeach
-0E-E:Maghand
-0F-E:LinGlove
-10-E:TailWag
-11-E:Cannon
-12-E:Fumigatr
-13-E:H.Vulcan
-14-E:SuperFan
-15-E:Cyclooka
-16-E:Zapper
-17-E:Popocon
-18-E:Yokozuna
-19-E:Blazer
-1A-E:Volcano
-1B-E:Piramet
-1C-E:SneaCar
-1D-E:Train
-1E-E:Balloon
-1F-E:UFO Rod
-20-E:Spdrshot
-21-E:LndRockt
-22-E:SunLaser
-23-E:Bouncer
-24-E:Firehog
-25-E:Sesame
-26-E:Bananer
-27-E:Riceball
-28-E:KarateDg
-29-E:Meowzer
-2A-E:BubblHrn
-2B-E:Flatuler
-2C-E:LoveSong
-2D-E:StarScop
-2E-E:Hotafant
-2F-E:Mansnow
-30-E:ShuriGun
-31-E:Shadow
-
 RESTRUCT 62C258 1A 58 7F002E 30 40 32
 00-E:Hit [F5] at the right time!
 01-E:
