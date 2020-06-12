@@ -7,6 +7,7 @@
 .include "asm/vwf_8x8.asm"
 
 .include "asm/menu.asm"
+.include "asm/menu_gimmicks.asm"
 .include "asm/battle_menu.asm"
 .include "asm/battle_message.asm"
 .include "asm/battle_levelup.asm"

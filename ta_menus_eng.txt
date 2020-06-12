@@ -668,7 +668,7 @@ BLOCKFIXED 4904B0 0A 01 06
 00-E:Difficulty
 
 BLOCKFIXED 4904B8 24 01
-00-E:[EF][EF][EF][EF]'s can be modified here!
+00-E:Adjust Gimmicks for
 
 BLOCKFIXED 4904C0 1B 03
 00-E:L/R:    Select difficulty

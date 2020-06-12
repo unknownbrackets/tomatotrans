@@ -513,6 +513,10 @@ lsl r6,r5,4
 strb r1,[r2,12]
 str r3,[r2,4]
 
+; Skip clearing if we draw at an offset, it's already been cleared.
+cmp r1,0
+bne @@clearDone
+
 ; Okay, use DMA3 to clear those bytes.
 ldr r0,=0x040000D4
 mov r1,sp
@@ -524,6 +528,8 @@ lsl r1,r1,24
 orr r1,r6
 str r1,[r0,8]
 ldr r1,[r0,8]
+
+@@clearDone:
 
 ldr r5,=0x03000604
 ldr r6,=0x03000608
