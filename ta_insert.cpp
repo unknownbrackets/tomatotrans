@@ -928,7 +928,7 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 				}
 
 				// Let's read it in from the original position if blank (use a space to prevent.)
-				if (len == 0 && origLen <= maxLen && updateNext)
+				if (len == 0 && origLen <= maxLen)
 				{
 					fseek(fout, origAddress + i * origLen, SEEK_SET);
 					len = (int)fread(str2, 1, origLen, fout);
