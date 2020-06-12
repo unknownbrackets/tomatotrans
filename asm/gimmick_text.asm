@@ -63,11 +63,6 @@ bl 0x0802BEF0
 b 0x0802B882
 .endarea
 
-; Helper so I don't have to type as much to load an existing literal.
-.macro LoadPCRel,reg,address
-	ldr reg,[r15,address - (. & ~3) - 4]
-.endmacro
-
 ; Now for the function that actually loads the buffer, 08065518.
 ; We rewrite a good chunk of the beginning to make space...
 .org 0x08065518
@@ -76,11 +71,11 @@ mov r3,r8
 push r3-r7,r14
 
 ; Font util parameter struct, grab it from the existing literal pool.
-LoadPCRel r7,0x080655D4 ; 0x030018BC
+ldr r7,[0x080655D4] ; 0x030018BC
 ; Address of the buffer that stores the gimmick info.
-LoadPCRel r6,0x080655E0 ; 0x03003F34
+ldr r6,[0x080655E0] ; 0x03003F34
 ; Load the parameter location for the gimmick number.
-LoadPCRel r4,0x080655D8 ; 0x03001AD2
+ldr r4,[0x080655D8] ; 0x03001AD2
 
 ; Grab the gimmick number (offset by 1.)
 ldrb r0,[r4]
@@ -91,7 +86,7 @@ lsl r5,r0,5
 mov r2,0x58
 mul r0,r2
 ; Load the original buffer pointer with actual data, offset because r0 is 1 indexed.
-LoadPCRel r1,0x080655DC ; 0x0862C250 - 0x58
+ldr r1,[0x080655DC] ; 0x0862C250 - 0x58
 add r1,r1,r0
 ; Okay, memcpy to the buffer.  We use library memcpy instead of game util, less setup.
 mov r0,r6

@@ -3,6 +3,8 @@
 ; widthIndex is stored as 0xFD (means normal char) in 0806FA50.
 ; This patches both of those functions.
 
+@WidthIndex equ 0x08649C4C
+
 ; Inside 0806FA50, we just rewrite some registers to save the right value.
 ; Don't clobber code in r0 so we can avoid reloading it.  Switches r0 to r2.
 .org 0x0806FA84
@@ -126,7 +128,7 @@ ldr r0,[r6,4]
 add r2,r2,r0
 
 ; Since we're done with xpos, increase it by the charWidth.
-ldr r1,=0x08649C4C
+ldr r1,=@WidthIndex
 ; This is the char code stored by 0x0806FA50 when reading the char.
 ; Previously VWF was disabled because this was statically written as 0xFD.
 ldrb r0,[r6,14]
@@ -214,7 +216,62 @@ mov r9,r1
 mov r10,r2
 pop r0
 bx r0
+.endfunc
+
+; There's lots of space here, so let's add a new func for width calculation.
+; Args: const char *str, uint8_t maxLen, uint8_t ignoreTrailingSpace
+; Result struct: r0=str, r1=strLen, r2=pixelWidth, r3=tileWidth
+.func Calc8x8PixelWidth
+push r4
+cmp r2,0
+beq @@lengthReady
+
+@@shorter:
+; Okay, let's assume it's too long and check.
+sub r1,r1,1 ; Sets Z/eq on zero.
+beq @@tooShort
+ldr r2,[r0,r1]
+cmp r2,0
+beq @@shorter
+
+; At this point, r1 is one too short.
+add r1,r1,1
+
+@@lengthReady:
+; Grab the widths
+ldr r3,=@WidthIndex
+; Save maxLen for later, and start our counter.
+mov r12,r1
+mov r4,0
+
+@@nextChar:
+; Pre-increment so we can ldrb directly.
+sub r1,r1,1 ; Sets Z/eq on zero.
+beq @@charsDone
+ldrb r2,[r0,r1]
+; And just grab the width directly.
+ldrb r2,[r3,r2]
+add r4,r4,r2
+b @@nextChar
 .pool
+
+@@charsDone:
+; Alright, now let's just put the result in the right place.
+; r0=str, r1=strLen, r2=pixelWidth, r3=tileWidth
+mov r1,r12
+mov r2,r4
+
+; And calculate the approx tile width.
+add r3,r0,7
+lsr r3,r3,3
+
+@@return:
+pop r4
+bx r14
+@@tooShort:
+mov r2,0
+mov r3,0
+b @@return
 .endfunc
 .endarea
 

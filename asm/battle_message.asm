@@ -3,7 +3,7 @@
 ; We edit the func to use a pointer in that buffer for long strings, instead.
 
 ; 0804A168 is pretty long so just rewriting the relevant part.
-; All regs are actually free at this point, luckily.
+; All regs are actually free at this point, luckily (r4-r7 were saved.)
 
 ; Original buffer:
 ; uint8_t align = { LEFT = 0, CENTER = 1, RIGHT = 2 }; // Doesn't work with VWF.
@@ -13,78 +13,74 @@
 ; Before the literal pool...
 .org 0x0804A4E0
 .area 0x0804A4F8-.,0x00
-; Load the existing 0x03000BFC from the literal pool.
-ldr r0,[r15,0x0804A50C-.-4]
+; Load the existing buffer pointer from the literal pool.
+ldr r4,[0x0804A50C] ; 0x03000BFC
+; Load the font draw params struct.
+ldr r5,[0x0804A580] ; 0x030018BC
 
-; Read length into r7 and skip on length zero.
-ldrb r7,[r0,1]
-cmp r7,0
-beq 0x0804A54C
+; Prepare a flag for the Calc8x8PixelWidth call.
+mov r2,1
 
-; Load the font draw params struct - 0x030018BC.
-ldr r5,[r15,0x0804A580-.-4]
+; Read max length into r1 and compare to 0x1A.
+ldrb r1,[r4,1]
+mov r6,0x1A
+cmp r1,r6
+bgt @@largeText
 
-; Now the alignment flag.
-ldrb r1,[r0,0]
-mov r6,0
-; Used for alignment, not compatible with VWF really...
-; Kept to avoid breaking other strings.
-mov r2,0x1A
+; Smaller, so embedded.
+add r0,r4,2
+b @stringReady
 
-; 0 = left, 1 = center, 2 = right.
-cmp r1,1
-beq @alignCenterDesc
-bgt @alignRightDesc
-b @alignDoneDesc
+@@largeText:
+ldr r0,[r4,4]
+b @stringReady
 .endarea
 
 ;After the literal pool...
 .org 0x0804A510
 .area 0x0804A54C-.,0x00
-@alignCenterDesc:
-; xpos = (0x1A - length) / 2
-mov r6,r2
-sub r6,r7
-lsr r6,r6,1
-b @alignDoneDesc
+@stringReady:
+; Calculate the actual width of the string, including stripping trailing spaces.
+bl Calc8x8PixelWidth
 
-@alignRightDesc:
-; xpos = 0x1A - length
-mov r6,r2
-sub r6,r7
+; Skip if zero length.
+cmp r2,0
+beq 0x0804A54C
 
-@alignDoneDesc:
-
-; This is the literal pool address for 0x06000820.
-ldr r1,[r15,0x0804A588-.-4]
-; Set the dest parameter for drawing.
+; This is the literal pool address for the VRAM dest to draw to.
+ldr r7,[0x0804A588] ; 0x06000820
+; Make r6 the availWidth, and convert both to bytes for easy math.
 lsl r6,r6,5
-add r1,r6
-str r1,[r5,8]
+lsl r2,r2,2
 
-; Now, if length is > 0x1A, read as a pointer.  r2 still has 0x1A.
-cmp r7,r2
-bgt @@largeText
+; Now let's check the alignment flag.
+ldrb r3,[r4,0]
+; 0 = left, 1 = center, 2 = right.
+cmp r3,1
+beq @@alignCenter
+bgt @@alignRight
+b @@alignDone
 
-; Use the buffer as the source for < 0x1A.
-add r0,r0,2
-b @@drawText
+@@alignCenter:
+; xpos = (availWidth - actualWidth) / 2
+sub r6,r6,r2
+lsr r6,1
+add r7,r6
+b @@alignDone
 
-@@largeText:
-ldr r0,[r0,4]
+@@alignRight:
+; xpos = availWidth - actualWidth
+sub r6,r6,r2
+add r7,r6
 
-@@drawText:
-; Actually store the string pointer.
+@@alignDone:
+; Okay, that's out draw destination.
+str r7,[r5,8]
+; Then store the string pointer and length.
 str r0,[r5,12]
-
-mov r1,r7
-; This calculates the length less padding.  So we don't draw too many spaces at the end.
-; Expects r0=str, r1=maxLength
-bl 0x080484A8
-strb r0,[r5,5]
-
-; Draw the description.
-bl 0x8071748
+strb r1,[r5,5]
+; Draw the message.
+bl CopyString8x8ToVRAM
 
 ; There's a lot of blank space now, skip it.
 b 0x0804A54C
