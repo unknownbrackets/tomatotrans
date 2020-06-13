@@ -27,8 +27,6 @@ int           CharToHex(char);
 unsigned int  hstrtoi(char*);
 uint32_t UpdatePointers(int, int, FILE *, const char *);
 uint32_t InsertEnemies(FILE *, uint32_t &afterTextPos);
-void          InsertMenuStuff1(FILE*);
-void          InsertStuff(FILE*, char[], int, int, int);
 uint32_t InsertMenuStuff2(FILE *, uint32_t &afterTextPos);
 
 //=================================================================================================
@@ -146,10 +144,8 @@ int main(void)
 
    uint32_t afterTextPos = (uint32_t)ftell(fout);
 
-   totalInsertions += InsertEnemies(fout, afterTextPos);
-   //InsertMenuStuff1(fout);
-   //InsertStuff(fout, "ta_items_eng.txt", 0x4573F2, 5, 8);
    totalInsertions += InsertMenuStuff2(fout, afterTextPos);
+   totalInsertions += InsertEnemies(fout, afterTextPos);
 
    uint32_t usedBytes = afterTextPos - TOMATO_END_POS;
    uint32_t usedPercent = 100 * usedBytes / (TOMATO_SIZE - TOMATO_END_POS);
@@ -888,128 +884,6 @@ uint32_t InsertEnemies(FILE *fout, uint32_t &afterTextPos)
 
 	fclose(fin);
 	return insertions;
-}
-
-//=================================================================================================
-
-void InsertMenuStuff1(FILE* fout)
-{
-	FILE* fin;
-	char  str[5000];
-	char  str2[5000];
-	int   i = 0;
-	int   j;
-	int   len;
-
-    fin = fopen("ta_menus1_eng.txt", "r");
-    if (fin == NULL)
-    {
-		printf("Couldn't open ta_menus1_eng.txt!\n");
-		return;
-	}
-
-
-   fgets(str, 5000, fin);
-   while(strstr(str, "-E:") == NULL)
-   {
-      fgets(str, 5000, fin);
-   }
-   while(!feof(fin))
-   {
-  	  PrepString(str, str2, 5);
-
-  	  if (str2[0] != '\n')
-  	  {
-		for (j = 0; j < (int)strlen(str2); j++)
-		   printf("%c ", str2[j]);
-
-	  	ConvComplexString(str2, len, false);
-
-	  	if (len > 7)
-	  	{
-			printf("too long: %s\n", str);
-			len = 7;
-		}
-
- 	    fseek(fout, 0x7F0000 + 0x7 * i, SEEK_SET);
- 	    for (j = 0; j < 7; j++)
- 	       fputc(0x00, fout);
-
-      	fseek(fout, 0x7F0000 + 0x7 * i, SEEK_SET);
-	  	for (j = 0; j < len; j++)
- 	  	   fputc(str2[j], fout);
-  	  }
-
-      i++;
-	  fgets(str, 5000, fin);
-	  while(strstr(str, "-E:") == NULL && !feof(fin))
-	  {
-	   	 fgets(str, 5000, fin);
-	  }
-   }
-
-   fclose(fin);
-}
-
-//=================================================================================================
-
-void InsertStuff(FILE* fout, char inFile[], int address, int startPos, int maxLen)
-{
-	FILE* fin;
-	char  str[5000];
-	char  str2[5000];
-	int   i = 0;
-	int   j;
-	int   len;
-
-    fin = fopen(inFile, "r");
-    if (fin == NULL)
-    {
-		printf("Couldn't open %s!\n", inFile);
-		return;
-	}
-
-
-   fgets(str, 5000, fin);
-   while(strstr(str, "-E:") == NULL)
-   {
-      fgets(str, 5000, fin);
-   }
-   while(!feof(fin))
-   {
-  	  PrepString(str, str2, startPos);
-
-  	  if (str2[0] != '\n')
-  	  {
-		//for (j = 0; j < strlen(str2); j++)
-		//   printf("%c ", str2[j]);
-
-	  	ConvComplexString(str2, len, false);
-
-	  	if (len > maxLen)
-	  	{
-			printf("too long: %s\n", str);
-			len = maxLen;
-		}
-
- 	    fseek(fout, address + maxLen * i, SEEK_SET);
- 	    for (j = 0; j < maxLen; j++)
- 	       fputc(0x00, fout);
-
-      	fseek(fout, address + maxLen * i, SEEK_SET);
-	  	for (j = 0; j < len; j++)
- 	  	   fputc(str2[j], fout);
-  	  }
-
-      i++;
-	  fgets(str, 5000, fin);
-	  while(strstr(str, "-E:") == NULL && !feof(fin))
-	  {
-	   	 fgets(str, 5000, fin);
-	  }
-   }
-
-   fclose(fin);
 }
 
 //=================================================================================================
