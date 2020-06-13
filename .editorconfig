@@ -1,0 +1,12 @@
+root = true
+
+[*]
+charset = utf-8
+indent_style = tab
+insert_final_newline = true
+
+[*.{c,cpp,asm}]
+trim_trailing_whitespace = true
+
+[*.sh]
+end_of_line = lf
