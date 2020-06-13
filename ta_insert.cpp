@@ -2,9 +2,12 @@
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
+#include <map>
+#include <vector>
 
 static const uint32_t TOMATO_END_POS = 0x0064B4EC;
 static const uint32_t TOMATO_SIZE = 0x007F0000;
+std::map<std::vector<uint8_t>, uint32_t> previousInsertions;
 
 struct tableEntry
 {
@@ -30,7 +33,8 @@ uint32_t InsertMenuStuff2(FILE *, uint32_t &afterTextPos);
 
 //=================================================================================================
 
-bool WriteLE32(FILE *fout, uint32_t value) {
+bool WriteLE32(FILE *fout, uint32_t value)
+{
 	uint8_t parts[4];
 	parts[0] = (value & 0x000000FF) >> 0;
 	parts[1] = (value & 0x0000FF00) >> 8;
@@ -40,13 +44,47 @@ bool WriteLE32(FILE *fout, uint32_t value) {
 	return fwrite(parts, 1, 4, fout) == 4;
 }
 
-bool ReadLE32(FILE *fin, uint32_t &value) {
+bool ReadLE32(FILE *fin, uint32_t &value)
+{
 	uint8_t parts[4];
 	if (fread(parts, 1, 4, fin) != 4)
 		return false;
 
 	value = parts[0] | (parts[1] << 8) | (parts[2] << 16) | (parts[3] << 24);
 	return true;
+}
+
+uint32_t InsertStringAt(FILE *fout, const char *str, uint32_t len, uint32_t fullLen, uint32_t pos)
+{
+	std::vector<uint8_t> full;
+	full.resize(fullLen, 0);
+	memcpy(full.data(), str, len);
+
+	fseek(fout, pos, SEEK_SET);
+	fwrite(full.data(), 1, fullLen, fout);
+
+	previousInsertions[full] = pos;
+	return pos;
+}
+
+uint32_t InsertString(FILE *fout, const char *str, uint32_t len, uint32_t fullLen, uint32_t &nextFree)
+{
+	std::vector<uint8_t> full;
+	full.resize(fullLen, 0);
+	memcpy(full.data(), str, len);
+
+	auto already = previousInsertions.find(full);
+	if (already != previousInsertions.end())
+		return already->second;
+
+	uint32_t pos = nextFree;
+	nextFree += fullLen;
+
+	fseek(fout, pos, SEEK_SET);
+	fwrite(full.data(), 1, fullLen, fout);
+
+	previousInsertions[full] = pos;
+	return pos;
 }
 
 //=================================================================================================
@@ -778,18 +816,15 @@ uint32_t InsertEnemies(FILE *fout, uint32_t &afterTextPos)
 			fread(str2, 1, 8, fout);
 			int len = DetectFixedLen(str2, 8);
 
+			uint32_t pos = InsertString(fout, str2, len, len, afterTextPos);
+
 			fseek(fout, nameAddress, SEEK_SET);
-			WriteLE32(fout, afterTextPos | 0x08000000);
+			WriteLE32(fout, pos | 0x08000000);
 			fputc((uint8_t)len, fout);
 			fputc(0x00, fout);
 			fputc(0x00, fout);
 			fputc(0x00, fout);
 
-			// Now write the pointer over there.
-			fseek(fout, afterTextPos, SEEK_SET);
-			fwrite(str2, 1, len, fout);
-
-			afterTextPos += len;
 			insertions++;
 			i++;
 		}
@@ -815,18 +850,14 @@ uint32_t InsertEnemies(FILE *fout, uint32_t &afterTextPos)
 			len = DetectFixedLen(str2, 8);
 		}
 
+		uint32_t pos = InsertString(fout, str2, len, len, afterTextPos);
 		fseek(fout, nameAddress, SEEK_SET);
-		WriteLE32(fout, afterTextPos | 0x08000000);
+		WriteLE32(fout, pos | 0x08000000);
 		fputc((uint8_t)len, fout);
 		fputc(0x00, fout);
 		fputc(0x00, fout);
 		fputc(0x00, fout);
 
-		// Now write the pointer over there.
-		fseek(fout, afterTextPos, SEEK_SET);
-		fwrite(str2, 1, len, fout);
-
-		afterTextPos += len;
 		insertions++;
 		i++;
 	}
@@ -843,18 +874,14 @@ uint32_t InsertEnemies(FILE *fout, uint32_t &afterTextPos)
 			fread(str2, 1, 8, fout);
 			int len = DetectFixedLen(str2, 8);
 
+			uint32_t pos = InsertString(fout, str2, len, len, afterTextPos);
 			fseek(fout, nameAddress, SEEK_SET);
-			WriteLE32(fout, afterTextPos | 0x08000000);
+			WriteLE32(fout, pos | 0x08000000);
 			fputc((uint8_t)len, fout);
 			fputc(0x00, fout);
 			fputc(0x00, fout);
 			fputc(0x00, fout);
 
-			// Now write the pointer over there.
-			fseek(fout, afterTextPos, SEEK_SET);
-			fwrite(str2, 1, len, fout);
-
-			afterTextPos += len;
 			insertions++;
 		}
 	}
@@ -1019,8 +1046,6 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 		return 0;
 	}
 
-	// Just in case, let's make sure it's aligned.
-	uint32_t nextPos = (afterTextPos + 1) & ~1;
 	uint32_t insertions = 0;
 
 	fgets(str, 5000, fin);
@@ -1050,7 +1075,7 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 			origAddress &= ~0x08000000;
 			fread(&origLen, 1, 1, fout);
 
-			uint32_t blockPos = nextPos;
+			uint32_t blockPos = afterTextPos;
 			bool updateNext = true;
 			if (origLen == maxLen)
 			{
@@ -1094,18 +1119,13 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 					len = (int)fread(str2, 1, origLen, fout);
 				}
 
-				fseek(fout, blockPos, SEEK_SET);
-				for (int j = 0; j < maxLen; ++j)
-				{
-					char c = j < len ? str2[j] : '\0';
-					fputc(c, fout);
-				}
+				InsertStringAt(fout, str2, len, maxLen, blockPos);
 				blockPos += maxLen;
 				insertions++;
 			}
 
 			if (updateNext)
-				nextPos = (blockPos + 1) & ~1;
+				afterTextPos = blockPos;
 		}
 		// Alternate for just a pointer: FIXEDPOINTER PointerLoc MaxLen
 		else if (!comment && strstr(str, "FIXEDPOINTER") != NULL)
@@ -1125,17 +1145,9 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 
 			if (len != 0)
 			{
+				uint32_t pos = InsertString(fout, str2, len, maxLen, afterTextPos);
 				fseek(fout, address, SEEK_SET);
-				WriteLE32(fout, nextPos | 0x08000000);
-
-				fseek(fout, nextPos, SEEK_SET);
-				for (int j = 0; j < maxLen; ++j)
-				{
-					char c = j < len ? str2[j] : '\0';
-					fputc(c, fout);
-				}
-				nextPos += maxLen;
-				nextPos = (nextPos + 1) & ~1;
+				WriteLE32(fout, pos | 0x08000000);
 				insertions++;
 			}
 		}
@@ -1167,12 +1179,7 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 					uint32_t oldPtr = 0;
 					fseek(fout, address, SEEK_SET);
 					ReadLE32(fout, oldPtr);
-					fseek(fout, oldPtr & ~0x08000000, SEEK_SET);
-					for (int j = 0; j < oldLen; ++j)
-					{
-						char c = j < len ? str2[j] : '\0';
-						fputc(c, fout);
-					}
+					InsertStringAt(fout, str2, len, oldLen, oldPtr & ~0x08000000);
 				}
 				else
 				{
@@ -1185,14 +1192,9 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 						fputc((uint8_t)len, fout);
 					}
 
+					uint32_t pos = InsertString(fout, str2, len, len, afterTextPos);
 					fseek(fout, address, SEEK_SET);
-					WriteLE32(fout, nextPos | 0x08000000);
-
-					fseek(fout, nextPos, SEEK_SET);
-					fwrite(str2, 1, len, fout);
-
-					nextPos += len;
-					nextPos = (nextPos + 1) & ~1;
+					WriteLE32(fout, pos | 0x08000000);
 				}
 				insertions++;
 			}
@@ -1224,12 +1226,7 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 					len = (int)fread(str2, 1, oldLen, fout);
 				}
 
-				fseek(fout, newAddress + i * newStride, SEEK_SET);
-				for (int j = 0; j < newLen; ++j)
-				{
-					char c = j < len ? str2[j] : '\0';
-					fputc(c, fout);
-				}
+				InsertStringAt(fout, str2, len, newLen, newAddress + i * newStride);
 				insertions++;
 			}
 		}
@@ -1264,14 +1261,10 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 					len = DetectScriptLen(str2, len);
 				}
 
+				uint32_t pos = InsertString(fout, str2, len, len, afterTextPos);
 				fseek(fout, address + i * stride, SEEK_SET);
-				WriteLE32(fout, nextPos | 0x08000000);
+				WriteLE32(fout, pos | 0x08000000);
 
-				fseek(fout, nextPos, SEEK_SET);
-				fwrite(str2, 1, len, fout);
-
-				nextPos += len;
-				nextPos = (nextPos + 1) & ~1;
 				insertions++;
 			}
 		}
@@ -1300,21 +1293,14 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 
 			   if (str2[0] != 0x0)
 			   {
-				   fseek(fout, address + maxLen * i, SEEK_SET);
-			       for (int j = 0; j < maxLen; j++)
-			          fputc(0x00, fout);
-
-			   	   fseek(fout, address + maxLen * i, SEEK_SET);
-			       for (int j = 0; j < len; j++)
-			         fputc(str2[j], fout);
-				   insertions++;
+					InsertStringAt(fout, str2, len, maxLen, address + maxLen * i);
+					insertions++;
 		   	   }
 		   }
 		}
 
 		fgets(str, 5000, fin);
 	}
-	afterTextPos = (nextPos + 1) & ~1;
 
 	fclose(fin);
 	return insertions;
