@@ -23,7 +23,7 @@ void          CompileCC(char[], int&, unsigned char[], int&);
 int           CharToHex(char);
 unsigned int  hstrtoi(char*);
 uint32_t UpdatePointers(int, int, FILE *, const char *);
-uint32_t InsertEnemies(FILE*);
+uint32_t InsertEnemies(FILE *, uint32_t &afterTextPos);
 void          InsertMenuStuff1(FILE*);
 void          InsertStuff(FILE*, char[], int, int, int);
 uint32_t InsertMenuStuff2(FILE *, uint32_t &afterTextPos);
@@ -108,7 +108,7 @@ int main(void)
 
    uint32_t afterTextPos = (uint32_t)ftell(fout);
 
-   totalInsertions += InsertEnemies(fout);
+   totalInsertions += InsertEnemies(fout, afterTextPos);
    //InsertMenuStuff1(fout);
    //InsertStuff(fout, "ta_items_eng.txt", 0x4573F2, 5, 8);
    totalInsertions += InsertMenuStuff2(fout, afterTextPos);
@@ -707,13 +707,20 @@ uint32_t UpdatePointers(int lineNum, int loc, FILE *fout, const char *pointersFi
 
 //=================================================================================================
 
-uint32_t InsertEnemies(FILE* fout)
+int DetectFixedLen(const char *str, int maxLen)
 {
-	char  str[5000];
-	char  str2[5000];
-	int   i = 0;
-	int   j;
-	int   len;
+	for (int i = maxLen; i > 0; --i)
+	{
+		if (str[i - 1] != 0)
+			return i;
+	}
+	return 0;
+}
+
+uint32_t InsertEnemies(FILE *fout, uint32_t &afterTextPos)
+{
+	char str[5000];
+	char str2[5000];
 
     FILE *fin = fopen("ta_enemies_eng.txt", "r");
     if (fin == NULL)
@@ -723,50 +730,97 @@ uint32_t InsertEnemies(FILE* fout)
 	}
 
 	uint32_t insertions = 0;
+	int state = 0;
+	int i = 0;
 
-   fgets(str, 5000, fin);
-   while(strstr(str, "-E:") == NULL)
-   {
-      fgets(str, 5000, fin);
-   }
-   while(!feof(fin))
-   {
-  	  PrepString(str, str2, 5);
+	// Enemies have names and attack names.  We use this file for both.
+	// Detect the old format and skip the first name.
+	while (!feof(fin))
+	{
+		fgets(str, 5000, fin);
+		if (str[0] == '#')
+			continue;
+		if (strstr(str, "NAMES:") != nullptr)
+		{
+			state = 1;
+			i = 0;
+			continue;
+		}
+		if (strstr(str, "ATTACKS:") != nullptr)
+		{
+			state = 2;
+			i = 0;
+			continue;
+		}
+		if (strstr(str, "-E:") == NULL)
+			continue;
 
-  	  if (str2[0] != '\n')
-  	  {
-		//for (j = 0; j < strlen(str2); j++)
-		//   printf("%c ", str2[j]);
+		// Okay, this is a string.  In state 0, we skipped the first enemy.
+		// This is for old ta_enemies_eng.txt compatibility.
+		if (state == 0)
+		{
+			state = 1;
 
-	  	ConvComplexString(str2, len, false);
+			// Just do the first one now.
+			fseek(fout, 0x00634F50, SEEK_SET);
+			fread(str2, 1, 8, fout);
+			int len = DetectFixedLen(str2, 8);
 
-	  	if (len > 8)
-	  	{
-			printf("Enemy name too long: %s\n", str);
-			len = 8;
+			fseek(fout, 0x00634F50, SEEK_SET);
+			WriteLE32(fout, afterTextPos | 0x08000000);
+			fputc((uint8_t)len, fout);
+			fputc(0x00, fout);
+			fputc(0x00, fout);
+			fputc(0x00, fout);
+
+			// Now write the pointer over there.
+			fseek(fout, afterTextPos, SEEK_SET);
+			fwrite(str2, 1, len, fout);
+
+			afterTextPos += len;
+			insertions++;
+			i++;
 		}
 
- 	    fseek(fout, 0x634F9C + 0x4C * i, SEEK_SET);
- 	    for (j = 0; j < 8; j++)
- 	       fputc(0x00, fout);
+		int len = 0;
+		PrepString(str, str2, 5);
+		ConvComplexString(str2, len, true);
+		if (len > 24)
+		{
+			printf("Enemy name too long: %s\n", str);
+			len = 24;
+		}
 
-      	fseek(fout, 0x634F9C + 0x4C * i, SEEK_SET);
-	  	for (j = 0; j < len; j++)
- 	  	   fputc(str2[j], fout);
+		// State 1 = enemy names, state 2 = attack names.
+		uint32_t nameAddress = state == 2 ? 0x00638558 : 0x00634F50;
+		nameAddress += i * (state == 2 ? 16 : 76);
 
+		if (len == 0)
+		{
+			// We have to read in the old string and still insert.
+			fseek(fout, nameAddress, SEEK_SET);
+			fread(str2, 1, 8, fout);
+			len = DetectFixedLen(str2, 8);
+		}
+
+		fseek(fout, nameAddress, SEEK_SET);
+		WriteLE32(fout, afterTextPos | 0x08000000);
+		fputc((uint8_t)len, fout);
+		fputc(0x00, fout);
+		fputc(0x00, fout);
+		fputc(0x00, fout);
+
+		// Now write the pointer over there.
+		fseek(fout, afterTextPos, SEEK_SET);
+		fwrite(str2, 1, len, fout);
+
+		afterTextPos += len;
 		insertions++;
-  	  }
+		i++;
+	}
 
-      i++;
-	  fgets(str, 5000, fin);
-	  while(strstr(str, "-E:") == NULL && !feof(fin))
-	  {
-	   	 fgets(str, 5000, fin);
-	  }
-   }
-
-   fclose(fin);
-   return insertions;
+	fclose(fin);
+	return insertions;
 }
 
 //=================================================================================================

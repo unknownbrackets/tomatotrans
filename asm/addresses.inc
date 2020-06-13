@@ -3,5 +3,6 @@
 .definelabel GimmickText,0x087F001E ; length 0x0C80
 .definelabel ItemTextName,0x087F0C9E ; length 0x0610
 .definelabel ItemTextDesc,0x087F12AE ; length 0x1230
-.definelabel ClothesText,0x087F24DE ; length 0x200
-; Next at 0x087F26DE.
+.definelabel ClothesText,0x087F24DE ; length 0x0200
+.definelabel EnemyAilmentsText,0x087F26DE ; length 0x0060
+; Next at 0x087F273E.

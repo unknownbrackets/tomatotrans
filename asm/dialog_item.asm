@@ -3,6 +3,7 @@
 ; We redo this to use a different buffer.
 
 ; The game doesn't seem to use all of the WRAM in any code, so we'll use that.
+; This is also used in battle_enemies.asm, but they never run at the same time.
 @WorkArea equ 0x02038000
 
 ; This touches items, clothes/equipment, and gimmicks.

@@ -8,6 +8,7 @@
 
 .include "asm/menu.asm"
 .include "asm/menu_gimmicks.asm"
+.include "asm/battle_enemies.asm"
 .include "asm/battle_menu.asm"
 .include "asm/battle_message.asm"
 .include "asm/battle_levelup.asm"
