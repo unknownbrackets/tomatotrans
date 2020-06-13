@@ -21,11 +21,12 @@ int        tableLen = 0;
 void 		  LoadTable(void);
 void          PrepString(char[], char[], int);
 unsigned char ConvChar(unsigned char);
-void          ConvComplexString(char s[], int &l, bool spaceIsZero);
-void          CompileCC(char[], int&, unsigned char[], int&);
+int ConvComplexString(char s[], bool spaceIsZero);
+int CompileCC(const char *str, int len, int &pos, unsigned char *dest);
 int           CharToHex(char);
 unsigned int  hstrtoi(char*);
 uint32_t UpdatePointers(int, int, FILE *, const char *);
+uint32_t InsertMainScript(FILE *, uint32_t &afterTextPos);
 uint32_t InsertEnemies(FILE *, uint32_t &afterTextPos);
 uint32_t InsertMenuStuff2(FILE *, uint32_t &afterTextPos);
 
@@ -89,164 +90,173 @@ uint32_t InsertString(FILE *fout, const char *str, uint32_t len, uint32_t fullLe
 
 int main(void)
 {
-   FILE* fin;
-   FILE* fout;
-   char  str[5000];
-   char  str2[5000];
-   int   len;
-   int   loc;
-   int   i;
-   int   j;
+	LoadTable();
 
-   LoadTable();
-
-   fout = fopen("test.gba", "rb+");
-
-   fin = fopen("ta_script_eng.txt", "r");
-   if (fin == NULL)
-   {
-	   printf("Couldn't open ta_script_eng.txt!\n");
-	   return -1;
-   }
-
-   int totalInsertions = 0;
-
-   i = 0;
-   fseek(fout, TOMATO_END_POS, SEEK_SET);
-   fgets(str, 5000, fin);
-   while(strstr(str, "-E:") == NULL)
-   {
-      fgets(str, 5000, fin);
-   }
-   while(!feof(fin))
-   {
-  	  PrepString(str, str2, 6);
-
-  	  if (str2[0] != '\n')
-  	  {
-	  	ConvComplexString(str2, len, false);
-
-      	loc = ftell(fout);
-	  	for (j = 0; j < len; j++)
- 	  	   fputc(str2[j], fout);
-
-		totalInsertions += UpdatePointers(i, loc, fout, "pointers1.dat");
-  	  }
-
-      i++;
-	  fgets(str, 5000, fin);
-	  while(strstr(str, "-E:") == NULL && !feof(fin))
-	  {
-	   	 fgets(str, 5000, fin);
-	  }
-   }
-   fclose(fin);
-
-   uint32_t afterTextPos = (uint32_t)ftell(fout);
-
-   totalInsertions += InsertMenuStuff2(fout, afterTextPos);
-   totalInsertions += InsertEnemies(fout, afterTextPos);
-
-   uint32_t usedBytes = afterTextPos - TOMATO_END_POS;
-   uint32_t usedPercent = 100 * usedBytes / (TOMATO_SIZE - TOMATO_END_POS);
-   printf("Inserted %u strings, using %u extra bytes (%03u%%)\n", totalInsertions, usedBytes, usedPercent);
-
-   fclose(fout);
-   return 0;
-}
-
-//=================================================================================================
-
-void ConvComplexString(char str[5000], int &newLen, bool spaceIsZero)
-{
-	char          newStr[5000] = "";
-	unsigned char newStream[100];
-	int           streamLen =  0;
-	int           len = strlen(str) - 1; // minus one to take out the newline
-	int           counter = 0;
-	int           i;
-
-	newLen = 0;
-
-    while (counter < len)
-    {
-		//printf("%c", str[counter]);
-		if (str[counter] == '[')
-		{
-		   CompileCC(str, counter, newStream, streamLen);
-		   for (i = 0; i < streamLen; i++)
-		   {
-			   newStr[newLen] = newStream[i];
-			   newLen++;
-		   }
-		   counter++; // to skip past the ]
-		}
-		else if (str[counter] == ' ' && spaceIsZero)
-		{
-			newStr[newLen] = '\0';
-			newLen++;
-			counter++;
-		}
-		else
-		{
-		   newStr[newLen] = ConvChar(str[counter]);
-		   newLen++;
-
-		   counter++;
-		}
+	FILE *fout = fopen("test.gba", "rb+");
+	if (!fout)
+	{
+		printf("Couldn't open test.gba, make sure you ran armips\n");
+		return 1;
 	}
 
-	memset(str, '\0', 5000);
-	for (i = 0; i < newLen; i++)
-	   str[i] = newStr[i];
-}
+	int totalInsertions = 0;
+	uint32_t afterTextPos = TOMATO_END_POS;
+	totalInsertions += InsertMainScript(fout, afterTextPos);
+	totalInsertions += InsertMenuStuff2(fout, afterTextPos);
+	totalInsertions += InsertEnemies(fout, afterTextPos);
 
+	uint32_t usedBytes = afterTextPos - TOMATO_END_POS;
+	uint32_t usedPercent = 100 * usedBytes / (TOMATO_SIZE - TOMATO_END_POS);
+	printf("Inserted %u strings, using %u extra bytes (%03u%%)\n", totalInsertions, usedBytes, usedPercent);
+
+	fclose(fout);
+	return 0;
+}
 
 //=================================================================================================
 
-void CompileCC(char str[5000], int& strLoc, unsigned char newStream[100], int& streamLen)
+uint32_t InsertMainScript(FILE *fout, uint32_t &afterTextPos)
 {
-   char  str2[5000] = "";
-   char* ptr[5000];
-   int   ptrCount = 0;
-   int   totalLength = strlen(str);
-   int   i;
-   int   j;
-   char  hexVal[100] = "";
-   char  specialStr[100] = "";
-   int   retVal = 0;
+	FILE *fin = fopen("ta_script_eng.txt", "r");
+	if (fin == NULL) {
+		printf("Couldn't open ta_script_eng.txt!\n");
+		return 0;
+	}
 
+	uint32_t insertions = 0;
+	int i = 0;
+	int state = 0;
+	char pendingString[5000];
+	int pendingPos = 0;
 
-   // we're gonna mess with the original string, so make a backup for later
-   strcpy(str2, str);
+	auto flushString = [&]() {
+		if (pendingPos == 0)
+			return;
 
-   // first we gotta parse the codes, what a pain
-   ptr[ptrCount++] = &str[strLoc + 1];
-   while (str[strLoc] != ']' && strLoc < totalLength)
-   {
-      if (str[strLoc] == ' ')
-      {
-         ptr[ptrCount++] = &str[strLoc + 1];
-         str[strLoc] = 0;
-      }
+		// ConvComplexString expects a newline...
+		pendingString[pendingPos++] = '\n';
+		pendingString[pendingPos] = 0;
 
-      strLoc++;
-   }
+		int len = ConvComplexString(pendingString, false);
+		uint32_t loc = InsertString(fout, pendingString, len, len, afterTextPos);
+		insertions += UpdatePointers(i, loc, fout, "pointers1.dat");
+		pendingPos = 0;
+	};
 
-   if (str[strLoc] == ']')
-      str[strLoc] = 0;
+	// Assume a BOM may exist.
+	if ((uint8_t)fgetc(fin) == 0xEF)
+		fseek(fin, 3, SEEK_SET);
+	else
+		fseek(fin, 0, SEEK_SET);
 
+	while (!feof(fin))
+	{
+		char str[5000];
+		if (!fgets(str, 5000, fin))
+			continue;
 
-   // Capitalize all the arguments for ease of use
-   for (i = 0; i < ptrCount; i++)
-   {
-      for (j = 0; j < (int)strlen(ptr[i]); j++)
-         ptr[i][j] = toupper(ptr[i][j]);
-   }
+		bool isStartLine = strstr(str, "-E:") == str + 3;
+		if (!isStartLine && state == 0)
+		{
+			printf("Unexpected line: %s", str);
+			continue;
+		}
 
+		if (isStartLine && state != 0)
+		{
+			flushString();
+			i++;
+			state = 0;
+		}
 
-   // now the actual compiling into the data stream
-   streamLen = 0;
+		if (state == 0)
+		{
+			// Brand new string.  We'll write this later (see above.)
+			state = 1;
+			int toCopy = strlen(str + 6) - 1;
+			if (toCopy > 0)
+				memcpy(pendingString + pendingPos, str + 6, toCopy);
+			pendingPos += toCopy;
+		}
+		else if (state == 1)
+		{
+			// Continuation of an existing line.
+			int toCopy = strlen(str) - 1;
+			if (toCopy > 0)
+				memcpy(pendingString + pendingPos, str, toCopy);
+			pendingPos += toCopy;
+		}
+	}
+	// Flush any last string.
+	flushString();
+	fclose(fin);
+
+	return insertions;
+}
+
+//=================================================================================================
+
+int ConvComplexString(char str[5000], bool spaceIsZero)
+{
+	unsigned char newStr[5000];
+	int len = strlen(str) - 1; // minus one to take out the newline
+	int newLen = 0;
+	for (int counter = 0; counter < len; ++counter)
+	{
+		if (str[counter] == '[')
+		{
+			// Updates counter one less than full string.
+			int streamLen = CompileCC(str, len, counter, newStr + newLen);
+			newLen += streamLen;
+		}
+		else if (str[counter] == ' ' && spaceIsZero)
+			newStr[newLen++] = '\0';
+		else
+			newStr[newLen++] = ConvChar(str[counter]);
+	}
+
+	memcpy(str, newStr, newLen);
+	memset(str + newLen, '\0', 5000 - newLen);
+
+	return newLen;
+}
+
+//=================================================================================================
+
+int CompileCC(const char *str, int totalLength, int &strLoc, unsigned char *newStream)
+{
+	char str2[5000] = "";
+	char *ptr[5000];
+	int ptrCount = 0;
+
+	// we're gonna mess with the string, so do it in a copy
+	strcpy(str2 + strLoc, str + strLoc);
+
+	// first we gotta parse the codes, what a pain
+	ptr[ptrCount++] = &str2[strLoc + 1];
+	while (str2[strLoc] != ']' && strLoc < totalLength)
+	{
+		if (str2[strLoc] == ' ')
+		{
+			ptr[ptrCount++] = &str2[strLoc + 1];
+			str2[strLoc] = 0;
+		}
+
+		strLoc++;
+	}
+
+	if (str2[strLoc] == ']')
+		str2[strLoc] = 0;
+
+	// Capitalize all the arguments for ease of use
+	for (int i = 0; i < ptrCount; i++)
+	{
+		for (int j = 0; j < (int)strlen(ptr[i]); j++)
+			ptr[i][j] = toupper(ptr[i][j]);
+	}
+
+	// now the actual compiling into the data stream
+	int streamLen = 0;
    if (strcmp(ptr[0], "END") == 0)
    {
        newStream[streamLen++] = 0xFF;
@@ -472,36 +482,35 @@ void CompileCC(char str[5000], int& strLoc, unsigned char newStream[100], int& s
        newStream[streamLen++] = 0xFB;
    }
 
-   else if (isalpha((int)ptr[0][0]) && strlen(ptr[0]) != 2)
-   {
-	    i = 0;
-
-		while ((i < tableLen) && (retVal == 0))
+	else if (isalpha((int)ptr[0][0]) && strlen(ptr[0]) != 2)
+	{
+		int retVal = 0;
+		for (int i = 0; i < tableLen; ++i)
 		{
 			if (strcmp(ptr[0], table[i].str) == 0)
-			   retVal = table[i].hexVal;
-			else
-			   i++;
+			{
+				retVal = table[i].hexVal;
+				break;
+			}
 		}
 
 		newStream[streamLen++] = retVal;
 		newStream[streamLen++] = 0x00;
 		if (retVal == 0)
-		   printf("Couldn't convert control code: %s\n", ptr[0]);
-   }
+			printf("Couldn't convert control code: %s\n", ptr[0]);
+	}
 
-   // going to assume raw codes now, in 2-char hex things, like [FA 1A 2C EE]
-   else if (strlen(ptr[0]) == 2)
-   {
-      for (i = 0; i < ptrCount; i++)
-         newStream[streamLen++] = hstrtoi(ptr[i]);
-   }
+	// going to assume raw codes now, in 2-char hex things, like [FA 1A 2C EE]
+	else if (strlen(ptr[0]) == 2)
+	{
+		for (int i = 0; i < ptrCount; i++)
+			newStream[streamLen++] = hstrtoi(ptr[i]);
+	}
 
-   else
-      printf("UNKNOWN CONTROL CODE: %s\n", ptr[0]);
+	else
+		printf("UNKNOWN CONTROL CODE: %s\n", ptr[0]);
 
-   // restore backup string
-   strcpy(str, str2);
+	return streamLen;
 }
 
 //=================================================================================================
@@ -764,9 +773,9 @@ uint32_t InsertEnemies(FILE *fout, uint32_t &afterTextPos)
 	char str[5000];
 	char str2[5000];
 
-    FILE *fin = fopen("ta_enemies_eng.txt", "r");
-    if (fin == NULL)
-    {
+	FILE *fin = fopen("ta_enemies_eng.txt", "r");
+	if (fin == NULL)
+	{
 		printf("Couldn't open ta_enemies_eng.txt!\n");
 		return 0;
 	}
@@ -827,9 +836,8 @@ uint32_t InsertEnemies(FILE *fout, uint32_t &afterTextPos)
 
 		states |= state;
 
-		int len = 0;
 		PrepString(str, str2, 5);
-		ConvComplexString(str2, len, true);
+		int len = ConvComplexString(str2, true);
 		if (len > 24)
 		{
 			printf("Enemy name too long: %s\n", str);
@@ -979,7 +987,7 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 				fgets(str, 5000, fin);
 				PrepString(str, str2, 5);
 
-				ConvComplexString(str2, len, true);
+				len = ConvComplexString(str2, true);
 				if (len > maxLen)
 				{
 					printf("too long: %s\n", str);
@@ -1009,7 +1017,7 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 
 			fgets(str, 5000, fin);
 			PrepString(str, str2, 5);
-			ConvComplexString(str2, len, true);
+			len = ConvComplexString(str2, true);
 
 			if (maxLen != 0 && len > maxLen)
 			{
@@ -1035,7 +1043,7 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 
 			fgets(str, 5000, fin);
 			PrepString(str, str2, 5);
-			ConvComplexString(str2, len, true);
+			len = ConvComplexString(str2, true);
 
 			if (maxLen != 0 && len > maxLen)
 			{
@@ -1085,7 +1093,7 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 			{
 				fgets(str, 5000, fin);
 				PrepString(str, str2, 5);
-				ConvComplexString(str2, len, true);
+				len = ConvComplexString(str2, true);
 
 				if (len > newLen)
 				{
@@ -1116,7 +1124,7 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 			{
 				fgets(str, 5000, fin);
 				PrepString(str, str2, 5);
-				ConvComplexString(str2, len, true);
+				len = ConvComplexString(str2, true);
 
 				if (len > maxLen)
 				{
@@ -1150,27 +1158,27 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 			sscanf(str, "%*s %X %X %X", &address, &maxLen, &lines);
 			//printf("block address:%X  line len:%02X  line count:%02X\n", address, maxLen, lines);
 
-		   for (int i = 0; i < lines; i++)
-		   {
-			   fgets(str, 5000, fin);
-  	  		   PrepString(str, str2, 5);
+			for (int i = 0; i < lines; i++)
+			{
+				fgets(str, 5000, fin);
+				PrepString(str, str2, 5);
 
- 		       //for (int j = 0; j < strlen(str2); j++)
-		   	   //   printf("%c ", str2[j]);
+				//for (int j = 0; j < strlen(str2); j++)
+				//	printf("%c ", str2[j]);
 
-	  		   ConvComplexString(str2, len, false);
-	  		   if (len > maxLen)
-	  		   {
-			      printf("too long: %s\n", str);
-			      len = maxLen;
-			   }
+				len = ConvComplexString(str2, false);
+				if (len > maxLen)
+				{
+					printf("too long: %s\n", str);
+					len = maxLen;
+				}
 
-			   if (str2[0] != 0x0)
-			   {
+				if (str2[0] != 0x0)
+				{
 					InsertStringAt(fout, str2, len, maxLen, address + maxLen * i);
 					insertions++;
-		   	   }
-		   }
+				}
+			}
 		}
 
 		fgets(str, 5000, fin);
