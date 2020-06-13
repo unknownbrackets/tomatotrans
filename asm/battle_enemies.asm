@@ -75,9 +75,44 @@ LongerNameToBufferAt 0x0804FFA0
 b 0x0804FF4C
 .endarea
 
-; TODO: Attack names.
+; 0805040C reads attack names in two places.  This is a bit tight, but like above.
+.org 0x080504F4
+.area 0x08050510-.,0x00
+; r0=FREE, r1=FREE, r2=FREE, r3=FREE, r4=enemyStatus, r5=flags?, r6=techInfo
+; Grab the pointer and length we shoved in here.
+ldr r1,[r6,0]
+ldrb r2,[r6,4]
 
-; 080502A4 is more complex, because it appends status strings.
+; Grab the buffer from the literal pool later.
+ldr r0,[0x08050550] ; 0x03000BFC
+mov r3,0 ; LEFT
+; Store the alignment and length.
+strb r3,[r0,0]
+strb r2,[r0,1]
+
+; Adjust the pointer, tech names are never longer than 0x1A so copy directly.
+add r0,r0,2
+
+; This jumps to a memcpy.
+b 0x08050542
+.endarea
+
+.org 0x08050536
+.area 0x08050542-.,0x00
+; r0=messageBuffer, r1=FREE, r2=FREE, r3=FREE, r4=enemyStatus, r5=0, r6=techInfo
+ldr r1,[r6,0]
+ldrb r2,[r6,4]
+; Store LEFT and the length.
+strb r5,[r0,0]
+strb r2,[r0,1]
+
+; As above, we just adjust the pointer.
+add r0,r0,2
+; One more op free...
+nop
+.endarea
+
+; 080502A4 reads the name, but is more complex because it appends status strings.
 ; We rewrite the whole thing because we need to change the buffer handling
 ; For longer strings to work.
 .org 0x080502A4

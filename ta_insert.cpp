@@ -717,6 +717,14 @@ int DetectFixedLen(const char *str, int maxLen)
 	return 0;
 }
 
+uint32_t EnemyInfoAddress(int i, int state)
+{
+	// State 1 = enemy names, state 2 = attack names.
+	if (state == 2)
+		return 0x00638558 + i * 16;
+	return 0x00634F50 + i * 76;
+}
+
 uint32_t InsertEnemies(FILE *fout, uint32_t &afterTextPos)
 {
 	char str[5000];
@@ -731,13 +739,15 @@ uint32_t InsertEnemies(FILE *fout, uint32_t &afterTextPos)
 
 	uint32_t insertions = 0;
 	int state = 0;
+	int states = 0;
 	int i = 0;
 
 	// Enemies have names and attack names.  We use this file for both.
 	// Detect the old format and skip the first name.
 	while (!feof(fin))
 	{
-		fgets(str, 5000, fin);
+		if (!fgets(str, 5000, fin))
+			continue;
 		if (str[0] == '#')
 			continue;
 		if (strstr(str, "NAMES:") != nullptr)
@@ -760,13 +770,15 @@ uint32_t InsertEnemies(FILE *fout, uint32_t &afterTextPos)
 		if (state == 0)
 		{
 			state = 1;
+			printf("Old ta_enemies_eng.txt file, inserting old Celemo...\n");
 
 			// Just do the first one now.
-			fseek(fout, 0x00634F50, SEEK_SET);
+			uint32_t nameAddress = EnemyInfoAddress(i, state);
+			fseek(fout, nameAddress, SEEK_SET);
 			fread(str2, 1, 8, fout);
 			int len = DetectFixedLen(str2, 8);
 
-			fseek(fout, 0x00634F50, SEEK_SET);
+			fseek(fout, nameAddress, SEEK_SET);
 			WriteLE32(fout, afterTextPos | 0x08000000);
 			fputc((uint8_t)len, fout);
 			fputc(0x00, fout);
@@ -782,6 +794,8 @@ uint32_t InsertEnemies(FILE *fout, uint32_t &afterTextPos)
 			i++;
 		}
 
+		states |= state;
+
 		int len = 0;
 		PrepString(str, str2, 5);
 		ConvComplexString(str2, len, true);
@@ -791,9 +805,7 @@ uint32_t InsertEnemies(FILE *fout, uint32_t &afterTextPos)
 			len = 24;
 		}
 
-		// State 1 = enemy names, state 2 = attack names.
-		uint32_t nameAddress = state == 2 ? 0x00638558 : 0x00634F50;
-		nameAddress += i * (state == 2 ? 16 : 76);
+		uint32_t nameAddress = EnemyInfoAddress(i, state);
 
 		if (len == 0)
 		{
@@ -817,6 +829,34 @@ uint32_t InsertEnemies(FILE *fout, uint32_t &afterTextPos)
 		afterTextPos += len;
 		insertions++;
 		i++;
+	}
+
+	if ((states & 2) == 0)
+	{
+		// We never did attack names, but the game will crash now if we don't.
+		// Copy the existing names over.
+		state = 2;
+		for (i = 0; i < 256; ++i)
+		{
+			uint32_t nameAddress = EnemyInfoAddress(i, state);
+			fseek(fout, nameAddress, SEEK_SET);
+			fread(str2, 1, 8, fout);
+			int len = DetectFixedLen(str2, 8);
+
+			fseek(fout, nameAddress, SEEK_SET);
+			WriteLE32(fout, afterTextPos | 0x08000000);
+			fputc((uint8_t)len, fout);
+			fputc(0x00, fout);
+			fputc(0x00, fout);
+			fputc(0x00, fout);
+
+			// Now write the pointer over there.
+			fseek(fout, afterTextPos, SEEK_SET);
+			fwrite(str2, 1, len, fout);
+
+			afterTextPos += len;
+			insertions++;
+		}
 	}
 
 	fclose(fin);
