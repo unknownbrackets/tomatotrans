@@ -7,7 +7,8 @@
 
 static const uint32_t TOMATO_END_POS = 0x0064B4EC;
 static const uint32_t TOMATO_SIZE = 0x007F0000;
-std::map<std::vector<uint8_t>, uint32_t> previousInsertions;
+static std::map<std::vector<uint8_t>, uint32_t> previousInsertions;
+static bool forceAll = false;
 
 struct tableEntry
 {
@@ -23,12 +24,15 @@ void          PrepString(char[], char[], int);
 unsigned char ConvChar(unsigned char);
 int ConvComplexString(char s[], bool spaceIsZero);
 int CompileCC(const char *str, int len, int &pos, unsigned char *dest);
+int DetectScriptLen(const char *str, int maxLen);
+void ForceTranslateComplex(char *str, int len);
 int           CharToHex(char);
 unsigned int  hstrtoi(char*);
-uint32_t UpdatePointers(int, int, FILE *, const char *);
+uint32_t UpdatePointers(const std::vector<uint32_t> &list, int loc, FILE *fout);
 uint32_t InsertMainScript(FILE *, uint32_t &afterTextPos);
 uint32_t InsertEnemies(FILE *, uint32_t &afterTextPos);
 uint32_t InsertMenuStuff2(FILE *, uint32_t &afterTextPos);
+std::vector<std::vector<uint32_t>> BuildPointerMap(const char *pointersFile);
 
 //=================================================================================================
 
@@ -73,7 +77,8 @@ uint32_t InsertString(FILE *fout, const char *str, uint32_t len, uint32_t fullLe
 	memcpy(full.data(), str, len);
 
 	auto already = previousInsertions.find(full);
-	if (already != previousInsertions.end())
+	// Forcing is meant to stress, let's disable this optimization.
+	if (already != previousInsertions.end() && !forceAll)
 		return already->second;
 
 	uint32_t pos = nextFree;
@@ -88,8 +93,11 @@ uint32_t InsertString(FILE *fout, const char *str, uint32_t len, uint32_t fullLe
 
 //=================================================================================================
 
-int main(void)
+int main(int argc, char **argv)
 {
+	if (argc == 2 && !strcmp(argv[1], "--force"))
+		forceAll = true;
+
 	LoadTable();
 
 	FILE *fout = fopen("test.gba", "rb+");
@@ -123,15 +131,42 @@ uint32_t InsertMainScript(FILE *fout, uint32_t &afterTextPos)
 		return 0;
 	}
 
+	std::vector<std::vector<uint32_t>> pointers = BuildPointerMap("pointers1.dat");
+
 	uint32_t insertions = 0;
 	int i = 0;
 	int state = 0;
 	char pendingString[5000];
 	int pendingPos = 0;
 
-	auto flushString = [&]() {
+	auto flushString = [&]()
+	{
 		if (pendingPos == 0)
-			return;
+		{
+			if (forceAll)
+			{
+				// We need to load the old string to force it.
+				if (pointers[i].empty())
+					return;
+
+				uint32_t oldPtrAddress = pointers[i][0];
+				fseek(fout, oldPtrAddress, SEEK_SET);
+				uint32_t oldStrAddress = 0;
+				ReadLE32(fout, oldStrAddress);
+				fseek(fout, oldStrAddress & ~0x08000000, SEEK_SET);
+				fread(pendingString, 1, 4999, fout);
+
+				int len = DetectScriptLen(pendingString, 4999);
+				ForceTranslateComplex(pendingString, len);
+
+				// So we can test insertion works, insert as a "new" string.
+				uint32_t forceLoc = InsertString(fout, pendingString, len, len, afterTextPos);
+				insertions += UpdatePointers(pointers[i], forceLoc, fout);
+				return;
+			}
+			else
+				return;
+		}
 
 		// ConvComplexString expects a newline...
 		pendingString[pendingPos++] = '\n';
@@ -144,7 +179,7 @@ uint32_t InsertMainScript(FILE *fout, uint32_t &afterTextPos)
 			pendingString[len++] = (char)0x00;
 		}
 		uint32_t loc = InsertString(fout, pendingString, len, len, afterTextPos);
-		insertions += UpdatePointers(i, loc, fout, "pointers1.dat");
+		insertions += UpdatePointers(pointers[i], loc, fout);
 		pendingPos = 0;
 	};
 
@@ -714,43 +749,54 @@ void PrepString(char str[5000], char str2[5000], int startPoint)
 
 //=================================================================================================
 
-uint32_t UpdatePointers(int lineNum, int loc, FILE *fout, const char *pointersFile)
+std::vector<std::vector<uint32_t>> BuildPointerMap(const char *pointersFile)
 {
-   char  str[5000];
-   int   address;
-   int   readOK;
-   int   tempLoc = ftell(fout);
+	std::vector<std::vector<uint32_t>> pointers;
+	FILE *fptrs = fopen(pointersFile, "r");
+	if (!fptrs)
+	{
+		printf("Couldn't open %s!\n", pointersFile);
+		return pointers;
+	}
 
-   FILE *fptrs = fopen(pointersFile, "r");
-   if (fptrs == NULL)
-   {
-	   printf("Couldn't open %s!\n", pointersFile);
-	   return 0;
-   }
+	int i = 0;
+	while (!feof(fptrs))
+	{
+		char str[5000]{};
+		fgets(str, sizeof(str), fptrs);
+		pointers.emplace_back();
 
-   for (int i = 0; i < lineNum; i++)
-      fgets(str, 5000, fptrs);
+		uint32_t address;
+		int pos = 0;
+		int oldpos = 0;
+		while (sscanf(str + oldpos + pos, "%X%n", &address, &pos) > 0)
+		{
+			if (address != 0xFFFFFFFF)
+				pointers[i].push_back(address);
+			oldpos += pos + 1;
+			pos = 0;
+		}
+		i++;
+	}
+	fclose(fptrs);
 
-   //printf("\nline %03X:", lineNum);
+	return pointers;
+}
 
-   uint32_t insertions = 0;
-   readOK = fscanf(fptrs, "%X", &address);
-   while ((readOK != 0) && (address != 0xFFFFFFFF))
-   {
-	  loc |= 0x08000000;
-	  //printf("loc:%08X    %08X", loc, address);
-	  fseek(fout, address, SEEK_SET);
-	  WriteLE32(fout, loc);
+uint32_t UpdatePointers(const std::vector<uint32_t> &list, int loc, FILE *fout)
+{
+	uint32_t insertions = 0;
 
-      readOK = fscanf(fptrs, "%X", &address);
-	  insertions++;
-   }
-   //printf("\n");
+	loc |= 0x08000000;
+	for (uint32_t address : list)
+	{
+		//printf("loc:%08X    %08X", loc, address);
+		fseek(fout, address, SEEK_SET);
+		WriteLE32(fout, loc);
+		insertions++;
+	}
 
-   fclose(fptrs);
-
-   fseek(fout, tempLoc, SEEK_SET);
-   return insertions;
+	return insertions;
 }
 
 //=================================================================================================
@@ -825,6 +871,8 @@ uint32_t InsertEnemies(FILE *fout, uint32_t &afterTextPos)
 			fseek(fout, nameAddress, SEEK_SET);
 			fread(str2, 1, 8, fout);
 			int len = DetectFixedLen(str2, 8);
+			if (forceAll)
+				ForceTranslateComplex(str2, 8);
 
 			uint32_t pos = InsertString(fout, str2, len, len, afterTextPos);
 
@@ -857,6 +905,8 @@ uint32_t InsertEnemies(FILE *fout, uint32_t &afterTextPos)
 			fseek(fout, nameAddress, SEEK_SET);
 			fread(str2, 1, 8, fout);
 			len = DetectFixedLen(str2, 8);
+			if (forceAll)
+				ForceTranslateComplex(str2, 8);
 		}
 
 		uint32_t pos = InsertString(fout, str2, len, len, afterTextPos);
@@ -882,6 +932,8 @@ uint32_t InsertEnemies(FILE *fout, uint32_t &afterTextPos)
 			fseek(fout, nameAddress, SEEK_SET);
 			fread(str2, 1, 8, fout);
 			int len = DetectFixedLen(str2, 8);
+			if (forceAll)
+				ForceTranslateComplex(str2, 8);
 
 			uint32_t pos = InsertString(fout, str2, len, len, afterTextPos);
 			fseek(fout, nameAddress, SEEK_SET);
@@ -917,6 +969,48 @@ int DetectScriptLen(const char *str, int maxLen)
 	}
 
 	return maxLen;
+}
+
+void ForceTranslateComplex(char *s, int len)
+{
+	unsigned char *str = (unsigned char *)s;
+	// Isn't "machine translation" great?
+	for (int i = 0; i < len; ++i)
+	{
+		// Already English or a space/symbol?
+		if (str[i] <= 30 || (str[i] >= 129 && str[i] <= 154))
+			continue;
+		// Symbols and numbers should be kept too...
+		if ((str[i] >= 107 && str[i] <= 128) || (str[i] >= 155 && str[i] <= 159))
+			continue;
+
+		if (str[i] == 0xFF)
+		{
+			int code = str[++i];
+			// Skip args for commands that have them.
+			if (code == 17 || code == 3 || code == 16 || code == 24 || code == 25 || code == 26 || code == 34)
+				i++;
+			continue;
+		}
+
+		if (str[i] == 0xFE)
+		{
+			// For Kanji, we keep the symbols.
+			int code = str[i + 1];
+			if (code >= 240)
+			{
+				i++;
+				continue;
+			}
+
+			// Okay, it's just kanji, remove the next char, we won't need it.
+			memmove(str + i, str + i + 1, len - i - 1);
+			// Keep going, though.
+		}
+
+		// And finally, our amazing translation algorithm.
+		str[i] = 1;
+	}
 }
 
 uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
@@ -1004,6 +1098,8 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 				{
 					fseek(fout, origAddress + i * origLen, SEEK_SET);
 					len = (int)fread(str2, 1, origLen, fout);
+					if (forceAll)
+						ForceTranslateComplex(str2, len);
 				}
 
 				InsertStringAt(fout, str2, len, maxLen, blockPos);
@@ -1032,6 +1128,21 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 
 			if (len != 0)
 			{
+				uint32_t pos = InsertString(fout, str2, len, maxLen, afterTextPos);
+				fseek(fout, address, SEEK_SET);
+				WriteLE32(fout, pos | 0x08000000);
+				insertions++;
+			}
+			else if (forceAll)
+			{
+				fseek(fout, address, SEEK_SET);
+				uint32_t oldPos = 0;
+				ReadLE32(fout, oldPos);
+				fseek(fout, oldPos & ~0x08000000, SEEK_SET);
+				fread(str2, 1, maxLen, fout);
+				ForceTranslateComplex(str2, maxLen);
+
+				// Simulate insertion.
 				uint32_t pos = InsertString(fout, str2, len, maxLen, afterTextPos);
 				fseek(fout, address, SEEK_SET);
 				WriteLE32(fout, pos | 0x08000000);
@@ -1085,6 +1196,22 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 				}
 				insertions++;
 			}
+			else if (forceAll)
+			{
+				fseek(fout, sizeAddress, SEEK_SET);
+				int oldLen = fgetc(fout);
+
+				uint32_t oldPtr = 0;
+				fseek(fout, address, SEEK_SET);
+				ReadLE32(fout, oldPtr);
+
+				fseek(fout, oldPtr & ~0x08000000, SEEK_SET);
+				fread(str2, 1, maxLen, fout);
+				ForceTranslateComplex(str2, maxLen);
+
+				InsertStringAt(fout, str2, oldLen, oldLen, oldPtr & ~0x08000000);
+				insertions++;
+			}
 		}
 		// Rewrite a structure size: RESTRUCT OldAddress OldSize OldStride NewAddress NewSize NewStride Count
 		else if (!comment && strstr(str, "RESTRUCT") != NULL)
@@ -1111,6 +1238,8 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 				{
 					fseek(fout, oldAddress + i * oldStride, SEEK_SET);
 					len = (int)fread(str2, 1, oldLen, fout);
+					if (forceAll)
+						ForceTranslateComplex(str2, len);
 				}
 
 				InsertStringAt(fout, str2, len, newLen, newAddress + i * newStride);
@@ -1146,6 +1275,8 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 					fseek(fout, oldPointer, SEEK_SET);
 					len = (int)fread(str2, 1, maxLen, fout);
 					len = DetectScriptLen(str2, len);
+					if (forceAll)
+						ForceTranslateComplex(str2, len);
 				}
 
 				uint32_t pos = InsertString(fout, str2, len, len, afterTextPos);
@@ -1178,9 +1309,19 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 					len = maxLen;
 				}
 
-				if (str2[0] != 0x0)
+				if (len != 0)
 				{
 					InsertStringAt(fout, str2, len, maxLen, address + maxLen * i);
+					insertions++;
+				}
+				else if (forceAll)
+				{
+					fseek(fout, address + maxLen * i, SEEK_SET);
+					fread(str2, 1, maxLen, fout);
+					ForceTranslateComplex(str2, len);
+
+					fseek(fout, address + maxLen * i, SEEK_SET);
+					fwrite(str2, 1, maxLen, fout);
 					insertions++;
 				}
 			}
