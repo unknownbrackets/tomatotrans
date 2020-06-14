@@ -138,6 +138,11 @@ uint32_t InsertMainScript(FILE *fout, uint32_t &afterTextPos)
 		pendingString[pendingPos] = 0;
 
 		int len = ConvComplexString(pendingString, false);
+		// Ensure it has an END at the END, they should always.
+		if (len < 2 || pendingString[len - 2] != (char)0xFF || pendingString[len - 1] != 0x00) {
+			pendingString[len++] = (char)0xFF;
+			pendingString[len++] = (char)0x00;
+		}
 		uint32_t loc = InsertString(fout, pendingString, len, len, afterTextPos);
 		insertions += UpdatePointers(i, loc, fout, "pointers1.dat");
 		pendingPos = 0;
