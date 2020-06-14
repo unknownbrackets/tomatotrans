@@ -31,7 +31,6 @@ mov r7,0
 ; If they got more than one, we show a prefix i.e. "2x ".
 ; The original game used a suffix and hardcoded ko.
 ldrb r0,[r4,1]
-mov r0,5
 cmp r0,1
 bls @@onlyOne
 
