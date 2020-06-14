@@ -230,7 +230,7 @@ beq @@lengthReady
 ; Okay, let's assume it's too long and check.
 sub r1,r1,1 ; Sets Z/eq on zero.
 beq @@tooShort
-ldr r2,[r0,r1]
+ldrb r2,[r0,r1]
 cmp r2,0
 beq @@shorter
 
@@ -245,7 +245,7 @@ mov r12,r1
 mov r4,0
 
 @@nextChar:
-; Pre-increment so we can ldrb directly.
+; Pre-decrement so we can ldrb directly.  Doesn't matter if we add widths in reverse.
 sub r1,r1,1 ; Sets Z/eq on zero.
 beq @@charsDone
 ldrb r2,[r0,r1]

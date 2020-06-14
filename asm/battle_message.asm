@@ -74,7 +74,7 @@ sub r6,r6,r2
 add r7,r6
 
 @@alignDone:
-; Okay, that's out draw destination.
+; Okay, that's our draw destination.
 str r7,[r5,8]
 ; Then store the string pointer and length.
 str r0,[r5,12]
