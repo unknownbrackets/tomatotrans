@@ -41,8 +41,8 @@ ldr r0,[r0,0]
 str r1,[sp,0]
 
 ; Calculate the width of the first line in that desc.
-lsl r1,r1,24
-lsr r1,r1,24
+mov r3,0xFF
+and r1,r3
 mov r2,1
 bl Calc8x8PixelWidth
 ; That kept r0 as str, but let's save r2 (pixelWidth) for later.
