@@ -5,7 +5,7 @@
 .org org(BattleMenuText) + 24
 .fill 6
 
-; Here we replace the length of 4 with 8
+; Here we replace the length of 4 with 6.
 .org 0x0804A636
 mov r6,6
 .org 0x0804A642
@@ -51,23 +51,37 @@ dw org(BattleMenuText) + 18
 
 ; Another Cool only, have to reuse an and for cmp.
 .org 0x0804090A
-; Luckily, r4 seems to be free.
-mov r4,6
+.area 0x0804091E-.,0x00
 mov r5,4
 ; This sets the Z flag, no need for another cmp.
 and r1,r5
-.org 0x0804091C
-strb r4,[r0,5]
+beq @@skipRed
+; Set color to red.
+bl 0x08071A4C
+@@skipRed:
+ldr r0,[0x08040958] ; 0x030018BC
+ldr r1,[0x0804095C] ; 0x08639BB4 (we replace this)
+str r1,[r0,12]
+mov r2,6
+strb r2,[r0,5h]
+.endarea
 .org 0x0804095C
 dw org(BattleMenuText) + 18
 
 ; Almost exactly like the above one.
 .org 0x0804DCC6
-; Very lucky we have r2 free here.
-mov r2,6
+.area 0x0804DCDA-.,0x00
 mov r4,4
 and r1,r4
-.org 0x0804DCD8
-strb r2,[r0,5]
+beq @@skipRed
+; Set color to red.
+bl 0x08071A4C
+@@skipRed:
+ldr r0,[0x0804DD04] ; 0x030018BC
+ldr r1,[0x0804DD08] ; 0x08639BB4 (we replace this)
+str r1,[r0,12]
+mov r2,6
+strb r2,[r0,5h]
+.endarea
 .org 0x0804DD08
 dw org(BattleMenuText) + 18
