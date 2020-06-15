@@ -246,8 +246,8 @@ mov r4,0
 
 @@nextChar:
 ; Pre-decrement so we can ldrb directly.  Doesn't matter if we add widths in reverse.
-sub r1,r1,1 ; Sets Z/eq on zero.
-beq @@charsDone
+sub r1,r1,1 ; Sets N/mi on negative, so we do the last one.
+bmi @@charsDone
 ldrb r2,[r0,r1]
 ; And just grab the width directly.
 ldrb r2,[r3,r2]
