@@ -38,6 +38,9 @@ dw org(GimmickText)
 db @Stride
 .org 0x0804AAD0
 db @NameLen
+; We need to force it only to clear 8, though.
+.org 0x0804AADC
+bl CopyString8x8ToVRAMClear8
 
 ; 0806AD60 is used to draw text in dialogs, but is handled in dialog_item.asm.
 ; That's called when [ITEM] is used in dialog text.

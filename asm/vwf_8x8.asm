@@ -372,7 +372,7 @@ str r3,[r7,8]
 add r2,r9
 str r2,[r7,12]
 ; All set, now we draw the string to workarea.
-bl 0x08071748
+bl CopyString8x8ToVRAM
 
 .if @@mode == 1
 	;; Grab the bytes written (accounting for VWF.)
@@ -517,6 +517,19 @@ str r3,[r2,4]
 cmp r1,0
 bne @@clearDone
 
+; Also check the flag for clear size.
+ldr r2,=MFontClearSize
+ldrb r0,[r2]
+cmp r0,0
+beq @@noClearOverride
+
+mov r6,r0
+; r1 must be zero because of the offset check above.
+; We only set this in our special replacements.
+strb r1,[r2]
+
+@@noClearOverride:
+
 ; Okay, use DMA3 to clear those bytes.
 ldr r0,=0x040000D4
 mov r1,sp
@@ -602,6 +615,14 @@ add sp,4
 pop r4-r7
 pop r0
 bx r0
-.pool
 .endfunc
+
+.func CopyString8x8ToVRAMClear8
+ldr r0,=MFontClearSize
+; Shorts to clear.
+mov r1,8*4
+strb r1,[r0]
+b CopyString8x8ToVRAM
+.endfunc
+.pool
 .endarea

@@ -8,10 +8,7 @@
 ; Sometimes we have to do something more complex when there's other text added.
 ;
 ; We also need to build an ailment message like "Nutter is asleep".
-; The game doesn't seem to use all of the WRAM in any code, so we'll use that.
-; This is also used by dialog_item.asm but they never run at the same time.
-; Make sure not to mess with it during battle.
-@WorkArea equ 0x02038000 ; length 0x30
+@WorkArea equ MBattleEnemyWorkArea
 
 ; Ailments in order: asleep, paralyzed, woke up, no longer paralyzed.
 @AilmentStride equ 0x18

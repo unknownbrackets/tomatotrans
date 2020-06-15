@@ -2,9 +2,8 @@
 ; the name is stored in a fixed size buffer at 0x0300199C in 0806B27C.
 ; We redo this to use a different buffer.
 
-; The game doesn't seem to use all of the WRAM in any code, so we'll use that.
 ; This is also used in battle_enemies.asm, but they never run at the same time.
-@WorkArea equ 0x02038000
+@WorkArea equ MBattleEnemyWorkArea
 
 ; This touches items, clothes/equipment, and gimmicks.
 ; It can also show a count received, if more than one.  We change that too, since
