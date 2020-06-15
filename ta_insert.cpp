@@ -22,10 +22,11 @@ int        tableLen = 0;
 void 		  LoadTable(void);
 void          PrepString(char[], char[], int);
 unsigned char ConvChar(unsigned char);
-int ConvComplexString(char s[], bool spaceIsZero);
+int ConvComplexString(char *s, size_t availLen, bool stripNewline);
 int CompileCC(const char *str, int len, int &pos, unsigned char *dest);
 int DetectScriptLen(const char *str, int maxLen);
-void ForceTranslateComplex(char *str, int len);
+// Modifies stringID.
+void ForceTranslateComplex(char *str, int len, char *stringID);
 int           CharToHex(char);
 unsigned int  hstrtoi(char*);
 uint32_t UpdatePointers(const std::vector<uint32_t> &list, int loc, FILE *fout);
@@ -157,7 +158,9 @@ uint32_t InsertMainScript(FILE *fout, uint32_t &afterTextPos)
 				fread(pendingString, 1, 4999, fout);
 
 				int len = DetectScriptLen(pendingString, 4999);
-				ForceTranslateComplex(pendingString, len);
+				char stringID[16];
+				sprintf(stringID, "S%03X", i);
+				ForceTranslateComplex(pendingString, len, stringID);
 
 				// So we can test insertion works, insert as a "new" string.
 				uint32_t forceLoc = InsertString(fout, pendingString, len, len, afterTextPos);
@@ -168,11 +171,8 @@ uint32_t InsertMainScript(FILE *fout, uint32_t &afterTextPos)
 				return;
 		}
 
-		// ConvComplexString expects a newline...
-		pendingString[pendingPos++] = '\n';
-		pendingString[pendingPos] = 0;
-
-		int len = ConvComplexString(pendingString, false);
+		pendingString[pendingPos] = '\0';
+		int len = ConvComplexString(pendingString, sizeof(pendingString), false);
 		// Ensure it has an END at the END, they should always.
 		if (len < 2 || pendingString[len - 2] != (char)0xFF || pendingString[len - 1] != 0x00) {
 			pendingString[len++] = (char)0xFF;
@@ -236,10 +236,10 @@ uint32_t InsertMainScript(FILE *fout, uint32_t &afterTextPos)
 
 //=================================================================================================
 
-int ConvComplexString(char str[5000], bool spaceIsZero)
+int ConvComplexString(char *str, size_t availLen, bool stripNewline)
 {
 	unsigned char newStr[5000];
-	int len = strlen(str) - 1; // minus one to take out the newline
+	int len = strlen(str) - (stripNewline ? 1 : 0);
 	int newLen = 0;
 	for (int counter = 0; counter < len; ++counter)
 	{
@@ -249,14 +249,14 @@ int ConvComplexString(char str[5000], bool spaceIsZero)
 			int streamLen = CompileCC(str, len, counter, newStr + newLen);
 			newLen += streamLen;
 		}
-		else if (str[counter] == ' ' && spaceIsZero)
+		else if (str[counter] == ' ')
 			newStr[newLen++] = '\0';
 		else
 			newStr[newLen++] = ConvChar(str[counter]);
 	}
 
 	memcpy(str, newStr, newLen);
-	memset(str + newLen, '\0', 5000 - newLen);
+	memset(str + newLen, '\0', availLen - newLen);
 
 	return newLen;
 }
@@ -872,7 +872,11 @@ uint32_t InsertEnemies(FILE *fout, uint32_t &afterTextPos)
 			fread(str2, 1, 8, fout);
 			int len = DetectFixedLen(str2, 8);
 			if (forceAll)
-				ForceTranslateComplex(str2, 8);
+			{
+				char stringID[16];
+				sprintf(stringID, "%c:%06X", state == 2 ? 'A' : 'E', i);
+				ForceTranslateComplex(str2, 8, stringID);
+			}
 
 			uint32_t pos = InsertString(fout, str2, len, len, afterTextPos);
 
@@ -890,7 +894,7 @@ uint32_t InsertEnemies(FILE *fout, uint32_t &afterTextPos)
 		states |= state;
 
 		PrepString(str, str2, 5);
-		int len = ConvComplexString(str2, true);
+		int len = ConvComplexString(str2, sizeof(str2), true);
 		if (len > 24)
 		{
 			printf("Enemy name too long: %s\n", str);
@@ -906,7 +910,11 @@ uint32_t InsertEnemies(FILE *fout, uint32_t &afterTextPos)
 			fread(str2, 1, 8, fout);
 			len = DetectFixedLen(str2, 8);
 			if (forceAll)
-				ForceTranslateComplex(str2, 8);
+			{
+				char stringID[16];
+				sprintf(stringID, "%c:%06X", state == 2 ? 'A' : 'E', i);
+				ForceTranslateComplex(str2, 8, stringID);
+			}
 		}
 
 		uint32_t pos = InsertString(fout, str2, len, len, afterTextPos);
@@ -933,7 +941,11 @@ uint32_t InsertEnemies(FILE *fout, uint32_t &afterTextPos)
 			fread(str2, 1, 8, fout);
 			int len = DetectFixedLen(str2, 8);
 			if (forceAll)
-				ForceTranslateComplex(str2, 8);
+			{
+				char stringID[16];
+				sprintf(stringID, "%c:%06X", state == 2 ? 'A' : 'E', i);
+				ForceTranslateComplex(str2, 8, stringID);
+			}
 
 			uint32_t pos = InsertString(fout, str2, len, len, afterTextPos);
 			fseek(fout, nameAddress, SEEK_SET);
@@ -971,8 +983,10 @@ int DetectScriptLen(const char *str, int maxLen)
 	return maxLen;
 }
 
-void ForceTranslateComplex(char *s, int len)
+void ForceTranslateComplex(char *s, int len, char *stringID)
 {
+	int stringIDLen = ConvComplexString(stringID, strlen(stringID) + 1, false);
+
 	unsigned char *str = (unsigned char *)s;
 	// Isn't "machine translation" great?
 	for (int i = 0; i < len; ++i)
@@ -1009,7 +1023,13 @@ void ForceTranslateComplex(char *s, int len)
 		}
 
 		// And finally, our amazing translation algorithm.
-		str[i] = 1;
+		if (stringIDLen > 0)
+		{
+			str[i] = *stringID++;
+			stringIDLen--;
+		}
+		else
+			str[i] = 1;
 	}
 }
 
@@ -1086,7 +1106,7 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 				fgets(str, 5000, fin);
 				PrepString(str, str2, 5);
 
-				len = ConvComplexString(str2, true);
+				len = ConvComplexString(str2, sizeof(str2), true);
 				if (len > maxLen)
 				{
 					printf("too long: %s\n", str);
@@ -1099,7 +1119,11 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 					fseek(fout, origAddress + i * origLen, SEEK_SET);
 					len = (int)fread(str2, 1, origLen, fout);
 					if (forceAll)
-						ForceTranslateComplex(str2, len);
+					{
+						char stringID[16];
+						sprintf(stringID, "%d:%06X", i, address);
+						ForceTranslateComplex(str2, len, stringID);
+					}
 				}
 
 				InsertStringAt(fout, str2, len, maxLen, blockPos);
@@ -1118,7 +1142,7 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 
 			fgets(str, 5000, fin);
 			PrepString(str, str2, 5);
-			len = ConvComplexString(str2, true);
+			len = ConvComplexString(str2, sizeof(str2), true);
 
 			if (maxLen != 0 && len > maxLen)
 			{
@@ -1135,12 +1159,15 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 			}
 			else if (forceAll)
 			{
+				char stringID[16];
+				sprintf(stringID, "%06X", address);
+
 				fseek(fout, address, SEEK_SET);
 				uint32_t oldPos = 0;
 				ReadLE32(fout, oldPos);
 				fseek(fout, oldPos & ~0x08000000, SEEK_SET);
 				fread(str2, 1, maxLen, fout);
-				ForceTranslateComplex(str2, maxLen);
+				ForceTranslateComplex(str2, maxLen, stringID);
 
 				// Simulate insertion.
 				uint32_t pos = InsertString(fout, str2, len, maxLen, afterTextPos);
@@ -1159,7 +1186,7 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 
 			fgets(str, 5000, fin);
 			PrepString(str, str2, 5);
-			len = ConvComplexString(str2, true);
+			len = ConvComplexString(str2, sizeof(str2), true);
 
 			if (maxLen != 0 && len > maxLen)
 			{
@@ -1198,6 +1225,9 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 			}
 			else if (forceAll)
 			{
+				char stringID[16];
+				sprintf(stringID, "%06X", address);
+
 				fseek(fout, sizeAddress, SEEK_SET);
 				int oldLen = fgetc(fout);
 
@@ -1207,7 +1237,7 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 
 				fseek(fout, oldPtr & ~0x08000000, SEEK_SET);
 				fread(str2, 1, maxLen, fout);
-				ForceTranslateComplex(str2, maxLen);
+				ForceTranslateComplex(str2, maxLen, stringID);
 
 				InsertStringAt(fout, str2, oldLen, oldLen, oldPtr & ~0x08000000);
 				insertions++;
@@ -1225,7 +1255,7 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 			{
 				fgets(str, 5000, fin);
 				PrepString(str, str2, 5);
-				len = ConvComplexString(str2, true);
+				len = ConvComplexString(str2, sizeof(str2), true);
 
 				if (len > newLen)
 				{
@@ -1239,7 +1269,11 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 					fseek(fout, oldAddress + i * oldStride, SEEK_SET);
 					len = (int)fread(str2, 1, oldLen, fout);
 					if (forceAll)
-						ForceTranslateComplex(str2, len);
+					{
+						char stringID[16];
+						sprintf(stringID, "%d:%06X", i, newAddress);
+						ForceTranslateComplex(str2, len, stringID);
+					}
 				}
 
 				InsertStringAt(fout, str2, len, newLen, newAddress + i * newStride);
@@ -1258,7 +1292,7 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 			{
 				fgets(str, 5000, fin);
 				PrepString(str, str2, 5);
-				len = ConvComplexString(str2, true);
+				len = ConvComplexString(str2, sizeof(str2), true);
 
 				if (len > maxLen)
 				{
@@ -1276,7 +1310,11 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 					len = (int)fread(str2, 1, maxLen, fout);
 					len = DetectScriptLen(str2, len);
 					if (forceAll)
-						ForceTranslateComplex(str2, len);
+					{
+						char stringID[16];
+						sprintf(stringID, "%d:%06X", i, address);
+						ForceTranslateComplex(str2, len, stringID);
+					}
 				}
 
 				uint32_t pos = InsertString(fout, str2, len, len, afterTextPos);
@@ -1302,7 +1340,7 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 				//for (int j = 0; j < strlen(str2); j++)
 				//	printf("%c ", str2[j]);
 
-				len = ConvComplexString(str2, false);
+				len = ConvComplexString(str2, sizeof(str2), true);
 				if (len > maxLen)
 				{
 					printf("too long: %s\n", str);
@@ -1316,9 +1354,12 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 				}
 				else if (forceAll)
 				{
+					char stringID[16];
+					sprintf(stringID, "%d:%06X", i, address);
+
 					fseek(fout, address + maxLen * i, SEEK_SET);
 					fread(str2, 1, maxLen, fout);
-					ForceTranslateComplex(str2, len);
+					ForceTranslateComplex(str2, len, stringID);
 
 					fseek(fout, address + maxLen * i, SEEK_SET);
 					fwrite(str2, 1, maxLen, fout);
