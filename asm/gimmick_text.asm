@@ -95,7 +95,7 @@ add r1,r1,r0
 mov r0,r6
 bl 0x080F954C
 
-; The game use this zero later...
+; The game uses this zero later...
 mov r0,0
 mov r8,r0
 
