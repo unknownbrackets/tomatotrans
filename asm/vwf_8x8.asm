@@ -262,7 +262,7 @@ mov r1,r12
 mov r2,r4
 
 ; And calculate the approx tile width.
-add r3,r0,7
+add r3,r2,7
 lsr r3,r3,3
 
 @@return:
@@ -439,6 +439,21 @@ mov r8,r5
 pop r4-r7
 pop r3
 bx r3
+.endfunc
+
+; Clear width in r0, pixel width in r2.
+.func CopyString8x8CenterR0
+
+ldr r1,=MFontClearSize
+; Multiply by 8 to get pixel clear width.
+lsl r3,r0,3
+sub r3,r3,r2
+lsr r3,r3,1
+; Okay, now put that in the x override.
+strb r3,[r1,MFontXOffset-MFontClearSize]
+
+ldr r3,=CopyString8x8ClearR0+1
+bx r3
 .pool
 .endfunc
 .endarea
@@ -499,7 +514,7 @@ add r3,3
 bic r3,r0
 ; r1 is still 0 from above, that will be x also.
 
-; Since we're clearing, let's just assume we have at most 0x1A tiles of space.
+; Since we're clearing, let's just assume we have at most 0x1C tiles of space.
 ; The VWF makes longer strings take less than 32 bytes each char, so this may still be too much.
 mov r5,0x1C
 cmp r7,r5
@@ -509,40 +524,44 @@ mov r5,r7
 lsl r6,r5,4
 
 @@alignDone:
-; Now store that as the starting xpos and store the dest.
-strb r1,[r2,12]
+; Now store the dest.
 str r3,[r2,4]
 
 ; Skip clearing if we draw at an offset, it's already been cleared.
 cmp r1,0
 bne @@clearDone
 
-; Also check the flag for clear size.
-ldr r2,=MFontClearSize
-ldrb r0,[r2]
+; Check our override flags.  First, clear size.
+ldr r5,=MFontClearSize
+ldrh r0,[r5,0]
+
 cmp r0,0
 beq @@noClearOverride
-
 mov r6,r0
+@@noClearOverride:
+
+ldrb r0,[r5,MFontXOffset-MFontClearSize]
 ; r1 must be zero because of the offset check above.
 ; We only set this in our special replacements.
-strb r1,[r2]
-
-@@noClearOverride:
+str r1,[r5]
+; Now we can add to xpos, since this will change r1 from zero.
+add r1,r0
 
 ; Okay, use DMA3 to clear those bytes.
 ldr r0,=0x040000D4
-mov r1,sp
-str r1,[r0,0]
+mov r5,sp
+str r5,[r0,0]
 str r3,[r0,4]
-mov r1,0x81
-lsl r1,r1,24
+mov r5,0x81
+lsl r5,r5,24
 ; We put the shorts to clear in r6.
-orr r1,r6
-str r1,[r0,8]
-ldr r1,[r0,8]
+orr r5,r6
+str r5,[r0,8]
+ldr r5,[r0,8]
 
 @@clearDone:
+; Now store that as the starting xpos and store the dest.
+strb r1,[r2,12]
 
 ldr r5,=0x03000604
 ldr r6,=0x03000608
@@ -591,8 +610,7 @@ sub r7,r7,1
 lsl r0,r7,24
 lsr r0,r0,24
 
-; This is a straight bx r14, but let's call it anyway.
-bl 0x0802FEF0
+; There was a call to 0802FEF0 here, but it's just a straight bx r14.
 
 ldr r1,=0x03000600
 strh r0,[r1]
@@ -617,15 +635,17 @@ pop r0
 bx r0
 .endfunc
 
-.func CopyString8x8ToVRAMClear8
+; Forces clear to 8, which is common.
+.func CopyString8x8Clear8
 mov r0,8
-; Fall through to CopyString8x8ToVRAMClearR0.
+; Fall through to CopyString8x8ClearR0.
 .endfunc
-.func CopyString8x8ToVRAMClearR0
+; This allows quick specification of clear width.
+.func CopyString8x8ClearR0
 ldr r1,=MFontClearSize
 ; Shorts to clear.
-lsl r0,r0,2
-strb r0,[r1]
+lsl r0,r0,4
+strh r0,[r1]
 b CopyString8x8ToVRAM
 .endfunc
 .pool

@@ -11,4 +11,5 @@
 ; Some places need RAM for temporary storage.
 ; The game doesn't seem to use all of the WRAM in any code, so we'll use that.
 MBattleEnemyWorkArea equ 0x02038000 ; length 0x30
-MFontClearSize equ 0x02038030 ; length 0x01
+MFontClearSize equ 0x02038030 ; length 0x2
+MFontXOffset equ 0x02038032 ; length 0x2

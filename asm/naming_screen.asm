@@ -142,6 +142,19 @@ dh 0xF005, 0xF005, 0xF005, 0xF005, 0xF005
 nop
 nop
 
+; Need to update the message when English is selected.
+.org 0x0802E4EE
+sub r0,r0,1
+; And always show the space on our space.
+.org 0x0802E548
+b 0x802E54E
+
+; And also need to adjust the arrow position.
+.org 0x0802E794
+mov r0,0xA6
+.org 0x0802E780
+mov r0,0x85
+
 .org 0x0802D220
 .area 0x0802D2F0-.,0x00
 .func NamingScreenUpdateButtons
@@ -287,6 +300,68 @@ bl 0x0802FD58
 sub r6,r6,1 ; Sets Z/eq on zero.
 bne @@nextTile
 
+pop r4-r6,r15
+.pool
+.endfunc
+.endarea
+
+.org 0x0802E578
+.area 0x0802E5DC-.,0x00
+.func NameScreenUpdateMessage
+push r4-r6,r14
+; Font drawing params.
+ldr r4,=0x030018BC
+; These are the naming screen params, 11 is the current message.
+ldr r2,=0x03001AE5
+ldrb r0,[r2,11]
+
+; This is the new message to set.
+ldrb r1,[r4,4]
+cmp r0,r1
+beq @@skip
+
+; Update the current message.
+strb r1,[r2,11]
+
+ldr r0,=@MessageText
+; Probably too much space, but easier than multiplying.
+lsl r1,r1,5
+add r0,r1
+
+; Let's figure out how long that is, to center it.
+mov r1,32
+mov r2,1
+bl Calc8x8PixelWidth
+; We still have str in r0, r1 is now actual length, and r2 pixel width.
+strb r1,[r4,5]
+str r0,[r4,12]
+
+; Our temp buffer for drawing.
+ldr r5,=0x030041DC
+str r5,[r4,8]
+
+; Actual clear size, we'll let this center for us based on r2.
+mov r0,18
+bl CopyString8x8CenterR0
+
+; It's nicely centered in those 18 blocks, time to copy to screen.
+mov r0,0x90
+lsl r0,r0,2
+strh r0,[r4,4]
+str r5,[r4,8]
+
+ldr r0,=0x04000008
+ldrh r1,[r0]
+; Check the correct BG charblock.
+mov r0,0x000C
+and r0,r1
+lsl r0,r0,12
+ldr r1,=0x06002880
+add r0,r1
+str r0,[r4,12]
+bl 0x0806B4B4
+
+@@skip:
 pop r4-r6,r15
 .pool
 .endfunc

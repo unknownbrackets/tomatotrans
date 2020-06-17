@@ -1421,6 +1421,17 @@ BLOCKSTART 7F183E 08 04
 02-E:Default
 03-E:OK
 
+RESTRUCT 62C188 12 12 7F185E 20 20 09
+00-E:Please enter a name
+01-E:Use uppercase letters
+02-E:
+03-E:Use lowercase letters
+04-E:Reset to the default name
+05-E:Pick this name
+06-E:Are you sure?   Yes   No
+07-E:Add a blank space
+08-E:Someone has that name
+
 POINTERLIST 649A08 04 24 30
 00-E:[CENTER_H]Spill[PAUSE 14][END]
 01-E:[CENTER_H]Forest[PAUSE 14][END]
