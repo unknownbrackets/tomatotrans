@@ -618,10 +618,14 @@ bx r0
 .endfunc
 
 .func CopyString8x8ToVRAMClear8
-ldr r0,=MFontClearSize
+mov r0,8
+; Fall through to CopyString8x8ToVRAMClearR0.
+.endfunc
+.func CopyString8x8ToVRAMClearR0
+ldr r1,=MFontClearSize
 ; Shorts to clear.
-mov r1,8*4
-strb r1,[r0]
+lsl r0,r0,2
+strb r0,[r1]
 b CopyString8x8ToVRAM
 .endfunc
 .pool

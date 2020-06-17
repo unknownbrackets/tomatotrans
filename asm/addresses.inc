@@ -5,7 +5,8 @@
 .definelabel ItemTextDesc,0x087F12AE ; length 0x0330
 .definelabel ClothesText,0x087F15DE ; length 0x0200
 .definelabel EnemyAilmentsText,0x087F17DE ; length 0x0060
-; Next at 0x087F183E.
+.definelabel NamingScreenText,0x087F183E ; length 0x0140
+; Next at 0x087F197E.
 
 ; Some places need RAM for temporary storage.
 ; The game doesn't seem to use all of the WRAM in any code, so we'll use that.

@@ -1414,6 +1414,13 @@ BLOCKSTART 639CB1 06 01
 BLOCKSTART 639CB7 08 01
 00-J:Got away
 
+# This is different text for the naming screen.
+BLOCKSTART 7F183E 08 04
+00-E:Lower
+01-E:Upper
+02-E:Default
+03-E:OK
+
 POINTERLIST 649A08 04 24 30
 00-E:[CENTER_H]Spill[PAUSE 14][END]
 01-E:[CENTER_H]Forest[PAUSE 14][END]

@@ -28,4 +28,7 @@
 ; Allow longer item names and format as "#x Foo" for multiple.
 .include "asm/dialog_item.asm"
 
+; Use English uppercase/lowercase in the naming screen.
+.include "asm/naming_screen.asm"
+
 .close
