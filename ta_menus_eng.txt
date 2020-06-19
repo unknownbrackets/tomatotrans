@@ -1364,6 +1364,10 @@ RESTRUCT 632E14 08 08 7F17DE 18 18 04
 00-E:
 00-E:
 
+# Could be made longer, but slight trickiness to it.
+BLOCKSTART 639BB4 04 01
+00-J:Cool
+
 RESTRUCT 639558 1A 1A 7F12AE 30 30 11
 00-J:Restores 20 HP
 01-J:Restores 60 HP
