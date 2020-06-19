@@ -3,6 +3,9 @@
 
 .include "asm/addresses.inc"
 
+; Game bugfix for saving in no$gba.  Possibly an emulator bug.
+.include "asm/bug_nocash.asm"
+
 ; Required for the menu VWF fixes below to work.
 .include "asm/fontmap.asm"
 .include "asm/vwf_8x8.asm"
