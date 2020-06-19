@@ -155,6 +155,7 @@ mov r0,0xA6
 .org 0x0802E780
 mov r0,0x85
 
+; This draws the buttons to the right of the letters.
 .org 0x0802D220
 .area 0x0802D2F0-.,0x00
 .func NamingScreenUpdateButtons
@@ -305,6 +306,8 @@ pop r4-r6,r15
 .endfunc
 .endarea
 
+; This updates the message below the keyboard.
+; We alter to support our new keyboard numbers and layout.
 .org 0x0802E578
 .area 0x0802E5DC-.,0x00
 .func NameScreenUpdateMessage
@@ -363,6 +366,70 @@ bl 0x0806B4B4
 
 @@skip:
 pop r4-r6,r15
+.pool
+.endfunc
+.endarea
+
+; This function draws the cursor after the name.
+.org 0x0802E2CC
+.area 0x0802E344-.,0x00
+.func NamingScreenUpdateCursor
+push r4,r14
+; Utility parameters.
+ldr r4,=0x030018BC
+
+; Check the current frame number (I suspect) to make the cursor blink.
+ldr r0,=0x030018D6
+ldrh r0,[r0]
+mov r1,0x10
+tst r0,r1
+bne @@disableCursor
+
+; Naming screen parameters.
+ldr r3,=0x03001AE5
+; Let's check if we're in the Yes/No confirmation select - hide the cursor if so.
+ldrb r0,[r3,2]
+cmp r0,0xFF
+bne @@disableCursor
+
+; Okay, grab the current name length.  Decrease if we're at the end.
+ldrb r1,[r3,4]
+.ifdef NameMaxLength
+	cmp r1,NameMaxLength
+.else
+	cmp r1,4
+.endif
+blo @@skipDecrement
+sub r1,r1,1
+@@skipDecrement:
+
+; This buffer has the string so far.
+ldr r0,=0x0300199C
+mov r2,0
+bl Calc8x8PixelWidth
+
+; r2 now has the actual pixel width.  Add the start offset.
+add r2,0x69
+strb r2,[r4,4]
+mov r0,9
+strb r0,[r4,5]
+mov r0,0xF0
+strb r0,[r4,9]
+mov r0,0x90
+strb r0,[r4,8]
+mov r0,0
+b @@drawCursor
+
+@@disableCursor:
+mov r0,0
+strh r0,[r4,4]
+strh r0,[r4,8]
+
+@@drawCursor:
+strb r0,[r4,1]
+bl 0x0806A3B0
+
+pop r4,r15
 .pool
 .endfunc
 .endarea
