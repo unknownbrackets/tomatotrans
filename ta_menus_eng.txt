@@ -687,10 +687,10 @@ BLOCKFIXED 4904D8 04 01
 00-E:DEF
 
 # This is centered originally, lining up the Yes/No.
-BLOCKFIXED 4904E0 1C 03 1A
+BLOCKFIXED 4904E0 1C 03
 00-E:[EF][EF][EF][EF][EF][EF][EF][EF][EF]Put this on?
 01-E: 
-02-E:[EF][EF][EF][EF][EF][EF][EF][EF][EF][EF]Yes[EF][EF] No
+02-E:[EF][EF][EF][EF][EF][EF][EF][EF][EF][EF]Yes[EF][EF] No[EF]
 
 BLOCKFIXED 4904E8 0C 02
 00-E:L/R: Adjust
