@@ -89,7 +89,8 @@ b @@nameReady
 
 @@gimmick:
 ; The game called 0x0806AD60 here, but there's no need.
-lsl r0,r0,5
+bic r0,r1
+lsl r0,r0,6
 ldr r1,=GimmickText - 0x40
 mov r4,0x10
 
