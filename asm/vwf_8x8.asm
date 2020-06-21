@@ -226,6 +226,7 @@ push r4
 cmp r2,0
 beq @@lengthReady
 
+; Keeping this inline to avoid extra stack usage in case important...
 @@shorter:
 ; Okay, let's assume it's too long and check.
 sub r1,r1,1 ; Sets Z/eq on zero.
@@ -273,6 +274,28 @@ mov r2,0
 mov r3,0
 b @@return
 .endfunc
+
+; Get the length without trailing spaces.  This uses r0/r1.
+; The game uses a func for this but it takes more bytes to prep and use.
+; Args: const char *str, uint8_t maxLen
+; Result struct: r0=str, r1=strLen
+.func CalcFixedStringLength
+@@shorter:
+; Okay, let's assume it's too long and check.
+sub r1,r1,1 ; Sets Z/eq on zero.
+bls @@tooShort
+ldrb r2,[r0,r1]
+cmp r2,0
+beq @@shorter
+
+; At this point, r1 is one too short.
+add r1,r1,1
+bx r14
+
+@@tooShort:
+mov r1,0
+bx r14
+.endfunc
 .endarea
 
 
@@ -296,42 +319,11 @@ mov r4,0xFF
 and r2,r4
 and r4,r0
 
-; Save dest and str which we'll need later, about to make a call.
+; With the below, saved regs: (sp+0x20 still has blockSize...)
+; r4=index, r5=FREE, r6=FREE, r7=FREE, r8=FREE, r9=str, r10=dest
 mov r10,r1
 mov r9,r3
-; About to call some funcs, saved regs: (sp+0x20 still has blockSize...)
-; r4=index, r5=FREE, r6=FREE, r7=FREE, r8=FREE, r9=str, r10=dest
-
-cmp r2,1
-beq @@handleColor1
-bgt @@handleColors23
-cmp r2,0
-beq @@handleColorWhite
-b @@colorDone
-
-@@handleColors23:
-cmp r2,2
-beq @@handleColorGray
-cmp r2,3
-beq @@handleColorRed
-b @@colorDone
-
-@@handleColorWhite:
-bl 0x08071A20
-b @@colorDone
-
-@@handleColor1:
-bl 0x08071A38
-b @@colorDone
-
-@@handleColorGray:
-bl 0x08071A60
-b @@colorDone
-
-@@handleColorRed:
-bl 0x08071A4C
-
-@@colorDone:
+bl Draw8x8StrSetColorModeR2
 
 ; Low byte of blockSize is w, next byte is h.  Just read as bytes.
 add r5,sp,0x20
@@ -339,7 +331,15 @@ ldrb r6,[r5,0]
 ldrb r7,[r5,1]
 .if @@mode == 2
 	ldrb r5,[r5,2]
+	cmp r5,0
+	bne @@clearSet
+	mov r5,r6
+	@@clearSet:
 .endif
+
+; If height is 0, we're wasting our time.
+cmp r7,0
+beq @@skipDrawing
 
 ; Offset string by w*h*i to get the ith entry.
 mul r4,r6
@@ -348,10 +348,8 @@ add r9,r4
 ; We only need h for cmp now, so free a low reg.
 mov r8,r7
 
-; If height is 0, we're wasting our time.
+; This is now our y within height.
 mov r4,0
-cmp r8,r4
-beq @@skipDrawing
 
 .if @@mode == 1
 	; Track what this mode needs: max xpos (actually bytes.)
@@ -361,18 +359,30 @@ beq @@skipDrawing
 ldr r7,=0x030018BC
 
 @@drawNextLine:
-strb r6,[r7,5]
-mov r2,r6
-mul r2,r4
+mov r0,r6
+mul r0,r4
 ; Offset workarea by y * w * 32 bytes.
 ldr r1,=0x030041DC
-lsl r3,r2,5
+lsl r3,r0,5
 add r3,r1
 str r3,[r7,8]
-add r2,r9
-str r2,[r7,12]
-; All set, now we draw the string to workarea.
-bl CopyString8x8ToVRAM
+
+add r0,r9
+str r0,[r7,12]
+
+.if @@mode == 2
+	; We're clearing anyway, so the spaces might only run over.
+	mov r1,r6
+	bl CalcFixedStringLength
+	strb r1,[r7,5]
+
+	mov r0,r5
+	bl CopyString8x8ClearR0
+.else
+	strb r6,[r7,5]
+	; All set, now we draw the string to workarea.
+	bl CopyString8x8ToVRAM
+.endif
 
 .if @@mode == 1
 	;; Grab the bytes written (accounting for VWF.)
@@ -400,10 +410,7 @@ ldr r1,=0x040000D4
 	lsr r5,r5,3
 .elseif @@mode == 2
 	; In this mode, when r5 is not 0, override the max length.
-	lsl r5,r5,3 ; Sets Z=1 if zero.
-	bne @@haveOverride
-	lsl r5,r6,3
-	@@haveOverride:
+	lsl r5,r5,3
 .endif
 mov r2,0x84
 lsl r2,r2,24
@@ -441,6 +448,41 @@ pop r3
 bx r3
 .endfunc
 
+; Helper function for our drawing, this is inlined originally.
+; Args: uint8_t index (ignored), void *dest (ignored), uint8_t color
+.func Draw8x8StrSetColorModeR2
+push r14
+cmp r2,1
+beq @@handleColor1
+bgt @@handleColors23
+cmp r2,0
+beq @@handleColorWhite
+pop r15
+
+@@handleColors23:
+cmp r2,2
+beq @@handleColorGray
+cmp r2,3
+beq @@handleColorRed
+pop r15
+
+@@handleColorWhite:
+bl 0x08071A20
+pop r15
+
+@@handleColor1:
+bl 0x08071A38
+pop r15
+
+@@handleColorGray:
+bl 0x08071A60
+pop r15
+
+@@handleColorRed:
+bl 0x08071A4C
+pop r15
+.endfunc
+
 ; Clear width in r0, pixel width in r2.
 .func CopyString8x8CenterR0
 
@@ -453,6 +495,109 @@ lsr r3,r3,1
 strb r3,[r1,MFontXOffset-MFontClearSize]
 
 ldr r3,=CopyString8x8ClearR0+1
+bx r3
+.pool
+.endfunc
+.endarea
+
+; This is another function that draws indexed fixed strings, but without DMA3 transfer.
+; blockSize actually has the full 32 bits in the ROM, which we take advantage of.
+; Note: the original version of this func had a bug which broke it for multi-line strings,
+; which is probably why it was never used for them.  This also fixes that bug.
+.org 0x080749B8
+.area 0x08074A68-.,0x00
+; Args: uint8_t index, void *dest, uint8_t color, const char *str, uint16_t blockSize
+.func Draw8x8FixedStrIndexedToVRAM
+push r4-r7,r14
+mov r4,r8
+mov r5,r9
+mov r6,r10
+push r4-r6
+; At this point blockSize is at sp + 0x20.
+
+; Customization mode: 0=original, 2=from blockSize
+@@mode equ 2
+
+; Truncate r2 (color) and then truncate-and-move index to r4.
+mov r4,0xFF
+and r2,r4
+and r4,r0
+
+; With the below, saved regs: (sp+0x20 still has blockSize...)
+; r4=index, r5=FREE, r6=FREE, r7=FREE, r8=FREE, r9=str, r10=dest
+mov r10,r1
+mov r9,r3
+bl Draw8x8StrSetColorModeR2
+
+; Low byte of blockSize is w, next byte is h.  Just read as bytes.
+add r5,sp,0x20
+ldrb r6,[r5,0]
+ldrb r7,[r5,1]
+.if @@mode == 2
+	ldrb r5,[r5,2]
+	cmp r5,0
+	bne @@clearSet
+	mov r5,r6
+	@@clearSet:
+.endif
+
+; If height is 0, we're wasting our time.
+cmp r7,0
+beq @@skipDrawing
+
+; Offset string by w*h*i to get the ith entry.
+mul r4,r6
+mul r4,r7
+add r9,r4
+; We only need h for cmp now, so free a low reg.
+mov r8,r7
+
+; This is now our y within height.
+mov r4,0
+
+; Font drawing parameters are set here.
+ldr r7,=0x030018BC
+
+@@drawNextLine:
+lsl r0,r4,10
+add r0,r10
+str r0,[r7,8]
+
+mov r0,r6
+mul r0,r4
+add r0,r9
+str r0,[r7,12]
+
+.if @@mode == 2
+	; We're clearing anyway, so the spaces might only run over.
+	mov r1,r6
+	bl CalcFixedStringLength
+	strb r1,[r7,5]
+
+	mov r0,r5
+	bl CopyString8x8ClearR0
+.else
+	strb r6,[r7,5]
+	; All set, now we draw the string to workarea.
+	bl CopyString8x8ToVRAM
+.endif
+
+add r4,r4,1
+cmp r4,r8
+blo @@drawNextLine
+
+; No DMA3 transfer needed here, we're done.
+
+@@skipDrawing:
+; Restore color to white.
+bl 0x08071A20
+
+pop r4-r6
+mov r10,r6
+mov r9,r5
+mov r8,r4
+pop r4-r7
+pop r3
 bx r3
 .pool
 .endfunc
@@ -566,6 +711,9 @@ strb r1,[r2,12]
 ldr r5,=0x03000604
 ldr r6,=0x03000608
 
+cmp r7,0
+beq @@done
+
 @@nextChar:
 ; The old code saves/restores len in 03000608, we just keep it in r7.
 ; Nothing we call reads it from there.
@@ -604,19 +752,13 @@ str r2,[r4,12]
 str r0,[r5]
 
 @@skipCharDraw:
-; One less char left.  We mask 0xFF in case it started with 0 and becomes -1.
-; That'd be a bug anyway, but I'd rather not break worse than the original code.
-sub r7,r7,1
-lsl r0,r7,24
-lsr r0,r0,24
-
+; One less char left.
+sub r7,r7,1 ; Sets flags for gt on the result.
 ; There was a call to 0802FEF0 here, but it's just a straight bx r14.
+bgt @@nextChar
 
 ldr r1,=0x03000600
-strh r0,[r1]
-
-cmp r0,0
-bne @@nextChar
+strh r7,[r1]
 
 @@done:
 ; Grab the final x position.
