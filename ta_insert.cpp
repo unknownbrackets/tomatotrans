@@ -1306,7 +1306,7 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 					uint32_t oldPointer = 0;
 					fseek(fout, address + i * stride, SEEK_SET);
 					ReadLE32(fout, oldPointer);
-					fseek(fout, oldPointer, SEEK_SET);
+					fseek(fout, oldPointer & ~ 0x08000000, SEEK_SET);
 					len = (int)fread(str2, 1, maxLen, fout);
 					len = DetectScriptLen(str2, len);
 					if (forceAll)
