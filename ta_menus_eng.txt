@@ -1359,10 +1359,10 @@ RESTRUCT 63146C 08 10 7F15DE 10 10 20
 1F-E:Plt.Cape
 
 RESTRUCT 632E14 08 08 7F17DE 18 18 04
-00-E:
-00-E:
-00-E:
-00-E:
+00-E: is asleep
+00-E: is paralyzed
+00-E: woke up
+00-E:'s paralysis wore off
 
 # Could be made longer, but slight trickiness to it.
 BLOCKSTART 639BB4 04 01
