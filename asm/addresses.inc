@@ -6,10 +6,12 @@
 .definelabel ClothesText,0x087F15DE ; length 0x0200
 .definelabel EnemyAilmentsText,0x087F17DE ; length 0x0060
 .definelabel NamingScreenText,0x087F183E ; length 0x0140
-; Next at 0x087F197E.
+.definelabel DefaultNamesText,0x087F1980 ; length 0x0020
+; Next at 0x087F19A0.
 
 ; Some places need RAM for temporary storage.
 ; The game doesn't seem to use all of the WRAM in any code, so we'll use that.
 MBattleEnemyWorkArea equ 0x02038000 ; length 0x30
 MFontClearSize equ 0x02038030 ; length 0x2
 MFontXOffset equ 0x02038032 ; length 0x2
+MLongCharNameWorkArea equ 0x02038034 ; length 0x0008

@@ -27,11 +27,13 @@
 ; Updates for the menu options and descriptions.
 .include "asm/menu.asm"
 .include "asm/menu_gimmicks.asm"
+.include "asm/menu_friends.asm"
 
 ; Allow longer item names and format as "#x Foo" for multiple.
 .include "asm/dialog_item.asm"
 
 ; Use English uppercase/lowercase in the naming screen.
 .include "asm/naming_screen.asm"
+.include "asm/name_long.asm"
 
 .close

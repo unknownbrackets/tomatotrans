@@ -20,11 +20,15 @@ add r7,r1,r2
 lsl r2,8
 add r7,r2
 
-; Multiply r0 (charNumber) by 96 to get offset into char data, and save in r5.
-; (x * 2 + x) * 32 = x * 96
-lsl r5,r0,1
-add r5,r0
-lsl r5,r5,5
+.ifndef NameMaxLength
+	; Multiply r0 (charNumber) by 96 to get offset into char data, and save in r5.
+	; (x * 2 + x) * 32 = x * 96
+	lsl r5,r0,1
+	add r5,r0
+	lsl r5,r5,5
+.else
+	mov r5,r0
+.endif
 
 ; Not sure what this is, I assume menu status struct?  We want the 0x37 offset.
 ldr r0,=0x03004FF8 + 0x37
@@ -56,23 +60,28 @@ mov r1,r7
 mov r0,0
 bl Draw8x8FixedStrIndexed
 
-; And now the name of the character.  We calculated the offset earlier.
-ldr r0,=0x03001EDC
-add r0,r0,r5
-; This is the length currently...
-ldrb r1,[r0,4]
-
 ; Font drawing params struct.
 ldr r2,=0x030018BC
-strb r1,[r2,5]
-str r0,[r2,12]
 
 ; Add dest (r7) and our calculated width (r4) of line 1.
 add r1,r7,r4
-; Add 7 pixels in width for a space.
-add r1,28
+; Add 6 pixels in width for a space.
+add r1,24
 str r1,[r2,8]
-bl CopyString8x8ToVRAM
+
+.ifndef NameMaxLength
+	; And now the name of the character.  We calculated the offset earlier.
+	ldr r0,=0x03001EDC
+	add r0,r0,r5
+	; This is the length normally.
+	ldrb r1,[r0,4]
+	strb r1,[r2,5]
+	str r0,[r2,12]
+	bl CopyString8x8ToVRAM
+.else
+	mov r0,r5
+	bl CopyCharName8x8ToVRAM
+.endif
 
 @@return:
 add sp,8

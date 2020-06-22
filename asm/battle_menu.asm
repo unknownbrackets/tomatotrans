@@ -85,3 +85,26 @@ strb r2,[r0,5h]
 .endarea
 .org 0x0804DD08
 dw org(BattleMenuText) + 18
+
+.ifdef NameMaxLength
+; This is part of the larger 0804A930, which draws the in battle stats.
+; We just adjust to show longer names.
+.org 0x0804A97E
+.area 0x0804A9A2-.,0x00
+; At this point: r0=which, 1=FREE, r2=FREE, r3=FREE, r4=FREE, r9=0x030018BC, r10=y
+; Requires as output: r4=yByteOffset - do that right away.
+mov r4,r10
+lsl r4,r4,11
+
+; Grab the utility drawing params.
+mov r3,r9
+ldr r1,[0x0804AA48] ; 0x06000D00
+add r1,r1,r4
+str r1,[r3,8]
+
+; Okay, we still have r0=which char.  Draw.
+bl CopyCharName8x8ToVRAM
+
+b 0x0804A9A2
+.endarea
+.endif

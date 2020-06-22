@@ -155,6 +155,12 @@ mov r0,0xA6
 .org 0x0802E780
 mov r0,0x85
 
+; This corrects a bug in the game in checking for name reuse.  Oops.
+.ifndef NameMaxLength
+.org 0x0802DDBA
+	ldrb r0,[r7,8]
+.endif
+
 ; This draws the buttons to the right of the letters.
 .org 0x0802D220
 .area 0x0802D2F0-.,0x00
