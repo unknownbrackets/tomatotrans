@@ -1,3 +1,2 @@
-armips tomatoadv.asm
-insert
-scriptinsert
+@echo off
+armips tomatoadv.asm && a %1

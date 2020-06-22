@@ -431,7 +431,7 @@ int CompileCC(const char *str, int totalLength, int &strLoc, unsigned char *newS
        newStream[streamLen++] = 0xFF;
        newStream[streamLen++] = 0x43;
    }
-   else if (strcmp(ptr[0], "MONEY") == 0)
+   else if (strcmp(ptr[0], "NUMBER") == 0 || strcmp(ptr[0], "MONEY") == 0)
    {
        newStream[streamLen++] = 0xFF;
        newStream[streamLen++] = 0x80;
