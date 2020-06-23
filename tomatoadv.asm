@@ -28,6 +28,7 @@
 .include "asm/menu.asm"
 .include "asm/menu_gimmicks.asm"
 .include "asm/menu_friends.asm"
+.include "asm/shop_messages.asm"
 
 ; Allow longer item names and format as "#x Foo" for multiple.
 .include "asm/dialog_item.asm"

@@ -112,6 +112,7 @@ bx r14
 .endfunc
 
 ; Same as CopyCharName8x8ToVRAM, but with a clear parameter.
+; Args: int charNumber, int clearSize
 .func CopyCharName8x8ToVRAMClearR1
 ldr r2,=MFontClearSize
 ; Convert to shorts.

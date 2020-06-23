@@ -678,7 +678,8 @@ bne @@clearDone
 
 ; Check our override flags.  First, clear size.
 ldr r5,=MFontClearSize
-ldrh r0,[r5,0]
+; r1 is known zero at this point, so reuse.
+ldrsh r0,[r5,r1]
 
 cmp r0,0
 beq @@noClearOverride
@@ -691,6 +692,9 @@ ldrb r0,[r5,MFontXOffset-MFontClearSize]
 str r1,[r5]
 ; Now we can add to xpos, since this will change r1 from zero.
 add r1,r0
+
+cmp r6,0
+blt @@clearDone
 
 ; Okay, use DMA3 to clear those bytes.
 ldr r0,=0x040000D4

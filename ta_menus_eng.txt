@@ -30,12 +30,13 @@ BLOCKFIXED 4903C0 0A 17
 BLOCKFIXED 4903D0 18 01 18
 00-E:Don't have any items
 
-BLOCKFIXED 4903D8 08 05
+# Clothing status effects.
+BLOCKFIXED 4903D8 0C 05
 00-E:Speed Up
 01-E:HP Up
-02-E:walkHP
+02-E:Walk HP
 03-E:EXP Up
-04-E:NoStatus
+04-E:No Status
 
 BLOCKFIXED 4903E0 08 0A
 00-E:
@@ -801,16 +802,16 @@ BLOCKFIXED 4905D0 06 01
 BLOCKFIXED 4905D8 09 01
 00-E:Welcome!
 
-BLOCKFIXED 4905E0 0F 06
+BLOCKFIXED 4905E0 14 06
 00-E:Thanks!
 01-E:At maximum TP!
-02-E:Equipped
-03-E:Not enough
-04-E:Can't carry
-05-E:Already have
+02-E:Currently equipped
+03-E:Too poor
+04-E:Can't carry more
+05-E:Already have this
 
-BLOCKFIXED 4905E8 04 01
-00-E:
+BLOCKFIXED 4905E8 0A 01 07
+00-E:can equip
 
 BLOCKFIXED 4905F0 04 01
 00-E:
