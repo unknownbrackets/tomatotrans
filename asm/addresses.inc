@@ -4,7 +4,7 @@
 .definelabel ItemTextName,0x087F0C9E ; length 0x0610
 .definelabel ItemTextDesc,0x087F12AE ; length 0x0330
 .definelabel ClothesText,0x087F15DE ; length 0x0200
-.definelabel EnemyAilmentsText,0x087F17DE ; length 0x0060
+.definelabel BattleAilmentsText,0x087F17DE ; length 0x0060
 .definelabel NamingScreenText,0x087F183E ; length 0x0140
 .definelabel DefaultNamesText,0x087F1980 ; length 0x0020
 ; Next at 0x087F19A0.

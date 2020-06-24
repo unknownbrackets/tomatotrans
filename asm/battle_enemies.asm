@@ -11,6 +11,7 @@
 @WorkArea equ MBattleEnemyWorkArea
 
 ; Ailments in order: asleep, paralyzed, woke up, no longer paralyzed.
+; Note: also used by battle_sleep.asm.
 @AilmentStride equ 0x18
 
 ; The below replacements all replace a strnlen_rev check, which we replace by
@@ -241,7 +242,7 @@ mov r2,0x40
 
 ; Here's where our messages start, we'll add to get to the target.
 ; Using r1 because a memcpy is coming up.
-ldr r1,=EnemyAilmentsText
+ldr r1,=BattleAilmentsText
 
 ; Now let's increase the recovery counter and check if recovered yet.
 ldrb r0,[r7,4]

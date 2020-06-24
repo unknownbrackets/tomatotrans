@@ -13,6 +13,7 @@
 ; The below lengthen text primarily in battle, and require battle_message.asm.
 .include "asm/battle_message.asm"
 .include "asm/battle_enemies.asm"
+.include "asm/battle_sleep.asm"
 .include "asm/gimmick_text.asm"
 .include "asm/item_text.asm"
 
