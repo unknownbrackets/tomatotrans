@@ -43,12 +43,6 @@ add r0,18
 .org 0x0804FB1C
 dw org(BattleMenuText)
 
-; This one is only Cool which was at 0x08639BB4.
-.org 0x0804AE4A
-mov r0,6
-.org 0x0804EA68
-dw org(BattleMenuText) + 18
-
 ; Another Cool only, have to reuse an and for cmp.
 .org 0x0804090A
 .area 0x0804091E-.,0x00
@@ -108,3 +102,70 @@ bl CopyCharName8x8ToVRAM
 b 0x0804A9A2
 .endarea
 .endif
+
+; We rewrite this function to save some bytes and center "Cool".
+; It shows "Cool" on the right side in the battle menu.
+.org 0x0804ADE0
+.area 0x0804AE70-.,0x00
+.func BattleUpdateCoolIndicator
+push r14
+add sp,-24
+
+; Prepare some of the struct in sp before the branch.
+mov r2,0
+; This was originally two strh, but we can zero both at once.
+str r2,[sp,4]
+mov r1,6
+mov r0,sp
+strh r1,[r0,8]
+strh r1,[r0,10]
+ldr r3,=0x060073B0
+str r3,[sp,12]
+; Also originally two strh.
+str r2,[sp,16]
+strh r1,[r0,20]
+strh r1,[r0,22]
+
+ldr r3,=0x03000BAD
+ldrb r3,[r3,0]
+cmp r3,1
+bne @@displayCool
+
+; I'm not sure exactly what this bl is doing, maybe icons?  Does a DMA3.
+ldr r3,=0x085E6938
+str r3,[sp,0]
+; Takes r0=sp, already prepared earlier.
+bl 0x080400C4
+b @@return
+
+@@displayCool:
+ldr r3,=0x085E68F0
+str r3,[sp,0]
+; Takes r0=sp, already prepared earlier.
+bl 0x080400C4
+
+ldr r0,=org(BattleMenuText) + 18
+mov r1,6
+mov r2,1
+bl Calc8x8PixelWidth
+
+; Okay, now we can draw centered - r0=str, r1=len, r2=pixel width.
+ldr r3,=0x030018BC
+strb r1,[r3,5]
+ldr r1,=0x06000EC0
+str r1,[r3,8]
+str r0,[r3,12]
+
+; Center in the 4 tiles available.
+mov r0,4
+; Move slightly right.
+add r2,r2,3
+bl CopyString8x8CenterR0
+
+@@return:
+add sp,24
+pop r0
+bx r0
+.pool
+.endfunc
+.endarea
