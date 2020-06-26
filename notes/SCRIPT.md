@@ -31,7 +31,7 @@ Starts a new line.  Without this, text just continues on the same line.  It does
 
 ### [TICKEROFF] / [FF 06]
 
-Turns the teletype ticker off.
+Turns the teletype ticker off.  This makes the following text show immediately.
 
 ### [FF 10 XX]
 
