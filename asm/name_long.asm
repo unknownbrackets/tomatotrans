@@ -1,5 +1,3 @@
-; Testing...
-
 .definelabel NameMaxLength,7
 
 ; Adjustments for the naming screen entry.

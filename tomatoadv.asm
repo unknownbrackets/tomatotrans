@@ -34,6 +34,9 @@
 ; Allow longer item names and format as "#x Foo" for multiple.
 .include "asm/dialog_item.asm"
 
+; Fix VWF centering in dialogs.
+.include "asm/dialog_center.asm"
+
 ; Use English uppercase/lowercase in the naming screen.
 .include "asm/naming_screen.asm"
 .include "asm/name_long.asm"

@@ -10,16 +10,17 @@
 ; it used hardcoded Japanese.
 
 ; Exclusively called by 0806AD80, which is called by 0806DBD8 and 0806EBC4.
-; 0806EBC4 seems to deal with its length, but doesn't read the text.
-; 0806DBD8 actually reads the text we write.  We patch that too.
+; 0806EBC4 deals with its length, and we change it to read the text.
+; 0806DBD8 actually reads the text we write to draw.  We patch that too.
 org 0x0806B27C
 .area 0x0806B3A4-.,0x00
 .func FormatObtainedItem
 push r4-r7,r14
 sub sp,4
-; 03001AD2 holds: (0x80 | ID) for clothes, (0xC0 | ID) for gimmicks, and ID for items.
-; 03001AD3 holds the count obtained.
-ldr r4,=0x3001AD2
+; The original code looked at 03001AD2, but that's strictly a copy of 03003A34.  We go direct.
+; 03003A34 holds: (0x80 | ID) for clothes, (0xC0 | ID) for gimmicks, and ID for items.
+; 03003A35 holds the count obtained.
+ldr r4,=0x03003A34
 ; Font drawing parameters.
 ldr r5,=0x030018BC
 ldr r6,=@WorkArea
@@ -119,7 +120,7 @@ ldrb r0,[r5,1]
 add r7,r7,r0
 strb r7,[r3,11]
 
-; We're constrained in 0806DBD8, so help it by storing the pointer and total length.
+; Help 0806DBD8 by storing the pointer and total length.
 str r6,[r5,12]
 strb r7,[r5,1]
 
@@ -137,17 +138,10 @@ org 0x0806DBD8
 .area 0x0806DC10-.,0x00
 .func HandleDialog85Item
 push r4,r14
-; This is the source of our parameters.  We copy to avoid messing with the other caller.
-; The original func goes through another level of indirection which gives us too many literals.
-ldr r1,=0x03003A34
-ldr r2,=0x03001AD2
-
-ldrh r0,[r1,0]
-strh r0,[r2,0]
 ; Build the item name.
-bl 0x0806B27C
+bl FormatObtainedItem
 ; Append to current position in 0x03004DDC.
-; Params already set by 0806B27C.
+; Params already set by FormatObtainedItem.
 bl 0x0806DA40
 ; This marks flag 1 in the dialog state.
 bl 0x0806CE80
@@ -155,6 +149,69 @@ bl 0x0806CE80
 pop r4
 pop r0
 bx r0
+.pool
+.endfunc
+.endarea
+
+; We fix this to calculate the actual pixel width of the item name.
+.org CalcLengthDialog85ItemLoc
+.area 0x0806EC90-.,0x00
+.func CalcLengthDialog85Item
+push r4-r6,r14
+
+; This breaks the utility params at 030018BC, so we save them.
+ldr r4,=0x030018BC
+ldr r5,=0x03000604
+ldr r6,=0x03000608
+
+; Get current position...
+ldr r0,[r5]
+lsl r1,r0,2
+add r6,r6,r1
+
+; Allocate 4 more.  It's amazing how inefficient the original code was for this.
+add r0,r0,4
+str r0,[r5]
+
+; Actually save.
+ldmia r4!,r0,r1,r2,r3
+sub r4,16
+stmia r6!,r0,r1,r2,r3
+sub r6,16
+
+; Now we can just call FormatObtainedItem.  Parameters already ready.
+bl FormatObtainedItem
+
+; Okay, get the formatted buffer and length.
+ldr r0,[r4,12]
+ldrb r1,[r4,1]
+bl Calc8x12PixelWidth
+
+; Alright, length in r2.  Time to restore.
+ldr r0,[r5]
+sub r0,r0,4
+str r0,[r5]
+
+; Skip r2 (length) and use r5 (now free) instead.
+ldmia r6!,r0,r1,r3,r5
+stmia r4!,r0,r1,r3,r5
+sub r4,16
+
+; Now that the params are restored, figure out if we were doubling width.
+; This value is either 0 (normal) or 1 (double).
+ldrb r0,[r4,8]
+lsl r2,r0
+
+; Finally, account for the width so far and cap at 0x90.
+ldrb r0,[r4,5]
+add r0,r0,r2
+cmp r0,0x90
+blt @@skipCap
+mov r0,0x90
+@@skipCap:
+strb r0,[r4,5]
+
+pop r4-r6,r14
 .pool
 .endfunc
 .endarea
