@@ -1106,6 +1106,10 @@ BLOCKFIXED 49F634 1C 02
 00-E:
 01-E:
 
+# Not sure where this is, probably can be longer.
+BLOCKFIXED 49F63C 0C 01
+00-E:
+
 # Was block at 639BA8 04 04, moved in battle_menu.asm.
 BLOCKSTART 7F0000 06 04
 00-E:Gimck.
@@ -1365,67 +1369,93 @@ RESTRUCT 63146C 08 10 7F15DE 10 10 20
 1E-E:SumoJckt
 1F-E:Plt.Cape
 
+DYNPOINTER 04D490 1A 04D474 04D47C #632E04
+00-E:Poison damage
+DYNPOINTER 04D62C 1A 04D612 04D61A #632E04
+00-E:Poison damage
+
 # Sleep and woke up can only be 12 (18 decimal) long.
 RESTRUCT 632E14 08 08 7F17DE 18 18 04
 00-E: is asleep
 01-E: is paralyzed
 02-E: woke up
-03-E:'s paralysis wore off
+03-E: is no longer paralyzed
+
+DYNPOINTER 04E1FC 1A 04E1E6 04E1EE #632E34
+00-E:All
+DYNPOINTER 04FD6C 1A 04FD52 04FD5A #632E34
+00-E:All
+
+# Length is a bit harder to change.
+FIXEDPOINTER 632E38 10
+00-E:
+
+# Length is a bit harder to change.
+FIXEDPOINTER 632E48 10
+00-E:
+
+DYNPOINTER 0504F0 1A 0504CE 0504D6 #632E78
+00-E:
 
 # Could be made longer, but slight trickiness to it.
 BLOCKSTART 639BB4 04 01
-00-J:Cool
+00-E:Cool
 
 RESTRUCT 639558 1A 1A 7F12AE 30 30 11
-00-J:Restores 20 HP
-01-J:Restores 60 HP
-02-J:Restores 100 HP
-03-J:Restores 240 HP
-04-J:Restores all HP
-05-J:Restores 60 HP to all
-06-J:Restores 180 HP to all
-07-J:Restores all HP to all
-08-J:Revives a fallen ally
-09-J:Fully revives an ally
-0A-J:Cures a poison
-0B-J:Wakes an ally up
-0C-J:Cures Gimmick Stop
-0D-J:Speed up 50 [F2] 3 turns
-0E-J:Def. up [F2] for 3 turns
-0F-J:Speed, Def. up for 3 turns
-10-J:Always escape
+00-E:Restores 20 HP
+01-E:Restores 60 HP
+02-E:Restores 100 HP
+03-E:Restores 240 HP
+04-E:Restores all HP
+05-E:Restores 60 HP to all
+06-E:Restores 180 HP to all
+07-E:Restores all HP to all
+08-E:Revives a fallen ally
+09-E:Fully revives an ally
+0A-E:Cures a poison
+0B-E:Wakes an ally up
+0C-E:Cures Gimmick Stop
+0D-E:Speed up 50 [F2] 3 turns
+0E-E:Def. up [F2] for 3 turns
+0F-E:Speed, Def. up for 3 turns
+10-E:Always escape
 
 BLOCKSTART 639C80 0B 01
-00-J:You won!
+00-E:You won!
 
 BLOCKSTART 639C8B 05 01
-00-J:EXP
+00-E:EXP
 
+# TODO
 BLOCKSTART 639C90 03 01
 00-J:TP
 
+# Can easily make longer.
 BLOCKSTART 639C93 0B 01
-00-J:leveled up!
+00-E:leveled up!
 
 DYNPOINTER 050CFC 10 050C8E 0 #639C9E
 00-E:Strength
 
 BLOCKSTART 639CA4 05 01
-00-J:Speed
+00-E:Speed
 
 BLOCKSTART 639CA9 04 01
-00-J:up
+00-E:up
 
 # Can be made longer if needed.
 BLOCKSTART 639CAD 04 01
-00-J:Item
+00-E:Item
 
 # Can be made longer if needed.
 BLOCKSTART 639CB1 06 01
-00-J:found!
+00-E:found!
 
 BLOCKSTART 639CB7 08 01
-00-J:Got away
+00-E:Got away
+
+DYNPOINTER 0510DC 1A 0510B8 0510C0 #639CD4
+00-E:Annihilated
 
 # This is different text for the naming screen.
 BLOCKSTART 7F183E 08 04
