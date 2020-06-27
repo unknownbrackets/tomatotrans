@@ -101,13 +101,30 @@ dh 0xF005, 0xF005, 0xF005, 0xF005
 ; And the old Kata/Hira switch.
 .org 0x0863A782 + 30 * 2 * 4 + 12 * 2
 dh 0xF005, 0xF005, 0xF005, 0xF005
-; For the keyboard, default, and accept buttons - let's give ourselves 5 tiles.
-.org 0x0863A782 + 30 * 2 * 6 + 12 * 2
-dh 0xF156, 0xF157, 0xF158, 0xF159, 0xF15A ; 0x06002AC0
-.org 0x0863A782 + 30 * 2 * 8 + 12 * 2
-dh 0xF15B, 0xF15C, 0xF15D, 0xF15E, 0xF15F ; 0x06002B60
-.org 0x0863A782 + 30 * 2 * 10 + 12 * 2
-dh 0xF160, 0xF161, 0xF162, 0xF163, 0xF164 ; 0x06002C00
+.ifdef NameMaxLength
+	; Show more tiles for the name.
+	.org 0x863A6D8
+	dh 0xF140, 0xF141, 0xF142, 0xF143, 0xF144, 0xF145 ; 0x06002800
+	; For the keyboard, default, and accept buttons - let's give ourselves 5 tiles.
+	.org 0x0863A782 + 30 * 2 * 6 + 12 * 2
+	dh 0xF158, 0xF159, 0xF15A, 0xF15B, 0xF15C ; 0x06002B00
+	.org 0x0863A782 + 30 * 2 * 8 + 12 * 2
+	dh 0xF15D, 0xF15E, 0xF15F, 0xF160, 0xF161 ; 0x06002BA0
+	.org 0x0863A782 + 30 * 2 * 10 + 12 * 2
+	dh 0xF162, 0xF163, 0xF164, 0xF165, 0xF166 ; 0x06002C40
+	; Move the message a bit to give more space for the name.
+	.org 0x0863AA8C
+	; 0x060028C0 (was 0x06002880)
+	dh 0xF146, 0xF147, 0xF148, 0xF149, 0xF14A, 0xF14B, 0xF14C, 0xF14D, 0xF14E, 0xF14F, 0xF150, 0xF151, 0xF152, 0xF153, 0xF154, 0xF155, 0xF156, 0xF157
+.else
+	; For the keyboard, default, and accept buttons - let's give ourselves 5 tiles.
+	.org 0x0863A782 + 30 * 2 * 6 + 12 * 2
+	dh 0xF156, 0xF157, 0xF158, 0xF159, 0xF15A ; 0x06002AC0
+	.org 0x0863A782 + 30 * 2 * 8 + 12 * 2
+	dh 0xF15B, 0xF15C, 0xF15D, 0xF15E, 0xF15F ; 0x06002B60
+	.org 0x0863A782 + 30 * 2 * 10 + 12 * 2
+	dh 0xF160, 0xF161, 0xF162, 0xF163, 0xF164 ; 0x06002C00
+.endif
 
 ; Next up, the old Hiragana graphics - lowercase.
 ; Note: this is just the update area, 11 per row.
@@ -225,7 +242,11 @@ ldrh r1,[r0]
 mov r0,0x000C
 and r0,r1
 lsl r0,r0,12
-ldr r1,=0x06002AC0
+.ifdef NameMaxLength
+	ldr r1,=0x06002B00
+.else
+	ldr r1,=0x06002AC0
+.endif
 add r0,r1
 str r0,[r5,12]
 bl 0x0806B514
@@ -234,6 +255,53 @@ pop r4-r6,r15
 .pool
 .endfunc
 .endarea
+
+.ifdef NameMaxLength
+.org 0x0802D2F0
+.area 0x0802D338-.,0x00
+.func NamingScreenUpdateName
+push r4-r5,r14
+
+; These are the utility params.
+ldr r4,=0x030018BC
+; Source string.  We compose to save bytes.
+mov r0,r4
+add r0,0x0300199C - 0x030018BC
+; Temp buffer.
+ldr r5,=0x030041DC
+
+str r5,[r4,8]
+str r0,[r4,12]
+
+mov r0,7
+strb r0,[r4,5]
+mov r0,6
+; Center based on 5 tiles.
+mov r2,40
+bl CopyString8x8CenterR0
+
+; Now copy that to the screen.
+mov r0,0xC0
+strh r0,[r4,4]
+str r5,[r4,8]
+
+ldr r0,=0x04000008
+ldrh r1,[r0]
+; Check the correct BG charblock.
+mov r0,0x000C
+and r0,r1
+lsl r0,r0,12
+
+ldr r1,=0x06002800
+add r0,r0,r1
+str r0,[r4,12]
+bl 0x0806B514
+
+pop r4-r5,r15
+.pool
+.endfunc
+.endarea
+.endif
 
 ; We also need to change the highlight func to do all 5 tiles now.
 .org 0x0802E5DC
@@ -365,7 +433,11 @@ ldrh r1,[r0]
 mov r0,0x000C
 and r0,r1
 lsl r0,r0,12
-ldr r1,=0x06002880
+.ifdef NameMaxLength
+	ldr r1,=0x060028C0
+.else
+	ldr r1,=0x06002880
+.endif
 add r0,r1
 str r0,[r4,12]
 bl 0x0806B4B4
@@ -415,7 +487,11 @@ mov r2,0
 bl Calc8x8PixelWidth
 
 ; r2 now has the actual pixel width.  Add the start offset.
-add r2,0x69
+.ifdef NameMaxLength
+	add r2,0x65
+.else
+	add r2,0x69
+.endif
 strb r2,[r4,4]
 mov r0,9
 strb r0,[r4,5]
