@@ -458,3 +458,13 @@
 # B4 LPacfier / おしゃぶり みぎ, B5 RPacfier / おしゃぶりひだり
 0D4D34-J:バリアの いりょくが さがった!
 0D4D11-J:バリアの いりょくが もどった!
+
+# These also look like strings, but aren't referenced by any enemy.
+# It might be they aren't actually, so translating could break things unless we see them used.
+0D242F-J:カモ-ン! マ~イク!!
+0D376B-J:オマエタチ イマ ヤスンデタ?
+0D3772-J:チョット ユルセナイネ!
+0D3779-J:コウゲキシテ! コウゲキシテ!
+0D3780-J:コンドハ モット スゴイゾ!
+0D37DA-J:フ- チカレタ チカレタ
+0D4FCB-J:ヒットポイント すくないはんてい
