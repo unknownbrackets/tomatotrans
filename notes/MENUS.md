@@ -19,28 +19,35 @@ Format: FIXEDPOINTER PointerLoc MaxLen
 
 This is a simple pointer with a fixed length.
 
-## DYNPOINTER
+### DYNPOINTER
 
 Format: DYNPOINTER PointerLoc MaxLen SizeLoc [SizeLoc2]
 
 This is a pointer that allows a more dynamic size.  Bytes at SizeLoc and SizeLoc2 are updated with
 the new length.
 
-## RESTRUCT
+### RESTRUCT
 
 Format: RESTRUCT OldAddress OldSize OldStride NewAddress NewSize NewStride Count
 
 This resizes an existing structure with embedded text to a new size, but only copies the text
 fields.
 
-## POINTERLIST
+### POINTERLIST
 
 Format: POINTERLIST PointerLoc Stride MaxLen Count
 
 This is essentially for a list of FIXEDPOINTER that are evenly spaced and have the same length.
 
-## BLOCKSTART
+### BLOCKSTART
 
 Format: BLOCKSTART TextLoc Len Count
 
 A simple in-place insertion.  Does not allow longer text than original.
+
+### TERMSTRING
+
+Format: TERMSTRING PointerLoc TermChar MaxLen
+
+This is a string terminated by a character, i.e. FF.  The length is also the number of tiles to
+replace when drawing the string, so be careful.

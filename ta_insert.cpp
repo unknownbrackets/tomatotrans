@@ -1285,7 +1285,7 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 				ForceTranslateComplex(str2, maxLen, stringID);
 
 				// Simulate insertion.
-				uint32_t pos = InsertString(fout, str2, len, maxLen, afterTextPos);
+				uint32_t pos = InsertString(fout, str2, maxLen, maxLen, afterTextPos);
 				fseek(fout, address, SEEK_SET);
 				WriteLE32(fout, pos | 0x08000000);
 				insertions++;
@@ -1436,6 +1436,50 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 				fseek(fout, address + i * stride, SEEK_SET);
 				WriteLE32(fout, pos | 0x08000000);
 
+				insertions++;
+			}
+		}
+		// Dynamic format with terminator: TERMSTRING Loc TermChar MaxLen
+		else if (!comment && strstr(str, "TERMSTRING") != NULL)
+		{
+			int termChar = 0;
+			int maxLen = 0;
+			sscanf(str, "%*s %X %X %X", &address, &termChar, &maxLen);
+
+			fgets(str, 5000, fin);
+			PrepString(str, str2, 5);
+			len = ConvComplexString(str2, sizeof(str2), true);
+
+			if (maxLen != 0 && len > maxLen)
+			{
+				printf("too long: %s\n", str);
+				len = maxLen;
+			}
+
+			if (len != 0)
+			{
+				str2[len] = termChar;
+				uint32_t pos = InsertString(fout, str2, len + 1, len + 1, afterTextPos);
+				fseek(fout, address, SEEK_SET);
+				WriteLE32(fout, pos | 0x08000000);
+				insertions++;
+			}
+			else if (forceAll)
+			{
+				char stringID[16];
+				sprintf(stringID, "%06X", address);
+
+				fseek(fout, address, SEEK_SET);
+				uint32_t oldPos = 0;
+				ReadLE32(fout, oldPos);
+				fseek(fout, oldPos & ~0x08000000, SEEK_SET);
+				fread(str2, 1, maxLen, fout);
+				ForceTranslateComplex(str2, maxLen, stringID);
+
+				// Simulate insertion.
+				uint32_t pos = InsertString(fout, str2, maxLen, maxLen, afterTextPos);
+				fseek(fout, address, SEEK_SET);
+				WriteLE32(fout, pos | 0x08000000);
 				insertions++;
 			}
 		}
