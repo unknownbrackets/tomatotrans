@@ -996,37 +996,80 @@ uint32_t InsertBattleText(FILE *fout, uint32_t &afterTextPos)
 			continue;
 		}
 
+		uint8_t align = 0;
+		if (!strncmp(str + offset, "[CENTER]", strlen("[CENTER]")))
+		{
+			align = 1;
+			offset += strlen("[CENTER]");
+		}
+		else if (!strncmp(str + offset, "[CENTER_H]", strlen("[CENTER_H]")))
+		{
+			align = 1;
+			offset += strlen("[CENTER_H]");
+		}
+		else if (!strncmp(str + offset, "[RIGHT]", strlen("[RIGHT]")))
+		{
+			align = 2;
+			offset += strlen("[RIGHT]");
+		}
+		else if (!strncmp(str + offset, "[LEFT]", strlen("[LEFT]")))
+		{
+			// No change, just for completeness.
+			offset += strlen("[LEFT]");
+		}
+
 		PrepString(str, str2, offset);
 		int len = ConvComplexString(str2, sizeof(str2), true);
-		// TODO: Make longer.
-		if (len > 16)
-		{
-			printf("Battle message too long: %s\n", str);
-			len = 16;
-		}
+
+		uint32_t oldAddress = 0;
+		fseek(fout, loc, SEEK_SET);
+		ReadLE32(fout, oldAddress);
 
 		if (len == 0)
 		{
+			fseek(fout, oldAddress & ~0x08000000, SEEK_SET);
+			fread(str2, 1, 16, fout);
+			len = 16;
+
 			if (forceAll)
 			{
-				uint32_t oldAddress = 0;
-				fseek(fout, loc, SEEK_SET);
-				ReadLE32(fout, oldAddress);
-				fseek(fout, oldAddress & ~0x08000000, SEEK_SET);
-				fread(str2, 1, 16, fout);
-
 				char stringID[16];
 				sprintf(stringID, "%c:%06X", 'B', loc);
-				ForceTranslateComplex(str2, 16, stringID);
-				len = 16;
+				ForceTranslateComplex(str2, len, stringID);
 			}
-			else
-				continue;
 		}
 
-		uint32_t pos = InsertString(fout, str2, len, 16, afterTextPos);
-		fseek(fout, loc, SEEK_SET);
-		WriteLE32(fout, pos | 0x08000000);
+		// Let's just insert in place if we can.
+		if (align == 0 && len <= 16 && str2[0] != 0xFF && !forceAll)
+			InsertStringAt(fout, str2, len, 16, oldAddress & ~0x08000000);
+		else if (len >= 0 && len <= 0x1A)
+		{
+			// If <= 0x1A, we embed the string directly.  FF, copyLength, align, length, string.
+			memmove(str2 + 4, str2, len);
+			str2[0] = (char)0xFF;
+			str2[1] = len + 2;
+			str2[2] = align;
+			str2[3] = len;
+			uint32_t pos = InsertString(fout, str2, len + 4, len + 4, afterTextPos);
+			fseek(fout, loc, SEEK_SET);
+			WriteLE32(fout, pos | 0x08000000);
+		}
+		else
+		{
+			// For a longer string, we use a pointer instead - see battle_message.asm.
+			uint32_t textPos = InsertString(fout, str2, len, len, afterTextPos);
+			uint32_t packetPos = afterTextPos;
+
+			// Format: FF, copyLength, align, length, 00, 00, ptr32.
+			uint8_t packet[]{ 0xFF, 0x08, align, (uint8_t)len, 0, 0 };
+			fseek(fout, packetPos, SEEK_SET);
+			fwrite(packet, 1, sizeof(packet), fout);
+			WriteLE32(fout, textPos | 0x08000000);
+			afterTextPos += 10;
+
+			fseek(fout, loc, SEEK_SET);
+			WriteLE32(fout, packetPos | 0x08000000);
+		}
 
 		insertions++;
 	}

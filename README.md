@@ -57,6 +57,8 @@ These names are shown during battle using an 8x8 font.
 This contains messages shown during battle based on the scripting for enemies.  They display
 using an 8x8 font.
 
+May be prefixed with [CENTER_H] for alignment.  Some original messages were manually centered.
+
 Some strings may be reused by multiple enemies.
 
 ### ta_menus_eng.txt

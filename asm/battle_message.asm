@@ -85,3 +85,67 @@ bl CopyString8x8ToVRAM
 ; There's a lot of blank space now, skip it.
 b 0x0804A54C
 .endarea
+
+.org 0x08042484
+.area 0x080424DC-.,0x00
+push r14
+
+; I think this is a flag to indicate it's showing.
+ldr r3,=0x03000BBA
+mov r2,4
+strb r2,[r3,r1]
+
+; Update the script pointer for this enemy.
+ldr r2,=0x0300074C
+lsl r1,r1,2
+add r0,r0,4
+str r0,[r2,r1]
+sub r0,r0,4
+
+; Read the pointer, unaligned.  Hard with thumb.
+; Considered doing two unaligned ldrs and masking...
+ldrb r1,[r0,3]
+lsl r1,r1,8
+ldrb r2,[r0,2]
+orr r1,r2
+lsl r1,r1,8
+ldrb r2,[r0,1]
+orr r1,r2
+lsl r1,r1,8
+ldrb r0,[r0,0]
+orr r1,r0
+
+; This is the battle message buffer to copy to.
+; r3 is still 0x03000BBA.  Avoid a ldr.
+add r3,0x03000BFC - 0x03000BBA
+
+; At that pointer, we put a byte for size, and the rest gets copied.
+ldrb r2,[r1,0]
+cmp r2,0xFF
+beq @@newType
+
+; Old type of message, we copy 16 bytes.
+mov r2,0
+strb r2,[r3,0]
+mov r2,16
+strb r2,[r3,1]
+add r0,r3,2
+b @@copy
+
+@@newType:
+ldrb r2,[r1,1]
+add r1,r1,2
+mov r0,r3
+
+@@copy:
+bl 0x080F954C
+
+; Lastly update flags.
+mov r0,0x40
+lsl r0,r0,8
+add r0,r0,1
+bl 0x0804A148
+
+pop r15
+.pool
+.endarea
