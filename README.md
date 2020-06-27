@@ -52,6 +52,13 @@ This contains both enemy names and their attack names.  Both are limited to 24 c
 
 These names are shown during battle using an 8x8 font.
 
+### ta_battle_eng.txt
+
+This contains messages shown during battle based on the scripting for enemies.  They display
+using an 8x8 font.
+
+Some strings may be reused by multiple enemies.
+
 ### ta_menus_eng.txt
 
 This contains menu text and related messages shown in:

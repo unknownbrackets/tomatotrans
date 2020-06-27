@@ -1,0 +1,460 @@
+# 00 Celemo / セレモ
+0D1A41-E:
+0D1A4A-E:
+0D1A53-E:
+0D1A63-E:
+0D1A76-E:
+0D1A7F-E:
+0D1A88-E:
+0D1A99-E:
+0D1AA2-E:
+0D1AB9-E:
+0D1AC2-E:
+0D1ACB-E:
+0D1AD4-E:
+0D1ADD-E:
+0D1AEC-E:
+0D1AFB-E:
+0D1B0A-E:
+0D1B19-E:
+0D1B2F-E:
+0D1B3F-E:
+0D1B48-E:
+0D1B58-E:
+0D1B67-E:
+0D1B70-E:
+0D1B80-E:
+0D1B95-E:
+0D1BA4-E:
+0D1BAD-E:
+0D1BC2-E:
+0D1BCB-E:
+0D1BD4-E:
+0D1BE3-E:
+0D1BEC-E:
+0D1C02-E:
+0D1C0B-E:
+0D1C14-E:
+0D1C23-E:
+0D1C2C-E:
+0D1C35-E:
+0D1C44-E:
+# 01 Celemo / セレモ
+0D1F1D-E:
+0D1F2D-E:
+0D1F4C-E:
+0D1F5B-E:
+0D1F64-E:
+0D1F72-E:
+0D1F8F-E:
+0D1F98-E:
+0D1FB1-E:
+0D1FBA-E:
+0D1FC3-E:
+0D1FE0-E:
+0D1FE9-E:
+0D1FF8-E:
+# 0C Hack / ブリッキ
+0D3CAE-E:
+# 0D Slash / ゴリッキ
+0D3CD6-E:
+# 12 Froobs / うそガエルレディ
+0D0F12-E:
+# 17 Potfan / ポットマニア
+0D212C-E:
+0D2136-E:
+0D213D-E:
+0D2144-E:
+# 1A Oops / ウ-プス
+0D21F1-E:
+# 1B Mirarror / ミラクルミラ-
+0D2245-E:
+# 1C Windbath / ねじまきオフロ
+0D227C-E:
+# 1D Hack / ブリッキ
+0D22B9-E:
+0D22C0-E:
+0D230D-E:
+0D2314-E:
+# 1E Slash / ゴリッキ
+0D2352-E:
+0D2359-E:
+# 24 Seebass / ギョロン
+0D118B-E:
+# 27 Sawbass / レッドギョロン
+0D11A3-E:
+# 26 Seebass / ギョロン
+0D11BB-E:
+# 29 Cap.Size / ガ-ゴせんちょう
+0D0FE2-E:
+0D0FE9-E:
+0D0FF0-E:
+0D1004-E:
+0D100E-E:
+# 2A Cap.Size / ガ-ゴせんちょう
+0D10C1-E:
+0D10C8-E:
+0D10E3-E:
+0D10ED-E:
+# 2B Cap.Size / ガ-ゴせんちょう
+0D106D-E:
+0D108A-E:
+0D109D-E:
+0D10A7-E:
+# 2C Cap.Size / ガ-ゴせんちょう
+0D1109-E:
+0D1110-E:
+0D1117-E:
+0D111E-E:
+0D1137-E:
+0D114A-E:
+0D1154-E:
+# 2D Cap.Size / ガ-ゴせんちょう
+0D1029-E:
+0D1048-E:
+0D1052-E:
+# 2F Octolina / タコチュリ-ナ
+0D2593-E:
+# 31 Pompador / リ-ゼント
+0D23D6-E:
+0D2425-E:
+0D2415-E:
+0D240B-E:
+# 32 SuprMike / ス-パ-マイク
+0D24B1-E:
+0D24BB-E:
+0D24C4-E:
+0D24CD-E:
+# 33 BigDonut / とくだいド-ナツ
+0D250C-E:
+# 3E Poochie / ポチ
+0D15C3-E:
+0D1612-E:
+0D1619-E:
+0D162C-E:
+0D1633-E:
+0D166C-E:
+0D1673-E:
+0D167A-E:
+0D1681-E:
+0D163F-E:
+0D1646-E:
+0D1659-E:
+0D1660-E:
+# 3F Crony / ポチのてした
+0D155D-E:
+0D1564-E:
+0D156D-E:
+0D1574-E:
+# 40 Crony / ポチのてした
+0D1595-E:
+0D159C-E:
+0D15A5-E:
+0D15AC-E:
+# 43 Snakid / ノミコンダキッズ
+0D26CE-E:
+0D26EE-E:
+# 45 Snakid / ノミコンダキッズ
+0D2712-E:
+0D2732-E:
+# 47 Snakid / ノミコンダキッズ
+0D2756-E:
+0D2788-E:
+# 49 Hack / ブリッキ
+0D3185-E:
+0D318C-E:
+0D31A6-E:
+0D31AD-E:
+0D3195-E:
+0D319C-E:
+# 4A Slash / ゴリッキ
+0D31D2-E:
+0D31D9-E:
+# 4B What / ホワット
+0D27F7-E:
+0D2831-E:
+0D2838-E:
+0D284F-E:
+0D2856-E:
+0D2869-E:
+0D2870-E:
+# 4C Slurp / ごっくんストロ-
+0D28D0-E:
+0D28DA-E:
+# 4D LardJuic / ラ-ドジュ-ス
+0D2929-E:
+0D293F-E:
+0D2934-E:
+# 56 Ghozart / オルガンスキ-
+0D36F5-E:
+0D36FC-E:
+# 5F DethLlby / デスリルビ
+0D29A0-E:
+0D29C2-E:
+0D29DE-E:
+0D29E5-E:
+0D2980-E:
+0D2987-E:
+# 64 Bugsy / オマルバギ-
+0D153F-E:
+# 80 Berry / かいとうベリ-
+0D32CF-E:
+0D32BE-E:
+0D32DE-E:
+# 71 Abet-Bot / おたすけロボG
+0D32FE-E:
+# 72 Abet-Bot / おたすけロボG
+0D3326-E:
+# 73 Hack / ブリッキ
+0D3379-E:
+# 74 Slash / ゴリッキ
+0D33FA-E:
+0D3457-E:
+0D344E-E:
+0D3445-E:
+0D3460-E:
+0D3469-E:
+0D3491-E:
+0D3498-E:
+0D34A1-E:
+0D34B3-E:
+# 75 Connectr / コネクタ-
+0D2B0C-E:
+0D2B13-E:
+0D2B2E-E:
+0D2B35-E:
+0D2B4C-E:
+0D2B53-E:
+0D2C4F-E:
+0D2C7C-E:
+0D2C83-E:
+0D2C90-E:
+0D2D5E-E:
+0D2D65-E:
+0D2D7C-E:
+0D2D83-E:
+0D2D8D-E:
+0D2D94-E:
+0D2D9E-E:
+0D2DA7-E:
+0D2D30-E:
+0D2D37-E:
+# 82 BusyBotB / おたすけロボB
+0D380D-E:
+# 83 BusyBotB / おたすけロボB
+0D3845-E:
+# 87 KukuCopy / ぶんれつククッポ
+0D12A6-E:
+0D134D-E:
+0D133B-E:
+0D1329-E:
+0D1271-E:
+0D1317-E:
+0D1305-E:
+0D12F3-E:
+0D123C-E:
+0D12E1-E:
+0D12CF-E:
+0D12BD-E:
+# 8B PopoCopy / ぶんれつポポック
+0D1394-E:
+0D143B-E:
+0D14E2-E:
+0D14D0-E:
+0D14BE-E:
+0D1406-E:
+0D14AC-E:
+0D149A-E:
+0D1488-E:
+0D13D1-E:
+0D1476-E:
+0D1464-E:
+0D1452-E:
+# 8C Chekkit / チェキダ
+0D3ED0-E:
+0D3F21-E:
+0D3F28-E:
+0D3F0F-E:
+0D3F60-E:
+0D3F67-E:
+0D4015-E:
+0D3FC1-E:
+0D3EAC-E:
+0D3EB3-E:
+# 8D Left Arm / ひだりうで, 8E RightArm / みぎうで
+0D4155-E:
+0D415C-E:
+0D423B-E:
+0D4259-E:
+0D4260-E:
+0D4269-E:
+0D4287-E:
+0D428E-E:
+0D4222-E:
+0D4229-E:
+# 8D Left Arm / ひだりうで
+0D4071-E:
+# 8E RightArm / みぎうで
+0D4489-E:
+0D4490-E:
+0D4557-E:
+0D455E-E:
+0D4570-E:
+0D458E-E:
+0D4595-E:
+0D459E-E:
+0D45BD-E:
+0D45C4-E:
+0D4383-E:
+# 92 Tinimato / とマッちゃん
+0D16F8-E:
+0D16D9-E:
+0D16E7-E:
+# 93 Megamato / デカとマッちゃん
+0D1963-E:
+# 94 Pottyboy / オマルライダ-
+0D19A0-E:
+# 95 Pottyboy / オマルライダ-
+0D19CC-E:
+# 96 Pottyboy / オマルライダ-
+0D19F8-E:
+# 9A Hackpres / ブリキザプレス
+0D37C3-E:
+0D37CA-E:
+0D3751-E:
+0D37A1-E:
+# 9D Navila / ナビ-ラ
+0D1826-E:
+0D182D-E:
+0D175F-E:
+0D1766-E:
+0D176D-E:
+0D178B-E:
+0D1792-E:
+0D179B-E:
+0D17A2-E:
+0D17E3-E:
+0D17EA-E:
+0D17F5-E:
+0D17FC-E:
+0D17B7-E:
+0D17BE-E:
+0D17C7-E:
+0D17CE-E:
+0D184F-E:
+0D1856-E:
+0D185F-E:
+0D1866-E:
+# A0 MatoGear / トマトウォ-カ-
+0D2171-E:
+# A1 MatoMech / トマトリ-ダ-
+0D3986-E:
+0D392A-E:
+0D393B-E:
+0D394C-E:
+# A5 Detector / キッズたんちき
+0D1A19-E:
+# A9 GimikBot / ギミックロボ
+0D3554-E:
+0D3567-E:
+0D3547-E:
+# AA GimikBot / ギミックロボ
+0D3D56-E:
+0D3DC2-E:
+0D3DD3-E:
+0D3DDA-E:
+# AB GimikBot / ギミックロボ
+0D3E18-E:
+# AC GimikBot / ギミックロボ
+0D3609-E:
+0D361C-E:
+# AE Hack / ブリッキ
+0D39EC-E:
+0D39CB-E:
+0D39D2-E:
+0D3AB6-E:
+0D3AA9-E:
+0D3AE1-E:
+0D3AC0-E:
+0D3AC7-E:
+0D3B2F-E:
+0D3B22-E:
+0D3B11-E:
+0D3B18-E:
+0D3B00-E:
+0D3B07-E:
+# AF Slash / ゴリッキ
+0D3B79-E:
+0D3B5F-E:
+0D3BEB-E:
+0D3C0C-E:
+0D3C82-E:
+0D3C89-E:
+0D3C90-E:
+0D3C66-E:
+0D3C6F-E:
+0D3C76-E:
+0D3C2C-E:
+0D3C16-E:
+0D3C59-E:
+0D3C45-E:
+0D3C4C-E:
+0D3C38-E:
+# B0 Avila / アビ-ラ
+0D2F80-E:
+0D2F87-E:
+0D2F8E-E:
+0D2F95-E:
+0D2FA4-E:
+0D2FAB-E:
+0D2FB2-E:
+# B1 Left Arm / ひだりうで
+0D301C-E:
+0D3023-E:
+0D3035-E:
+0D303C-E:
+0D3048-E:
+0D304F-E:
+0D3085-E:
+0D308C-E:
+0D3095-E:
+0D30A1-E:
+0D30AA-E:
+0D30B1-E:
+# B2 RightArm / スライスシ-ルド
+0D30FB-E:
+0D3102-E:
+0D3121-E:
+0D3128-E:
+# B3 Avilas / アビラス, B4 LPacfier / おしゃぶり みぎ, B5 RPacfier / おしゃぶりひだり
+0D4D46-E:
+0D4BFE-E:
+# B3 Avilas / アビラス
+0D4DBE-E:
+0D4DC5-E:
+0D4E27-E:
+0D4C3B-E:
+0D4C4C-E:
+0D4C53-E:
+0D4C5D-E:
+# B3 Avilas / アビラス, B4 LPacfier / おしゃぶり みぎ, B5 RPacfier / おしゃぶりひだり
+0D478E-E:
+0D47B5-E:
+0D47C1-E:
+0D4885-E:
+0D4926-E:
+0D4946-E:
+0D4966-E:
+# B3 Avilas / アビラス
+0D4B46-E:
+0D4B05-E:
+0D4AE5-E:
+0D4AF9-E:
+0D4B28-E:
+0D4674-E:
+0D467E-E:
+0D4688-E:
+0D4692-E:
+# B4 LPacfier / おしゃぶり みぎ, B5 RPacfier / おしゃぶりひだり
+0D4D34-E:
+0D4D11-E:

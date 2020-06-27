@@ -33,6 +33,7 @@ uint32_t UpdatePointers(const std::vector<uint32_t> &list, int loc, FILE *fout);
 uint32_t InsertMainScript(FILE *, uint32_t &afterTextPos);
 uint32_t InsertEnemies(FILE *, uint32_t &afterTextPos);
 uint32_t InsertMenuStuff2(FILE *, uint32_t &afterTextPos);
+uint32_t InsertBattleText(FILE *, uint32_t &afterTextPos);
 std::vector<std::vector<uint32_t>> BuildPointerMap(const char *pointersFile);
 
 //=================================================================================================
@@ -113,6 +114,7 @@ int main(int argc, char **argv)
 	totalInsertions += InsertMainScript(fout, afterTextPos);
 	totalInsertions += InsertMenuStuff2(fout, afterTextPos);
 	totalInsertions += InsertEnemies(fout, afterTextPos);
+	totalInsertions += InsertBattleText(fout, afterTextPos);
 
 	uint32_t usedBytes = afterTextPos - TOMATO_END_POS;
 	uint32_t usedPercent = 100 * usedBytes / (TOMATO_SIZE - TOMATO_END_POS);
@@ -957,6 +959,76 @@ uint32_t InsertEnemies(FILE *fout, uint32_t &afterTextPos)
 
 			insertions++;
 		}
+	}
+
+	fclose(fin);
+	return insertions;
+}
+
+//=================================================================================================
+
+uint32_t InsertBattleText(FILE *fout, uint32_t &afterTextPos)
+{
+	char str[5000];
+	char str2[5000];
+
+	FILE *fin = fopen("ta_battle_eng.txt", "r");
+	if (fin == NULL)
+	{
+		printf("Couldn't open ta_enemies_eng.txt!\n");
+		return 0;
+	}
+
+	uint32_t insertions = 0;
+
+	// Enemies have names and attack names.  We use this file for both.
+	// Detect the old format and skip the first name.
+	while (!feof(fin))
+	{
+		if (!fgets(str, 5000, fin))
+			continue;
+		if (str[0] == '#')
+			continue;
+
+		uint32_t loc = 0;
+		int offset = 0;
+		if (sscanf(str, "%X-E:%n", &loc, &offset) < 1) {
+			continue;
+		}
+
+		PrepString(str, str2, offset);
+		int len = ConvComplexString(str2, sizeof(str2), true);
+		// TODO: Make longer.
+		if (len > 16)
+		{
+			printf("Battle message too long: %s\n", str);
+			len = 16;
+		}
+
+		if (len == 0)
+		{
+			if (forceAll)
+			{
+				uint32_t oldAddress = 0;
+				fseek(fout, loc, SEEK_SET);
+				ReadLE32(fout, oldAddress);
+				fseek(fout, oldAddress & ~0x08000000, SEEK_SET);
+				fread(str2, 1, 16, fout);
+
+				char stringID[16];
+				sprintf(stringID, "%c:%06X", 'B', loc);
+				ForceTranslateComplex(str2, 16, stringID);
+				len = 16;
+			}
+			else
+				continue;
+		}
+
+		uint32_t pos = InsertString(fout, str2, len, 16, afterTextPos);
+		fseek(fout, loc, SEEK_SET);
+		WriteLE32(fout, pos | 0x08000000);
+
+		insertions++;
 	}
 
 	fclose(fin);
