@@ -16,6 +16,7 @@
 .include "asm/battle_sleep.asm"
 .include "asm/gimmick_text.asm"
 .include "asm/item_text.asm"
+.include "asm/mecha_text.asm"
 
 ; Allow longer text in the main battle menu.
 .include "asm/battle_menu.asm"
