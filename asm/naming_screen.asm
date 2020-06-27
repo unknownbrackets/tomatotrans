@@ -252,8 +252,66 @@ str r0,[r5,12]
 bl 0x0806B514
 
 pop r4-r6,r15
+.endfunc
+
+.ifdef NameMaxLength
+; No args, same as below.
+.func NamingScreenCanAddCurrent
+; Name params struct.
+ldr r3,=0x03001AE5
+ldrb r0,[r3,5]
+; Intentionally continues to NamingScreenCanAddLetter.
+.endfunc
+; Args: uint8_t letterIndex
+; Returns 1 if that letter can fit
+.func NamingScreenCanAddLetter
+push r4,r14
+; Start by getting the letter.
+bl NamingScreenGetLetter
+
+; How wide is that?
+ldr r1,=0x08649C4C
+ldrb r4,[r1,r0]
+
+; Get the current length from the naming params
+ldr r3,=0x03001AE5
+ldrb r1,[r3,4]
+cmp r1,NameMaxLength
+bhs @@nope
+
+; This buffer has the string so far.
+ldr r0,=0x0300199C
+mov r2,0
+bl Calc8x8PixelWidth
+
+; Okay r2 is the current pixel width, add our new letter.
+add r1,r2,r4
+mov r0,1
+
+; We allow up to 5 tiles.
+cmp r1,NameMaxTiles * 8
+bls @@return
+
+@@nope:
+; Not enough space, sorry.
+mov r0,0
+
+@@return:
+pop r4,r15
+.endfunc
+
+; Returns 1 if more letters can fit.
+.func NamingScreenCanAddMore
+push r14
+; Let's cheat and just ask if we can add an 'i'.
+mov r0,0x89
+bl NamingScreenCanAddLetter
+pop r15
 .pool
 .endfunc
+.else
+.pool
+.endif
 .endarea
 
 .ifdef NameMaxLength
@@ -277,7 +335,7 @@ mov r0,7
 strb r0,[r4,5]
 mov r0,6
 ; Center based on 5 tiles.
-mov r2,40
+mov r2,NameMaxTiles * 8
 bl CopyString8x8CenterR0
 
 ; Now copy that to the screen.
@@ -452,7 +510,7 @@ pop r4-r6,r15
 .org 0x0802E2CC
 .area 0x0802E344-.,0x00
 .func NamingScreenUpdateCursor
-push r4,r14
+push r4-r5,r14
 ; Utility parameters.
 ldr r4,=0x030018BC
 
@@ -464,20 +522,23 @@ tst r0,r1
 bne @@disableCursor
 
 ; Naming screen parameters.
-ldr r3,=0x03001AE5
+ldr r5,=0x03001AE5
 ; Let's check if we're in the Yes/No confirmation select - hide the cursor if so.
-ldrb r0,[r3,2]
+ldrb r0,[r5,2]
 cmp r0,0xFF
 bne @@disableCursor
 
 ; Okay, grab the current name length.  Decrease if we're at the end.
-ldrb r1,[r3,4]
 .ifdef NameMaxLength
-	cmp r1,NameMaxLength
+	bl NamingScreenCanAddMore
+	ldrb r1,[r5,4]
+	cmp r0,0
+	bne @@skipDecrement
 .else
+	ldrb r1,[r5,4]
 	cmp r1,4
+	blo @@skipDecrement
 .endif
-blo @@skipDecrement
 sub r1,r1,1
 @@skipDecrement:
 
@@ -511,7 +572,90 @@ strh r0,[r4,8]
 strb r0,[r4,1]
 bl 0x0806A3B0
 
-pop r4,r15
+pop r4-r5,r15
 .pool
 .endfunc
 .endarea
+
+.ifdef NameMaxLength
+; 0802E074 is called when A is pressed.  We replace the max length checks in part of it.
+; This is the check for if a letter can be added.
+.org 0x0802E15C
+.area 0x0802E164-.,0x00
+; Should return r0=1/0.
+bl NamingScreenCanAddCurrent
+cmp r0,0
+bne 0x0802E16C
+.endarea
+.org 0x0802E16C
+ldrb r0,[r7,5]
+
+; This part checks if the name is full to move straight to OK.
+.org 0x0802E190
+.area 0x0802E1A2-.,0x00
+; Should return r0=1/0.
+bl NamingScreenCanAddMore
+cmp r0,0
+; Not full, don't move.
+bne 0x802E1A2
+
+; Update X and Y.
+mov r0,10
+strb r0,[r7,7]
+mov r0,5
+strb r0,[r7,6]
+nop
+.endarea
+
+.org 0x0802E00C
+.area 0x0802E074-.,0x00
+; Args: uint8_t letterIndex
+.func NamingScreenAddLetter
+push r14
+; Translate to an actual letter straight away.
+bl NamingScreenGetLetter
+
+; Naming screen params, for the current length.
+ldr r3,=0x03001AE5
+; This is the name buffer.
+ldr r2,=0x0300199C
+ldrb r1,[r3,4]
+strb r0,[r2,r1]
+; And increase the length.
+add r1,r1,1
+strb r1,[r3,4]
+
+bl NamingScreenUpdateName
+
+pop r15
+.endfunc
+
+; Args: uint8_t letterIndex
+; Returns: char letter
+.func NamingScreenGetLetter
+; Naming screen params.  Get the keyboard #.
+ldr r3,=0x03001AE5
+ldrb r1,[r3,3]
+
+cmp r1,1
+beq @@lowercase
+blo @@uppercase
+
+ldr r1,=0x0862C14C
+b @@keysReady
+
+@@uppercase:
+ldr r1,=0x0862C0D4
+b @@keysReady
+
+@@lowercase:
+ldr r1,=0x0862C110
+
+@@keysReady:
+; Grab the letter at the letter index.
+ldrb r0,[r1,r0]
+bx r14
+.pool
+.endfunc
+.endarea
+.endif

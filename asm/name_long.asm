@@ -1,12 +1,6 @@
 .definelabel NameMaxLength,7
+.definelabel NameMaxTiles,5
 
-; Adjustments for the naming screen entry.
-; Allow more chars entered.
-; TODO: Do this based on pixel width instead... at best have 5 tiles, some places 4.
-.org 0x0802E160
-cmp r0,NameMaxLength - 1
-.org 0x0802E194
-cmp r0,NameMaxLength
 ; Check up to 7 chars on the naming screen for a duplicate.
 .org 0x0802DD04
 mov r0,NameMaxLength
