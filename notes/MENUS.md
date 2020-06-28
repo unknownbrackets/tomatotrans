@@ -1,7 +1,19 @@
-Menu insertion types
+Menu insertion
 ===========
 
-There are several types of insertions supported by the inserter in the ta_menus file.
+There are several types of insertions supported by the inserter in the ta_menus file.  With these,
+there are more limited control codes available.
+
+## Control codes
+
+A subset of script codes work in these strings.
+
+[END], [NAME1], [NAME2], [NAME3], and [NAME4] work as described in [SCRIPT.md][].  All other codes
+will not work.
+
+Note that there is no teletype/ticker for this text.
+
+## Types
 
 ### BLOCKFIXED
 
@@ -51,3 +63,5 @@ Format: TERMSTRING PointerLoc TermChar MaxLen
 
 This is a string terminated by a character, i.e. FF.  The length is also the number of tiles to
 replace when drawing the string, so be careful.
+
+[SCRIPT.md]: SCRIPT.md

@@ -15,4 +15,5 @@
 MBattleEnemyWorkArea equ 0x02038000 ; length 0x30
 MFontClearSize equ 0x02038030 ; length 0x2
 MFontXOffset equ 0x02038032 ; length 0x2
-MLongCharNameWorkArea equ 0x02038034 ; length 0x0008
+MFontControlCodeData equ 0x02038034 ; length 0x4
+MLongCharNameWorkArea equ 0x02038038 ; length 0x0008

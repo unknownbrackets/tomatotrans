@@ -5,27 +5,68 @@
 
 @WidthIndex equ 0x08649C4C
 
-; Inside 0806FA50, we just rewrite some registers to save the right value.
-; Don't clobber code in r0 so we can avoid reloading it.  Switches r0 to r2.
-.org 0x0806FA84
+.org 0x0806FA50
+.area 0x00806FAB8-.,0x00
+.func GetNext8x8Char
+push r14
+
+; Font/utility params struct.
+ldr r3,=0x030018BC
+; We save the last char here, for some reason.
+ldr r2,=0x03001AD2
+ldrb r0,[r3,1]
+strb r0,[r2]
+
+; This is where we store the char # for width lookup.
+; The original wrote FD here, which disabled the buggy half implemented VWF.
+ldr r1,=0x0300198C
+
+; Load the string pointer and the char.
 ldr r2,[r3,12]
-ldrb r1,[r2]
-strb r1,[r3,5]
-add r2,1
+ldrb r0,[r2,0]
+cmp r0,0xFF
+bne @@regularChar
+
+; Alright, grab the control code.
+ldrb r0,[r2,1]
+
+; The original did some things here for codes, but they were half implemented.
+; We use to replace names instead.
+cmp r0,0x81
+blo @@noHandler
+cmp r0,0x84
+bhi @@noHandler
+
+; Takes r0, r1 (and updates width), and r2, and r3.
+; Returns r0 (should always be FD), the updated r2, and r3.
+bl Handle8x8Code8xName
+b @@done
+
+@@noHandler:
+add r2,r2,2
+b @@done
+
+@@regularChar:
+strb r0,[r1,14]
+
+; Look up the source bitmap address.
+ldr r1,=0x08648748
+lsl r0,r0,4
+add r1,r1,r0
+str r1,[r3,8]
+
+; Prepare the control code to use and update str in r2.
+mov r0,0xFD
+add r2,r2,1
+
+@@done:
+strb r0,[r3,1]
 str r2,[r3,12]
-; Here the char is used to get the bitmap offset, again switch to r2.
-.org 0x0806FA9A
-lsl r2,r0,4
-.skip 2 ; ldr for 0x08648748, bitmap address.
-add r2,r1
-str r2,[r3,8]
-; Still store the code as 0xFD (processed later to draw it.)
-mov r2,0xFD
-strb r2,[r3,1]
-; This used to be a ldr to r0 from the code (0xFD above) to store as the widthIndex.
-; We just nop it out since r0 is already the correct widthIndex.
-.org 0x0806FAA8
-nop
+
+pop r15
+.pool
+.endfunc
+.endarea
 
 ; This function renders a single character, and copies it to tile memory.
 ; The original handled VWF offsets incorrectly, so we're rewriting it here.
@@ -295,6 +336,82 @@ bx r14
 @@tooShort:
 mov r1,0
 bx r14
+.endfunc
+
+; Args: uint8_t code, void *charDrawingParams, char *str, void *fontUtilParams
+; Returns: uint8_t drawCode, int dummy, char *str, void *fontUtilParams
+.func Handle8x8Code8xName
+push r4-r6,r14
+; Convert to charNum.
+sub r0,0x81
+
+ldr r6,=MLongCharNameWorkArea
+
+; Are we mid name?
+ldr r4,=MFontControlCodeData
+ldrb r5,[r4,0]
+cmp r5,0
+bne @@continueName
+
+; Keep the parameters for later, and keep the stack aligned.
+.ifdef NameMaxLength
+	push r0-r3
+	mov r1,r0
+	mov r0,r6
+	bl CopyCharNameToBuffer
+
+	; Store the length.
+	strb r2,[r4,1]
+	pop r0-r3
+.else
+	; r0=FREE, r5=0 (needs restore)
+	ldr r5,=0x03001EDC
+	lsl r0,r1,1
+	add r0,r0,r1
+	lsl r0,r0,5
+	add r0,r0,r5
+
+	; Copy into our temp buffer so we can use the same code.
+	; In this path, it's always aligned and 4 or less in length.
+	ldr r5,[r0,0]
+	str r5,[r4,0]
+
+	ldrb r5,[r0,4]
+	strb r5,[r4,1]
+	mov r5,0
+.endif
+; r5 is still 0, so just continue now.
+
+@@continueName:
+; Grab and update the pos.
+ldrb r0,[r6,r5]
+add r5,r5,1
+strb r5,[r4,0]
+; Update the width index, this frees r1.
+strb r0,[r1,14]
+
+; Look up the source bitmap address.
+ldr r1,=0x08648748
+lsl r0,r0,4
+add r1,r1,r0
+str r1,[r3,8]
+
+; Prepare the control code to return.
+mov r0,0xFD
+
+; Are we at the end yet?
+ldrb r1,[r4,1]
+cmp r1,r5
+bhi @@stayAtCode
+; Done, skip over the control code finally.
+add r2,r2,2
+; Also clear the workdata so we start over next name.
+mov r1,0
+str r1,[r4,0]
+@@stayAtCode:
+
+pop r4-r6,r15
+.pool
 .endfunc
 .endarea
 
@@ -712,19 +829,25 @@ ldr r5,[r0,8]
 ; Now store that as the starting xpos and store the dest.
 strb r1,[r2,12]
 
-ldr r5,=0x03000604
-ldr r6,=0x03000608
+; Clear any code data since we're drawing a fresh string.
+ldr r6,=MFontClearSize
+mov r5,0
+str r5,[r6,MFontControlCodeData-MFontClearSize]
 
 cmp r7,0
 beq @@done
+
+; Change r7 to be the end of the string.
+ldr r6,[r4,12]
+add r7,r7,r6
 
 @@nextChar:
 ; The old code saves/restores len in 03000608, we just keep it in r7.
 ; Nothing we call reads it from there.
 
 ; This grabs the next character and bitmap, accounting for FF codes.
-bl 0x0806FA50
-ldrb r0,[r4,1]
+; Returns code as r0.
+bl GetNext8x8Char
 
 ; If we hit 0, 1, 3, 4 (END, WAITBREAK, PAUSEBREAK, CLEAR), stop.
 cmp r0,2
@@ -737,32 +860,20 @@ cmp r0,0xFB
 bls @@skipCharDraw
 
 ; Save the current string pointer, because this func overwrites it.
-ldr r0,[r5]
-lsl r1,r0,2
-ldr r2,[r4,12]
-str r2,[r6,r1]
-add r0,r0,1
-str r0,[r5]
-
-; Draw the character
+ldr r6,[r4,12]
+; Draw the character.
 bl CopyChar8x8ToVRAM
-
 ; Restore that string pointer.
-ldr r0,[r5]
-sub r0,r0,1
-lsl r1,r0,2
-ldr r2,[r6,r1]
-str r2,[r4,12]
-str r0,[r5]
+str r6,[r4,12]
 
 @@skipCharDraw:
-; One less char left.
-sub r7,r7,1 ; Sets flags for gt on the result.
 ; There was a call to 0802FEF0 here, but it's just a straight bx r14.
-bgt @@nextChar
+cmp r6,r7
+blo @@nextChar
 
+; r5 is still 0.
 ldr r1,=0x03000600
-strh r7,[r1]
+strh r5,[r1]
 
 @@done:
 ; Grab the final x position.
