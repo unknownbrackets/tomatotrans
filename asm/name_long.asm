@@ -206,7 +206,7 @@ bx r14
 
 ; This one is used to save the name from the naming screen.
 .org 0x0802D398
-.area 0x0802D420-.,0x00
+.area 0x0802D420-.
 .func NamingScreenSaveName
 push r4-r6,r14
 ; Utility/font params struct.
@@ -252,6 +252,8 @@ strb r0,[r4,1]
 pop r4-r6,r15
 .pool
 .endfunc
+
+SavingRenderNameLoc:
 .endarea
 
 ; This is part of a larger function that handles A buttons on the naming screen.

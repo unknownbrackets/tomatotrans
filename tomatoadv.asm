@@ -46,5 +46,6 @@
 ; Comment this out to disable.
 .include "asm/name_long.asm"
 .include "asm/dialog_name.asm"
+.include "asm/saving_screen.asm"
 
 .close

@@ -52,7 +52,7 @@ pop r4-r7,r15
 
 ; Alright, time for some updated sprite OAM data.
 .org MenuNameSprites
-.area 0x0070,0x00
+.area 0x0038,0x00
 ; This is the "base" count and OAM for names, it adds X and Y to each.
 @Name1Sprite:
 dh 2
