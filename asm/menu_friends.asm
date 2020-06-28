@@ -1,3 +1,10 @@
+; The old code patched in NAME1 for a status message inside 08077F14.
+; We now render properly using the VWF, so remove the patching.
+.org 0x08077F94
+.area 0x08077FAA-.,0x00
+b 0x08077FAA
+.endarea
+
 .ifdef NameMaxLength
 ; This is a small part of 0807C96C, which draws the Friends status content.
 ; Just adjusting the name length.
