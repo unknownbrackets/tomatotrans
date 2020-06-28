@@ -8,7 +8,8 @@
 .definelabel NamingScreenText,0x087F183E ; length 0x0140
 .definelabel DefaultNamesText,0x087F1980 ; length 0x0020
 .definelabel MechaText,0x087F19A0 ; length 0x0240
-; Next at 0x087F1BE0.
+.definelabel MenuNameSprites,0x087F1BE0 ; length 0x0070
+; Next at 0x087F1C50.
 
 ; Some places need RAM for temporary storage.
 ; The game doesn't seem to use all of the WRAM in any code, so we'll use that.
