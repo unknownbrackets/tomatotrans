@@ -40,6 +40,10 @@
 
 ; Use English uppercase/lowercase in the naming screen.
 .include "asm/naming_screen.asm"
+
+; Allow longer charcter names than the default 4.  Some in other files too.
+; Comment this out to disable.
 .include "asm/name_long.asm"
+.include "asm/dialog_name.asm"
 
 .close
