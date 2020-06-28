@@ -3,10 +3,10 @@ BLOCKFIXED 4903C8 0A 01
 00-E:??????
 # Gimica card names, 6 tiles max pixel width.
 BLOCKFIXED 4903C0 0A 17
-00-E:Demi
-01-E:Ales
-02-E:Sofi
-03-E:Lelk
+00-E:[NAME1]
+01-E:[NAME2]
+02-E:[NAME3]
+03-E:[NAME4]
 04-E:Parsly
 05-E:Mushum
 06-E:Nance

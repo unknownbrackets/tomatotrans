@@ -32,11 +32,12 @@
 .include "asm/menu_friends.asm"
 .include "asm/shop_messages.asm"
 
-; Allow longer item names and format as "#x Foo" for multiple.
+; Longer names in dialog message control codes and VWF support.
 .include "asm/dialog_item.asm"
-
-; Fix VWF centering in dialogs.
 .include "asm/dialog_center.asm"
+
+; Longer text and names in Gimica.
+.include "asm/gimica_text.asm"
 
 ; Use English uppercase/lowercase in the naming screen.
 .include "asm/naming_screen.asm"
