@@ -76,7 +76,7 @@ ldr r0,=0x03001EDC + 0x4A
 ldrb r0,[r0]
 strb r0,[r6,7]
 
-; Not sure what this is.
+; I think this is which friend you've picked.
 ldr r0,=0x030019D4 + 0xE0
 ldrb r0,[r0]
 mov r1,0x0F

@@ -23,9 +23,11 @@ Features
 
 As of writing, some of these features are still in progress.
 
- * Variable width font
+ * Variable width font in menus, dialogs, battle, etc.
  * Dynamic or increased lengths for names, descriptions, and other text.
- * Inserter for text and pointers
+ * Inserter for text and pointers.
+ * Longer character names.
+ * Save compatibility with the original game.
 
 Missing features can be found in issues on GitHub.
 
