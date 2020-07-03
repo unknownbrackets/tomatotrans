@@ -29,6 +29,9 @@ static bool TilemapFromPNG(Tilemap &tilemap, const Palette &pal, const char *fil
 	}
 
 	bool success = tilemap.FromImage(image, width, height, pal, is256);
+	if (!success) {
+		fprintf(stderr, "Failed to convert png: %s\n", filename);
+	}
 	stbi_image_free(image);
 	return success;
 }
