@@ -1,12 +1,13 @@
 #include <cstdint>
 #include <cstdio>
-#include <unordered_map>
+#include <map>
 #include <vector>
 #include "lz77.h"
 
 class LZ77GBACompressor {
 public:
 	LZ77GBACompressor(const std::vector<uint8_t> &input) : input_(input) {
+		BuildIndex();
 	}
 
 	std::vector<uint8_t> Compress(int flags, int max_scenarios);
@@ -26,11 +27,13 @@ private:
 	void CompressReverse(int max_scenarios);
 	void CompressForward(int max_scenarios);
 
+	void BuildIndex();
 	Scenario TryReverseWaste(size_t src, int waste);
 	Scenario TryForwardWaste(size_t src, int waste);
 
 	const std::vector<uint8_t> &input_;
 	std::vector<uint8_t> output_;
+	std::multimap<uint32_t, size_t> index_;
 	int flags_ = 0;
 };
 
@@ -53,6 +56,19 @@ std::vector<uint8_t> LZ77GBACompressor::Compress(int flags, int max_scenarios) {
 	return output_;
 }
 
+void LZ77GBACompressor::BuildIndex() {
+	if (input_.size() < 3) {
+		return;
+	}
+	index_.clear();
+
+	uint32_t hash = (input_[0] << 16) | (input_[1] << 8);
+	for (size_t i = 2; i < input_.size(); ++i) {
+		hash = (hash | input_[i]) << 8;
+		index_.emplace(hash, i);
+	}
+}
+
 LZ77GBACompressor::Scenario LZ77GBACompressor::TryReverseWaste(size_t src, int waste) {
 	Scenario plan{ waste };
 	// Start out in debt, our match has to save more.
@@ -70,49 +86,48 @@ LZ77GBACompressor::Scenario LZ77GBACompressor::TryReverseWaste(size_t src, int w
 		return plan;
 	}
 
-	// This is the farthest back we could possibly go.
-	int farthest_offset = src - MIN_BACKREF_LEN > (size_t)MAX_BACKREF_OFFSET ? MAX_BACKREF_OFFSET : (int)(src - MIN_BACKREF_LEN);
 	int best_offset = 0;
 	int best_len = 0;
 
-	for (int off = farthest_offset; off > 1; ) {
-		// Find the next match after this.  Note: this is the last byte of the backref.
-		uint8_t *match = (uint8_t *)memchr(input_.data() + src - off, input_[src - 1], off - 1);
-		if (!match) {
+	uint32_t hash = (input_[src - 3] << 24) | (input_[src - 2] << 16) | (input_[src - 1] << 8);
+	auto matches = index_.equal_range(hash);
+	for (auto it = matches.first; it != matches.second; ++it) {
+		const size_t &found_pos = it->second;
+		if (found_pos >= src - 1) {
 			break;
 		}
+		if (found_pos + MAX_BACKREF_OFFSET < src - 1) {
+			continue;
+		}
 
-		// Okay, found one.  Set the next search offset after it in case we reject.
-		size_t found_pos = match - input_.data();
-		int found_off = -(int)(found_pos - src);
-		off = found_off - 1;
+		int found_off = (int)(src - 1 - found_pos);
+		if ((flags_ & LZ77_VRAM_SAFE) != 0 && found_off <= 1) {
+			continue;
+		}
 
-		// How long is this match?  We only looked for the last byte so far.
-		int found_len = 1;
+		// How long is this match?  We only looked for three bytes so far.
+		int found_len = 3;
 		int max_len = found_pos >= (size_t)left ? left : (int)found_pos;
-		for (int j = 1; j < max_len; ++j) {
+		for (int j = found_len; j < max_len; ++j) {
 			if (input_[found_pos - j] != input_[src - j - 1]) {
 				break;
 			}
 			found_len++;
 		}
 
-		// Too short, rejected.  Look for another end byte.
-		if (found_len < MIN_BACKREF_LEN || found_len < best_len) {
-			continue;
+		if (found_len > best_len) {
+			// Maybe this is the one?
+			best_len = found_len;
+			best_offset = found_off;
+			if (found_len == MAX_BACKREF_LEN) {
+				break;
+			}
 		}
-		if ((flags_ & LZ77_VRAM_SAFE) != 0 && found_off - 2 <= 0) {
-			continue;
-		}
-
-		// Maybe this is the one?
-		best_len = found_len;
-		best_offset = found_off;
 	}
 
 	if (best_len >= MIN_BACKREF_LEN) {
 		// Alright, this is our best shot.
-		plan.backref_offset = best_offset - 2;
+		plan.backref_offset = best_offset - 1;
 		plan.backref_len = best_len;
 		plan.saved_bytes += best_len;
 	}
@@ -129,46 +144,45 @@ void LZ77GBACompressor::CompressReverse(int max_scenarios) {
 	ptrdiff_t total_saved = 0;
 	size_t compressed_size = 0;
 	for (size_t src = input_.size(); src > 0; ) {
-		for (int i = 0; i < 8; ++i) {
-			if (src == 0 || src > input_.size()) {
-				break;
-			}
+		if (src == 0 || src > input_.size()) {
+			break;
+		}
 
-			// Default plan is no backref.
-			Scenario plan;
+		// Default plan is no backref.
+		Scenario plan;
 
-			// Play Chess.  Is it smarter to waste a byte now to save one later?
-			for (int s = 0; s < max_scenarios; ++s) {
-				Scenario option = TryReverseWaste(src, s);
-				if (option.saved_bytes > plan.saved_bytes) {
-					// TODO: Could cache these for speed?
-					plan = option;
-					// If any plan wasting a byte is better, go with it.
-					// We don't need to examine future plans, since we'll do this next byte.
-					if (s != 0) {
-						break;
-					}
-					// If this is already ideal, we're done.
-					if (plan.backref_len == MAX_BACKREF_LEN) {
-						break;
-					}
-				} else if (s == 0) {
-					// Won't save, no sense checking other scenarios.
+		// Play Chess.  Is it smarter to waste a byte now to save one later?
+		for (int s = 0; s < max_scenarios; ++s) {
+			Scenario option = TryReverseWaste(src, s);
+			if (option.saved_bytes > plan.saved_bytes) {
+				plan = option;
+				// If any plan wasting a byte is better, go with it.
+				// We don't need to examine future plans, since we'll do this next byte.
+				if (s != 0) {
 					break;
 				}
+				// If this is already ideal, we're done.
+				if (plan.backref_len == MAX_BACKREF_LEN) {
+					break;
+				}
+			} else if (s == 0) {
+				// Won't save, no sense checking other scenarios.
+				break;
 			}
+		}
 
-			if (plan.waste != 0) {
+		if (plan.waste != 0) {
+			for (int i = 0; i < plan.waste; ++i) {
 				chunks.push_back({ input_[--src] });
 				compressed_size++;
-			} else {
-				uint8_t byte1 = ((plan.backref_len - 3) << 4) | (plan.backref_offset >> 8);
-				uint8_t byte2 = plan.backref_offset & 0xFF;
-				chunks.push_back({ byte1, byte2 });
-				src -= plan.backref_len;
-				total_saved += plan.saved_bytes;
-				compressed_size += 2;
 			}
+		} else {
+			uint8_t byte1 = ((plan.backref_len - 3) << 4) | (plan.backref_offset >> 8);
+			uint8_t byte2 = plan.backref_offset & 0xFF;
+			chunks.push_back({ byte1, byte2 });
+			src -= plan.backref_len;
+			total_saved += plan.saved_bytes;
+			compressed_size += 2;
 		}
 	}
 
@@ -215,44 +229,42 @@ LZ77GBACompressor::Scenario LZ77GBACompressor::TryForwardWaste(size_t src, int w
 		return plan;
 	}
 
-	// This is as far back as we can go.
-	int base_offset = src <= (size_t)MAX_BACKREF_OFFSET ? (int)src : MAX_BACKREF_OFFSET + 1;
 	int best_offset = 0;
 	int best_len = 0;
 
-	// Doesn't matter forwards or backwards since it's a fixed encoding.
-	for (int off = base_offset; off > 0; ) {
-		// Find the next match after this.
-		uint8_t *match = (uint8_t *)memchr(input_.data() + src - off, input_[src], off);
-		if (!match) {
+	uint32_t hash = (input_[src] << 24) | (input_[src + 1] << 16) | (input_[src + 2] << 8);
+	auto matches = index_.equal_range(hash);
+	for (auto it = matches.first; it != matches.second; ++it) {
+		const size_t &found_pos = it->second;
+		if (found_pos >= src) {
 			break;
 		}
+		if (found_pos + MAX_BACKREF_OFFSET < src) {
+			continue;
+		}
 
-		// Okay, found one.  Set the next search offset after it in case we reject.
-		size_t found_pos = match - input_.data();
-		int found_off = -(int)(found_pos - src);
-		off = found_off - 1;
+		int found_off = (int)(src - found_pos);
+		if ((flags_ & LZ77_VRAM_SAFE) != 0 && found_off <= 1) {
+			continue;
+		}
 
-		// How long is this match?  We only looked for the start byte so far.
-		int found_len = 1;
-		for (int j = 1; j < left; ++j) {
-			if (match[j] != input_[src + j]) {
+		// How long is this match?  We only looked for three bytes so far.
+		int found_len = 3;
+		for (int j = found_len; j < left; ++j) {
+			if (input_[found_pos + j] != input_[src + j]) {
 				break;
 			}
 			found_len++;
 		}
 
-		// Too short, rejected.  Look for another start byte.
-		if (found_len < MIN_BACKREF_LEN || found_len < best_len) {
-			continue;
+		if (found_len > best_len) {
+			// Maybe this is the one?
+			best_len = found_len;
+			best_offset = found_off;
+			if (found_len == MAX_BACKREF_LEN) {
+				break;
+			}
 		}
-		if ((flags_ & LZ77_VRAM_SAFE) != 0 && found_off - 1 <= 0) {
-			continue;
-		}
-
-		// Maybe this is the one?
-		best_len = found_len;
-		best_offset = found_off;
 	}
 
 	if (best_len >= MIN_BACKREF_LEN) {
@@ -293,7 +305,6 @@ void LZ77GBACompressor::CompressForward(int max_scenarios) {
 			for (int s = 0; s < max_scenarios; ++s) {
 				Scenario option = TryForwardWaste(src, s);
 				if (option.saved_bytes >= plan.saved_bytes) {
-					// TODO: Could cache these for speed?
 					plan = option;
 					// If any plan wasting a byte is better, go with it.
 					// We don't need to examine future plans, since we'll do this next byte.
@@ -311,7 +322,12 @@ void LZ77GBACompressor::CompressForward(int max_scenarios) {
 			}
 
 			if (plan.waste != 0) {
-				*pos++ = input_[src++];
+				for (int j = 0; j < plan.waste && i < 8; ++j) {
+					*pos++ = input_[src++];
+					i++;
+				}
+				// We increased this one extra.
+				i--;
 			} else {
 				*pos++ = ((plan.backref_len - 3) << 4) | (plan.backref_offset >> 8);
 				*pos++ = plan.backref_offset & 0xFF;
