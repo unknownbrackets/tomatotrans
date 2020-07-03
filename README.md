@@ -124,6 +124,7 @@ Credits and licensing
  * Tomato for the [initial proof of concept][], permitted for use under ISC.
  * Samda Knowe, White Reflection, and El Jefe for the initial idea.
  * otakuto for [TomatoTool][], licensed under MIT.
+ * Sean Barrett for [stb_image][], licensed under public domain.
 
 
 [armips]: https://github.com/Kingcom/armips
@@ -133,3 +134,4 @@ Credits and licensing
 [no$gba]: https://problemkaputt.de/gba.htm
 [SCRIPT.md]: notes/SCRIPT.md
 [MENUS.md]: notes/MENUS.md
+[stb_image]: https://github.com/nothings/stb/blob/master/stb_image.h
