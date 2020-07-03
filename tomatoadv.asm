@@ -48,4 +48,7 @@
 .include "asm/dialog_name.asm"
 .include "asm/saving_screen.asm"
 
+; Adjust the buttons on the title screen.
+.include "asm/title_screen.asm"
+
 .close

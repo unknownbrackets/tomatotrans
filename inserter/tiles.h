@@ -1,0 +1,190 @@
+#include <cstdint>
+#include <vector>
+
+class Palette {
+public:
+	void Load(int base, int count, uint16_t *data);
+
+	// Finds palettes that contain a color, so you can make all of a tile use the same palette.
+	uint16_t FindPaletteMask16(const uint8_t *color4) const;
+	int FindIndex16(const uint8_t *color4, uint16_t paletteMask, uint8_t *palette) const;
+	int FindIndex256(const uint8_t *color4) const;
+
+private:
+	uint16_t ColorTo555(const uint8_t *color4) const {
+		uint8_t r = color4[0] >> 3;
+		uint8_t g = color4[1] >> 3;
+		uint8_t b = color4[2] >> 3;
+		// We reverse the A flag to handle transparent.
+		uint8_t a = color4[3] < 128;
+		return (r << 0) | (g << 5) | (b << 10) | (a << 15);
+	}
+
+	uint16_t colors_[256]{};
+	uint16_t validBase_ = 16;
+	uint16_t validEnd_ = 0;
+};
+
+class Tile {
+public:
+	static Tile Load16(const uint8_t *src);
+	static Tile Load256(const uint8_t *src);
+	void Encode16(uint8_t *dest) const;
+	void Encode256(uint8_t *dest) const;
+
+	bool From16(const uint8_t *image, const Palette &pal, uint8_t *palette, int pixelStride);
+	bool From256(const uint8_t *image, const Palette &pal, int pixelStride);
+
+	bool Match(const Tile &other, bool *hflip, bool *vflip) const;
+
+private:
+	uint8_t pixels_[64];
+};
+
+class Tileset {
+public:
+	void Load16(uint8_t *data, int count);
+
+	int FindOrAdd(const Tile &tile, uint8_t palette);
+	int Add(const Tile &tile);
+	void Free(int i);
+
+	size_t ByteSize16() const {
+		return tiles_.size() * 32;
+	}
+
+	size_t ByteSize256() const {
+		return tiles_.size() * 64;
+	}
+
+	void Encode16(uint8_t *dest) const {
+		for (const Tile &tile : tiles_) {
+			tile.Encode16(dest);
+			dest += 32;
+		}
+	}
+
+	void Encode256(uint8_t *dest) const {
+		for (const Tile &tile : tiles_) {
+			tile.Encode256(dest);
+			dest += 64;
+		}
+	}
+
+	const Tile &At(int i) const {
+		return tiles_[i];
+	}
+
+private:
+	std::vector<Tile> tiles_;
+	std::vector<bool> free_;
+};
+
+class Tilemap {
+public:
+	Tilemap(Tileset &tileset) : tileset_(tileset) {
+	}
+
+	bool FromImage(const uint8_t *image, int width, int height, const Palette &pal, bool is256);
+
+	uint16_t At(int x, int y) const {
+		return tiles_[y * width_ + x];
+	}
+
+	int Width() const {
+		return width_;
+	}
+
+	int Height() const {
+		return height_;
+	}
+
+	size_t ByteSizeMap() const {
+		return tiles_.size() * sizeof(uint16_t);
+	}
+
+	void EncodeMap(uint8_t *dest) const;
+
+	size_t ByteSizeSet() const {
+		return is256_ ? tileset_.ByteSize256() : tileset_.ByteSize16();
+	}
+
+	void EncodeSet(uint8_t *dest) const {
+		if (is256_) {
+			tileset_.Encode256(dest);
+		} else {
+			tileset_.Encode16(dest);
+		}
+	}
+
+private:
+	std::vector<uint16_t> tiles_;
+	Tileset &tileset_;
+	int width_ = 0;
+	int height_ = 0;
+	bool is256_ = false;
+};
+
+class Chip {
+public:
+	static Chip FromTilemap(const Tilemap &tilemap, int x, int y);
+
+	void Encode(uint8_t *dest) const;
+
+	bool Match(const Chip &other) const;
+
+private:
+	uint16_t tiles_[4];
+};
+
+class Chipset {
+public:
+	int FindOrAdd(const Chip &chip);
+
+	size_t ByteSize() const {
+		return chips_.size() * 8;
+	}
+
+	void Encode(uint8_t *dest) const {
+		for (const Chip &chip : chips_) {
+			chip.Encode(dest);
+			dest += 8;
+		}
+	}
+
+private:
+	std::vector<Chip> chips_;
+};
+
+class Chipmap {
+public:
+	bool FromTilemap(const Tilemap &tilemap);
+
+	int Width() const {
+		return width_;
+	}
+
+	int Height() const {
+		return height_;
+	}
+
+	size_t ByteSizeMap() const {
+		return chips_.size() * sizeof(uint16_t);
+	}
+
+	void EncodeMap(uint8_t *dest) const;
+
+	size_t ByteSizeSet() const {
+		return chipset_.ByteSize();
+	}
+
+	void EncodeSet(uint8_t *dest) const {
+		chipset_.Encode(dest);
+	}
+
+private:
+	std::vector<uint16_t> chips_;
+	Chipset chipset_;
+	int width_ = 0;
+	int height_ = 0;
+};

@@ -2,6 +2,6 @@
 /test.gba
 /*.sav
 
-/ta_insert.o
-/ta_insert.obj
-/ta_insert.nativecodeanalysis.xml
+*.o
+*.obj
+*.nativecodeanalysis.xml

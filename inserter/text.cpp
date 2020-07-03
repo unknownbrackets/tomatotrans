@@ -4,11 +4,10 @@
 #include <cstring>
 #include <map>
 #include <vector>
+#include "util.h"
 
-static const uint32_t TOMATO_END_POS = 0x0064B4EC;
-static const uint32_t TOMATO_SIZE = 0x007F0000;
 static std::map<std::vector<uint8_t>, uint32_t> previousInsertions;
-static bool forceAll = false;
+bool forceAll = false;
 
 struct tableEntry
 {
@@ -16,50 +15,24 @@ struct tableEntry
 	char str[500];
 };
 
-tableEntry table[500];
-int        tableLen = 0;
+static tableEntry table[500];
+static int tableLen = 0;
 
-void 		  LoadTable(void);
-void          PrepString(char[], char[], int);
+void PrepString(char[], char[], int);
 unsigned char ConvChar(unsigned char);
 int ConvComplexString(char *s, size_t availLen, bool stripNewline);
 int CompileCC(const char *str, int len, int &pos, unsigned char *dest);
 int DetectScriptLen(const char *str, int maxLen);
 // Modifies stringID.
 void ForceTranslateComplex(char *str, int len, char *stringID);
-int           CharToHex(char);
-unsigned int  hstrtoi(char*);
+int CharToHex(char);
+unsigned int hstrtoi(char*);
 uint32_t UpdatePointers(const std::vector<uint32_t> &list, int loc, FILE *fout);
-uint32_t InsertMainScript(FILE *, uint32_t &afterTextPos);
-uint32_t InsertEnemies(FILE *, uint32_t &afterTextPos);
-uint32_t InsertMenuStuff2(FILE *, uint32_t &afterTextPos);
-uint32_t InsertBattleText(FILE *, uint32_t &afterTextPos);
 std::vector<std::vector<uint32_t>> BuildPointerMap(const char *pointersFile);
 
 //=================================================================================================
 
-bool WriteLE32(FILE *fout, uint32_t value)
-{
-	uint8_t parts[4];
-	parts[0] = (value & 0x000000FF) >> 0;
-	parts[1] = (value & 0x0000FF00) >> 8;
-	parts[2] = (value & 0x00FF0000) >> 16;
-	parts[3] = (value & 0xFF000000) >> 24;
-
-	return fwrite(parts, 1, 4, fout) == 4;
-}
-
-bool ReadLE32(FILE *fin, uint32_t &value)
-{
-	uint8_t parts[4];
-	if (fread(parts, 1, 4, fin) != 4)
-		return false;
-
-	value = parts[0] | (parts[1] << 8) | (parts[2] << 16) | (parts[3] << 24);
-	return true;
-}
-
-uint32_t InsertStringAt(FILE *fout, const char *str, uint32_t len, uint32_t fullLen, uint32_t pos)
+static uint32_t InsertStringAt(FILE *fout, const char *str, uint32_t len, uint32_t fullLen, uint32_t pos)
 {
 	std::vector<uint8_t> full;
 	full.resize(fullLen, 0);
@@ -72,7 +45,7 @@ uint32_t InsertStringAt(FILE *fout, const char *str, uint32_t len, uint32_t full
 	return pos;
 }
 
-uint32_t InsertString(FILE *fout, const char *str, uint32_t len, uint32_t fullLen, uint32_t &nextFree)
+static uint32_t InsertString(FILE *fout, const char *str, uint32_t len, uint32_t fullLen, uint32_t &nextFree)
 {
 	std::vector<uint8_t> full;
 	full.resize(fullLen, 0);
@@ -91,37 +64,6 @@ uint32_t InsertString(FILE *fout, const char *str, uint32_t len, uint32_t fullLe
 
 	previousInsertions[full] = pos;
 	return pos;
-}
-
-//=================================================================================================
-
-int main(int argc, char **argv)
-{
-	if (argc == 2 && !strcmp(argv[1], "--force"))
-		forceAll = true;
-
-	LoadTable();
-
-	FILE *fout = fopen("test.gba", "rb+");
-	if (!fout)
-	{
-		printf("Couldn't open test.gba, make sure you ran armips\n");
-		return 1;
-	}
-
-	int totalInsertions = 0;
-	uint32_t afterTextPos = TOMATO_END_POS;
-	totalInsertions += InsertMainScript(fout, afterTextPos);
-	totalInsertions += InsertMenuStuff2(fout, afterTextPos);
-	totalInsertions += InsertEnemies(fout, afterTextPos);
-	totalInsertions += InsertBattleText(fout, afterTextPos);
-
-	uint32_t usedBytes = afterTextPos - TOMATO_END_POS;
-	uint32_t usedPercent = 100 * usedBytes / (TOMATO_SIZE - TOMATO_END_POS);
-	printf("Inserted %u strings, using %u extra bytes (%03u%%)\n", totalInsertions, usedBytes, usedPercent);
-
-	fclose(fout);
-	return 0;
 }
 
 //=================================================================================================
@@ -238,7 +180,7 @@ uint32_t InsertMainScript(FILE *fout, uint32_t &afterTextPos)
 
 //=================================================================================================
 
-int ConvComplexString(char *str, size_t availLen, bool stripNewline)
+static int ConvComplexString(char *str, size_t availLen, bool stripNewline)
 {
 	unsigned char newStr[5000];
 	int len = strlen(str) - (stripNewline ? 1 : 0);
@@ -265,7 +207,7 @@ int ConvComplexString(char *str, size_t availLen, bool stripNewline)
 
 //=================================================================================================
 
-int CompileCC(const char *str, int totalLength, int &strLoc, unsigned char *newStream)
+static int CompileCC(const char *str, int totalLength, int &strLoc, unsigned char *newStream)
 {
 	char str2[5000] = "";
 	char *ptr[5000];
@@ -557,7 +499,7 @@ int CompileCC(const char *str, int totalLength, int &strLoc, unsigned char *newS
 
 //=================================================================================================
 
-unsigned char ConvChar(unsigned char ch)
+static unsigned char ConvChar(unsigned char ch)
 {
 	unsigned char retVal = 0;
 	char          origChar[100] = "";
@@ -581,7 +523,7 @@ unsigned char ConvChar(unsigned char ch)
 
 //=================================================================================================
 
-void LoadTable(void)
+void LoadTable()
 {
    FILE* fin;
    char  tempStr[500] = "";
@@ -620,7 +562,7 @@ void LoadTable(void)
 
 //=================================================================================================
 
-unsigned int hstrtoi(char* string)
+static unsigned int hstrtoi(char* string)
 {
    unsigned int retval = 0;
 
@@ -635,104 +577,20 @@ unsigned int hstrtoi(char* string)
 
 //=================================================================================================
 
-int CharToHex(char ch)
+static int CharToHex(char ch)
 {
-   // Converts a single hex character to an integer.
+	// Converts a single hex character to an integer.
+	std::string possible = "0123456789ABCDEF";
+	size_t pos = possible.find(ch);
+	if (pos != possible.npos)
+		return (int)pos;
 
-   int retVal = 0;
-
-   ch = toupper(ch);
-
-   switch (ch)
-   {
-      case '0':
-      {
-         retVal = 0;
-         break;
-      }
-      case '1':
-      {
-         retVal = 1;
-         break;
-      }
-      case '2':
-      {
-         retVal = 2;
-         break;
-      }
-      case '3':
-      {
-         retVal = 3;
-         break;
-      }
-      case '4':
-      {
-         retVal = 4;
-         break;
-      }
-      case '5':
-      {
-         retVal = 5;
-         break;
-      }
-      case '6':
-      {
-         retVal = 6;
-         break;
-      }
-      case '7':
-      {
-         retVal = 7;
-         break;
-      }
-      case '8':
-      {
-         retVal = 8;
-         break;
-      }
-      case '9':
-      {
-         retVal = 9;
-         break;
-      }
-      case 'A':
-      {
-         retVal = 10;
-         break;
-      }
-      case 'B':
-      {
-         retVal = 11;
-         break;
-      }
-      case 'C':
-      {
-         retVal = 12;
-         break;
-      }
-      case 'D':
-      {
-         retVal = 13;
-         break;
-      }
-      case 'E':
-      {
-         retVal = 14;
-         break;
-      }
-      case 'F':
-      {
-         retVal = 15;
-         break;
-      }
-   }
-
-   return retVal;
+	return 0;
 }
 
 //=================================================================================================
 
-void PrepString(char str[5000], char str2[5000], int startPoint)
+static void PrepString(char str[5000], char str2[5000], int startPoint)
 {
 	int j;
 	int ctr;
@@ -751,7 +609,7 @@ void PrepString(char str[5000], char str2[5000], int startPoint)
 
 //=================================================================================================
 
-std::vector<std::vector<uint32_t>> BuildPointerMap(const char *pointersFile)
+static std::vector<std::vector<uint32_t>> BuildPointerMap(const char *pointersFile)
 {
 	std::vector<std::vector<uint32_t>> pointers;
 	FILE *fptrs = fopen(pointersFile, "r");
@@ -785,7 +643,7 @@ std::vector<std::vector<uint32_t>> BuildPointerMap(const char *pointersFile)
 	return pointers;
 }
 
-uint32_t UpdatePointers(const std::vector<uint32_t> &list, int loc, FILE *fout)
+static uint32_t UpdatePointers(const std::vector<uint32_t> &list, int loc, FILE *fout)
 {
 	uint32_t insertions = 0;
 
@@ -803,7 +661,7 @@ uint32_t UpdatePointers(const std::vector<uint32_t> &list, int loc, FILE *fout)
 
 //=================================================================================================
 
-int DetectFixedLen(const char *str, int maxLen)
+static int DetectFixedLen(const char *str, int maxLen)
 {
 	for (int i = maxLen; i > 0; --i)
 	{
@@ -813,7 +671,7 @@ int DetectFixedLen(const char *str, int maxLen)
 	return 0;
 }
 
-uint32_t EnemyInfoAddress(int i, int state)
+static uint32_t EnemyInfoAddress(int i, int state)
 {
 	// State 1 = enemy names, state 2 = attack names.
 	if (state == 2)
@@ -1080,7 +938,7 @@ uint32_t InsertBattleText(FILE *fout, uint32_t &afterTextPos)
 
 //=================================================================================================
 
-int DetectScriptLen(const char *str, int maxLen)
+static int DetectScriptLen(const char *str, int maxLen)
 {
 	int pos = 0;
 	while (pos < maxLen)
@@ -1098,7 +956,7 @@ int DetectScriptLen(const char *str, int maxLen)
 	return maxLen;
 }
 
-void ForceTranslateComplex(char *s, int len, char *stringID)
+static void ForceTranslateComplex(char *s, int len, char *stringID)
 {
 	int stringIDLen = ConvComplexString(stringID, strlen(stringID) + 1, false);
 

@@ -25,7 +25,7 @@ As of writing, some of these features are still in progress.
 
  * Variable width font in menus, dialogs, battle, etc.
  * Dynamic or increased lengths for names, descriptions, and other text.
- * Inserter for text and pointers.
+ * Inserter for text, pointers, and images.
  * Longer character names.
  * Save compatibility with the original game.
 
@@ -75,7 +75,6 @@ This contains menu text and related messages shown in:
 
 This text is all shown using the 8x8 font.  See [MENUS.md] for format details.
 
-
 ### Mock insertion
 
 To force all known strings to be inserted, use --force, as in any of:
@@ -89,7 +88,15 @@ This will replace all Japanese characters with an ID followed by As.  The ID can
 the translation within files the inserter uses.
 
 
-### Emulator & hardware
+Images
+===========
+
+Images are inserted as part of the process, but currently they have space limitations and must
+reuse the same palettes as the original images.
+
+
+Emulator & hardware
+===========
 
 The changes are intended to work on common emulators and on hardware, but have not been tested
 everywhere.  Contributions are welcome to improve support.
@@ -104,7 +111,7 @@ These tools were designed to be portable, but a compiler is required on platform
 Windows.  Steps to complete before the basic usage:
 
 1. Install or compile [armips][].
-2. Compile ta_insert.cpp, similar to: `clang++ -stdlib=libc++ -Wall ta_insert.cpp -o a`
+2. Compile the inserter, similar to: `pushd inserter && make && popd`
 3. Use `armips tomatoadv.asm && ./a` instead of `i.bat`.
 
 
