@@ -157,7 +157,7 @@ uint32_t InsertMainScript(FILE *fout, uint32_t &afterTextPos)
 		{
 			// Brand new string.  We'll write this later (see above.)
 			state = 1;
-			int toCopy = strlen(str + 6) - 1;
+			int toCopy = (int)strlen(str + 6) - 1;
 			if (toCopy > 0)
 				memcpy(pendingString + pendingPos, str + 6, toCopy);
 			pendingPos += toCopy;
@@ -165,7 +165,7 @@ uint32_t InsertMainScript(FILE *fout, uint32_t &afterTextPos)
 		else if (state == 1)
 		{
 			// Continuation of an existing line.
-			int toCopy = strlen(str) - 1;
+			int toCopy = (int)strlen(str) - 1;
 			if (toCopy > 0)
 				memcpy(pendingString + pendingPos, str, toCopy);
 			pendingPos += toCopy;
@@ -183,7 +183,7 @@ uint32_t InsertMainScript(FILE *fout, uint32_t &afterTextPos)
 static int ConvComplexString(char *str, size_t availLen, bool stripNewline)
 {
 	unsigned char newStr[5000];
-	int len = strlen(str) - (stripNewline ? 1 : 0);
+	int len = (int)strlen(str) - (stripNewline ? 1 : 0);
 	int newLen = 0;
 	for (int counter = 0; counter < len; ++counter)
 	{
@@ -858,22 +858,22 @@ uint32_t InsertBattleText(FILE *fout, uint32_t &afterTextPos)
 		if (!strncmp(str + offset, "[CENTER]", strlen("[CENTER]")))
 		{
 			align = 1;
-			offset += strlen("[CENTER]");
+			offset += (int)strlen("[CENTER]");
 		}
 		else if (!strncmp(str + offset, "[CENTER_H]", strlen("[CENTER_H]")))
 		{
 			align = 1;
-			offset += strlen("[CENTER_H]");
+			offset += (int)strlen("[CENTER_H]");
 		}
 		else if (!strncmp(str + offset, "[RIGHT]", strlen("[RIGHT]")))
 		{
 			align = 2;
-			offset += strlen("[RIGHT]");
+			offset += (int)strlen("[RIGHT]");
 		}
 		else if (!strncmp(str + offset, "[LEFT]", strlen("[LEFT]")))
 		{
 			// No change, just for completeness.
-			offset += strlen("[LEFT]");
+			offset += (int)strlen("[LEFT]");
 		}
 
 		PrepString(str, str2, offset);
@@ -940,12 +940,12 @@ uint32_t InsertBattleText(FILE *fout, uint32_t &afterTextPos)
 
 static int DetectScriptLen(const char *str, int maxLen)
 {
-	int pos = 0;
+	ptrdiff_t pos = 0;
 	while (pos < maxLen)
 	{
 		// Did we find FF 00 (END)?
 		if (pos != 0 && str[pos] == 0)
-			return pos + 1;
+			return (int)pos + 1;
 		const char *next = (const char *)memchr(str + pos, 0xFF, maxLen - pos);
 		if (!next)
 			break;

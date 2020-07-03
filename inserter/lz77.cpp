@@ -44,7 +44,7 @@ static std::vector<uint8_t> compress_gba_lz77_rev(const std::vector<uint8_t> &in
 		}
 
 		// This is the farthest back we could possibly go.
-		int farthest_offset = src - MIN_BACKREF_LEN > (size_t)MAX_BACKREF_OFFSET ? MAX_BACKREF_OFFSET : src - MIN_BACKREF_LEN;
+		int farthest_offset = src - MIN_BACKREF_LEN > (size_t)MAX_BACKREF_OFFSET ? MAX_BACKREF_OFFSET : (int)(src - MIN_BACKREF_LEN);
 		int best_offset = 0;
 		int best_len = 0;
 

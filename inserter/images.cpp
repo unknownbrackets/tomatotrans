@@ -10,7 +10,7 @@
 #include "stb_image.h"
 
 
-static Palette LoadPaletteAt(FILE *ta, size_t pos, int base, int count) {
+static Palette LoadPaletteAt(FILE *ta, uint32_t pos, int base, int count) {
 	Palette pal;
 	fseek(ta, pos, SEEK_SET);
 	std::vector<uint16_t> buf;
@@ -59,7 +59,7 @@ static bool SaveTilemapAsChips(FILE *ta, const Tilemap &tilemap, int mapID, uint
 		fseek(ta, 0x0031E7B4 + 12 * mapID + 8, SEEK_SET);
 		WriteLE32(ta, nextPos | 0x08000000);
 
-		nextPos += buf.size();
+		nextPos += (uint32_t)buf.size();
 	}
 
 	return true;
@@ -118,7 +118,7 @@ bool InsertIntroMaps(FILE *ta, uint32_t &nextPos) {
 
 		fseek(ta, nextPos, SEEK_SET);
 		fwrite(compressed.data(), 1, compressed.size(), ta);
-		nextPos += compressed.size();
+		nextPos += (uint32_t)compressed.size();
 	} else {
 		fseek(ta, 0x00186D30, SEEK_SET);
 		fwrite(compressed.data(), 1, compressed.size(), ta);
@@ -202,7 +202,7 @@ bool InsertDefeatScreen(FILE *ta, uint32_t &nextPos) {
 
 		fseek(ta, nextPos, SEEK_SET);
 		fwrite(buf.data(), 1, buf.size(), ta);
-		nextPos += buf.size();
+		nextPos += (uint32_t)buf.size();
 	} else {
 		fseek(ta, 0x0063B8D0, SEEK_SET);
 		fwrite(buf.data(), 1, buf.size(), ta);
@@ -260,7 +260,7 @@ bool InsertTitleScreen(FILE *ta, uint32_t &nextPos) {
 
 		fseek(ta, nextPos, SEEK_SET);
 		fwrite(compressed.data(), 1, compressed.size(), ta);
-		nextPos += compressed.size();
+		nextPos += (uint32_t)compressed.size();
 	} else {
 		fseek(ta, 0x0049FAB8, SEEK_SET);
 		fwrite(compressed.data(), 1, compressed.size(), ta);
@@ -331,7 +331,7 @@ bool InsertTitleButtons(FILE *ta, uint32_t &nextPos) {
 
 		fseek(ta, nextPos, SEEK_SET);
 		fwrite(compressed.data(), 1, compressed.size(), ta);
-		nextPos += compressed.size();
+		nextPos += (uint32_t)compressed.size();
 	} else {
 		fseek(ta, 0x0049F698, SEEK_SET);
 		fwrite(compressed.data(), 1, compressed.size(), ta);
