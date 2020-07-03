@@ -262,6 +262,15 @@ bool Tilemap::FromImage(const uint8_t *image, int width, int height, const Palet
 	is256_ = is256;
 	tiles_.resize(width_ * height_);
 
+	auto compareTile = [width](const uint8_t *tile1, const uint8_t *tile2) {
+		for (int y = 0; y < 8; ++y) {
+			if (memcmp(tile1 + y * width * 4, tile2 + y * width * 4, 8 * 4) != 0) {
+				return false;
+			}
+		}
+		return true;
+	};
+
 	const uint8_t *lastSrc = nullptr;
 	uint16_t lastIndex = 0;
 	for (int y = 0; y < height_; ++y) {
@@ -269,7 +278,7 @@ bool Tilemap::FromImage(const uint8_t *image, int width, int height, const Palet
 			const uint8_t *src = image + (width * y * 8 + x * 8) * 4;
 
 			// If a tile repeats, we can reuse everything - tileset, index, palette, etc.
-			if (lastSrc != nullptr && memcmp(src, lastSrc, 64 * 4) == 0) {
+			if (lastSrc != nullptr && compareTile(lastSrc, src)) {
 				tiles_[y * width_ + x] = lastIndex;
 				continue;
 			}

@@ -90,6 +90,7 @@ LZ77GBACompressor::Scenario LZ77GBACompressor::TryReverseWaste(size_t src, int w
 	int best_len = 0;
 
 	uint32_t hash = (input_[src - 3] << 24) | (input_[src - 2] << 16) | (input_[src - 1] << 8);
+	const bool checkVRAM = (flags_ & LZ77_VRAM_SAFE) != 0;
 	auto matches = index_.equal_range(hash);
 	for (auto it = matches.first; it != matches.second; ++it) {
 		const size_t &found_pos = it->second;
@@ -101,7 +102,7 @@ LZ77GBACompressor::Scenario LZ77GBACompressor::TryReverseWaste(size_t src, int w
 		}
 
 		int found_off = (int)(src - 1 - found_pos);
-		if ((flags_ & LZ77_VRAM_SAFE) != 0 && found_off <= 1) {
+		if (checkVRAM && found_off <= 1) {
 			continue;
 		}
 
@@ -233,6 +234,7 @@ LZ77GBACompressor::Scenario LZ77GBACompressor::TryForwardWaste(size_t src, int w
 	int best_len = 0;
 
 	uint32_t hash = (input_[src] << 24) | (input_[src + 1] << 16) | (input_[src + 2] << 8);
+	const bool checkVRAM = (flags_ & LZ77_VRAM_SAFE) != 0;
 	auto matches = index_.equal_range(hash);
 	for (auto it = matches.first; it != matches.second; ++it) {
 		const size_t &found_pos = it->second;
@@ -244,7 +246,7 @@ LZ77GBACompressor::Scenario LZ77GBACompressor::TryForwardWaste(size_t src, int w
 		}
 
 		int found_off = (int)(src - found_pos);
-		if ((flags_ & LZ77_VRAM_SAFE) != 0 && found_off <= 1) {
+		if (checkVRAM && found_off <= 1) {
 			continue;
 		}
 
