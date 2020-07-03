@@ -3,10 +3,10 @@
 
 class Palette {
 public:
-	void Load(int base, int count, uint16_t *data);
+	void Load(uint8_t base, uint8_t count, uint16_t *data);
 
 	// Finds palettes that contain a color, so you can make all of a tile use the same palette.
-	uint16_t FindPaletteMask16(const uint8_t *color4) const;
+	uint16_t FindPaletteMask16(const uint8_t *color4, uint16_t lastMask = 0xFFFF) const;
 	int FindIndex16(const uint8_t *color4, uint16_t paletteMask, uint8_t *palette) const;
 	int FindIndex256(const uint8_t *color4) const;
 
@@ -21,8 +21,8 @@ private:
 	}
 
 	uint16_t colors_[256]{};
-	uint16_t validBase_ = 16;
-	uint16_t validEnd_ = 0;
+	uint8_t validBase_ = 16;
+	uint8_t validEnd_ = 0;
 };
 
 class Tile {

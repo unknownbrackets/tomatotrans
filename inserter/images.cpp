@@ -10,7 +10,7 @@
 #include "stb_image.h"
 
 
-static Palette LoadPaletteAt(FILE *ta, uint32_t pos, int base, int count) {
+static Palette LoadPaletteAt(FILE *ta, uint32_t pos, uint8_t base, uint8_t count) {
 	Palette pal;
 	fseek(ta, pos, SEEK_SET);
 	std::vector<uint16_t> buf;

@@ -2,24 +2,36 @@
 #include <cstring>
 #include "tiles.h"
 
-void Palette::Load(int base, int count, uint16_t *data) {
-	memset(colors_, 0, sizeof(colors_));
-	memcpy(colors_ + base * 16, data, count * 16 * sizeof(uint16_t));
+void Palette::Load(uint8_t base, uint8_t count, uint16_t *data) {
+	if (base != 0) {
+		memset(colors_, 0, base * 16 * sizeof(uint16_t));
+	}
+	for (int i = 0; i < count * 16; ++i) {
+		colors_[base * 16 + i] = data[i] & 0x7FFF;
+	}
 	validBase_ = base;
 	validEnd_ = base + count;
+	if (validEnd_ != 16) {
+		memset(colors_ + validEnd_ * 16, 0, sizeof(colors_) - validEnd_ * 16 * sizeof(uint16_t));
+	}
 }
 
-uint16_t Palette::FindPaletteMask16(const uint8_t *color4) const {
+uint16_t Palette::FindPaletteMask16(const uint8_t *color4, uint16_t lastMask) const {
 	uint16_t c = ColorTo555(color4);
 	if (c & 0x8000) {
 		// Transparent, any palette will do.
-		return 0xFFFF;
+		return lastMask;
 	}
 
 	uint16_t valid = 0;
-	for (int i = validBase_ * 16; i < validEnd_ * 16; ++i) {
-		if ((colors_[i] & 0x7fff) == c) {
-			valid |= 1 << (i / 16);
+	for (uint8_t p = validBase_; p < validEnd_; ++p) {
+		if ((lastMask & (1 << p)) == 0) {
+			continue;
+		}
+		for (int i = p * 16; i < p * 16 + 16; ++i) {
+			if (colors_[i] == c) {
+				valid |= 1 << p;
+			}
 		}
 	}
 	return valid;
@@ -45,7 +57,7 @@ int Palette::FindIndex16(const uint8_t *color4, uint16_t paletteMask, uint8_t *p
 	}
 
 	for (int i = *palette * 16; i < *palette * 16 + 16; ++i) {
-		if ((colors_[i] & 0x7fff) == c) {
+		if (colors_[i] == c) {
 			return i & 15;
 		}
 	}
@@ -61,7 +73,7 @@ int Palette::FindIndex256(const uint8_t *color4) const {
 	}
 
 	for (int i = validBase_ * 16; i < validEnd_ * 16; ++i) {
-		if ((colors_[i] & 0x7fff) == c) {
+		if (colors_[i] == c) {
 			return i;
 		}
 	}
@@ -106,7 +118,7 @@ bool Tile::From16(const uint8_t *image, const Palette &pal, uint8_t *palette, in
 	for (int y = 0; y < 8; ++y) {
 		for (int x = 0; x < 8; ++x) {
 			const uint8_t *src = image + (y * pixelStride + x) * 4;
-			common &= pal.FindPaletteMask16(src);
+			common = pal.FindPaletteMask16(src, common);
 			if (common == 0) {
 				return false;
 			}
@@ -250,9 +262,17 @@ bool Tilemap::FromImage(const uint8_t *image, int width, int height, const Palet
 	is256_ = is256;
 	tiles_.resize(width_ * height_);
 
+	const uint8_t *lastSrc = nullptr;
+	uint16_t lastIndex = 0;
 	for (int y = 0; y < height_; ++y) {
 		for (int x = 0; x < width_; ++x) {
 			const uint8_t *src = image + (width * y * 8 + x * 8) * 4;
+
+			// If a tile repeats, we can reuse everything - tileset, index, palette, etc.
+			if (lastSrc != nullptr && memcmp(src, lastSrc, 64 * 4) == 0) {
+				tiles_[y * width_ + x] = lastIndex;
+				continue;
+			}
 
 			Tile tile;
 			uint8_t palette = 0;
@@ -272,7 +292,9 @@ bool Tilemap::FromImage(const uint8_t *image, int width, int height, const Palet
 				fprintf(stderr, "Could not allocate tile\n");
 				return false;
 			}
-			tiles_[y * width_ + x] = (uint16_t)index;
+			lastSrc = src;
+			lastIndex = (uint16_t)index;
+			tiles_[y * width_ + x] = lastIndex;
 		}
 	}
 
