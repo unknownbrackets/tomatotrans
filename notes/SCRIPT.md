@@ -131,13 +131,15 @@ Specifies that the text which follows is for the first option in an upcoming sel
 
 ### [MENU2] / [FF 42]
 
-Specifies that the text which follows is for the second option in an upcoming selection.
+Specifies that the text which follows is for the next option in an upcoming selection.
+While often used for only two choices, can define more.
 
 You will almost always want some space before this.
 
 ### [MENU_END] / [FF 43]
 
-Triggers the choice between MENU1 and MENU2.  Always shown on the second line, [BREAK] or not.
+Triggers the choice between [MENU1] and any [MENU2]s.  Always shown on the second line,
+[BREAK] or not.
 
 ### [NUMBER] / [FF 80]
 
