@@ -248,6 +248,12 @@ bool InsertTitleScreen(FILE *ta, uint32_t &nextPos) {
 		return false;
 	}
 
+	// Used at the end of the animation loop.  Should just use the same tiles...
+	Tilemap logoNoCopyrightBG(tileset);
+	if (!TilemapFromPNG(logoNoCopyrightBG, pal, "images/title_loop_logo_eng.png", true)) {
+		return false;
+	}
+
 	// The tileset is now ready, let's compress.
 	std::vector<uint8_t> buf;
 	buf.resize(tileset.ByteSize256());
@@ -276,6 +282,9 @@ bool InsertTitleScreen(FILE *ta, uint32_t &nextPos) {
 		return false;
 	}
 	if (!SaveTilemap(ta, logoBG, 0x0500, 0x0045CD84, nextPos)) {
+		return false;
+	}
+	if (!SaveTilemap(ta, logoNoCopyrightBG, 0x0500, 0x0045F94C, nextPos)) {
 		return false;
 	}
 	return true;
