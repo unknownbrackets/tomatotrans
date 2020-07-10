@@ -1563,12 +1563,14 @@ DYNPOINTER 04FD6C 1A 04FD52 04FD5A #632E34
 00-E:All
 
 # Length is a bit harder to change.
-FIXEDPOINTER 632E38 10
+BLOCKSTART 632E38 10 01
 00-E:
+01-E:
 
-# Length is a bit harder to change.
-FIXEDPOINTER 632E48 10
+# I'm not sure these are actually used in the game anywhere.
+BLOCKSTART 632E58 10 02
 00-E:
+01-E:
 
 DYNPOINTER 0504F0 1A 0504CE 0504D6 #632E78
 00-E:
@@ -1913,7 +1915,7 @@ BLOCKSTART 470666 1B 32 #64B3FC/49F684
 31-E:
 
 # Will require some code changes to tweak this text.
-BLOCKSTART 470BAC 18 07 #64B4C4/49F690
+BLOCKSTART 470BAC 18 08 #64B4C4/49F690
 00-E:
 01-E:
 02-E:
@@ -1921,6 +1923,7 @@ BLOCKSTART 470BAC 18 07 #64B4C4/49F690
 04-E:
 05-E:
 06-E:
+07-E:
 BLOCKSTART 470C6C 17 01 #64B4C4/49F690
 00-E:
 # Must start with a space for now.
