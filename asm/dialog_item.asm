@@ -162,7 +162,7 @@ push r4-r6,r14
 ; This breaks the utility params at 030018BC, so we save them.
 ldr r4,=0x030018BC
 ldr r5,=0x03000604
-ldr r6,=0x03000608
+add r6,r5,4 ; 0x03000608
 
 ; Get current position...
 ldr r0,[r5]

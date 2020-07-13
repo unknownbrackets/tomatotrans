@@ -91,8 +91,8 @@ ldr r0,[r7,8]
 str r0,[r7,12]
 
 ; Append charBitmap and current [r7,4] to stack0608.
-ldr r5,=0x03000608
 ldr r6,=0x03000604
+add r5,r6,4 ; 0x03000608
 ldr r1,[r6]
 lsl r2,r1,2
 add r2,r5
