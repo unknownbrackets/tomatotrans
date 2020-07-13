@@ -109,7 +109,7 @@ bool InsertIntroMaps(FILE *ta, uint32_t &nextPos) {
 	buf.resize(tileset.ByteSize16());
 	tileset.Encode16(buf.data());
 	std::vector<uint8_t> compressed = compress_gba_lz77(buf, LZ77_VRAM_SAFE);
-	if (compressed.size() > 2818) {
+	if (compressed.size() > 2816) {
 		nextPos = (nextPos + 3) & ~3;
 		// Relocate the pointers...
 		fseek(ta, 0x0015BA3C + 4 * 0x0000, SEEK_SET);
@@ -259,7 +259,7 @@ bool InsertTitleScreen(FILE *ta, uint32_t &nextPos) {
 	buf.resize(tileset.ByteSize256());
 	tileset.Encode256(buf.data());
 	std::vector<uint8_t> compressed = compress_gba_lz77(buf, LZ77_VRAM_SAFE);
-	if (compressed.size() > 9466) {
+	if (compressed.size() > 9460) {
 		// Okay, need to relocate.
 		nextPos = (nextPos + 3) & ~3;
 		fseek(ta, 0x00082A18, SEEK_SET);
@@ -335,7 +335,7 @@ bool InsertTitleButtons(FILE *ta, uint32_t &nextPos) {
 	buf.resize(tileset.ByteSize16());
 	tileset.Encode16(buf.data());
 	std::vector<uint8_t> compressed = compress_gba_lz77(buf, LZ77_VRAM_SAFE);
-	if (compressed.size() > 1060) {
+	if (compressed.size() > 1056) {
 		// Okay, need to relocate.
 		nextPos = (nextPos + 3) & ~3;
 		fseek(ta, 0x00082F44, SEEK_SET);
