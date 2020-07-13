@@ -676,7 +676,7 @@ BLOCKFIXED 4904B8 24 01
 BLOCKFIXED 4904C0 1B 03
 00-E:L/R:    Select difficulty
 01-E:START:  Test Gimmick
-02-E:SELECT: Show description
+02-E:SELECT: Show description[EF]
 
 BLOCKFIXED 4904C8 24 02
 00-E:L/R: Adjust difficulty  START: Try
@@ -1563,7 +1563,7 @@ DYNPOINTER 04FD6C 1A 04FD52 04FD5A #632E34
 00-E:All
 
 # Length is a bit harder to change.
-BLOCKSTART 632E38 10 01
+BLOCKSTART 632E38 10 02
 00-E:
 01-E:
 
