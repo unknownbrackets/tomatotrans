@@ -151,8 +151,8 @@ dw 0x06011200
 .org 0x0807AE00
 .area 0x0807AE14-.,0x00
 ; Get the name and save number.
-mov r0,r5
 ldrb r1,[r0,1]
+mov r0,r5
 ldr r2,[0x0807AEDC] ; 0x06011200
 lsl r3,r5,10
 add r2,r2,r3
@@ -199,8 +199,8 @@ dw 0x06011200
 .org 0x0807BCA8
 .area 0x0807BCBC-.,0x00
 ; Get the name and save number.
-mov r0,r5
 ldrb r1,[r0,1]
+mov r0,r5
 ldr r2,[0x0807BD54] ; 0x06011200
 lsl r3,r5,10
 add r2,r2,r3
