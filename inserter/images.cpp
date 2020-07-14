@@ -351,3 +351,44 @@ bool InsertTitleButtons(FILE *ta, uint32_t &nextPos) {
 
 	return true;
 }
+
+bool InsertGimmickMenuIcons(FILE *ta, uint32_t &nextPos) {
+	// We don't change the palette, just reuse.  Should we?
+	Palette pal = LoadPaletteAt(ta, 0x00489308, 7, 1);
+
+	Tileset tileset;
+	Tilemap tilemap(tileset);
+	if (!TilemapFromPNG(tilemap, pal, "images/gimmick_types_eng.png", false)) {
+		return false;
+	}
+
+	// The tileset is now ready, leave it uncompressed.
+	std::vector<uint8_t> buf;
+	buf.resize(tileset.ByteSize16());
+	tileset.Encode16(buf.data());
+	if (buf.size() > 0x0280) {
+		// Okay, need to relocate.  Not supported yet.
+		fprintf(stderr, "Relocate?");
+		return false;
+	} else {
+		fseek(ta, 0x00488208, SEEK_SET);
+		fwrite(buf.data(), 1, buf.size(), ta);
+	}
+
+	if (0x0028 < tilemap.ByteSizeMap()) {
+		return false;
+	}
+
+	fseek(ta, 0x0048D710, SEEK_SET);
+	buf.resize(tilemap.ByteSizeMap());
+	tilemap.EncodeMap(buf.data());
+	// Before we write it, offset each tile by 0x7C.  It can't be more than 20 tiles.
+	// The game loads the tileset at an offset.
+	for (size_t i = 0; i < buf.size(); i += 2) {
+		buf[i] += 0x007C;
+	}
+
+	fwrite(buf.data(), 1, buf.size(), ta);
+
+	return true;
+}

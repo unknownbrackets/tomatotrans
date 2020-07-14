@@ -40,6 +40,9 @@ int main(int argc, char **argv)
 	if (InsertTitleButtons(fout, afterTextPos)) {
 		printf("Inserted updated title buttons\n");
 	}
+	if (InsertGimmickMenuIcons(fout, afterTextPos)) {
+		printf("Inserted updated gimick type icons\n");
+	}
 
 	uint32_t usedBytes = afterTextPos - TOMATO_END_POS;
 	uint32_t usedPercent = 100 * usedBytes / (TOMATO_SIZE - TOMATO_END_POS);
