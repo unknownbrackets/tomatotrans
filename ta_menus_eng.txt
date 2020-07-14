@@ -674,9 +674,9 @@ BLOCKFIXED 4904B8 24 01
 00-E:Adjust Gimmicks for
 
 BLOCKFIXED 4904C0 1B 03
-00-E:L/R:    Select difficulty
+00-E:L/R: [EF]   Select difficulty
 01-E:START:  Test Gimmick
-02-E:SELECT: Show description[EF]
+02-E:SELECT:[EF]Show description[EF]
 
 BLOCKFIXED 4904C8 24 02
 00-E:L/R: Adjust difficulty  START: Try
