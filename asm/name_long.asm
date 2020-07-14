@@ -342,5 +342,7 @@ b 0x0802DE4E
 
 ; We try to jump to this MUCH earlier than the original code, so it's too far away.
 @@gotoNext:
+; Restore r5 for next iteration (we'll copy to r4 again.)
+mov r5,r4
 b 0x0802DEAC
 .endarea
