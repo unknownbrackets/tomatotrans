@@ -476,13 +476,22 @@ mov r4,0
 ldr r7,=0x030018BC
 
 @@drawNextLine:
-mov r0,r6
+.if @@mode == 2
+	mov r0,r5
+.else
+	mov r0,r6
+.endif
 mul r0,r4
 ; Offset workarea by y * w * 32 bytes.
 ldr r1,=0x030041DC
 lsl r3,r0,5
 add r3,r1
 str r3,[r7,8]
+
+.if @@mode == 2
+	mov r0,r6
+	mul r0,r4
+.endif
 
 add r0,r9
 str r0,[r7,12]
@@ -535,7 +544,11 @@ orr r2,r5
 ldr r3,=0x030041DC
 
 ; Trade width for the byte offset so we don't recalc each line.
-lsl r6,r6,5
+.if @@mode == 2
+	lsl r6,r5,2
+.else
+	lsl r6,r6,5
+.endif
 
 mov r4,0
 @@copyNextLine:
