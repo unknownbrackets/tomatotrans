@@ -25,7 +25,7 @@
 ; These values are assumed the same in dialog_item.asm.
 @NameLen equ 0x10
 @DescLen equ 0x30
-@Stride equ @NameLen + @DescLen
+@Stride equ (@NameLen + @DescLen)
 
 ; In general, the code will ldr a base (maybe offset) pointer from the literal pool,
 ; then mov the stride in and multiply.  Near that, it will mov the length in and store it.

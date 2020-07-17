@@ -1,6 +1,6 @@
 @ButtonText equ NamingScreenText
 @ButtonLength equ 8
-@MessageText equ NamingScreenText + @ButtonLength * 4
+@MessageText equ (NamingScreenText + @ButtonLength * 4)
 
 ; Force English keyboad format on Left/Right/Up/Down.
 ; Also prevent access to the prev Katakana/Hiragana switch.

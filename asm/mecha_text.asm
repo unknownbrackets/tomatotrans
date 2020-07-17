@@ -4,7 +4,7 @@
 
 @NameLen equ 0x18
 @DescLen equ 0x30
-@Stride equ @NameLen + @DescLen
+@Stride equ (@NameLen + @DescLen)
 
 ; 0804ACB0 shows the names.  We patch to use our longer name buffer.
 .org 0x0804ACF0
