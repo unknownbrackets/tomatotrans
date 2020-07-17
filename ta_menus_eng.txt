@@ -38,12 +38,12 @@ BLOCKFIXED 4903D8 0C 05
 03-E:EXP Up
 04-E:No Status
 
-BLOCKFIXED 4903E0 08 0A
+BLOCKFIXED 4903E0 0A 0A
 00-E:
 01-E:Poison
 02-E:Sleep
 03-E:Critical
-04-E:TP Got
+04-E:Get Topar
 05-E:Spd Down
 06-E:Def Down
 07-E:Jump
@@ -809,7 +809,7 @@ BLOCKFIXED 4905D8 09 01
 
 BLOCKFIXED 4905E0 14 06
 00-E:Thanks!
-01-E:At maximum TP!
+01-E:At maximum topar!
 02-E:Currently equipped
 03-E:Too poor
 04-E:Can't carry more
@@ -1564,8 +1564,8 @@ DYNPOINTER 04FD6C 1A 04FD52 04FD5A #632E34
 
 # Length is a bit harder to change.
 BLOCKSTART 632E38 10 02
-00-E:
-01-E:
+00-E: topar stolen
+01-E: topar lost
 
 # I'm not sure these are actually used in the game anywhere.
 BLOCKSTART 632E58 10 02
@@ -1638,7 +1638,7 @@ DYNPOINTER 050AD0 06 05099E 0 #639C8B
 00-E:EXP
 
 DYNPOINTER 050AD8 06 0509AE 0 #639C90
-00-E:TP
+00-E:Topar
 
 # Can easily make longer, but requires a code change.
 BLOCKSTART 639C93 0B 01
