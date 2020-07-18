@@ -38,6 +38,7 @@
 
 ; Longer text and names in Gimica.
 .include "asm/gimica_text.asm"
+.include "asm/gimica_tutorial.asm"
 
 ; Use English uppercase/lowercase in the naming screen.
 .include "asm/naming_screen.asm"

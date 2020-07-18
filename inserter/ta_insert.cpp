@@ -27,6 +27,7 @@ int main(int argc, char **argv)
 	totalInsertions += InsertMenuStuff2(fout, afterTextPos);
 	totalInsertions += InsertEnemies(fout, afterTextPos);
 	totalInsertions += InsertBattleText(fout, afterTextPos);
+	totalInsertions += InsertGimicaTutorialText(fout, afterTextPos);
 
 	if (InsertIntroMaps(fout, afterTextPos)) {
 		printf("Inserted updated intro maps\n");

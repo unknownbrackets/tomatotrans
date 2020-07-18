@@ -75,6 +75,12 @@ This contains menu text and related messages shown in:
 
 This text is all shown using the 8x8 font.  See [MENUS.md] for format details.
 
+### ta_gimica_tutorial_eng.txt
+
+This is a list of messages shown during the Gimica tutorial.  These display using an 8x8 font.
+
+The number of lines can be changed, but each much end in [BREAK] or [END].
+
 ### Mock insertion
 
 To force all known strings to be inserted, use --force, as in any of:

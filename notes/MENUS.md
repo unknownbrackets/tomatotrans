@@ -49,7 +49,7 @@ fields.
 
 Format: POINTERLIST PointerLoc Stride MaxLen Count
 
-This is essentially for a list of FIXEDPOINTER that are evenly spaced and have the same length.
+This is essentially for a list of DYNPOINTER that are evenly spaced.
 
 ### BLOCKSTART
 

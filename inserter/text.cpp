@@ -71,7 +71,8 @@ static uint32_t InsertString(FILE *fout, const char *str, uint32_t len, uint32_t
 uint32_t InsertMainScript(FILE *fout, uint32_t &afterTextPos)
 {
 	FILE *fin = fopen("ta_script_eng.txt", "r");
-	if (fin == NULL) {
+	if (fin == NULL)
+	{
 		printf("Couldn't open ta_script_eng.txt!\n");
 		return 0;
 	}
@@ -118,7 +119,8 @@ uint32_t InsertMainScript(FILE *fout, uint32_t &afterTextPos)
 		pendingString[pendingPos] = '\0';
 		int len = ConvComplexString(pendingString, sizeof(pendingString), false);
 		// Ensure it has an END at the END, they should always.
-		if (len < 2 || pendingString[len - 2] != (char)0xFF || pendingString[len - 1] != 0x00) {
+		if (len < 2 || pendingString[len - 2] != (char)0xFF || pendingString[len - 1] != 0x00)
+		{
 			pendingString[len++] = (char)0xFF;
 			pendingString[len++] = (char)0x00;
 		}
@@ -1279,7 +1281,7 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 					uint32_t oldPointer = 0;
 					fseek(fout, address + i * stride, SEEK_SET);
 					ReadLE32(fout, oldPointer);
-					fseek(fout, oldPointer & ~ 0x08000000, SEEK_SET);
+					fseek(fout, oldPointer & ~0x08000000, SEEK_SET);
 					len = (int)fread(str2, 1, maxLen, fout);
 					len = DetectScriptLen(str2, len);
 					if (forceAll)
@@ -1390,4 +1392,192 @@ uint32_t InsertMenuStuff2(FILE *fout, uint32_t &afterTextPos)
 
 	fclose(fin);
 	return insertions;
+}
+
+uint32_t InsertGimicaTutorialText(FILE *fout, uint32_t &afterTextPos)
+{
+	FILE *fin = fopen("ta_gimica_tutorial_eng.txt", "r");
+	if (!fin)
+	{
+		printf("Couldn't open ta_gimica_tutorial_eng.txt!\n");
+		return 0;
+	}
+
+	// Assume a BOM may exist.
+	if ((uint8_t)fgetc(fin) == 0xEF)
+		fseek(fin, 3, SEEK_SET);
+	else
+		fseek(fin, 0, SEEK_SET);
+
+	// Includes the space.
+	static const int maxLen = 48;
+	uint32_t insertions = 0;
+	int groupNum = 0;
+	int groupCount = 0;
+	int state = 0;
+	char pendingString[5000];
+	int pendingPos = 0;
+	std::vector<uint32_t> stringPointers;
+
+	// For reusing prev text.
+	static const uint8_t oldGroupOffsets[] = { 0x00, 0x02, 0x03, 0x07, 0x0A, 0x0B, 0x10, 0x11, 0x12, 0x13, 0x1A, 0x1B, 0x1F, 0x23, 0x28, 0x29, 0x2A, 0x2B, 0x2C, 0x35, 0x37 };
+
+	auto flushGroup = [&]()
+	{
+		if (pendingPos == 0 && groupNum < 21)
+		{
+			// Copy over the original text if entirely blank.
+			uint32_t pointerLoc = 0x0064B1F8 + oldGroupOffsets[groupNum] * 4;
+			uint32_t oldPointer = 0;
+			bool foundEnd = false;
+
+			do
+			{
+				fseek(fout, pointerLoc, SEEK_SET);
+				ReadLE32(fout, oldPointer);
+				pointerLoc += 4;
+
+				char tutorialLine[maxLen + 1]{};
+				fseek(fout, oldPointer & ~0x08000000, SEEK_SET);
+				fread(tutorialLine, 1, 20, fout);
+				tutorialLine[maxLen] = (char)fgetc(fout);
+				if (tutorialLine[maxLen] == 0x7E)
+					foundEnd = true;
+
+				if (forceAll)
+				{
+					char stringID[16];
+					sprintf(stringID, "GT%02X", groupNum);
+					ForceTranslateComplex(tutorialLine, maxLen, stringID);
+				}
+
+				stringPointers.push_back(InsertString(fout, tutorialLine, maxLen + 1, maxLen + 1, afterTextPos));
+				insertions++;
+			}
+			while (!foundEnd);
+			groupCount++;
+			return;
+		}
+
+		pendingString[pendingPos] = '\0';
+		int groupLen = ConvComplexString(pendingString, sizeof(pendingString), false);
+		// Now we split it back out into separate strings.
+		for (int i = 0; i < groupLen; ) {
+			int end = i;
+			int type = -1;
+
+			do
+			{
+				char *nextFF = (char *)memchr(pendingString + end, 0xFF, groupLen - end);
+				if (!nextFF)
+					end = groupLen;
+				else
+					end = (int)(nextFF - pendingString);
+				if (end <= groupLen - 2)
+					type = *((uint8_t *)nextFF + 1);
+			}
+			while (end < groupLen && type != 0 && type != 5);
+
+			// [BREAK] becomes 0x1C, [END] becomes 0x7E.
+			if (type == 5)
+				type = 0x1C;
+			else
+				type = 0x7E;
+			// Also, if this is the end, force to 0x7E.
+			if (end + 2 >= groupLen)
+				type = 0x7E;
+
+			// Now let's construct the string.
+			char tutorialLine[maxLen + 1]{};
+			tutorialLine[0] = (char)0xEF;
+			tutorialLine[maxLen] = type;
+
+			if (end - i <= maxLen - 1)
+				memcpy(tutorialLine + 1, pendingString + i, end - i);
+			else
+			{
+				pendingString[end] = '\0';
+				printf("too long: %s\n", pendingString + i);
+				memcpy(tutorialLine + 1, pendingString + i, maxLen - 1);
+			}
+			i = end + 2;
+
+			stringPointers.push_back(InsertString(fout, tutorialLine, maxLen + 1, maxLen + 1, afterTextPos));
+			insertions++;
+		}
+		pendingPos = 0;
+		groupCount++;
+	};
+
+	while (!feof(fin))
+	{
+		char str[5000];
+		if (!fgets(str, 5000, fin))
+			continue;
+		if (str[0] == '#' || str[0] == '\0')
+			continue;
+
+		uint32_t num = 0;
+		int offset = 0;
+		if (sscanf(str, "%X-E:%n", &num, &offset) >= 1)
+		{
+			// New group of strings.
+			if (offset != 0)
+			{
+				if (state == 1)
+					flushGroup();
+				state = 0;
+				groupNum = num;
+			}
+		}
+
+		if (state == 0)
+		{
+			// Brand new string.  We'll write this later (see above.)
+			state = 1;
+			int toCopy = (int)strlen(str + 5) - 1;
+			if (toCopy > 0 && str[5 + toCopy - 1] == '\r')
+				toCopy--;
+			if (toCopy > 0)
+				memcpy(pendingString + pendingPos, str + 5, toCopy);
+			pendingPos += toCopy;
+		}
+		else if (state == 1)
+		{
+			// Continuation of an existing line.
+			int toCopy = (int)strlen(str) - 1;
+			if (toCopy > 0 && str[toCopy - 1] == '\r')
+				toCopy--;
+			if (toCopy > 0)
+				memcpy(pendingString + pendingPos, str, toCopy);
+			pendingPos += toCopy;
+		}
+	}
+
+	// Flush any last group.
+	flushGroup();
+
+	if (groupCount != 21)
+		printf("Wrong number of [END]s in ta_gimica_tutorial_eng.txt: %d instead of 21\n", groupCount);
+
+	if (stringPointers.size() <= 0x38)
+		fseek(fout, 0x0064B1F8, SEEK_SET);
+	else
+	{
+		// We'll put it in free space.  Overwrite the pointers it looks up.
+		fseek(fout, 0x00091390, SEEK_SET);
+		WriteLE32(fout, afterTextPos | 0x08000000);
+		fseek(fout, 0x0009140C, SEEK_SET);
+		WriteLE32(fout, afterTextPos | 0x08000000);
+
+		fseek(fout, afterTextPos, SEEK_SET);
+		afterTextPos += (int)stringPointers.size() * 4;
+	}
+
+	for (uint32_t p : stringPointers)
+		WriteLE32(fout, p | 0x08000000);
+
+	fclose(fin);
+	return insertions;
+
 }
