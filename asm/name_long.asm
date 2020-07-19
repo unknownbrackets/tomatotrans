@@ -346,3 +346,49 @@ b 0x0802DE4E
 mov r5,r4
 b 0x0802DEAC
 .endarea
+
+; On map 0x00AC (Cream Mountain, where you pull eyeballs), the script for one eyeball is buggy.
+; It should be inside an FE 00 block, but it's outside and therefore may overwrite incorrect bytes.
+; We patch the function to do a bounds check.
+.org 0x0803E650
+.area 0x0803E68C-.,0x00
+; Not actually sure what this func does precisely...
+.func MainScriptHandle2C
+; Map character info (48 bytes each.)
+ldr r3,=0x03001BDC
+; Holds the character offset to affect.
+ldr r2,=0x030018F0
+
+; Okay, here's where we're going to force it in bounds.
+ldrb r1,[r2]
+lsl r1,r1,28
+lsr r1,r1,28
+
+; Now multiply by 48.
+; (x * 2 + x) * 16 = x * 48
+lsl r0,r1,1
+add r0,r0,r1
+lsl r0,r0,4
+; And add to the buffer ptr, now this is the character.
+add r3,r3,r0
+
+; Now load the value we're setting.
+ldrb r2,[r2,1]
+
+; If the 2 flag is set, we update another address too.
+ldrb r1,[r3,2]
+mov r0,2
+and r0,r1 ; Sets Z/eq if not set
+beq @@skipB3C
+
+ldr r1,=0x03001B3C
+strb r2,[r1,0]
+
+@@skipB3C:
+; Now update the map character value.
+strb r2,[r3,5]
+
+bx r14
+.pool
+.endfunc
+.endarea
