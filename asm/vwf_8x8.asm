@@ -270,8 +270,8 @@ beq @@lengthReady
 ; Keeping this inline to avoid extra stack usage in case important...
 @@shorter:
 ; Okay, let's assume it's too long and check.
-sub r1,r1,1 ; Sets Z/eq on zero.
-beq @@tooShort
+sub r1,r1,1 ; Sets N/mi below zero.
+bmi @@tooShort
 ldrb r2,[r0,r1]
 cmp r2,0
 beq @@shorter
@@ -311,6 +311,7 @@ lsr r3,r3,3
 pop r4
 bx r14
 @@tooShort:
+mov r1,0
 mov r2,0
 mov r3,0
 b @@return
@@ -323,8 +324,8 @@ b @@return
 .func CalcFixedStringLength
 @@shorter:
 ; Okay, let's assume it's too long and check.
-sub r1,r1,1 ; Sets Z/eq on zero.
-bls @@tooShort
+sub r1,r1,1 ; Sets N/mi below zero.
+bmi @@tooShort
 ldrb r2,[r0,r1]
 cmp r2,0
 beq @@shorter
