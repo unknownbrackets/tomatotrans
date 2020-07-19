@@ -10,3 +10,7 @@ b 0x08074DAE
 .area 0x08074D0A-.,0x00
 b 0x08074D0A
 .endarea
+
+; Tell drawing to center the card descriptions.
+.org 0x084906A7
+db 0x01

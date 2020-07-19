@@ -499,11 +499,25 @@ str r0,[r7,12]
 .if @@mode == 2
 	; We're clearing anyway, so the spaces might only run over.
 	mov r1,r6
-	bl CalcFixedStringLength
+	mov r2,1
+	bl Calc8x8PixelWidth
 	strb r1,[r7,5]
 
+	add r0,sp,0x20
+	ldrb r0,[r0,3]
+	mov r1,1
+	tst r0,r1
+	beq @@lineNormal
+
+	mov r0,r5
+	bl CopyString8x8CenterR0
+	b @@lineDone
+
+	@@lineNormal:
 	mov r0,r5
 	bl CopyString8x8ClearR0
+
+	@@lineDone:
 .else
 	strb r6,[r7,5]
 	; All set, now we draw the string to workarea.

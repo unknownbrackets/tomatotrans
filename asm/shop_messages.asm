@@ -219,7 +219,7 @@ add r1,r1,r7
 ; And now draw the text.
 mov r0,r5
 mov r2,0
-bl 0x080748BC
+bl Draw8x8FixedStrIndexed
 add r6,r6,1
 
 @@skipEffect:
