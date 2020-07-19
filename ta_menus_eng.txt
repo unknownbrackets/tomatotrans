@@ -1650,7 +1650,7 @@ DYNPOINTER 050D04 10 050C9E 0 #639CA4
 
 # Can easily make longer, but requires a code change.
 BLOCKSTART 639CA9 04 01
-00-E:up
+00-E: up
 
 # Can be made longer if needed.
 BLOCKSTART 639CAD 04 01
