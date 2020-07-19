@@ -673,8 +673,8 @@ BLOCKFIXED 4904B0 0A 01 06
 BLOCKFIXED 4904B8 24 01
 00-E:Adjust Gimmicks for
 
-BLOCKFIXED 4904C0 1B 03
-00-E:L/R: [EF]   Select difficulty
+BLOCKFIXED 4904C0 1C 03 1A
+00-E:L/R:     Select difficulty
 01-E:START:  Test Gimmick
 02-E:SELECT:[EF]Show description
 
@@ -689,7 +689,7 @@ BLOCKFIXED 4904D8 04 01
 00-E:DEF
 
 # This is centered originally, lining up the Yes/No.
-BLOCKFIXED 4904E0 1C 03
+BLOCKFIXED 4904E0 1C 03 1A
 00-E:[EF][EF][EF][EF][EF][EF][EF][EF][EF]Put this on?
 01-E: 
 02-E:[EF][EF][EF][EF][EF][EF][EF][EF][EF][EF]Yes[EF][EF] No
@@ -862,10 +862,10 @@ BLOCKFIXED 490638 01 0A
 08-E:8
 09-E:9
 
-BLOCKFIXED 490640 1C 01
+BLOCKFIXED 490640 1C 01 1A
 00-J:Already equipped!
 
-BLOCKFIXED 490648 1C 03
+BLOCKFIXED 490648 1C 03 1A
 00-E:START: Begin or cancel
 01-E:[F7]: Back to menu
 02-E: 
@@ -1736,64 +1736,6 @@ POINTERLIST 649A08 04 24 31
 2E-E:
 2F-E:
 30-E:
-
-POINTERLIST 64B1F8 04 14 38
-00-E:
-01-E:
-02-E:
-03-E:
-04-E:
-05-E:
-06-E:
-07-E:
-08-E:
-09-E:
-0A-E:
-0B-E:
-0C-E:
-0D-E:
-0E-E:
-0F-E:
-10-E:
-11-E:
-12-E:
-13-E:
-14-E:
-15-E:
-16-E:
-17-E:
-18-E:
-19-E:
-1A-E:
-1B-E:
-1C-E:
-1D-E:
-1E-E:
-1F-E:
-20-E:
-21-E:
-22-E:
-23-E:
-24-E:
-25-E:
-26-E:
-27-E:
-28-E:
-29-E:
-2A-E:
-2B-E:
-2C-E:
-2D-E:
-2E-E:
-2F-E:
-30-E:
-31-E:
-32-E:
-33-E:
-34-E:
-35-E:
-36-E:
-37-E:
 
 # More Gimica text, needs code changes to make longer.
 BLOCKSTART 47038C 0A 17 #64B2D8/49F684
