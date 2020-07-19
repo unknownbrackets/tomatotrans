@@ -14,3 +14,6 @@ b 0x08074D0A
 ; Tell drawing to center the card descriptions.
 .org 0x084906A7
 db 0x01
+; Also the Gimica hub place description.
+.org 0x08490627
+db 0x01
