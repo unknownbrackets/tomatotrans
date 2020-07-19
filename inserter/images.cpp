@@ -82,7 +82,7 @@ static bool SaveTilemap(FILE *ta, const Tilemap &tilemap, uint32_t oldSize, uint
 	return true;
 }
 
-bool InsertIntroMaps(FILE *ta, uint32_t &nextPos) {
+static bool InsertIntroMaps(FILE *ta, uint32_t &nextPos) {
 	// We don't change the palette, just reuse.
 	Palette pal = LoadPaletteAt(ta, 0x00259D18, 0, 15);
 
@@ -139,7 +139,7 @@ bool InsertIntroMaps(FILE *ta, uint32_t &nextPos) {
 	return true;
 }
 
-bool InsertDefeatScreen(FILE *ta, uint32_t &nextPos) {
+static bool InsertDefeatScreen(FILE *ta, uint32_t &nextPos) {
 	// We don't change the palette, just reuse.  Should we?
 	Palette pal = LoadPaletteAt(ta, 0x0063FF98, 0, 16);
 
@@ -226,7 +226,7 @@ bool InsertDefeatScreen(FILE *ta, uint32_t &nextPos) {
 	return true;
 }
 
-bool InsertTitleScreen(FILE *ta, uint32_t &nextPos) {
+static bool InsertTitleScreen(FILE *ta, uint32_t &nextPos) {
 	// We don't change the palette, just reuse.  Should we?
 	Palette pal = LoadPaletteAt(ta, 0x0045BB64, 8, 8);
 
@@ -290,12 +290,12 @@ bool InsertTitleScreen(FILE *ta, uint32_t &nextPos) {
 	return true;
 }
 
-bool InsertTitleButtons(FILE *ta, uint32_t &nextPos) {
+static bool InsertTitleButtons(FILE *ta, uint32_t &nextPos) {
 	// We don't change the palette, just reuse.  Should we?
 	Palette pal = LoadPaletteAt(ta, 0x0045BB04, 0, 1);
 
 	// One common tileset for each button.
-	Tileset unorderedTileset;
+	Tileset unorderedTileset(false);
 
 	Tilemap newButton(unorderedTileset);
 	if (!TilemapFromPNG(newButton, pal, "images/title_new_eng.png", true)) {
@@ -313,7 +313,7 @@ bool InsertTitleButtons(FILE *ta, uint32_t &nextPos) {
 	}
 
 	// The tiles need to be in a specific order for the sprite defs in title_screen.asm.
-	Tileset tileset;
+	Tileset tileset(false);
 	for (int y = 0; y < 3; ++y) {
 		for (int x = 0; x < 8; ++x) {
 			tileset.Add(unorderedTileset.At(newButton.At(x, y) & 0x3FF));
@@ -352,7 +352,7 @@ bool InsertTitleButtons(FILE *ta, uint32_t &nextPos) {
 	return true;
 }
 
-bool InsertGimmickMenuIcons(FILE *ta, uint32_t &nextPos) {
+static bool InsertGimmickMenuIcons(FILE *ta, uint32_t &nextPos) {
 	// We don't change the palette, just reuse.  Should we?
 	Palette pal = LoadPaletteAt(ta, 0x00489308, 7, 1);
 
@@ -391,4 +391,163 @@ bool InsertGimmickMenuIcons(FILE *ta, uint32_t &nextPos) {
 	fwrite(buf.data(), 1, buf.size(), ta);
 
 	return true;
+}
+
+static bool InsertGimicaCard(FILE *ta, uint32_t &nextPos) {
+	Palette pal = LoadPaletteAt(ta, 0x00485BD0, 0, 1);
+
+	Tileset unorderedTileset(false);
+	Tilemap card(unorderedTileset);
+	if (!TilemapFromPNG(card, pal, "images/gimica_card_eng.png", false)) {
+		return false;
+	}
+
+	// The tiles need to be in a specific order for the sprite defs used by the game at 0x00480B68.
+	Tileset tileset(false);
+	// First, the top left 4x4.
+	for (int y = 0; y < 4; ++y) {
+		for (int x = 0; x < 4; ++x) {
+			tileset.Add(unorderedTileset.At(card.At(x, y) & 0x3FF));
+		}
+	}
+	// Then top right 2x4.
+	for (int y = 0; y < 4; ++y) {
+		for (int x = 4; x < 6; ++x) {
+			tileset.Add(unorderedTileset.At(card.At(x, y) & 0x3FF));
+		}
+	}
+	// The next row is 4x1, then 2x1, essentially linear.
+	for (int y = 4; y < 5; ++y) {
+		for (int x = 0; x < 6; ++x) {
+			tileset.Add(unorderedTileset.At(card.At(x, y) & 0x3FF));
+		}
+	}
+	// Almost done, 4x2 in the bottom left corner.
+	for (int y = 5; y < 7; ++y) {
+		for (int x = 0; x < 4; ++x) {
+			tileset.Add(unorderedTileset.At(card.At(x, y) & 0x3FF));
+		}
+	}
+	// Finally, 2x2 bottom right corner.
+	for (int y = 5; y < 7; ++y) {
+		for (int x = 4; x < 6; ++x) {
+			tileset.Add(unorderedTileset.At(card.At(x, y) & 0x3FF));
+		}
+	}
+
+	// The tileset is now ready, let's compress.
+	std::vector<uint8_t> buf;
+	buf.resize(tileset.ByteSize16());
+	tileset.Encode16(buf.data());
+	std::vector<uint8_t> compressed = compress_gba_lz77(buf, LZ77_VRAM_SAFE);
+	if (compressed.size() > 801) {
+		// Okay, need to relocate.
+		static const uint32_t relocations[]{ 0x0007E804, 0x000801C8, 0x000819A0, 0x0008BC14 };
+
+		nextPos = (nextPos + 3) & ~3;
+		for (uint32_t reloc : relocations)
+		{
+			fseek(ta, reloc, SEEK_SET);
+			WriteLE32(ta, nextPos | 0x08000000);
+		}
+
+		fseek(ta, nextPos, SEEK_SET);
+		fwrite(compressed.data(), 1, compressed.size(), ta);
+		nextPos += (uint32_t)compressed.size();
+	} else {
+		fseek(ta, 0x004858B4, SEEK_SET);
+		fwrite(compressed.data(), 1, compressed.size(), ta);
+	}
+
+	return true;
+}
+
+static bool InsertShopBanners(FILE *ta, uint32_t &nextPos) {
+	static const uint32_t originalSizes[]{ 529, 438, 625, 532, 441, 519, 411, 337, 286, 587 };
+	static const uint32_t tilesetPtrBase = 0x0064A7AC;
+	static const uint32_t palettePtrBase = 0x0064A7D4;
+
+	for (int i = 0; i < 10; ++i) {
+		uint32_t tilesetPtr = 0;
+		fseek(ta, tilesetPtrBase + i * 4, SEEK_SET);
+		ReadLE32(ta, tilesetPtr);
+		uint32_t palettePtr = 0;
+		fseek(ta, palettePtrBase + i * 4, SEEK_SET);
+		ReadLE32(ta, palettePtr);
+
+		Palette pal = LoadPaletteAt(ta, palettePtr & ~0x08000000, 0, 1);
+
+		char filename[64];
+		snprintf(filename, sizeof(filename), "images/shop_%02X_eng.png", i);
+
+		Tileset unorderedTileset(false);
+		Tilemap banner(unorderedTileset);
+		if (!TilemapFromPNG(banner, pal, filename, false)) {
+			return false;
+		}
+
+		// The tiles are in a specific order, we duplicate the blank in the bottom left.
+		Tileset tileset(false);
+		for (int x = 0; x < 11; ++x) {
+			tileset.Add(unorderedTileset.At(banner.At(x, 0) & 0x3FF));
+		}
+		// Just skip that one tile.
+		for (int x = 1; x < 11; ++x) {
+			tileset.Add(unorderedTileset.At(banner.At(x, 1) & 0x3FF));
+		}
+
+		// The tileset is now ready, let's compress.
+		std::vector<uint8_t> buf;
+		buf.resize(tileset.ByteSize16());
+		tileset.Encode16(buf.data());
+		std::vector<uint8_t> compressed = compress_gba_lz77(buf, LZ77_VRAM_SAFE);
+		if (compressed.size() > originalSizes[i]) {
+			// Okay, need to relocate.
+			nextPos = (nextPos + 3) & ~3;
+			fseek(ta, tilesetPtrBase + i * 4, SEEK_SET);
+			WriteLE32(ta, nextPos | 0x08000000);
+
+			fseek(ta, nextPos, SEEK_SET);
+			fwrite(compressed.data(), 1, compressed.size(), ta);
+			nextPos += (uint32_t)compressed.size();
+		} else {
+			fseek(ta, tilesetPtr & ~0x08000000, SEEK_SET);
+			fwrite(compressed.data(), 1, compressed.size(), ta);
+		}
+	}
+
+	return true;
+}
+
+bool InsertImages(FILE *ta, uint32_t &nextPos) {
+	bool failed = false;
+	if (!InsertIntroMaps(ta, nextPos)) {
+		printf("Failed to insert intro maps\n");
+		failed = true;
+	}
+	if (!InsertDefeatScreen(ta, nextPos)) {
+		printf("Failed to insert defeat screen\n");
+		failed = true;
+	}
+	if (!InsertTitleScreen(ta, nextPos)) {
+		printf("Failed to insert title screen\n");
+		failed = true;
+	}
+	if (!InsertTitleButtons(ta, nextPos)) {
+		printf("Failed to insert title buttons\n");
+		failed = true;
+	}
+	if (!InsertGimmickMenuIcons(ta, nextPos)) {
+		printf("Failed to insert gimmick menu icons\n");
+		failed = true;
+	}
+	if (!InsertGimicaCard(ta, nextPos)) {
+		printf("Failed to insert gimica card\n");
+		failed = true;
+	}
+	if (!InsertShopBanners(ta, nextPos)) {
+		printf("Failed to insert shop banners\n");
+		failed = true;
+	}
+	return !failed;
 }

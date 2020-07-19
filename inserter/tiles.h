@@ -43,6 +43,11 @@ private:
 
 class Tileset {
 public:
+	Tileset() {
+	}
+	explicit Tileset(bool allowFlip) : allowFlip_(allowFlip) {
+	}
+
 	void Load16(uint8_t *data, int count);
 
 	int FindOrAdd(const Tile &tile, uint8_t palette);
@@ -78,6 +83,7 @@ public:
 private:
 	std::vector<Tile> tiles_;
 	std::vector<bool> free_;
+	bool allowFlip_ = true;
 };
 
 class Tilemap {

@@ -29,20 +29,8 @@ int main(int argc, char **argv)
 	totalInsertions += InsertBattleText(fout, afterTextPos);
 	totalInsertions += InsertGimicaTutorialText(fout, afterTextPos);
 
-	if (InsertIntroMaps(fout, afterTextPos)) {
-		printf("Inserted updated intro maps\n");
-	}
-	if (InsertDefeatScreen(fout, afterTextPos)) {
-		printf("Inserted updated defeat screen\n");
-	}
-	if (InsertTitleScreen(fout, afterTextPos)) {
-		printf("Inserted updated title screen\n");
-	}
-	if (InsertTitleButtons(fout, afterTextPos)) {
-		printf("Inserted updated title buttons\n");
-	}
-	if (InsertGimmickMenuIcons(fout, afterTextPos)) {
-		printf("Inserted updated gimick type icons\n");
+	if (InsertImages(fout, afterTextPos)) {
+		printf("Inserted updated images\n");
 	}
 
 	uint32_t usedBytes = afterTextPos - TOMATO_END_POS;

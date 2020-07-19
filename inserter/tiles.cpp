@@ -203,8 +203,10 @@ int Tileset::FindOrAdd(const Tile &tile, uint8_t palette) {
 	for (size_t i = 0; i < tiles_.size(); ++i) {
 		bool hflip = false, vflip = false;
 		if (tiles_[i].Match(tile, &hflip, &vflip)) {
-			free_[i] = false;
-			return (uint16_t)i | (hflip ? 0x0400 : 0) | (vflip ? 0x0800 : 0) | (palette << 12);
+			if (allowFlip_ || (!hflip && !vflip)) {
+				free_[i] = false;
+				return (uint16_t)i | (hflip ? 0x0400 : 0) | (vflip ? 0x0800 : 0) | (palette << 12);
+			}
 		}
 	}
 
