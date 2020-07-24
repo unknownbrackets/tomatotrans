@@ -235,8 +235,7 @@ pop r15
 .endautoregion
 
 ; Alright, time for some updated sprite OAM data.
-.org SaveNameSprites
-.area 0x0038,0x00
+.autoregion
 ; This is the "base" count and OAM for names, it adds X and Y to each.
 @Name1Sprite:
 dh 2
@@ -254,7 +253,7 @@ dh 2
 dh 2
 	dh 0x4000, 0x4000, 0x00F0
 	dh 0x4400, 0x4020, 0x04F4
-.endarea
+.endautoregion
 
 ; Now overwrite the pointers to the OAM data.  Save/Load/Delete each use this.
 .org 0x08456DD8

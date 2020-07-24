@@ -51,8 +51,7 @@ pop r4-r7,r15
 .endregion
 
 ; Alright, time for some updated sprite OAM data.
-.org MenuNameSprites
-.area 0x0038,0x00
+.autoregion
 ; This is the "base" count and OAM for names, it adds X and Y to each.
 @Name1Sprite:
 dh 2
@@ -70,7 +69,7 @@ dh 2
 dh 2
 	dh 0x4000, 0x4000, 0x0258
 	dh 0x4400, 0x4020, 0x025C
-.endarea
+.endautoregion
 
 ; Now overwrite the pointers to the OAM data.  All the menus use this.
 .org 0x08456D60
