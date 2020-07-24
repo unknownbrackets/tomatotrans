@@ -3,7 +3,15 @@
 
 class Palette {
 public:
+	Palette(uint8_t base, uint8_t count);
 	void Load(uint8_t base, uint8_t count, uint16_t *data);
+	bool FromImage16(const uint8_t *image, int width, int height);
+	bool FromImage256(const uint8_t *image, int width, int height);
+
+	void Resize(uint8_t base, uint8_t count);
+	int TotalUsage() const;
+
+	void Encode(uint16_t *dst, uint8_t base, uint8_t count) const;
 
 	// Finds palettes that contain a color, so you can make all of a tile use the same palette.
 	uint16_t FindPaletteMask16(const uint8_t *color4, uint16_t lastMask = 0xFFFF) const;
@@ -11,6 +19,7 @@ public:
 	int FindIndex256(const uint8_t *color4) const;
 
 private:
+	bool FromTile16(const uint8_t *image, int pixelStride);
 	uint16_t ColorTo555(const uint8_t *color4) const {
 		uint8_t r = color4[0] >> 3;
 		uint8_t g = color4[1] >> 3;
@@ -21,6 +30,7 @@ private:
 	}
 
 	uint16_t colors_[256]{};
+	bool used_[256]{};
 	uint8_t validBase_ = 16;
 	uint8_t validEnd_ = 0;
 };
@@ -53,6 +63,7 @@ public:
 	int FindOrAdd(const Tile &tile, uint8_t palette);
 	int Add(const Tile &tile);
 	void Free(int i);
+	void Clear();
 
 	size_t ByteSize16() const {
 		return tiles_.size() * 32;

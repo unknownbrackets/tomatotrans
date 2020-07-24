@@ -1,19 +1,218 @@
 #include <cstdio>
 #include <cstring>
+#include <set>
 #include "tiles.h"
+
+Palette::Palette(uint8_t base, uint8_t count) {
+	validBase_ = base;
+	validEnd_ = base + count;
+	memset(colors_, 0, sizeof(colors_));
+}
 
 void Palette::Load(uint8_t base, uint8_t count, uint16_t *data) {
 	if (base != 0) {
 		memset(colors_, 0, base * 16 * sizeof(uint16_t));
 	}
 	for (int i = 0; i < count * 16; ++i) {
-		colors_[base * 16 + i] = data[i] & 0x7FFF;
+		int c = base * 16 + i;
+		colors_[c] = data[i] & 0x7FFF;
+		used_[c] = true;
 	}
+}
+
+bool Palette::FromImage16(const uint8_t *image, int width, int height) {
+	if ((width & 7) != 0 || (height & 7) != 0) {
+		fprintf(stderr, "Image is not a clean multiple of 8x8 tiles\n");
+		return false;
+	}
+
+	// Mark all transparent colors as used.
+	for (int i = validBase_; i < validEnd_; ++i) {
+		used_[i * 16] = true;
+	}
+
+	int h8 = height / 8;
+	int w8 = width / 8;
+	for (int y = 0; y < h8; ++y) {
+		for (int x = 0; x < w8; ++x) {
+			const uint8_t *src = image + (width * y * 8 + x * 8) * 4;
+			if (!FromTile16(src, width)) {
+				return false;
+			}
+
+			/*
+			uint16_t c = ColorTo555(src);
+			if ((c & 0x8000) != 0 || existing.count(c) != 0) {
+				// Transparent is always index 0, or existing.
+				continue;
+			}
+
+			if (nextFree == 256) {
+				return false;
+			}
+
+			colors_[nextFree] = c;
+			used_[nextFree] = true;
+			existing.insert(c);
+			for (int i = start; i < end; ++i) {
+				if (!used_[i]) {
+					nextFree = i;
+					break;
+				}
+			}*/
+		}
+	}
+
+	return true;
+}
+
+bool Palette::FromTile16(const uint8_t *image, int pixelStride) {
+	// Get all colors used in this tile to start with.
+	std::set<uint16_t> uniqueColors;
+	for (int y = 0; y < 8; ++y) {
+		for (int x = 0; x < 8; ++x) {
+			const uint8_t *src = image + (y * pixelStride + x) * 4;
+			uint16_t c = ColorTo555(src);
+			// We always have room for transparent.
+			if (c & 0x8000) {
+				continue;
+			}
+			uniqueColors.insert(c);
+		}
+	}
+
+	// If there's more than 15 (not counting transparent), it's over.
+	if (uniqueColors.size() > 15) {
+		return false;
+	}
+
+	int bestPalette = 16;
+	int bestPaletteNeeded = 16;
+	int bestPaletteFree = 16;
+	std::set<uint16_t> bestExisting;
+	for (uint8_t p = validBase_; p < validEnd_; ++p) {
+		int needed = 0;
+		std::set<uint16_t> availColors;
+		for (int i = p * 16 + 1; i < p * 16 + 16; ++i) {
+			if (used_[i]) {
+				availColors.insert(colors_[i]);
+			}
+		}
+
+		for (uint16_t c : uniqueColors) {
+			if (availColors.count(c) == 0) {
+				needed++;
+			}
+		}
+
+		// We need more than it has, not even an option.
+		int freeColors = 15 - (int)availColors.size();
+		if (needed > freeColors) {
+			continue;
+		}
+		// Try to find the palette with the least free entries that we can use.
+		if (bestPaletteFree < freeColors || (bestPaletteFree == freeColors && bestPaletteNeeded < needed)) {
+			continue;
+		}
+
+		// This one is better.
+		bestPalette = p;
+		bestPaletteNeeded = needed;
+		bestPaletteFree = freeColors;
+		bestExisting = availColors;
+	}
+
+	// We couldn't find one with enough free colors.
+	if (bestPalette >= 16) {
+		return false;
+	}
+
+	int nextFree = 16;
+	for (int i = bestPalette * 16 + 1; i < bestPalette * 16 + 16; ++i) {
+		if (!used_[i]) {
+			nextFree = i;
+			break;
+		}
+	}
+
+	for (uint16_t c : uniqueColors) {
+		if (bestExisting.count(c) == 0) {
+			colors_[nextFree] = c;
+			used_[nextFree] = true;
+
+			for (int i = nextFree + 1; i < bestPalette * 16 + 16; ++i) {
+				if (!used_[i]) {
+					nextFree = i;
+					break;
+				}
+			}
+		}
+	}
+
+	return true;
+}
+
+bool Palette::FromImage256(const uint8_t *image, int width, int height) {
+	std::set<uint16_t> existing;
+
+	used_[0] = true;
+
+	int end = validEnd_ * 16;
+	int nextFree = 256;
+	for (int i = validBase_ * 16; i < end; ++i) {
+		if (used_[i]) {
+			existing.insert(colors_[i]);
+		} else if (nextFree == 256) {
+			nextFree = i;
+		}
+	}
+
+	for (int y = 0; y < height; ++y) {
+		for (int x = 0; x < width; ++x) {
+			const uint8_t *src = image + (width * y + x) * 4;
+			uint16_t c = ColorTo555(src);
+			if ((c & 0x8000) != 0 || existing.count(c) != 0) {
+				// Transparent is always index 0, or existing.
+				continue;
+			}
+
+			if (nextFree == 256) {
+				return false;
+			}
+
+			colors_[nextFree] = c;
+			used_[nextFree] = true;
+			existing.insert(c);
+			for (int i = nextFree + 1; i < end; ++i) {
+				if (!used_[i]) {
+					nextFree = i;
+					break;
+				}
+			}
+		}
+	}
+
+	return true;
+}
+
+void Palette::Resize(uint8_t base, uint8_t count) {
 	validBase_ = base;
 	validEnd_ = base + count;
-	if (validEnd_ != 16) {
-		memset(colors_ + validEnd_ * 16, 0, sizeof(colors_) - validEnd_ * 16 * sizeof(uint16_t));
+}
+
+int Palette::TotalUsage() const {
+	int c = 0;
+	int start = validBase_ == 0 ? 1 : validBase_ * 16;
+	for (int i = start; i < validEnd_ * 16; ++i) {
+		if (used_[i]) {
+			c++;
+		}
 	}
+	return c;
+}
+
+void Palette::Encode(uint16_t *dst, uint8_t base, uint8_t count) const {
+	memcpy(dst, colors_ + base * 16, count * 16 * sizeof(uint16_t));
 }
 
 uint16_t Palette::FindPaletteMask16(const uint8_t *color4, uint16_t lastMask) const {
@@ -251,6 +450,11 @@ void Tileset::Free(int i) {
 		tiles_.resize(newSize);
 		free_.resize(newSize);
 	}
+}
+
+void Tileset::Clear() {
+	tiles_.clear();
+	free_.clear();
 }
 
 bool Tilemap::FromImage(const uint8_t *image, int width, int height, const Palette &pal, bool is256) {

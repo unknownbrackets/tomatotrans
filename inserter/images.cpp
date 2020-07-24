@@ -11,7 +11,7 @@
 
 
 static Palette LoadPaletteAt(FILE *ta, uint32_t pos, uint8_t base, uint8_t count) {
-	Palette pal;
+	Palette pal(base, count);
 	fseek(ta, pos, SEEK_SET);
 	std::vector<uint16_t> buf;
 	buf.resize(count * 16);
@@ -32,6 +32,33 @@ static bool TilemapFromPNG(Tilemap &tilemap, const Palette &pal, const char *fil
 	if (!success) {
 		fprintf(stderr, "Failed to convert png: %s\n", filename);
 	}
+	stbi_image_free(image);
+	return success;
+}
+
+static bool TilemapAndPaletteFromPNG(Tilemap &tilemap, Palette &pal, const char *filename, bool is256) {
+	int width, height, channels;
+	uint8_t *image = stbi_load(filename, &width, &height, &channels, STBI_rgb_alpha);
+	if (!image) {
+		fprintf(stderr, "Failed to load png: %s\n", filename);
+		return false;
+	}
+
+	bool success = true;
+	if (is256) {
+		success = pal.FromImage256(image, width, height);
+	} else {
+		success = pal.FromImage16(image, width, height);
+	}
+	if (!success) {
+		fprintf(stderr, "Failed to convert png, too many colors: %s\n", filename);
+	} else {
+		success = tilemap.FromImage(image, width, height, pal, is256);
+		if (!success) {
+			fprintf(stderr, "Failed to convert png to tilemap: %s\n", filename);
+		}
+	}
+
 	stbi_image_free(image);
 	return success;
 }
@@ -226,32 +253,40 @@ static bool InsertDefeatScreen(FILE *ta, uint32_t &nextPos) {
 	return true;
 }
 
+static bool LoadTitleScreenTilemapsAndPalette(Palette &pal, Tilemap &logo, Tilemap &logoShadow, Tilemap &logoBG, Tilemap &logoLoop) {
+	if (!TilemapAndPaletteFromPNG(logo, pal, "images/title_logo_eng.png", true)) {
+		return false;
+	}
+	if (!TilemapAndPaletteFromPNG(logoShadow, pal, "images/title_logo_shadow_eng.png", true)) {
+		return false;
+	}
+	if (!TilemapAndPaletteFromPNG(logoBG, pal, "images/title_logo_bg_eng.png", true)) {
+		return false;
+	}
+	// Used at the end of the animation loop.  Should just use the same tiles...
+	if (!TilemapAndPaletteFromPNG(logoLoop, pal, "images/title_loop_logo_eng.png", true)) {
+		return false;
+	}
+	return true;
+}
+
 static bool InsertTitleScreen(FILE *ta, uint32_t &nextPos) {
-	// We don't change the palette, just reuse.  Should we?
-	Palette pal = LoadPaletteAt(ta, 0x0045BB64, 8, 8);
+	Palette pal(8, 8);
 
 	// One common tileset for each.
 	Tileset tileset;
-
 	Tilemap logo(tileset);
-	if (!TilemapFromPNG(logo, pal, "images/title_logo_eng.png", true)) {
-		return false;
-	}
-
 	Tilemap logoShadow(tileset);
-	if (!TilemapFromPNG(logoShadow, pal, "images/title_logo_shadow_eng.png", true)) {
-		return false;
-	}
-
 	Tilemap logoBG(tileset);
-	if (!TilemapFromPNG(logoBG, pal, "images/title_logo_bg_eng.png", true)) {
-		return false;
-	}
+	Tilemap logoLoop(tileset);
+	if (!LoadTitleScreenTilemapsAndPalette(pal, logo, logoShadow, logoBG, logoLoop)) {
+		pal.Resize(7, 9);
+		tileset.Clear();
 
-	// Used at the end of the animation loop.  Should just use the same tiles...
-	Tilemap logoNoCopyrightBG(tileset);
-	if (!TilemapFromPNG(logoNoCopyrightBG, pal, "images/title_loop_logo_eng.png", true)) {
-		return false;
+		// Try again with the larger palette.
+		if (!LoadTitleScreenTilemapsAndPalette(pal, logo, logoShadow, logoBG, logoLoop)) {
+			return false;
+		}
 	}
 
 	// The tileset is now ready, let's compress.
@@ -275,6 +310,37 @@ static bool InsertTitleScreen(FILE *ta, uint32_t &nextPos) {
 		fwrite(compressed.data(), 1, compressed.size(), ta);
 	}
 
+	if (pal.TotalUsage() <= 128) {
+		std::vector<uint16_t> palbuf;
+		fseek(ta, 0x0045BB64, SEEK_SET);
+		palbuf.resize(128);
+		pal.Encode(palbuf.data(), 8, 8);
+		fwrite(palbuf.data(), sizeof(uint16_t), palbuf.size(), ta);
+	} else {
+		static const uint32_t relocationPtrs[]{ 0x00082A20, 0x000863D0 };
+		static const uint32_t relocationDests[]{ 0x00082A24, 0x000863D4 };
+		static const uint32_t relocationSizes[]{ 0x00082A28, 0x000863D8 };
+		nextPos = (nextPos + 3) & ~3;
+		for (uint32_t p : relocationPtrs) {
+			fseek(ta, p, SEEK_SET);
+			WriteLE32(ta, nextPos | 0x08000000);
+		}
+		for (uint32_t p : relocationDests) {
+			fseek(ta, p, SEEK_SET);
+			WriteLE32(ta, 0x050000E0);
+		}
+		for (uint32_t p : relocationSizes) {
+			fseek(ta, p, SEEK_SET);
+			WriteLE32(ta, 0x80000090);
+		}
+		std::vector<uint16_t> palbuf;
+		fseek(ta, nextPos, SEEK_SET);
+		palbuf.resize(9 * 16);
+		pal.Encode(palbuf.data(), 7, 9);
+		fwrite(palbuf.data(), sizeof(uint16_t), palbuf.size(), ta);
+		nextPos += palbuf.size() * sizeof(uint16_t);
+	}
+
 	if (!SaveTilemap(ta, logo, 0x0500, 0x0045C384, nextPos)) {
 		return false;
 	}
@@ -284,7 +350,7 @@ static bool InsertTitleScreen(FILE *ta, uint32_t &nextPos) {
 	if (!SaveTilemap(ta, logoBG, 0x0500, 0x0045CD84, nextPos)) {
 		return false;
 	}
-	if (!SaveTilemap(ta, logoNoCopyrightBG, 0x0500, 0x0045F94C, nextPos)) {
+	if (!SaveTilemap(ta, logoLoop, 0x0500, 0x0045F94C, nextPos)) {
 		return false;
 	}
 	return true;
