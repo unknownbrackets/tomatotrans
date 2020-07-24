@@ -227,7 +227,7 @@ uint16_t Palette::FindPaletteMask16(const uint8_t *color4, uint16_t lastMask) co
 		if ((lastMask & (1 << p)) == 0) {
 			continue;
 		}
-		for (int i = p * 16; i < p * 16 + 16; ++i) {
+		for (int i = p * 16 + 1; i < p * 16 + 16; ++i) {
 			if (colors_[i] == c) {
 				valid |= 1 << p;
 			}
@@ -255,7 +255,7 @@ int Palette::FindIndex16(const uint8_t *color4, uint16_t paletteMask, uint8_t *p
 		return 0;
 	}
 
-	for (int i = *palette * 16; i < *palette * 16 + 16; ++i) {
+	for (int i = *palette * 16 + 1; i < *palette * 16 + 16; ++i) {
 		if (colors_[i] == c) {
 			return i & 15;
 		}
@@ -271,7 +271,8 @@ int Palette::FindIndex256(const uint8_t *color4) const {
 		return 0;
 	}
 
-	for (int i = validBase_ * 16; i < validEnd_ * 16; ++i) {
+	int start = validBase_ == 0 ? 1 : validBase_ * 16;
+	for (int i = start; i < validEnd_ * 16; ++i) {
 		if (colors_[i] == c) {
 			return i;
 		}
