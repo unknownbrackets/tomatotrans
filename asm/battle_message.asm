@@ -38,7 +38,7 @@ b @stringReady
 
 ;After the literal pool...
 .org 0x0804A510
-.area 0x0804A54C-.,0x00
+.region 0x0804A54C-.,0x00
 @stringReady:
 ; Calculate the actual width of the string, including stripping trailing spaces.
 bl Calc8x8PixelWidth
@@ -84,10 +84,12 @@ bl CopyString8x8ToVRAM
 
 ; There's a lot of blank space now, skip it.
 b 0x0804A54C
-.endarea
+.endregion
 
+; This is the battle script 0x43 command which shows a battle message.
 .org 0x08042484
-.area 0x080424DC-.,0x00
+.region 0x080424DC-.,0x00
+.func BattleScript43Message
 push r14
 
 ; I think this is a flag to indicate it's showing.
@@ -148,4 +150,5 @@ bl 0x0804A148
 
 pop r15
 .pool
-.endarea
+.endfunc
+.endregion

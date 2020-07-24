@@ -4,7 +4,7 @@
 .ifdef NameMaxLength
 ; The original duplicated a bunch of code for each.  They're basically the same, so we don't.
 .org 0x0806DB58
-.area 0x0806DBD8-.,0x00
+.region 0x0806DBD8-.,0x00
 .func HandleDialog81Name1
 mov r1,0
 b HandleDialog8xName
@@ -43,7 +43,7 @@ pop r0
 bx r0
 .pool
 .endfunc
-.endarea
+.endregion
 
 ; 0x08649F70 has a table of { int code; void *handler; int args; }.  Update the handlers.
 .org 0x0864a040

@@ -1,15 +1,15 @@
 ; The old code patched in NAME1 for a status message inside 08077F14.
 ; We now render properly using the VWF, so remove the patching.
 .org 0x08077F94
-.area 0x08077FAA-.,0x00
+.region 0x08077FAA-.,0x00
 b 0x08077FAA
-.endarea
+.endregion
 
 .ifdef NameMaxLength
 ; This is a small part of 0807C96C, which draws the Friends status content.
 ; Just adjusting the name length.
 .org 0x0807C98E
-.area 0x0807C9AC-.,0x00
+.region 0x0807C9AC-.,0x00
 ; At this point: r0=FREE, r1=FREE, r2=FREE
 ; r4=0x03004FF8 (menu params), r5=FREE, r6=FREE, r7=FREE, r8=dest
 
@@ -30,7 +30,7 @@ bl CopyCharName8x8ToVRAMClearR1
 
 b 0x0807C9AC
 .pool
-.endarea
+.endregion
 
 ; This replaces a value in the literal pool (since we no longer need the old one.)
 .org 0x0807CAB8
@@ -38,7 +38,7 @@ dw 0x030018BC
 
 ; This function draws the names on the left of the Friends menu.  We fix the lengths.
 .org 0x08072FBC
-.area 0x08073034-.,0x00
+.region 0x08073034-.,0x00
 .func FriendsMenuDrawSidebarNames
 mov r3,r8
 push r3-r7,r14
@@ -89,5 +89,5 @@ mov r8,r3
 pop r4-r7,r15
 .pool
 .endfunc
-.endarea
+.endregion
 .endif

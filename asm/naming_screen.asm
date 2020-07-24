@@ -180,7 +180,7 @@ mov r0,0x85
 
 ; This draws the buttons to the right of the letters.
 .org 0x0802D220
-.area 0x0802D2F0-.,0x00
+.region 0x0802D2F0-.,0x00
 .func NamingScreenUpdateButtons
 push r4-r6,r14
 ; Naming screen parameters.
@@ -312,11 +312,11 @@ pop r15
 .else
 .pool
 .endif
-.endarea
+.endregion
 
 .ifdef NameMaxLength
 .org 0x0802D2F0
-.area 0x0802D338-.,0x00
+.region 0x0802D338-.,0x00
 .func NamingScreenUpdateName
 push r4-r5,r14
 
@@ -358,12 +358,12 @@ bl 0x0806B514
 pop r4-r5,r15
 .pool
 .endfunc
-.endarea
+.endregion
 .endif
 
 ; We also need to change the highlight func to do all 5 tiles now.
 .org 0x0802E5DC
-.area 0x0802E694-.,0x00
+.region 0x0802E694-.,0x00
 .func NamingScreenQueueHighlight
 push r4-r6,r14
 
@@ -436,12 +436,12 @@ bne @@nextTile
 pop r4-r6,r15
 .pool
 .endfunc
-.endarea
+.endregion
 
 ; This updates the message below the keyboard.
 ; We alter to support our new keyboard numbers and layout.
 .org 0x0802E578
-.area 0x0802E5DC-.,0x00
+.region 0x0802E5DC-.,0x00
 .func NameScreenUpdateMessage
 push r4-r6,r14
 ; Font drawing params.
@@ -504,11 +504,11 @@ bl 0x0806B4B4
 pop r4-r6,r15
 .pool
 .endfunc
-.endarea
+.endregion
 
 ; This function draws the cursor after the name.
 .org 0x0802E2CC
-.area 0x0802E344-.,0x00
+.region 0x0802E344-.,0x00
 .func NamingScreenUpdateCursor
 push r4-r5,r14
 ; Utility parameters.
@@ -575,7 +575,7 @@ bl 0x0806A3B0
 pop r4-r5,r15
 .pool
 .endfunc
-.endarea
+.endregion
 
 .ifdef NameMaxLength
 ; 0802E074 is called when A is pressed.  We replace the max length checks in part of it.
@@ -608,7 +608,7 @@ nop
 .endarea
 
 .org 0x0802E00C
-.area 0x0802E074-.,0x00
+.region 0x0802E074-.,0x00
 ; Args: uint8_t letterIndex
 .func NamingScreenAddLetter
 push r14
@@ -657,5 +657,5 @@ ldrb r0,[r1,r0]
 bx r14
 .pool
 .endfunc
-.endarea
+.endregion
 .endif

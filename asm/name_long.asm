@@ -8,7 +8,7 @@ mov r0,NameMaxLength
 ; This function is called on game startup to initialize character data.
 ; We modify it to allow a longer name.
 .org 0x08032C10
-.area 0x08032CB8-.,0x00
+.region 0x08032CB8-.,0x00
 .func InitCharData
 push r4-r6,r14
 
@@ -134,11 +134,11 @@ bl CopyString8x8ToVRAM
 pop r15
 .pool
 .endfunc
-.endarea
+.endregion
 
 ; This is how the naming screen preps its buffer.
 .org 0x0802D338
-.area 0x0802D398-.,0x00
+.region 0x0802D398-.,0x00
 .func NamingScreenLoadName
 push r14
 ; This tells us which name to load.
@@ -202,11 +202,11 @@ ldrb r2,[r3,4]
 bx r14
 .pool
 .endfunc
-.endarea
+.endregion
 
 ; This one is used to save the name from the naming screen.
 .org 0x0802D398
-.area 0x0802D420-.
+.region 0x0802D420-.,0x00
 .func NamingScreenSaveName
 push r4-r6,r14
 ; Utility/font params struct.
@@ -252,16 +252,14 @@ strb r0,[r4,1]
 pop r4-r6,r15
 .pool
 .endfunc
-
-SavingRenderNameLoc:
-.endarea
+.endregion
 
 ; This is part of a larger function that handles A buttons on the naming screen.
 ; Essentially, we want to validate if any other name matches here.
 ;
 ; For easy testing, break on 0802D47C, and set 03001970 to 03 there.
 .org 0x0802DD76
-.area 0x0802DE4E-.,0x00
+.region 0x0802DE4E-.,0x00
 ; At this point, r0=FREE, r1=FREE, r2=0x03000600, r3=0x030018BC
 ; r4=FREE, r5=0x03001AE5, r6=0, r7=0x03001AE5
 ; r8=FREE, r9=FREE, r12=FREE, r14=FREE
@@ -345,13 +343,13 @@ b 0x0802DE4E
 ; Restore r5 for next iteration (we'll copy to r4 again.)
 mov r5,r4
 b 0x0802DEAC
-.endarea
+.endregion
 
 ; On map 0x00AC (Cream Mountain, where you pull eyeballs), the script for one eyeball is buggy.
 ; It should be inside an FE 00 block, but it's outside and therefore may overwrite incorrect bytes.
 ; We patch the function to do a bounds check.
 .org 0x0803E650
-.area 0x0803E68C-.,0x00
+.region 0x0803E68C-.,0x00
 ; Not actually sure what this func does precisely...
 .func MainScriptHandle2C
 ; Map character info (48 bytes each.)
@@ -391,4 +389,4 @@ strb r2,[r3,5]
 bx r14
 .pool
 .endfunc
-.endarea
+.endregion

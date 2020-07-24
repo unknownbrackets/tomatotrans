@@ -79,6 +79,6 @@ nop
 ; 08074DD0 used to patch in [NAME3], we now support directly.
 ; We just remove the patching part of it.
 .org 0x08074DEE
-.area 0x08074E24-.,0x0
+.region 0x08074E24-.,0x0
 b 0x08074E24
-.endarea
+.endregion

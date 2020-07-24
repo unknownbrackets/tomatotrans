@@ -10,7 +10,7 @@
 ; This is part of the larger function, 08050E2C, and shows the spoils.
 ; All regs are free at this point.
 .org 0x08050F6E
-.area 0x0805100C-.,0x00
+.region 0x0805100C-.,0x00
 ; Drawing params structure.
 ldr r7,=0x030018BC
 ; Start position for drawing.
@@ -23,7 +23,7 @@ str r0,[r7,12]
 mov r0,@ItemTextLen
 strb r0,[r7,5]
 str r2,[r7,8]
-bl 0x08071748
+bl CopyString8x8ToVRAM
 
 ; First byte, earned items.  After that, a byte to identify each item.
 ldr r6,=0x03000C54
@@ -70,7 +70,7 @@ bl 0x080484A8
 strb r0,[r7,5]
 
 ; All ready, draw the item name.
-bl 0x08071748
+bl CopyString8x8ToVRAM
 
 @skipSpoil:
 add r6,r6,1
@@ -95,7 +95,7 @@ strb r0,[r7,5]
 lsl r0,r4,10
 add r0,r9
 str r0,[r7,8]
-bl 0x08071748
+bl CopyString8x8ToVRAM
 
 mov r0,2
 mov r1,2
@@ -103,4 +103,4 @@ bl 0x08048584
 
 b 0x08051028
 .pool
-.endarea
+.endregion

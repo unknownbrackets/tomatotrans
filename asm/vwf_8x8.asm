@@ -6,7 +6,7 @@
 @WidthIndex equ 0x08649C4C
 
 .org 0x0806FA50
-.area 0x00806FAB8-.,0x00
+.region 0x00806FAB8-.,0x00
 .func GetNext8x8Char
 push r14
 
@@ -66,12 +66,12 @@ str r2,[r3,12]
 pop r15
 .pool
 .endfunc
-.endarea
+.endregion
 
 ; This function renders a single character, and copies it to tile memory.
 ; The original handled VWF offsets incorrectly, so we're rewriting it here.
 org 0x080713D0
-.area 0x080715A4-.,0x00
+.region 0x080715A4-.,0x00
 .func CopyChar8x8ToVRAM
 mov r0,r8
 mov r1,r9
@@ -414,13 +414,13 @@ str r1,[r4,0]
 pop r4-r6,r15
 .pool
 .endfunc
-.endarea
+.endregion
 
 
 ; This is the function that typically draws indexed fixed strings.
 ; blockSize actually has the full 32 bits in the ROM, which we take advantage of.
 .org 0x080748BC
-.area 0x080749B8-.,0x00
+.region 0x080749B8-.,0x00
 ; Args: uint8_t index, void *dest, uint8_t color, const char *str, uint16_t blockSize
 .func Draw8x8FixedStrIndexed
 push r4-r7,r14
@@ -643,14 +643,14 @@ ldr r3,=CopyString8x8ClearR0+1
 bx r3
 .pool
 .endfunc
-.endarea
+.endregion
 
 ; This is another function that draws indexed fixed strings, but without DMA3 transfer.
 ; blockSize actually has the full 32 bits in the ROM, which we take advantage of.
 ; Note: the original version of this func had a bug which broke it for multi-line strings,
 ; which is probably why it was never used for them.  This also fixes that bug.
 .org 0x080749B8
-.area 0x08074A68-.,0x00
+.region 0x08074A68-.,0x00
 ; Args: uint8_t index, void *dest, uint8_t color, const char *str, uint16_t blockSize
 .func Draw8x8FixedStrIndexedToVRAM
 push r4-r7,r14
@@ -746,12 +746,12 @@ pop r3
 bx r3
 .pool
 .endfunc
-.endarea
+.endregion
 
 ; We modify this func to adjust the start xpos on misaligned tiles.
 ; There's no reason to allow text rotating wrong on tiles, so we treat that as an x offset for VWF.
 org 0x08071748
-.area 0x0807184C-.,0x00
+.region 0x0807184C-.,0x00
 .func CopyString8x8ToVRAM
 push r4-r7,r14
 ldr r0,=0x99999999
@@ -934,4 +934,4 @@ strh r0,[r1]
 b CopyString8x8ToVRAM
 .endfunc
 .pool
-.endarea
+.endregion

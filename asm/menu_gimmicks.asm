@@ -5,7 +5,7 @@
 @GimmickStatusBlock equ 0x084904B8
 
 org 0x08078C18
-.area 0x08078CAC-.,0x00
+.region 0x08078CAC-.,0x00
 ; Args: uint8_t charNumber, void *dest
 .func MenuStatusGimmickPickWho
 push r4-r7,r14
@@ -90,4 +90,4 @@ pop r0
 bx r0
 .pool
 .endfunc
-.endarea
+.endregion

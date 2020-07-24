@@ -5,7 +5,7 @@
 @WidthIndex equ 0x08649D4D
 
 .org 0x0806E7EC
-.area 0x0806E80C-.,0x00
+.region 0x0806E80C-.,0x00
 ; We change this to simply take the new length in r0, simpler to use.
 ; Args: uint8_t addLength, struct *utilityParams
 ; Returns: uint8_t newLength, struct *utilityParams
@@ -22,10 +22,10 @@ mov r0,0x90
 strb r0,[r1,5]
 bx r14
 .endfunc
-.endarea
+.endregion
 
 .org 0x0806E80C
-.area 0x0806EC90-.
+.region 0x0806EC90-.,0x00
 .func CalcLengthDialog
 push r4,r14
 ; We track the widths in this struct.
@@ -338,7 +338,4 @@ strb r0,[r3,5]
 pop r15
 .pool
 .endfunc
-
-; See dialog_item.asm.  Takes until the end of this area.
-CalcLengthDialog85ItemLoc:
-.endarea
+.endregion

@@ -48,7 +48,7 @@ bl CopyString8x8Clear8
 ; 0802B7F0 uses a buffer copied by 08065518 into 0x03003F34.  It's too small for our name.
 ; We repoint it to use the original text address.
 .org 0x0802B868
-.area 0x0802B882-.,0x00
+.region 0x0802B882-.,0x00
 ; For some reason the game does a needless DMA3 transfer here.  Good news, it gives us space.
 ; At this point: r0=gimmickBuffer, r1=FREE, r2=vramDest, r3=FREE, r4=FREE, r5=fontInfo
 
@@ -64,12 +64,12 @@ str r2,[r5,8]
 ; This draws the string but checks for length=FF.
 bl 0x0802BEF0
 b 0x0802B882
-.endarea
+.endregion
 
 ; Now for the function that actually loads the buffer, 08065518.
 ; We rewrite a good chunk of the beginning to make space...
 .org 0x08065518
-.area 0x0806556C-.,0x00
+.region 0x0806556C-.,0x00
 mov r3,r8
 push r3-r7,r14
 
@@ -132,16 +132,16 @@ add r0,r5,2
 ldr r1,[r0]
 b 0x0806556C
 .pool
-.endarea
+.endregion
 
 ; Fix the epilog because we trimmed the prolog a bit.
 .org 0x080656B8
-.area 0x080656C2-.,0x00
+.region 0x080656C2-.,0x00
 pop r3-r7
 mov r8,r3
 pop r0
 bx r0
-.endarea
+.endregion
 
 ; Descriptions are copied to a fixed size buffer at 0x03000BFC, but we want longer.
 ; Below we actually store the pointer for desc, 4 times in 2 functions.

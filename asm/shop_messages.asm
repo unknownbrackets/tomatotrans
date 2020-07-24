@@ -1,6 +1,6 @@
 ; This updates the item descriptions.  We patch to give more space for the text.
 .org 0x0807D2E8
-.area 0x0807D4BC-.,0x00
+.region 0x0807D4BC-.,0x00
 .func ShopUpdateItemDescription
 mov r3,r8
 push r3-r7,r14
@@ -271,4 +271,4 @@ pop r0
 bx r0
 .pool
 .endfunc
-.endarea
+.endregion

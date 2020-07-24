@@ -1,6 +1,6 @@
 ; Adjust the button sprite definitions so there's no reuse.
 .org 0x0845B750
-.area 0x0845B89C-.,0x00
+.region 0x0845B89C-.,0x00
 @NewButtonSprite:
 dh 6
 	dh 0x4000, 0x41E0, 0x0000
@@ -25,7 +25,7 @@ dh 6
 	dh 0x4008, 0x4000, 0x003C
 	dh 0x4010, 0x41E0, 0x0040
 	dh 0x4010, 0x4000, 0x0044
-.endarea
+.endregion
 
 .org 0x0845B744
 dw @NewButtonSprite, @LoadButtonSprite, @DeleteButtonSprite

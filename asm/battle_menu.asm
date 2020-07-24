@@ -84,7 +84,7 @@ dw org(BattleMenuText) + 18
 ; This is part of the larger 0804A930, which draws the in battle stats.
 ; We just adjust to show longer names.
 .org 0x0804A97E
-.area 0x0804A9A2-.,0x00
+.region 0x0804A9A2-.,0x00
 ; At this point: r0=which, 1=FREE, r2=FREE, r3=FREE, r4=FREE, r9=0x030018BC, r10=y
 ; Requires as output: r4=yByteOffset - do that right away.
 mov r4,r10
@@ -100,13 +100,13 @@ str r1,[r3,8]
 bl CopyCharName8x8ToVRAM
 
 b 0x0804A9A2
-.endarea
+.endregion
 .endif
 
 ; We rewrite this function to save some bytes and center "Cool".
 ; It shows "Cool" on the right side in the battle menu.
 .org 0x0804ADE0
-.area 0x0804AE70-.,0x00
+.region 0x0804AE70-.,0x00
 .func BattleUpdateCoolIndicator
 push r14
 add sp,-24
@@ -168,4 +168,4 @@ pop r0
 bx r0
 .pool
 .endfunc
-.endarea
+.endregion

@@ -36,42 +36,42 @@ bl 0x080F954C
 ; but drawing that buffer checks the length anyway.  This gives us space.
 ; They're each the same...
 .org 0x0804E20C
-.area 0x0804E22E-.,0x00
+.region 0x0804E22E-.,0x00
 LongerNameToBufferAt 0x0804E244
 b 0x0804E22E
-.endarea
+.endregion
 
 .org 0x0804E31A
-.area 0x0804E33C-.,0x00
+.region 0x0804E33C-.,0x00
 LongerNameToBufferAt 0x0804E378
 b 0x0804E33C
-.endarea
+.endregion
 
 .org 0x0804E3AE
-.area 0x0804E3D0-.,0x00
+.region 0x0804E3D0-.,0x00
 LongerNameToBufferAt 0x0804E42C
 b 0x0804E3D0
-.endarea
+.endregion
 
 ; 0804FC90 is for Mecha Mecha Panic, I think?  We replace the same,
 ; and again it has 3 roughly identical reads.
 .org 0x0804FD7C
-.area 0x0804FD9C-.,0x00
+.region 0x0804FD9C-.,0x00
 LongerNameToBufferAt 0x0804FDB4
 b 0x0804FD9C
-.endarea
+.endregion
 
 .org 0x0804FE96
-.area 0x0804FEB8-.,0x00
+.region 0x0804FEB8-.,0x00
 LongerNameToBufferAt 0x0804FEF4
 b 0x0804FEB8
-.endarea
+.endregion
 
 .org 0x0804FF2A
-.area 0x0804FF4C-.,0x00
+.region 0x0804FF4C-.,0x00
 LongerNameToBufferAt 0x0804FFA0
 b 0x0804FF4C
-.endarea
+.endregion
 
 ; 0805040C reads attack names in two places.  This is a bit tight, but like above.
 .org 0x080504F4
@@ -114,7 +114,7 @@ nop
 ; We rewrite the whole thing because we need to change the buffer handling
 ; For longer strings to work.
 .org 0x080502A4
-.area 0x0805040C-.,0x00
+.region 0x0805040C-.,0x00
 ; Note: ultimately called by 0804851C through various pointer lookups.
 ; Doesn't take any arguments.
 .func BattleStatEnemyStatusMsg
@@ -308,4 +308,4 @@ bl 0x08048584
 b @@return
 .pool
 .endfunc
-.endarea
+.endregion

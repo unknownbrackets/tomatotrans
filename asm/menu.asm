@@ -4,7 +4,7 @@ org 0x08078038 :: db 0xB0          // move menu option text left 1 block
 ; Originally, 4 tiles were given to each name.  We need 8 tiles (2 wide sprites.)
 ; Nothing seems to use the space after these tiles - so we just increase the stride.
 .org 0x08072F70
-.area 0x08072FBC-.,0x00
+.region 0x08072FBC-.,0x00
 .func MenuDrawNameSprites
 push r4-r7,r14
 sub sp,4
@@ -48,7 +48,7 @@ add sp,4
 pop r4-r7,r15
 .pool
 .endfunc
-.endarea
+.endregion
 
 ; Alright, time for some updated sprite OAM data.
 .org MenuNameSprites

@@ -4,7 +4,7 @@
 ; 080502A4 reads the character name and status message for sleep.
 ; We rewrite because it uses a small buffer for its message.
 .org 0x0804D978
-.area 0x0804DAAC-.,0x00
+.region 0x0804DAAC-.,0x00
 ; Note: ultimately called by 0804851C through various pointer lookups.
 ; Doesn't take any arguments.
 .func BattleStatPlayerStatusMsg
@@ -208,4 +208,4 @@ bl 0x08048584
 b @@return
 .pool
 .endfunc
-.endarea
+.endregion

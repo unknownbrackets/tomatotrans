@@ -2,7 +2,7 @@
 ; When displaying save data, a small save buffer is created with only 4 bytes for name.
 ; In this function, we patch to put the name length there, and use another buffer.
 .org 0x08075AFC
-.area 0x08075BFC-.,0x0
+.region 0x08075BFC-.,0x0
 ; Args: uint8_t saveNum, uint8_t *buffer
 .func SavingLoadSaveInfo
 push r4-r6,r14
@@ -95,7 +95,7 @@ strb r0,[r6,11]
 ldrh r0,[r1,2]
 strb r0,[r6,12]
 
-; Not sure what this does, exactly, related to 0x030032E7.
+; This grabs main script flag 0x28.
 mov r0,0x28
 str r0,[r4,4]
 bl 0x0806AE2C
@@ -123,7 +123,7 @@ strb r0,[r6,14]
 pop r4-r6,r15
 .pool
 .endfunc
-.endarea
+.endregion
 
 ; We patch each of the saving renderers to draw names in a different place.
 ; Generally, they load save data into a 15 byte info record with name embedded.
@@ -133,7 +133,7 @@ pop r4-r6,r15
 
 ; This is the save screen, a small part of 0807A5F8.
 .org 0x0807A768
-.area 0x0807A77C-.,0x00
+.region 0x0807A77C-.,0x00
 ; Get the name and save number.
 mov r0,r6
 ldrb r1,[r2,1]
@@ -142,14 +142,14 @@ lsl r3,r6,10
 add r2,r2,r3
 bl SavingRenderName
 b 0x0807A77C
-.endarea
+.endregion
 ; We update the literal pool, used to have the old draw dest.
 .org 0x0807A7F0
 dw 0x06011200
 
 ; This is while actually saving, a small part of 0807AC3C.
 .org 0x0807AE00
-.area 0x0807AE14-.,0x00
+.region 0x0807AE14-.,0x00
 ; Get the name and save number.
 ldrb r1,[r0,1]
 mov r0,r5
@@ -158,14 +158,14 @@ lsl r3,r5,10
 add r2,r2,r3
 bl SavingRenderName
 b 0x0807AE14
-.endarea
+.endregion
 ; We update the literal pool, used to have the old draw dest.
 .org 0x0807AEDC
 dw 0x06011200
 
 ; This is the load screen, a small part of 0807B028.
 .org 0x0807B150
-.area 0x0807B164-.,0x00
+.region 0x0807B164-.,0x00
 ; Get the name and save number.
 mov r0,r6
 ldrb r1,[r2,1]
@@ -174,14 +174,14 @@ lsl r3,r6,10
 add r2,r2,r3
 bl SavingRenderName
 b 0x0807B164
-.endarea
+.endregion
 ; We update the literal pool, used to have the old draw dest.
 .org 0x0807B23C
 dw 0x06011200
 
 ; This is the delete screen, a small part of 0807B4C0.
 .org 0x0807B628
-.area 0x0807B63C-.,0x00
+.region 0x0807B63C-.,0x00
 ; Get the name and save number.
 mov r0,r6
 ldrb r1,[r2,1]
@@ -190,14 +190,14 @@ lsl r3,r6,10
 add r2,r2,r3
 bl SavingRenderName
 b 0x0807B63C
-.endarea
+.endregion
 ; We update the literal pool, used to have the old draw dest.
 .org 0x0807B6B0
 dw 0x06011200
 
 ; This might be while erasing (?), but I don't see it get called.  A small part of 0807BAE8.
 .org 0x0807BCA8
-.area 0x0807BCBC-.,0x00
+.region 0x0807BCBC-.,0x00
 ; Get the name and save number.
 ldrb r1,[r0,1]
 mov r0,r5
@@ -206,14 +206,13 @@ lsl r3,r5,10
 add r2,r2,r3
 bl SavingRenderName
 b 0x0807BCBC
-.endarea
+.endregion
 ; We update the literal pool, used to have the old draw dest.
 .org 0x0807BD54
 dw 0x06011200
 
 ; We stuff this somewhere we have space...
-.org SavingRenderNameLoc
-.area 0x0802D420-.
+.autoregion
 ; Args: uint8_t saveNum, uint8_t nameLen, void *dest
 .func SavingRenderName
 push r14
@@ -233,7 +232,7 @@ bl CopyString8x8ToVRAM
 pop r15
 .pool
 .endfunc
-.endarea
+.endautoregion
 
 ; Alright, time for some updated sprite OAM data.
 .org SaveNameSprites

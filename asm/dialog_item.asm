@@ -13,7 +13,7 @@
 ; 0806EBC4 deals with its length, and we change it to read the text.
 ; 0806DBD8 actually reads the text we write to draw.  We patch that too.
 org 0x0806B27C
-.area 0x0806B3A4-.,0x00
+.region 0x0806B3A4-.,0x00
 .func FormatObtainedItem
 push r4-r7,r14
 sub sp,4
@@ -130,12 +130,12 @@ pop r0
 bx r0
 .pool
 .endfunc
-.endarea
+.endregion
 
 ; This is the code the handles [FF 85] or [ITEM] codes in dialog text.
 ; It needs to look at the workarea that 0806B27C wrote.
 org 0x0806DBD8
-.area 0x0806DC10-.,0x00
+.region 0x0806DC10-.,0x00
 .func HandleDialog85Item
 push r4,r14
 ; Build the item name.
@@ -151,11 +151,10 @@ pop r0
 bx r0
 .pool
 .endfunc
-.endarea
+.endregion
 
 ; We fix this to calculate the actual pixel width of the item name.
-.org CalcLengthDialog85ItemLoc
-.area 0x0806EC90-.,0x00
+.autoregion
 .func CalcLengthDialog85Item
 push r4-r6,r14
 
@@ -214,4 +213,4 @@ strb r0,[r4,5]
 pop r4-r6,r14
 .pool
 .endfunc
-.endarea
+.endautoregion

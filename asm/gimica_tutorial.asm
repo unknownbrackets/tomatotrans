@@ -10,7 +10,7 @@ cmp r7,@TutorialTextLength - 1
 ; Here the game pointlessly buffers a pointer over itself, so we have space.
 ; We only need r2 to be the value at [ [0x03000100] + 1 ] and r7=0.  All others under r7 are free.
 .org 0x080912DC
-.area 0x0809130E-.,0x00
+.region 0x0809130E-.,0x00
 ; Grab the pointers, and the current index.
 ldr r0,[0x0809140C] ; 0x0864B1F8
 ldr r1,[0x08091408] ; 0x0300010C
@@ -30,7 +30,7 @@ ldr r2,[r0,12]
 ldrb r2,[r2,1]
 strb r2,[r0,1]
 b 0x0809130E
-.endarea
+.endregion
 
 ; This was a bne, but make it a bls in case we go longer.
 .org 0x0809131E
