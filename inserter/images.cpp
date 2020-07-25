@@ -357,24 +357,23 @@ static bool InsertTitleScreen(FILE *ta, uint32_t &nextPos) {
 }
 
 static bool InsertTitleButtons(FILE *ta, uint32_t &nextPos) {
-	// We don't change the palette, just reuse.  Should we?
-	Palette pal = LoadPaletteAt(ta, 0x0045BB04, 0, 1);
+	Palette pal(0, 1);
 
 	// One common tileset for each button.
 	Tileset unorderedTileset(false);
 
 	Tilemap newButton(unorderedTileset);
-	if (!TilemapFromPNG(newButton, pal, "images/title_new_eng.png", true)) {
+	if (!TilemapAndPaletteFromPNG(newButton, pal, "images/title_new_eng.png", true)) {
 		return false;
 	}
 
 	Tilemap loadButton(unorderedTileset);
-	if (!TilemapFromPNG(loadButton, pal, "images/title_load_eng.png", true)) {
+	if (!TilemapAndPaletteFromPNG(loadButton, pal, "images/title_load_eng.png", true)) {
 		return false;
 	}
 
 	Tilemap deleteButton(unorderedTileset);
-	if (!TilemapFromPNG(deleteButton, pal, "images/title_delete_eng.png", true)) {
+	if (!TilemapAndPaletteFromPNG(deleteButton, pal, "images/title_delete_eng.png", true)) {
 		return false;
 	}
 
@@ -415,16 +414,23 @@ static bool InsertTitleButtons(FILE *ta, uint32_t &nextPos) {
 		fwrite(compressed.data(), 1, compressed.size(), ta);
 	}
 
+	// And also insert the updated palette.
+	std::vector<uint16_t> palbuf;
+	palbuf.resize(16);
+	pal.Encode(palbuf.data(), 0, 1);
+	fseek(ta, 0x0045BB04, SEEK_SET);
+	fwrite(palbuf.data(), sizeof(uint16_t), palbuf.size(), ta);
+
 	return true;
 }
 
 static bool InsertGimmickMenuIcons(FILE *ta, uint32_t &nextPos) {
 	// We don't change the palette, just reuse.  Should we?
-	Palette pal = LoadPaletteAt(ta, 0x00489308, 7, 1);
+	Palette pal(7, 1);
 
 	Tileset tileset;
 	Tilemap tilemap(tileset);
-	if (!TilemapFromPNG(tilemap, pal, "images/gimmick_types_eng.png", false)) {
+	if (!TilemapAndPaletteFromPNG(tilemap, pal, "images/gimmick_types_eng.png", false)) {
 		return false;
 	}
 
@@ -453,8 +459,14 @@ static bool InsertGimmickMenuIcons(FILE *ta, uint32_t &nextPos) {
 	for (size_t i = 0; i < buf.size(); i += 2) {
 		buf[i] += 0x007C;
 	}
-
 	fwrite(buf.data(), 1, buf.size(), ta);
+
+	// And also insert the updated palette.
+	std::vector<uint16_t> palbuf;
+	palbuf.resize(16);
+	pal.Encode(palbuf.data(), 7, 1);
+	fseek(ta, 0x00489308, SEEK_SET);
+	fwrite(palbuf.data(), sizeof(uint16_t), palbuf.size(), ta);
 
 	return true;
 }
@@ -541,14 +553,14 @@ static bool InsertShopBanners(FILE *ta, uint32_t &nextPos) {
 		fseek(ta, palettePtrBase + i * 4, SEEK_SET);
 		ReadLE32(ta, palettePtr);
 
-		Palette pal = LoadPaletteAt(ta, palettePtr & ~0x08000000, 0, 1);
+		Palette pal(0, 1);
 
 		char filename[64];
 		snprintf(filename, sizeof(filename), "images/shop_%02X_eng.png", i);
 
 		Tileset unorderedTileset(false);
 		Tilemap banner(unorderedTileset);
-		if (!TilemapFromPNG(banner, pal, filename, false)) {
+		if (!TilemapAndPaletteFromPNG(banner, pal, filename, false)) {
 			return false;
 		}
 
@@ -580,6 +592,13 @@ static bool InsertShopBanners(FILE *ta, uint32_t &nextPos) {
 			fseek(ta, tilesetPtr & ~0x08000000, SEEK_SET);
 			fwrite(compressed.data(), 1, compressed.size(), ta);
 		}
+
+		// And also insert the updated palette.
+		std::vector<uint16_t> palbuf;
+		palbuf.resize(16);
+		pal.Encode(palbuf.data(), 0, 1);
+		fseek(ta, palettePtr & ~0x08000000, SEEK_SET);
+		fwrite(palbuf.data(), sizeof(uint16_t), palbuf.size(), ta);
 	}
 
 	return true;
