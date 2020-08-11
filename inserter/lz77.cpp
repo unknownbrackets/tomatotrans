@@ -18,6 +18,9 @@ private:
 	constexpr static int MAX_BACKREF_LEN = 3 + 0xF;
 
 	struct Scenario {
+		explicit Scenario(int w = 1) : waste(w) {
+		}
+
 		int waste = 1;
 		int backref_offset = 0;
 		int backref_len = 0;

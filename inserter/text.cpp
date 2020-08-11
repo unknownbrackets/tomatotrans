@@ -18,17 +18,17 @@ struct tableEntry
 static tableEntry table[500];
 static int tableLen = 0;
 
-void PrepString(char[], char[], int);
-unsigned char ConvChar(unsigned char);
-int ConvComplexString(char *s, size_t availLen, bool stripNewline);
-int CompileCC(const char *str, int len, int &pos, unsigned char *dest);
-int DetectScriptLen(const char *str, int maxLen);
+static void PrepString(char[], char[], int);
+static unsigned char ConvChar(unsigned char);
+static int ConvComplexString(char *s, size_t availLen, bool stripNewline);
+static int CompileCC(const char *str, int len, int &pos, unsigned char *dest);
+static int DetectScriptLen(const char *str, int maxLen);
 // Modifies stringID.
-void ForceTranslateComplex(char *str, int len, char *stringID);
-int CharToHex(char);
-unsigned int hstrtoi(char*);
-uint32_t UpdatePointers(const std::vector<uint32_t> &list, int loc, FILE *fout);
-std::vector<std::vector<uint32_t>> BuildPointerMap(const char *pointersFile);
+static void ForceTranslateComplex(char *str, int len, char *stringID);
+static int CharToHex(char);
+static unsigned int hstrtoi(char*);
+static uint32_t UpdatePointers(const std::vector<uint32_t> &list, int loc, FILE *fout);
+static std::vector<std::vector<uint32_t>> BuildPointerMap(const char *pointersFile);
 
 //=================================================================================================
 
@@ -900,7 +900,7 @@ uint32_t InsertBattleText(FILE *fout, uint32_t &afterTextPos)
 		}
 
 		// Let's just insert in place if we can.
-		if (align == 0 && len <= 16 && str2[0] != 0xFF && !forceAll)
+		if (align == 0 && len <= 16 && str2[0] != (uint8_t)0xFF && !forceAll)
 			InsertStringAt(fout, str2, len, 16, oldAddress & ~0x08000000);
 		else if (len >= 0 && len <= 0x1A)
 		{
