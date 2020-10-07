@@ -31,6 +31,7 @@
 .include "asm/menu_gimmicks.asm"
 .include "asm/menu_friends.asm"
 .include "asm/shop_messages.asm"
+.include "asm/menu_items.asm"
 
 ; Longer names in dialog message control codes and VWF support.
 .include "asm/dialog_item.asm"

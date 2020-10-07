@@ -18,7 +18,11 @@ dw org(ItemTextName)
 db @NameLen
 ; We need to force it only to clear 8, though.
 .org 0x0804AC3C
-bl CopyString8x8Clear8
+bl CopyString8x8Clear10
+.org 0x0804AC9C
+dw 0x06000CC0
+.org 0x0804AC5E
+mov r0,4
 
 ; 0806B27C is used to draw text in dialogs, but is handled in dialog_item.asm.
 ; That's called when [ITEM] is used in dialog text.

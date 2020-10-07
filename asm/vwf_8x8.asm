@@ -934,4 +934,9 @@ strh r0,[r1]
 b CopyString8x8ToVRAM
 .endfunc
 .pool
+
+.func CopyString8x8Clear10
+mov r0,10
+b CopyString8x8ClearR0
+.endfunc
 .endregion
