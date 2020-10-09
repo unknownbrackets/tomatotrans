@@ -1,460 +1,460 @@
-# 00 Celemo / セレモ
-0D1A41-E:
-0D1A4A-E:
-0D1A53-E:
-0D1A63-E:
-0D1A76-E:
-0D1A7F-E:
-0D1A88-E:
-0D1A99-E:
-0D1AA2-E:
-0D1AB9-E:
-0D1AC2-E:
-0D1ACB-E:
-0D1AD4-E:
-0D1ADD-E:
-0D1AEC-E:
-0D1AFB-E:
-0D1B0A-E:
-0D1B19-E:
-0D1B2F-E:
-0D1B3F-E:
-0D1B48-E:
-0D1B58-E:
-0D1B67-E:
-0D1B70-E:
-0D1B80-E:
-0D1B95-E:
-0D1BA4-E:
-0D1BAD-E:
-0D1BC2-E:
-0D1BCB-E:
-0D1BD4-E:
-0D1BE3-E:
-0D1BEC-E:
-0D1C02-E:
-0D1C0B-E:
-0D1C14-E:
-0D1C23-E:
-0D1C2C-E:
-0D1C35-E:
-0D1C44-E:
-# 01 Celemo / セレモ
-0D1F1D-E:
-0D1F2D-E:
-0D1F4C-E:
-0D1F5B-E:
-0D1F64-E:
-0D1F72-E:
-0D1F8F-E:
-0D1F98-E:
-0D1FB1-E:
-0D1FBA-E:
-0D1FC3-E:
-0D1FE0-E:
-0D1FE9-E:
-0D1FF8-E:
-# 0C Hack / ブリッキ
-0D3CAE-E:
-# 0D Slash / ゴリッキ
-0D3CD6-E:
-# 12 Froobs / うそガエルレディ
-0D0F12-E:
-# 17 Potfan / ポットマニア
-0D212C-E:
-0D2136-E:
-0D213D-E:
-0D2144-E:
+# 00 Selemo
+0D1A41-E:This is the battle screen.
+0D1A4A-E:Whenever you attack an enemy...
+0D1A53-E:You always use gimmicks.
+0D1A63-E:Press the [F5] button here.
+0D1A76-E:Pick the gimmick you want...
+0D1A7F-E:...even though you've only got one...
+0D1A88-E:And hit [F5] again.
+0D1A99-E:Now pick your target.
+0D1AA2-E:Press [F5].
+0D1AB9-E:All right! This is it!
+0D1AC2-E:When you use a gimmick,
+0D1ACB-E:if you do the command just right,
+0D1AD4-E:you'll deal more damage
+0D1ADD-E:to the enemy!
+0D1AEC-E:Using the Gear-Yo, a growing
+0D1AFB-E:and shrinking bar will appear.
+0D1B0A-E:Stop it in this red zone from here...
+0D1B19-E:To here...
+0D1B2F-E:Using the [F5] button!
+0D1B3F-E:Now it's your turn!
+0D1B48-E:Oh, and one more thing!
+0D1B58-E:You're on a time limit,
+0D1B67-E:so complete the command before
+0D1B70-E:all these lights light up!
+0D1B80-E:All right, let's start!
+0D1B95-E:Yeowch... That's the ticket!
+0D1BA4-E:Oww...
+0D1BAD-E:You need some more practice...
+0D1BC2-E:Also, each gimmick can only
+0D1BCB-E:be used a limited number of
+0D1BD4-E:times before it runs out.
+0D1BE3-E:This number is that limit!
+0D1BEC-E:Use up all your gimmicks...
+0D1C02-E:And you'll recover them all!
+0D1C0B-E:But, once you've obtained some
+0D1C14-E:other gimmicks...
+0D1C23-E:You have to use up ALL of the
+0D1C2C-E:ones that you have equipped
+0D1C35-E:before they'll recover!
+0D1C44-E:So use 'em wisely!
+# 01 Selemo / セレモ
+0D1F1D-E:So, about AWE! points...
+0D1F2D-E:You build them up as you
+0D1F4C-E:use your gimmicks successfully!
+0D1F5B-E:The amount of points you gain depends
+0D1F64-E:on your gimmicks' difficulty levels.
+0D1F72-E:Higher difficulty levels...
+0D1F8F-E:will net you more points at once!
+0D1F98-E:BUT! If you fail...
+0D1FB1-E:You can kiss all your points goodbye!
+0D1FBA-E:Succeed with your gimmicks...
+0D1FC3-E:And build up that gauge...
+0D1FE0-E:And you can use an AWE! attack!
+0D1FE9-E:It's pretty AWE!some...
+0D1FF8-E:So try using it!
+# 0C Brikky / ブリッキ
+0D3CAE-E:You'll pay for this!
+# 0D Grikky / ゴリッキ
+0D3CD6-E:Gah!
+# 12 Badfrog Gal / うそガエルレディ
+0D0F12-E:Such lovely skin!
+# 17 Pothead / ポットマニア
+0D212C-E:Hot! Hot-hot-hot!
+0D2136-E:Shoo
+0D213D-E:Shoo-shoo
+0D2144-E:Shoo-shoo-shoo!
 # 1A Oops / ウ-プス
-0D21F1-E:
-# 1B Mirarror / ミラクルミラ-
-0D2245-E:
-# 1C Windbath / ねじまきオフロ
-0D227C-E:
-# 1D Hack / ブリッキ
-0D22B9-E:
-0D22C0-E:
-0D230D-E:
-0D2314-E:
-# 1E Slash / ゴリッキ
-0D2352-E:
-0D2359-E:
+0D21F1-E:This is where you perish!
+# 1B Miracle Mirror / ミラクルミラ-
+0D2245-E:Oops's DEF went up!
+# 1C Wind-up Bath / ねじまきオフロ
+0D227C-E:Ah! What a relief!
+# 1D Brikky / ブリッキ
+0D22B9-E:Brikky: I'm done for, Grikky!
+0D22C0-E:Brikky: They got me!
+0D230D-E:Brikky: Grikky!
+0D2314-E:Brikky: Let's do that one thing!
+# 1E Grikky / ゴリッキ
+0D2352-E:Grikky: They got me, Brikky!
+0D2359-E:Grikky: Gwah!
 # 24 Seebass / ギョロン
-0D118B-E:
+0D118B-E:Delicious!
 # 27 Sawbass / レッドギョロン
-0D11A3-E:
+0D11A3-E:Tasty!
 # 26 Seebass / ギョロン
-0D11BB-E:
-# 29 Cap.Size / ガ-ゴせんちょう
-0D0FE2-E:
-0D0FE9-E:
-0D0FF0-E:
-0D1004-E:
-0D100E-E:
-# 2A Cap.Size / ガ-ゴせんちょう
-0D10C1-E:
-0D10C8-E:
-0D10E3-E:
-0D10ED-E:
-# 2B Cap.Size / ガ-ゴせんちょう
-0D106D-E:
-0D108A-E:
-0D109D-E:
-0D10A7-E:
-# 2C Cap.Size / ガ-ゴせんちょう
-0D1109-E:
-0D1110-E:
-0D1117-E:
-0D111E-E:
-0D1137-E:
-0D114A-E:
-0D1154-E:
-# 2D Cap.Size / ガ-ゴせんちょう
-0D1029-E:
-0D1048-E:
-0D1052-E:
-# 2F Octolina / タコチュリ-ナ
-0D2593-E:
-# 31 Pompador / リ-ゼント
-0D23D6-E:
-0D2425-E:
-0D2415-E:
-0D240B-E:
-# 32 SuprMike / ス-パ-マイク
-0D24B1-E:
-0D24BB-E:
-0D24C4-E:
-0D24CD-E:
-# 33 BigDonut / とくだいド-ナツ
-0D250C-E:
-# 3E Poochie / ポチ
-0D15C3-E:
-0D1612-E:
-0D1619-E:
-0D162C-E:
-0D1633-E:
-0D166C-E:
-0D1673-E:
-0D167A-E:
-0D1681-E:
-0D163F-E:
-0D1646-E:
-0D1659-E:
-0D1660-E:
+0D11BB-E:Yum yum!
+# 29 Capn' Garco / ガ-ゴせんちょう
+0D0FE2-E:Here's you a nice gift!
+0D0FE9-E:Well then...
+0D0FF0-E:I'll mess up your gimmicks!
+0D1004-E:Merrrrry Christmas!
+0D100E-E:I've got a present for yarr!
+# 2A Capn' Garco / ガ-ゴせんちょう
+0D10C1-E:Arrrgh! The jig is up!
+0D10C8-E:That one's a puppet!
+0D10E3-E:Merrrrry Christmas!
+0D10ED-E:I've got a present for yarr!
+# 2B Capn' Garco / ガ-ゴせんちょう
+0D106D-E:You saw... Right through me!
+0D108A-E:Which one's the real one?
+0D109D-E:Merrrrry Christmas!
+0D10A7-E:I've got a present for yarr!
+# 2C Capn' Garco / ガ-ゴせんちょう
+0D1109-E:Arrrgh! The jig is up!
+0D1110-E:Well done, my puppet!
+0D1117-E:But... It always messes up the
+0D111E-E:names of my attacks...
+0D1137-E:Which one is it?
+0D114A-E:Merrrrry Christmas!
+0D1154-E:I've got a present for yarr!
+# 2D Capn' Garco / ガ-ゴせんちょう
+0D1029-E:Yerr really strong, you!
+0D1048-E:Merrrrry Christmas!
+0D1052-E:I've got a present for yarr!
+# 2F Octorina / タコチュリ-ナ
+0D2593-E:Pucker up! Octo punch!
+# 31 Pompadour / リ-ゼント
+0D23D6-E:MERCY! My fabulous hairdo...!
+0D2425-E:Here's a new song for ya!
+0D2415-E:How do you like the do!
+0D240B-E:But first, a little gift!
+# 32 Super Mic / ス-パ-マイク
+0D24B1-E:Let me sing you to sleepy-sleep!
+0D24BB-E:A heart-piercing love song!
+0D24C4-E:MERCY! How exciting!
+0D24CD-E:Yadda-yadda blah-blah!
+# 33 Big Donut / とくだいド-ナツ
+0D250C-E:It's donut time!
+# 3E Poochy / ポチ
+0D15C3-E:Awooo!!!
+0D1612-E:Awoo! Awoo! Awoowoo!
+0D1619-E:(Poochy HATES being alone!)
+0D162C-E:Sorry to keep you waiting Poochy!
+0D1633-E:You called, Poochy?
+0D166C-E:Awoo! Awoo! Awoowoo!
+0D1673-E:(Poochy HATES being alone!)
+0D167A-E:Awoo!? Awoooooo!
+0D1681-E:(What!? Nobody came...!)
+0D163F-E:Awoo! Awoo! Awoowoo!
+0D1646-E:(Poochy HATES being alone!)
+0D1659-E:Sorry to keep Poochy waiting!
+0D1660-E:You called, Poochy?
 # 3F Crony / ポチのてした
-0D155D-E:
-0D1564-E:
-0D156D-E:
-0D1574-E:
+0D155D-E:Poochy!
+0D1564-E:Time to eat!
+0D156D-E:Awoo! Awoowoo!
+0D1574-E:(Poochy happy!)
 # 40 Crony / ポチのてした
-0D1595-E:
-0D159C-E:
-0D15A5-E:
-0D15AC-E:
-# 43 Snakid / ノミコンダキッズ
-0D26CE-E:
-0D26EE-E:
-# 45 Snakid / ノミコンダキッズ
-0D2712-E:
-0D2732-E:
-# 47 Snakid / ノミコンダキッズ
-0D2756-E:
-0D2788-E:
-# 49 Hack / ブリッキ
-0D3185-E:
-0D318C-E:
-0D31A6-E:
-0D31AD-E:
-0D3195-E:
-0D319C-E:
-# 4A Slash / ゴリッキ
-0D31D2-E:
-0D31D9-E:
+0D1595-E:Poochy!
+0D159C-E:Time to eat!
+0D15A5-E:Awoo! Awoowoo!
+0D15AC-E:(Poochy happy!)
+# 43 Conda Kid / ノミコンダキッズ
+0D26CE-E:AHAHAHAHA! I Lost!
+0D26EE-E:HA-HA-HA-HA-HA-HA!
+# 45 Conda Kid / ノミコンダキッズ
+0D2712-E:Son of a MAMA! I lost!
+0D2732-E:I can't take it anymore!
+# 47 Conda Kid / ノミコンダキッズ
+0D2756-E:*sobsob* I lost!
+0D2788-E:Waaaah! I'm being punished!
+# 49 Brikky / ブリッキ
+0D3185-E:Brikky: Grihhy!
+0D318C-E:Brikky: My jawzh dishlochaded!
+0D31A6-E:Brikky: Grihhy!
+0D31AD-E:Brikky: My powah... Gone...
+0D3195-E:Brikky: Grihhy!
+0D319C-E:Brikky: Shending you powah!
+# 4A Grikky/ ゴリッキ
+0D31D2-E:Grikky: I'm a goner!
+0D31D9-E:Grikky: AAAAHH!
 # 4B What / ホワット
-0D27F7-E:
-0D2831-E:
-0D2838-E:
-0D284F-E:
-0D2856-E:
-0D2869-E:
-0D2870-E:
+0D27F7-E:Guh-!
+0D2831-E:NOOOO! It's weaking!
+0D2838-E:My wawd juice!
+0D284F-E:NOOOO! It's weaking!
+0D2856-E:My wawd juice!
+0D2869-E:NOOOO! It's weaking!
+0D2870-E:I won't fowgive you!!
 # 4C Slurp / ごっくんストロ-
-0D28D0-E:
-0D28DA-E:
-# 4D LardJuic / ラ-ドジュ-ス
-0D2929-E:
-0D293F-E:
-0D2934-E:
+0D28D0-E:I'ww suck youw HP!
+0D28DA-E:Swuwp swuwp swuwp!
+# 4D Lard Cup / ラ-ドジュ-ス
+0D2929-E:What put up a huge meat barrier!
+0D293F-E:Yummy yummy!
+0D2934-E:Yummy yummy!
 # 56 Ghozart / オルガンスキ-
-0D36F5-E:
-0D36FC-E:
-# 5F DethLlby / デスリルビ
-0D29A0-E:
-0D29C2-E:
-0D29DE-E:
-0D29E5-E:
-0D2980-E:
-0D2987-E:
+0D36F5-E:Bravo!
+0D36FC-E:Bravery rises within me!
+# 5F Death Lilby / デスリルビ
+0D29A0-E:Death Lilby is acting strange...
+0D29C2-E:Death Lilby is acting strange...
+0D29DE-E:This is Death Lilby's
+0D29E5-E:true form!
+0D2980-E:That attack nailed her
+0D2987-E:weak spot!
 # 64 Bugsy / オマルバギ-
-0D153F-E:
-# 80 Berry / かいとうベリ-
-0D32CF-E:
-0D32BE-E:
-0D32DE-E:
-# 71 Abet-Bot / おたすけロボG
+0D153F-E:C'mon! Get outta the way!
+# 80 Berri / かいとうベリ-
+0D32CF-E:Come here, helper robos!
+0D32BE-E:Come here, helper robos!
+0D32DE-E:Come here, helper robos!
+# 71 Helper Robo-G / おたすけロボG
 0D32FE-E:
-# 72 Abet-Bot / おたすけロボG
+# 72 Helper Robo-G / おたすけロボG
 0D3326-E:
-# 73 Hack / ブリッキ
-0D3379-E:
-# 74 Slash / ゴリッキ
-0D33FA-E:
-0D3457-E:
-0D344E-E:
-0D3445-E:
-0D3460-E:
-0D3469-E:
-0D3491-E:
-0D3498-E:
-0D34A1-E:
-0D34B3-E:
-# 75 Connectr / コネクタ-
-0D2B0C-E:
-0D2B13-E:
-0D2B2E-E:
-0D2B35-E:
-0D2B4C-E:
-0D2B53-E:
-0D2C4F-E:
-0D2C7C-E:
-0D2C83-E:
-0D2C90-E:
-0D2D5E-E:
-0D2D65-E:
-0D2D7C-E:
-0D2D83-E:
-0D2D8D-E:
-0D2D94-E:
-0D2D9E-E:
-0D2DA7-E:
-0D2D30-E:
-0D2D37-E:
-# 82 BusyBotB / おたすけロボB
-0D380D-E:
-# 83 BusyBotB / おたすけロボB
-0D3845-E:
+# 73 Brikky / ブリッキ
+0D3379-E:Brikky: They got me, Grikky...!
+# 74 Grikky / ゴリッキ
+0D33FA-E:Grikky: I'm done for!
+0D3457-E:Grikky: I can't move!!
+0D344E-E:Grikky: I can't take this!
+0D3445-E:Grikky: So tired! So sluggish!
+0D3460-E:Grikky: Take this, Brikky!
+0D3469-E:Brikky: Yeah!! That's the stuff!
+0D3491-E:Sorry! I'm useless!
+0D3498-E:Grikky: Have some more!
+0D34A1-E:Brikky: Yeah!! That's the stuff!
+0D34B3-E:Grikky: I can't move!!
+# 75 Coupling / コネクタ-
+0D2B0C-E:Owwwww... Not bad!
+0D2B13-E:Power charging!
+0D2B2E-E:Owwwww... Not bad!
+0D2B35-E:Power charging!
+0D2B4C-E:And now...
+0D2B53-E:Don't do like before...
+0D2C4F-E:Whoa! The coupling's broken!
+0D2C7C-E:Owwwww... Not bad!
+0D2C83-E:Power charging!
+0D2C90-E:I, Shadap, am defeated at last...
+0D2D5E-E:Aim for minus, then minus again,
+0D2D65-E:and lastly hit the coupling!
+0D2D7C-E:Plus and plus...
+0D2D83-E:FULL POWER! Take this!
+0D2D8D-E:Plus and minus...
+0D2D94-E:Not enough power...
+0D2D9E-E:Minus and minus...
+0D2DA7-E:EEK! Don't hit the coupling!
+0D2D30-E:Plus and minus...
+0D2D37-E:Not enough power...
+# 82 BusyBot-B / おたすけロボB
+0D380D-E:Self... Destruct... Activated...
+# 83 BusyBot-B / おたすけロボB
+0D3845-E:Self... Destruct... Activated...
 # 87 KukuCopy / ぶんれつククッポ
-0D12A6-E:
-0D134D-E:
-0D133B-E:
-0D1329-E:
-0D1271-E:
-0D1317-E:
-0D1305-E:
-0D12F3-E:
-0D123C-E:
-0D12E1-E:
-0D12CF-E:
-0D12BD-E:
+0D12A6-E:Kupopo... (It's over...)
+0D134D-E:Kupopopo! (It's not over yet!)
+0D133B-E:Kupopopo! (It's not over yet!)
+0D1329-E:Kupopopo! (It's not over yet!)
+0D1271-E:Kupopo...  (It's over...)
+0D1317-E:Kupopopo! (It's not over yet!)
+0D1305-E:Kupopopo! (It's not over yet!)
+0D12F3-E:Kupopopo! (It's not over yet!)
+0D123C-E:Kupopo...  (It's over...)
+0D12E1-E:Kupopopo! (It's not over yet!)
+0D12CF-E:Kupopopo! (It's not over yet!)
+0D12BD-E:Kupopopo! (It's not over yet!)
 # 8B PopoCopy / ぶんれつポポック
-0D1394-E:
-0D143B-E:
-0D14E2-E:
-0D14D0-E:
-0D14BE-E:
-0D1406-E:
-0D14AC-E:
-0D149A-E:
-0D1488-E:
-0D13D1-E:
-0D1476-E:
-0D1464-E:
-0D1452-E:
+0D1394-E:Popopo! (Attack!)
+0D143B-E:Popopo... (I'm... done for...)
+0D14E2-E:Popopo!! (Split up!)
+0D14D0-E:Popopo!! (Split up!)
+0D14BE-E:Popopo!! (Split up!)
+0D1406-E:Popopo... (I'm... done for...)
+0D14AC-E:Popopo!! (Split up!)
+0D149A-E:Popopo!! (Split up!)
+0D1488-E:Popopo!! (Split up!)
+0D13D1-E:Popopo... (I'm... done for...)
+0D1476-E:Popopo!! (Split up!)
+0D1464-E:Popopo!! (Split up!)
+0D1452-E:Popopo!! (Split up!)
 # 8C Chekkit / チェキダ
-0D3ED0-E:
-0D3F21-E:
-0D3F28-E:
-0D3F0F-E:
-0D3F60-E:
-0D3F67-E:
-0D4015-E:
-0D3FC1-E:
-0D3EAC-E:
-0D3EB3-E:
+0D3ED0-E:This art sure hurts!
+0D3F21-E:Let's change up the art a bit!
+0D3F28-E:Any color is fine!
+0D3F0F-E:Let's change up the art a bit!
+0D3F60-E:Painful art!!
+0D3F67-E:Horrible art!
+0D4015-E:Art is war!
+0D3FC1-E:This is the power of art!
+0D3EAC-E:War is art!
+0D3EB3-E:Art is war!
 # 8D Left Arm / ひだりうで, 8E RightArm / みぎうで
-0D4155-E:
-0D415C-E:
-0D423B-E:
-0D4259-E:
-0D4260-E:
-0D4269-E:
-0D4287-E:
-0D428E-E:
-0D4222-E:
-0D4229-E:
+0D4155-E:No...
+0D415C-E:Not the same color!
+0D423B-E:Guh...
+0D4259-E:The colors are all the same!
+0D4260-E:Yikes! This is bad!
+0D4269-E:The colors are different!
+0D4287-E:My arm! My arm!
+0D428E-E:Horrible art!!
+0D4222-E:Different colors are...
+0D4229-E:Awful art!
 # 8D Left Arm / ひだりうで
-0D4071-E:
-# 8E RightArm / みぎうで
-0D4489-E:
-0D4490-E:
-0D4557-E:
-0D455E-E:
-0D4570-E:
-0D458E-E:
-0D4595-E:
-0D459E-E:
-0D45BD-E:
-0D45C4-E:
-0D4383-E:
+0D4071-E:Here we go! Invinsible!
+# 8E Right Arm / みぎうで
+0D4489-E:The invincibility of...
+0D4490-E:many colors!
+0D4557-E:Having all like colors...
+0D455E-E:This is invincible art!
+0D4570-E:Guh...
+0D458E-E:The colors are all the same!
+0D4595-E:Yikes! This is bad!
+0D459E-E:The colors are different!
+0D45BD-E:My arm! My arm!
+0D45C4-E:Horrible art!!
+0D4383-E:Artistic battle mode!
 # 92 Tinimato / とマッちゃん
-0D16F8-E:
-0D16D9-E:
-0D16E7-E:
+0D16F8-E:Yeowch! You'll pay for that!
+0D16D9-E:Let's go everyone!
+0D16E7-E:Let's go everyone!
 # 93 Megamato / デカとマッちゃん
-0D1963-E:
-# 94 Pottyboy / オマルライダ-
-0D19A0-E:
-# 95 Pottyboy / オマルライダ-
-0D19CC-E:
-# 96 Pottyboy / オマルライダ-
-0D19F8-E:
-# 9A Hackpres / ブリキザプレス
-0D37C3-E:
-0D37CA-E:
-0D3751-E:
-0D37A1-E:
-# 9D Navila / ナビ-ラ
-0D1826-E:
-0D182D-E:
-0D175F-E:
-0D1766-E:
-0D176D-E:
-0D178B-E:
-0D1792-E:
-0D179B-E:
-0D17A2-E:
-0D17E3-E:
-0D17EA-E:
-0D17F5-E:
-0D17FC-E:
-0D17B7-E:
-0D17BE-E:
-0D17C7-E:
-0D17CE-E:
-0D184F-E:
-0D1856-E:
-0D185F-E:
-0D1866-E:
-# A0 MatoGear / トマトウォ-カ-
-0D2171-E:
-# A1 MatoMech / トマトリ-ダ-
-0D3986-E:
-0D392A-E:
-0D393B-E:
-0D394C-E:
+0D1963-E:Megamato inhales.
+# 94 Potty Rider / オマルライダ-
+0D19A0-E:Full throttle!!
+# 95 Potty Rider / オマルライダ-
+0D19CC-E:Full throttle!!
+# 96 Potty Rider / オマルライダ-
+0D19F8-E:Full throttle!!
+# 9A Brikkypress / ブリキザプレス
+0D37C3-E:Ugh!!
+0D37CA-E:My aching back...
+0D3751-E:Ah! My stiff shoulders!
+0D37A1-E:Ah! My stiff shoulders!
+# 9D Nabira / ナビ-ラ
+0D1826-E:Even my dream...
+0D182D-E:Of world conquest is gone...
+0D175F-E:Fiends born from tomatoes!
+0D1766-E:I grant to you my
+0D176D-E:invincible power!
+0D178B-E:Come thee back to life!
+0D1792-E:Fiends born from tomatoes!
+0D179B-E:I grant to you my
+0D17A2-E:invincible power!
+0D17E3-E:Come thee back to life!
+0D17EA-E:Fiends born from tomatoes!
+0D17F5-E:I grant to you my
+0D17FC-E:invincible power!
+0D17B7-E:Come thee back to life!
+0D17BE-E:Fiends born from tomatoes!
+0D17C7-E:I grant to you my
+0D17CE-E:invincible power!
+0D184F-E:Come thee back to life!
+0D1856-E:Fiends born from tomatoes!
+0D185F-E:I grant to you my
+0D1866-E:Come thee back to life!
+# A0 Tomato Walker / トマトウォ-カ-
+0D2171-E:End of the line! Ga-ha-ha!
+# A1 Tomato Mecha / トマトリ-ダ-
+0D3986-E:Ready to fire!
+0D392A-E:I've got plenty of ammo!
+0D393B-E:This is where you fall!
+0D394C-E:Ready to fire!
 # A5 Detector / キッズたんちき
-0D1A19-E:
-# A9 GimikBot / ギミックロボ
-0D3554-E:
-0D3567-E:
-0D3547-E:
-# AA GimikBot / ギミックロボ
-0D3D56-E:
-0D3DC2-E:
+0D1A19-E:KIDS DETECTED!
+# A9 Gimmick Robo / ギミックロボ
+0D3554-E:GAGAGA GEGEGE GUGAGUGA
+0D3567-E:GA GA GA...
+0D3547-E:     ? ? ?
+# AA Gimmick Robo / ギミックロボ
+0D3D56-E:GANGAGAN GAGAGAGA!
+0D3DC2-E:GIGUGUGUGUGUGU!
 0D3DD3-E:
-0D3DDA-E:
-# AB GimikBot / ギミックロボ
-0D3E18-E:
-# AC GimikBot / ギミックロボ
-0D3609-E:
-0D361C-E:
-# AE Hack / ブリッキ
-0D39EC-E:
-0D39CB-E:
-0D39D2-E:
-0D3AB6-E:
-0D3AA9-E:
-0D3AE1-E:
-0D3AC0-E:
-0D3AC7-E:
-0D3B2F-E:
-0D3B22-E:
-0D3B11-E:
-0D3B18-E:
-0D3B00-E:
-0D3B07-E:
-# AF Slash / ゴリッキ
-0D3B79-E:
-0D3B5F-E:
-0D3BEB-E:
-0D3C0C-E:
-0D3C82-E:
-0D3C89-E:
-0D3C90-E:
-0D3C66-E:
-0D3C6F-E:
-0D3C76-E:
-0D3C2C-E:
-0D3C16-E:
-0D3C59-E:
-0D3C45-E:
-0D3C4C-E:
-0D3C38-E:
-# B0 Avila / アビ-ラ
-0D2F80-E:
-0D2F87-E:
-0D2F8E-E:
-0D2F95-E:
-0D2FA4-E:
-0D2FAB-E:
-0D2FB2-E:
+0D3DDA-E:GUGGAAAAA!
+# AB Gimmick Robo / ギミックロボ
+0D3E18-E:GAGA GAGA GAGAGAGA!
+# AC Gimmick Robo / ギミックロボ
+0D3609-E:MMM-GA MMM-GA MMM-GA
+0D361C-E:MMM-GA MMMMMMM-GA
+# AE Brikky / ブリッキ
+0D39EC-E:Brikky: Crap! They got me!
+0D39CB-E:Brikky: Grikky!
+0D39D2-E:Brikky: How very selfish!
+0D3AB6-E:Brikky: I'm gonna shoot ya down!
+0D3AA9-E:Brikky: I'm gonna shoot ya down!
+0D3AE1-E:Brikky: I'm gonna shoot ya down!
+0D3AC0-E:Brikky: Grikky!
+0D3AC7-E:Brikky: Ultimately, you were useless!
+0D3B2F-E:Brikky: I'm gonna shoot ya down!
+0D3B22-E:Brikky: Grikky!
+0D3B11-E:Brikky: Grikky!
+0D3B18-E:Brikky: Beautiful! Nice!
+0D3B00-E:Brikky: Grikky!
+0D3B07-E:Brikky: We'll beat 'em for sure today!
+# AF Grikky / ゴリッキ
+0D3B79-E:Grikky: CRAP! I've been hit!
+0D3B5F-E:Grikky: You're awful! How self-centered!
+0D3BEB-E:Grikky: I'm gonna shoot ya down!
+0D3C0C-E:Grikky: I'm gonna shoot ya down!
+0D3C82-E:Grikky: I want another massage!
+0D3C89-E:Brikky: There's no time for that!
+0D3C90-E:Grikky: You're awful! How self-centered!
+0D3C66-E:Grikky: I'm gonna shoot ya down!
+0D3C6F-E:Brikky: Grikky!
+0D3C76-E:Grikky: How very selfish!
+0D3C2C-E:Grikky: I'm gonna shoot ya down!
+0D3C16-E:Grikky: You were useless, Brikky!
+0D3C59-E:Grikky: I feel the love!
+0D3C45-E:Grikky: Don't flatter me!
+0D3C4C-E:Grikky: You're the cool one, Brikky!
+0D3C38-E:Grikky: Combo time!
+# B0 Abira / アビ-ラ
+0D2F80-E:D-... Do you see?
+0D2F87-E:The binky... on my head...
+0D2F8E-E:Don't... attack...
+0D2F95-E:this thing...
+0D2FA4-E:Owch! Owch! OWWWCH!
+0D2FAB-E:Guh... I don't have time for this
+0D2FB2-E:kind of long, drawn out fight...
 # B1 Left Arm / ひだりうで
-0D301C-E:
-0D3023-E:
-0D3035-E:
-0D303C-E:
-0D3048-E:
-0D304F-E:
-0D3085-E:
-0D308C-E:
-0D3095-E:
-0D30A1-E:
-0D30AA-E:
-0D30B1-E:
-# B2 RightArm / スライスシ-ルド
-0D30FB-E:
-0D3102-E:
-0D3121-E:
-0D3128-E:
-# B3 Avilas / アビラス, B4 LPacfier / おしゃぶり みぎ, B5 RPacfier / おしゃぶりひだり
-0D4D46-E:
-0D4BFE-E:
-# B3 Avilas / アビラス
-0D4DBE-E:
-0D4DC5-E:
-0D4E27-E:
-0D4C3B-E:
-0D4C4C-E:
-0D4C53-E:
-0D4C5D-E:
-# B3 Avilas / アビラス, B4 LPacfier / おしゃぶり みぎ, B5 RPacfier / おしゃぶりひだり
-0D478E-E:
-0D47B5-E:
-0D47C1-E:
-0D4885-E:
-0D4926-E:
-0D4946-E:
-0D4966-E:
-# B3 Avilas / アビラス
-0D4B46-E:
-0D4B05-E:
-0D4AE5-E:
-0D4AF9-E:
-0D4B28-E:
-0D4674-E:
-0D467E-E:
-0D4688-E:
-0D4692-E:
-# B4 LPacfier / おしゃぶり みぎ, B5 RPacfier / おしゃぶりひだり
-0D4D34-E:
-0D4D11-E:
+0D301C-E:Pasaran!
+0D3023-E:Come, Pasaran!
+0D3035-E:          What the...
+0D303C-E:A Pasaran puppet appeared!
+0D3048-E:NOOO! What have you done
+0D304F-E:to Pasaraaaaaaan!!
+0D3085-E:Sing! Sing for me,
+0D308C-E:Pasaran!
+0D3095-E:Mmm. How invigorating!
+0D30A1-E:It's over!
+0D30AA-E:Do you realize the power
+0D30B1-E:of the Pasaran puppet!?
+# B2 Right Arm / スライスシ-ルド
+0D30FB-E:Abira's DEF shot way
+0D3102-E:way down!
+0D3121-E:All effects and statuses
+0D3128-E:on Abira are erased!
+# B3 Abiwrath / アビラス, B4 LPacfier / おしゃぶり みぎ, B5 RPacfier / おしゃぶりひだり
+0D4D46-E:YOU... WILL... LOSE!
+0D4BFE-E:IT'S A BUG! PLEASE REPORT IT!
+# B3 Abiwrath / アビラス
+0D4DBE-E:GA-GA-GA...
+0D4DC5-E:GAGA GAGA GAGAGAGA!
+0D4E27-E:NOW... IT'S FOR REAL!
+0D4C3B-E:GA-GA-GA...
+0D4C4C-E:..........GA...
+0D4C53-E:PA...SA...RAN.......
+0D4C5D-E:GWAAAAAAAHHHH!!!
+# B3 Abiwrath / アビラス, B4 LPacfier / おしゃぶり みぎ, B5 RPacfier / おしゃぶりひだり
+0D478E-E:GUGUGU...
+0D47B5-E:YOU'RE... TOO WEAK...
+0D47C1-E:WHAT'S WRONG... GA-GA...
+0D4885-E:GUGUGU...
+0D4926-E:AWA.......KEN...
+0D4946-E:AWA.......KEN...
+0D4966-E:AWA.......KEN...
+# B3 Abiwrath / アビラス
+0D4B46-E:GIGUGUGUGU!!
+0D4B05-E:GAGAGEGE GUGAGUGA...
+0D4AE5-E:GUGGAAAAA!!
+0D4AF9-E:GUGUGU...
+0D4B28-E:GA-GA-GA...
+0D4674-E:   BARRIER!!!
+0D467E-E:AND NOW...
+0D4688-E:YOUR ATTACKS
+0D4692-E:WON'T HURT OR ITCH!!
+# B4 Left Binky / おしゃぶり みぎ, B5 RPacfier / おしゃぶりひだり
+0D4D34-E:The barrier's power weakened!
+0D4D11-E:The barrier's power returned!
