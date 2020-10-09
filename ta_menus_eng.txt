@@ -7,25 +7,25 @@ BLOCKFIXED 4903C0 0A 17
 01-E:[NAME2]
 02-E:[NAME3]
 03-E:[NAME4]
-04-E:Parsly
-05-E:Mushum
+04-E:Pasaran
+05-E:Enokin
 06-E:Nance
-07-E:Celemo
+07-E:Selemo
 08-E:Kaizo
-09-E:Potfan
-0A-E:Tombot
+09-E:Pothead
+0A-E:T.Robo
 0B-E:Jack
-0C-E:Butcha
-0D-E:Quizzy
-0E-E:Hack
-0F-E:Slash
-10-E:Avila
+0C-E:Bertha
+0D-E:QuizKid
+0E-E:Brikky
+0F-E:Grikky
+10-E:Abira
 11-E:Oops
 12-E:Ouch
 13-E:What
 14-E:Lilby
 15-E:Shadup
-16-E:Cheki
+16-E:Chekkit
 
 BLOCKFIXED 4903D0 18 01 18
 00-E:Don't have any items
@@ -34,7 +34,7 @@ BLOCKFIXED 4903D0 18 01 18
 BLOCKFIXED 4903D8 0C 05
 00-E:Speed Up
 01-E:HP Up
-02-E:Walk HP
+02-E:Walk Heal HP
 03-E:EXP Up
 04-E:No Status
 
@@ -44,19 +44,19 @@ BLOCKFIXED 4903E0 0A 0A
 02-E:Sleep
 03-E:Critical
 04-E:Get Topar
-05-E:Spd Down
-06-E:Def Down
+05-E:Speed Down
+06-E:DEF Down
 07-E:Jump
 08-E:HP Suck
 09-E:All
 
-BLOCKFIXED 4903E8 05 06
+BLOCKFIXED 4903E8 08 06
 00-E:Bolt
 01-E:Gear
-02-E:Sprng
+02-E:Spring
 03-E:Bulb
 04-E:Body
-05-E:Bttry
+05-E:Battery
 
 # This must be the same size as 4903F8.
 BLOCKFIXED 4903F0 10 01 0A
@@ -74,91 +74,91 @@ BLOCKFIXED 4903F8 10 61 0A
 09-E:
 0S-E:
 0B-E:
-0C-E:TBattery
-0D-E:CBattery
-0E-E:NBattery
-0F-E:SBattery
-10-E:T.Volt
-11-E:C.Volt
-12-E:E.Volt
-13-E:S.Volt
-14-E:T.Star
-15-E:C.Star
-16-E:E.Star
-17-E:S.Star
+0C-E:TimeCell
+0D-E:TapCell
+0E-E:FunCell
+0F-E:QuickCell
+10-E:TimeVolt
+11-E:TapVolt
+12-E:FunVolt
+13-E:QuickVolt
+14-E:TimeStar
+15-E:TapStar
+16-E:FunStar
+17-E:QuickStar
 18-E:
-19-E:R.Drop
-1A-E:A.Drop
-1B-E:Coffee
-1C-E:WakeBell
-1D-E:Whisper
-1E-E:M.Apple
-1F-E:B.Apple
-20-E:D.Apple
-21-E:Cologne
-22-E:C.Killer
-23-E:T.Killer
-24-E:S.Killer
-25-E:E.Killer
+19-E:RainDrop
+1A-E:AuraDrop
+1B-E:Dr. Java
+1C-E:Wake Bell
+1D-E:Hanzo Box
+1E-E:Mach Apple
+1F-E:Bari Apple
+20-E:2x Apple
+21-E:Eau d'Escape
+22-E:TimeKill
+23-E:TapKill
+24-E:QuickKill
+25-E:FunKill
 26-E:Fruit
-27-E:R.Gummy
-28-E:W.Gummy
-29-E:P.Gummy
-2A-E:G.Gummy
+27-E:Red Gel
+28-E:White Gel
+29-E:Peach Gel
+2A-E:Gold Gel
 2B-E:Cookie
 2C-E:Milk
 2D-E:Pudding
 2E-E:
 2F-E:Parts
 30-E:
-31-E:SpeedJar
-32-E:LifeJar
+31-E:Can-o-Quick
+32-E:Can-o-Life
 33-E:
-34-E:Modring
+34-E:Ringturner
 35-E:
-36-E:Pacifier
-37-E:P.Key 1
-38-E:P.Key 2
-39-E:P.Key 3
-3A-E:Gold Pot
-3B-E:Pillow
-3C-E:Last Pin
-3D-E:G.Memory
-3E-E:B.Memory
-3F-E:R.Memory
+36-E:Binky
+37-E:PalaceKey1
+38-E:PalaceKey2
+39-E:PalaceKey3
+3A-E:Golden Pot
+3B-E:ArtsyPillow
+3C-E:End Hand
+3D-E:Greemory
+3E-E:Blumory
+3F-E:Redmory
 40-E:Sheep 1
 41-E:Sheep 2
 42-E:Sheep 3
-43-E:Look
-44-E:BakuKey
-45-E:D.Pillow
-46-E:StartPin
-47-E:Sesakey
-48-E:Contract
-49-E:Tickets
+43-E:Dreco Gaze
+44-E:Boom Key
+45-E:DreamPillow
+46-E:OriginHand
+47-E:Sesame Key
+48-E:Deposit
+49-E:FreeTicket
 4A-E:License
 4B-E:Candy
 4C-E:Music
-4D-E:ChrchKey
+4D-E:Chapel Key
 4E-E:GTicket2
-4F-E:S.Diamnd
-50-E:Mask
+4F-E:D. Skull
+50-E:??? Mask
 51-E:GTicket
 52-E:Letter
-53-E:Doll
-54-E:G.Banana
-55-E:R.Banana
-56-E:Coupon
-57-E:B.Banana
+53-E:Winch Doll
+54-E:Greenana
+55-E:Rednana
+56-E:Gym Pass
+57-E:Blunana
 58-E:Gold Key
-59-E:Gum
+59-E:Gillygum
 5A-E:L.Ticket
-5B-E:MusicBox
-5C-E:Bellmush
+5B-E:Music Box
+5C-E:Belmush
 5D-E:Hotpot
 5E-E:Hotpot
 5F-E:Battery
-60-E:Spring
+60-E:Wow!Coil
 
 # For now assuming this needs the same size as 490410.
 BLOCKFIXED 490400 0C 01 09
@@ -167,87 +167,87 @@ BLOCKFIXED 490400 0C 01 09
 BLOCKFIXED 490408 0C 01 09
 00-E:
 BLOCKFIXED 490410 0C 20 09
-00-E:V.Shirt
-01-E:P.Jacket
-02-E:M.Jacket
-03-E:ThrnShrt
-04-E:Go Shirt
-05-E:SkulShrt
-06-E:T.Jacket
-07-E:4D Shirt
-08-E:S.Jacket
-09-E:N.Skirt
+00-E:Vinyl Shirt
+01-E:ModelJacket
+02-E:Mayo Jacket
+03-E:Thorn Shirt
+04-E:Go-Go Shirt
+05-E:Skull Shirt
+06-E:Tech Jacket
+07-E:4-D Shirt
+08-E:Star Jacket
+09-E:Nylon Skirt
 0A-E:Fur
-0B-E:Apron
-0C-E:Dress
-0D-E:GhstRobe
-0E-E:M.Skirt
-0F-E:D.Collar
-10-E:StarRobe
-11-E:LardSuit
+0B-E:Metal Apron
+0C-E:Scaly Dress
+0D-E:Ghost Robe
+0E-E:Metro Skirt
+0F-E:Gem Collar
+10-E:Star Robe
+11-E:Lard Suit
 12-E:Bat Suit
-13-E:Digisuit
-14-E:H.Suit
-15-E:StarSuit
-16-E:NinjaCot
-17-E:Skirt
-18-E:LitSkirt
-19-E:StarCoat
+13-E:Digi Suit
+14-E:Storm Suit
+15-E:Star Suit
+16-E:Ninja Coat
+17-E:Check Skirt
+18-E:Spark Skirt
+19-E:Star Coat
 1A-E:Diaper
-1B-E:M.Jersey
-1C-E:MoonGown
-1D-E:CsmoCape
-1E-E:SumoJckt
-1F-E:Plt.Cape
+1B-E:MachJersey
+1C-E:Moon Gown
+1D-E:Cosmo Cape
+1E-E:SumoJacket
+1F-E:Platna Cape
 
 # This must be the same size as 490420.
 BLOCKFIXED 490418 0C 01 08
 00-E:
 BLOCKFIXED 490420 0C 32 08
-00-E:GearYoYo
-01-E:NoisFace
+00-E:Gear-Yo
+01-E:Kendama
 02-E:Chomper
-03-E:Crane
+03-E:Origami
 04-E:TurtGlov
-05-E:DualSwrd
-06-E:RabShoes
-07-E:Hopper
+05-E:TwinDragon
+06-E:RabiShoes
+07-E:BunnyHop
 08-E:CupidBow
-09-E:Judgemnt
+09-E:Judgment
 0A-E:Elec.Eel
-0B-E:SlotBzka
+0B-E:SlotZooka
 0C-E:SeedBomb
-0D-E:BoyPeach
-0E-E:Maghand
+0D-E:Momotaro
+0E-E:Mag-Mitt
 0F-E:LinGlove
-10-E:TailWag
-11-E:Cannon
+10-E:Tail Wag
+11-E:Dragonfire
 12-E:Fumigatr
 13-E:H.Vulcan
 14-E:SuperFan
 15-E:Cyclooka
-16-E:Zapper
+16-E:Zap Drum
 17-E:Popocon
 18-E:Yokozuna
 19-E:Blazer
-1A-E:Volcano
-1B-E:Piramet
-1C-E:SneaCar
-1D-E:Train
-1E-E:Balloon
-1F-E:Pole UFO
-20-E:SpdrShot
-21-E:LndRockt
-22-E:SunLaser
+1A-E:Erupter
+1B-E:Pyramet
+1C-E:SneaKar
+1D-E:ChooChoo
+1E-E:Puffer
+1F-E:UFO-Cast
+20-E:SpiderGun
+21-E:RocketPak
+22-E:Sun Beam
 23-E:Bouncer
 24-E:Firehog
 25-E:Sesame
-26-E:Bananer
-27-E:Riceball
-28-E:KarateDg
-29-E:Meowzer
-2A-E:BubblHrn
-2B-E:Flatuler
+26-E:NanaBoard
+27-E:BowlingRice
+28-E:Dojo Pup
+29-E:Lucky Cat
+2A-E:Pop-Horn
+2B-E:FartHorn
 2C-E:LoveSong
 2D-E:StarScop
 2E-E:Hotafant
@@ -262,123 +262,123 @@ BLOCKFIXED 490428 1A 01
 BLOCKFIXED 490430 24 64
 00-E:Press [F5] to stop the bar in
 01-E:the red zone.
-02-E:
-03-E:
-04-E:
-05-E:
-06-E:
-07-E:
-08-E:
-09-E:
-0A-E:
-0B-E:
-0C-E:
-0D-E:
-0E-E:
-0F-E:
-10-E:
-11-E:
-12-E:
-13-E:
-14-E:
-15-E:
-16-E:
-17-E:
-18-E:
-19-E:
-1A-E:
-1B-E:
-1C-E:
-1D-E:
-1E-E:
-1F-E:
-20-E:
-21-E:
-22-E:
-23-E:
-24-E:
-25-E:
-26-E:
-27-E:
-28-E:
-29-E:
-2A-E:
-2B-E:
-2C-E:
-2D-E:
-2E-E:
-2F-E:
-30-E:
-31-E:
-32-E:
-33-E:
-34-E:
-35-E:
-36-E:
-37-E:
-38-E:
-39-E:
-3A-E:
-3B-E:
-3C-E:
-3D-E:
-3E-E:
-3F-E:
-40-E:
-41-E:
-42-E:
-43-E:
-44-E:
-45-E:
-46-E:
-47-E:
-48-E:
-49-E:
-4A-E:
-4B-E:
-4C-E:
-4D-E:
-4E-E:
-4F-E:
-50-E:
-51-E:
-52-E:
-53-E:
-54-E:
-55-E:
-56-E:
-57-E:
-58-E:
-59-E:
-5A-E:
-5B-E:
-5C-E:
-5D-E:
-5E-E:
-5F-E:
-60-E:
-61-E:
-62-E:
-63-E:
+02-E:Hold [F5] to speed up the ball. Release
+03-E:it to land the ball in the red zone.
+04-E:Press [F5] when the two bars
+05-E:clamp together.
+06-E:Stop the spinning slots with [F5]
+07-E:and land on the luck symbol.
+08-E:When the flowing balls reach the
+09-E:red zone, press [F5].
+0A-E:Push [F5] or [F7] depending on which
+0B-E:letter flows into the red zone.
+0C-E:Press [F5] to stop the moving
+0D-E:rabbit mark in the red zone.
+0E-E:Hold [F5] to pull back the ball.
+0F-E:Release it and aim for the red zone.
+10-E:When the moving ball and red
+11-E:zone cross, stop them with [F5].
+12-E:Move the bracket with [FC] and catch
+13-E:the moving ball in it with [F5].
+14-E:Stop the disappearing timer with [F5]
+15-E:when you think it's close to 0.00.
+16-E:Stop the slots with [F5] and aim
+17-E:for 777.
+18-E:Stop the ball in the vanishing
+19-E:red zone using [F5].
+1A-E:Stop all the moving peaches in the
+1B-E:blue zone simultaneously [F5].
+1C-E:Press [F5] rapidly to fill up
+1D-E:the bar completely.
+1E-E:Tap the button shown on the end
+1F-E:of the bar to fill it up completely.
+20-E:Alternate tapping [FB] and [F9]
+21-E:to fill up the bar.
+22-E:Tap [F5] a number of times while the
+23-E:bar is between [F6] and [F6].
+24-E:Tap [F5] to move [F9], [F7] to move [FB], and
+25-E:collect the pieces of trash.
+26-E:Tap the button on the end of the bar
+27-E:rapidly and fill it completely.
+28-E:Keep the ball in the red zone by
+29-E:tapping [F5] and reach the other side.
+2A-E:Tap [F5] and reach each red zone
+2B-E:while the [F6] is above it.
+2C-E:Alternate tapping [F5] and [F7]
+2D-E:to fill up the bar completely.
+2E-E:Tap [F5] rapidly to fill up the bar.
+2F-E:DON'T tap when the ! mark appears.
+30-E:Tap [F5] and keep the bar to the
+31-E:right of the center arrow.
+32-E:Get the bar in the red with limited
+33-E:[F5] taps. Faster taps fill it more.
+34-E:Use [FB][F9] to pick a ? panel. Hope
+35-E:you get one with a volcano!
+36-E:Memorize the panels, then enter
+37-E:them correctly from left to right.
+38-E:Memorize the panels in the block
+39-E:gap, then enter them in that order.
+3A-E:Memorize the scrolling panels and pick
+3B-E:them in order with [FB][F9] and [F5].
+3C-E:Memorize the starting panels. Select
+3D-E:the ones that changed using [FB][F9] and [F5].
+3E-E:Count the falling aliens, then
+3F-E:answer using [F8][FA]. Confirm with [F5].
+40-E:Hover the red zone over where a ball
+41-E:vanished using [FB][F9]. Confirm with [F5].
+42-E:Memorize, then match the numbers
+43-E:with [FB][F9] and [F8][FA], and confirm with [F5].
+44-E:Move the bar using [FC] and catch
+45-E:the 1 ball that comes flying.
+46-E:Use [F8][FA] and [F5] to answer how many of
+47-E:a certain weather icon appeared.
+48-E:Find the panel the face is hidden
+49-E:under. [FB][F9] moves, [F5] decides.
+4A-E:Pick the panels with faces on them.
+4B-E:Use [FB][F9] to move, [F5] to decide.
+4C-E:Press the buttons shown on screen
+4D-E:the number of times shown.
+4E-E:Press [FC] in the opposite direction
+4F-E:displayed some number of times.
+50-E:Hover your cursor over the balls
+51-E:with [FC] and grab them with [F5].
+52-E:Select the number panels from least
+53-E:to greatest using [FB][F9] and [F5].
+54-E:Clear the panels from left-to-right
+55-E:by pressing the corresponding buttons!
+56-E:Press the displayed button combos
+57-E:using [FC] and [F5][F7] at the same time.
+58-E:Press the button indicated by the
+59-E:yellow panel a number of times.
+5A-E:Count the letters and pick the side
+5B-E:with the most. [F5] for A, [F7] for B.
+5C-E:Catch a number of falling balls
+5D-E:in the bucket using [FB][F9].
+5E-E:Move the snowman with [FC] and
+5F-E:collect a number of balls.
+60-E:Push the [FC] in the opposite direction
+61-E:indicated by the yellow panels.
+62-E:Flip cards 2 at a time and find the
+63-E:matching pair using [FB][F9] and [F5].
 
 BLOCKFIXED 490438 0C 12 08
-00-E:Spill
-01-E:Forest
-02-E:Ruins
-03-E:Palace
-04-E:Mayonia
-05-E:Lagoon
+00-E:The Spillage
+01-E:Pokypine
+02-E:Toy Ruin
+03-E:G.Palace
+04-E:Mayonen
+05-E:NampLagoon
 06-E:Oystown
-07-E:Valley
+07-E:Tartar
 08-E:Soy City
-09-E:Dome
-0A-E:Lab 1
-0B-E:Lab 2
-0C-E:Lab 3
-0D-E:Lab 4
-0E-E:Lab 5
-0F-E:Lab 6
-10-E:Lab
+09-E:Balsamic
+0A-E:Hanzo 1
+0B-E:Hanzo 2
+0C-E:Hanzo 3
+0D-E:Hanzo 4
+0E-E:Hanzo 5
+0F-E:Hanzo 6
+10-E:Hanzo's
 11-E:CLEAR
 
 BLOCKFIXED 490440 12 03
@@ -411,176 +411,176 @@ BLOCKFIXED 490448 24 C2
 15-E:
 16-E:
 17-E:
-18-E:Gimmick power item
-19-E:Timing gimmick attacks up 1
-1A-E:Gimmick power item
-1B-E:Tapping gimmick attacks up 1
-1C-E:Gimmick power item
-1D-E:Excite gimmick attacks up 1
-1E-E:
-1F-E:
-20-E:
-21-E:
-22-E:
-23-E:
-24-E:
-25-E:
-26-E:
-27-E:
-28-E:
-29-E:
-2A-E:
-2B-E:
-2C-E:
-2D-E:
-2E-E:
-2F-E:
-30-E:
+18-E:Gimmick powerup item
+19-E:Timing gimmick POW up 1
+1A-E:Gimmick powerup item
+1B-E:Tap gimmick POW up 1
+1C-E:Gimmick powerup item
+1D-E:Excite gimmick POW up 1
+1E-E:Gimmick powerup item
+1F-E:Speed gimmick POW up 1
+20-E:Gimmick powerup item
+21-E:Timing gimmick POW up 3
+22-E:Gimmick powerup item
+23-E:Tap gimmick POW up 3
+24-E:Gimmick powerup item
+25-E:Excite gimmick POW up 3
+26-E:Gimmick powerup item
+27-E:Speed gimmick POW up 3
+28-E:Gimmick powerup item
+29-E:Timing gimmick POW up 5
+2A-E:Gimmick powerup item
+2B-E:Tap gimmick POW up 5
+2C-E:Gimmick powerup item
+2D-E:Excite gimmick POW up 5
+2E-E:Gimmick powerup item
+2F-E:Speed gimmick POW up 5
+30-E:DUMMY
 31-E:
-32-E:
-33-E:
-34-E:
-35-E:
-36-E:
-37-E:
-38-E:
-39-E:
-3A-E:
-3B-E:
-3C-E:
-3D-E:
-3E-E:
-3F-E:
-40-E:
-41-E:
-42-E:
-43-E:
-44-E:
+32-E:Battle-use healing item
+33-E:Revives a fallen ally
+34-E:Battle-use healing item
+35-E:Fully revives a fallen ally
+36-E:Battle-use healing item
+37-E:Cures an ally of poison
+38-E:Battle-use healing item
+39-E:Awakens a sleeping ally
+3A-E:Battle-use repair item
+3B-E:Fixes a janky gimmick
+3C-E:Battle-use powerup item
+3D-E:SPD up 50[F2] for 3 turns
+3E-E:Battle-use powerup item
+3F-E:DEF up 15[F2] for 3 turns
+40-E:Battle-use powerup item
+41-E:SPD and DEF up for 3 turns
+42-E:Battle-use escape item
+43-E:Escape battle without fail
+44-E:DUMMY
 45-E:
-46-E:
+46-E:DUMMY
 47-E:
-48-E:
+48-E:DUMMY
 49-E:
-4A-E:
+4A-E:DUMMY
 4B-E:
-4C-E:
-4D-E:
-4E-E:
-4F-E:
-50-E:
-51-E:
-52-E:
-53-E:
-54-E:
-55-E:
-56-E:
-57-E:
-58-E:
-59-E:
-5A-E:
-5B-E:
-5C-E:
+4C-E:Healing item
+4D-E:Restores 20HP
+4E-E:Healing item
+4F-E:Restores 60HP
+50-E:Healing item
+51-E:Restores 100HP
+52-E:Healing item
+53-E:Restores 240HP
+54-E:Healing item
+55-E:Restores all HP
+56-E:Healing item
+57-E:Restores 60HP to all allies
+58-E:Healing item
+59-E:Restores 180HP to all allies
+5A-E:Healing item
+5B-E:Restores all HP to all allies
+5C-E:DUMMY
 5D-E:
-5E-E:
-5F-E:
-60-E:
+5E-E:Gimmick powerup item
+5F-E:Increases a gimmick's number of uses by 1
+60-E:DUMMY
 61-E:
-62-E:
-63-E:
-64-E:
-65-E:
-66-E:
+62-E:Powerup item
+63-E:Increase a character's SPD by 5
+64-E:Powerup item
+65-E:Increase a character's MAX HP by 5
+66-E:DUMMY
 67-E:
-68-E:
-69-E:
+68-E:Escape item.
+69-E:Exits a dungeon
 6A-E:
 6B-E:
-6C-E:
-6D-E:
-6E-E:
+6C-E:An ordinary, commonplace
+6D-E:pacifier.
+6E-E:Gimmick Palace Door Key 1
 6F-E:
-70-E:
+70-E:Gimmick Palace Door Key 2
 71-E:
-72-E:
+72-E:Gimmick Palace Door Key 3
 73-E:
-74-E:
-75-E:
-76-E:
-77-E:
-78-E:
-79-E:
-7A-E:
-7B-E:
-7C-E:
-7D-E:
-7E-E:
-7F-E:
-80-E:
+74-E:A glimmering golden pot.
+75-E:Would surely please a Pothead.
+76-E:An artistic pillow. Why?
+77-E:Who knows! Use it in a bed.
+78-E:Dreco's missing End Hand,
+79-E:found in the NREM Maze.
+7A-E:An invigorating green memory,
+7B-E:for Mr. Green Door.
+7C-E:A chilling blue memory,
+7D-E:for Mr. Blue Door.
+7E-E:A passionate red memory,
+7F-E:for Mr. Red Door.
+80-E:Sheep icon 1
 81-E:
-82-E:
+82-E:Sheep icon 2
 83-E:
-84-E:
+84-E:Sheep icon 3
 85-E:
-86-E:
-87-E:
-88-E:
-89-E:
-8A-E:
+86-E:A gaze that takes you elsewhere.
+87-E:Use it when you want to warp.
+88-E:REM and NREM Maze access
+89-E:key.
+8A-E:Fluffy pillow. Use in bed.
 8B-E:
-8C-E:
-8D-E:
-8E-E:
-8F-E:
-90-E:
-91-E:
-92-E:
-93-E:
-94-E:
-95-E:
-96-E:
-97-E:
-98-E:
-99-E:
-9A-E:
-9B-E:
-9C-E:
-9D-E:
-9E-E:
-9F-E:
-A0-E:
+8C-E:Greco's missing Origin Hand,
+8D-E:found in the Rustic Room.
+8E-E:Key for entry to the Austere
+8F-E:and Rustic rooms.
+90-E:Money from Big Bertha.
+91-E:Careful not to lose it.
+92-E:All-you-can-ride pass for
+93-E:the Soy City Subway.
+94-E:A license to walk on
+95-E:Soy City's Soyway.
+96-E:Candy that gives you a booming
+97-E:voice if many are eaten.
+98-E:Sheet music to play a song
+99-E:called HELP ME!
+9A-E:A key found near the base of
+9B-E:the Rainthooven.
+9C-E:A non-expired ticket to ride
+9D-E:the Mt. S'creme gondola.
+9E-E:A diamond-shaped skull.
+9F-E:Kemlin wants this.
+A0-E:Mask with a question mark on it.
 A1-E:
-A2-E:
-A3-E:
-A4-E:
-A5-E:
-A6-E:
-A7-E:
-A8-E:
-A9-E:
-AA-E:
+A2-E:A ticket to ride the Mt. S'creme
+A3-E:gondola.
+A4-E:A letter addressed to Sofubi.
+A5-E:Found at his villa.
+A6-E:A doll with a rope used for 
+A7-E:rescuing those stuck in a Bananaconda.
+A8-E:A Green Bananaconda's favorite
+A9-E:treat.
+AA-E:Red Bananacondas love these.
 AB-E:
-AC-E:
-AD-E:
-AE-E:
+AC-E:Passes to use the gym and
+AD-E:cafeteria at Sofubi's villa.
+AE-E:Blue Bananaconda's favorite.
 AF-E:
-B0-E:
-B1-E:
-B2-E:
-B3-E:
-B4-E:
-B5-E:
-B6-E:
-B7-E:
-B8-E:
-B9-E:
-BA-E:
-BB-E:
-BC-E:
-BD-E:
-BE-E:
-BF-E:
-C0-E:
-C1-E:
+B0-E:A gorgeous golden key.
+B1-E:Opens a golden door.
+B2-E:Gum which allows the chewer
+B3-E:to breathe underwater.
+B4-E:A ticket to ride on the
+B5-E:NampLagoon Elevator.
+B6-E:A music box that plays a
+B7-E:shocking melody.
+B8-E:When eaten, a beautifying
+B9-E:mushroom. Makes a great gift.
+BA-E:Pot which keeps water warm
+BB-E:indefinitely. Full of hot water.
+BC-E:Pot which keeps water warm
+BD-E:indefinitely. Currently empty.
+BE-E:A battery which will move
+BF-E:someone, somewhere.
+C0-E:A spring which will repair
+C1-E:something, somewhere.
 
 # Size must match 490450.
 BLOCKFIXED 490458 20 04
@@ -590,40 +590,40 @@ BLOCKFIXED 490458 20 04
 03-E:
 
 BLOCKFIXED 490450 20 10
-00-E:
-01-E:
-02-E:
-03-E:
-04-E:
-05-E:
-06-E:
-07-E:
-08-E:
-09-E:
-0A-E:
-0B-E:
-0C-E:
-0D-E:
-0E-E:
-0F-E:
+00-E:Adjust the difficulty of,
+01-E:equip, and test gimmicks.
+02-E:Use healing and other
+03-E:types of items here.
+04-E:If you get cool clothes,
+05-E:change into them here.
+06-E:Check party status and
+07-E:switch out friends here.
+08-E:View the descriptions of
+09-E:important items here.
+0A-E:Check out your Gimica
+0B-E:deck here.
+0C-E:Save your game here.
+0D-E:Save early, save often!
+0E-E:Return to the field
+0F-E:screen.
 
 BLOCKFIXED 490460 16 02
-00-E:
+00-E:????????
 01-E:
 
 BLOCKFIXED 490468 16 0C
-00-E:
-01-E:
-02-E:
-03-E:
-04-E:
-05-E:
-06-E:
-07-E:
-08-E:
-09-E:
-0A-E:
-0B-E:
+00-E:Diamond alloy screw.
+01-E:Oops's toy part.
+02-E:Miracleplastic cog.
+03-E:Ouch's toy part.
+04-E:Tensile alloy coil.
+05-E:What's toy part.
+06-E:Million-volt bulb.
+07-E:Lilby's toy part.
+08-E:Cobalt-stainless body.
+09-E:Shadap's toy part.
+0A-E:100-year old battery.
+0B-E:Chekkit's toy part.
 
 BLOCKFIXED 490470 0A 08 08
 00-E:Gimmicks
@@ -646,7 +646,7 @@ FIXEDPOINTER 0781D8 08  #459F38
 
 # Can be made longer with changes to game code (not sure what fits.)
 FIXEDPOINTER 0781DC 08  #4575AA
-00-J:Pacifier
+00-E:Binkies
 
 BLOCKFIXED 490480 12 03
 00-E:   Go back?
@@ -738,7 +738,7 @@ BLOCKFIXED 490530 05 01
 00-E:Parts
 
 BLOCKFIXED 490538 07 01
-00-E:GmkCard
+00-E:Gimica Card
 
 BLOCKFIXED 490540 03 01
 00-E:EFF
@@ -771,7 +771,7 @@ BLOCKFIXED 490588 07 01
 00-E:Gimmick
 
 BLOCKFIXED 490590 04 01
-00-E:Cool
+00-E:AWE!
 
 BLOCKFIXED 490598 20 01
 00-E:Pick a friend!
@@ -832,7 +832,7 @@ BLOCKFIXED 490608 08 01
 00-E:Held
 
 BLOCKFIXED 490610 08 01
-00-E:Usage
+00-E:Use:
 
 BLOCKFIXED 490618 06 02
 00-E:Max HP
@@ -840,8 +840,8 @@ BLOCKFIXED 490618 06 02
 
 # Automatically centered.
 BLOCKFIXED 490620 30 02
-00-E:
-01-E:
+00-E:Check your
+01-E:Gimica rank here.
 
 BLOCKFIXED 490628 10 04
 00-E:View Cards
@@ -850,7 +850,7 @@ BLOCKFIXED 490628 10 04
 03-E:Done
 
 BLOCKFIXED 490630 10 01
-00-E:
+00-E:Has beaten:
 
 BLOCKFIXED 490638 01 0A
 00-E:0
@@ -887,188 +887,188 @@ BLOCKFIXED 490668 07 01
 00-E:Cards
 
 BLOCKFIXED 490670 30 0F 1A
-00-E:
-01-E:
-02-E:
-03-E:
-04-E:
-05-E:
-06-E:
-07-E:
-08-E:
-09-E:
-0A-E:
-0B-E:
-0C-E:
-0D-E:
-0E-E:
+00-E:You may not adjust your deck
+01-E:until it contains 12 cards and
+02-E:you have extras to swap them with.
+03-E:[FB][F9]: Switch between deck and stock
+04-E:[F8][FA][F5]: Pick a card to swap out
+05-E:SELECT: View card details
+06-E:[F8][FA]: Pick card to put in your deck
+07-E:[F5]: Confirm    [F7]: Cancel
+08-E:Select: View card details
+09-E:[F8][FA]: Pick a card to remove from deck
+0A-E:[F5]: Confirm    [F7]: Cancel
+0B-E:SELECT: View card details
+0C-E:[FB][F9]: Switch between deck and stock
+0D-E:[F8][FA]: Select a card
+0E-E:SELECT: View card details
 
 BLOCKFIXED 490678 0D 30
-00-E:
+00-E:????????
 01-E:
-02-E:
-03-E:
-04-E:
-05-E:
-06-E:
-07-E:
-08-E:
-09-E:
-0A-E:
-0B-E:
-0C-E:
-0D-E:
-0E-E:
-0F-E:
-10-E:
-11-E:
-12-E:
-13-E:
-14-E:
-15-E:
-16-E:
-17-E:
-18-E:
-19-E:
-1A-E:
-1B-E:
-1C-E:
-1D-E:
-1E-E:
-1F-E:
-20-E:
-21-E:
-22-E:
-23-E:
-24-E:
-25-E:
-26-E:
-27-E:
-28-E:
-29-E:
-2A-E:
-2B-E:
-2C-E:
-2D-E:
-2E-E:
-2F-E:
+02-E:Raise your gimmick
+03-E:card's points by 50
+04-E:Lower your gimmick
+05-E:card's points by 50
+06-E:Raise your gimmick
+07-E:card's rank by 2
+08-E:Prevents your rank
+09-E:from changing
+0A-E:Restores your HP
+0B-E:by 50
+0C-E:Raise your gimmick
+0D-E:card's rank by 1
+0E-E:Lower your gimmick
+0F-E:card's rank by 1
+10-E:Raise your gimmick
+11-E:card's points by 25
+12-E:Lower your gimmick
+13-E:card's points by 25
+14-E:Restores your HP
+15-E:by 25
+16-E:25 direct damage
+17-E:to your opponent
+18-E:Reduce a gimmick card's
+19-E:damage taken by 25
+1A-E:Reduce a gimmick card's
+1B-E:damage taken to 0
+1C-E:Transforms into another
+1D-E:character card
+1E-E:Raise opponent's gimmick
+1F-E:card's points by 25
+20-E:Lower opponent's gimmick
+21-E:card's points by 25
+22-E:50 direct damage
+23-E:to your opponent
+24-E:Raise opponent's gimmick
+25-E:card's rank by 1
+26-E:Lower opponent's gimmick
+27-E:card's rank by 1
+28-E:Raise opponent's gimmick
+29-E:card's rank by 2
+2A-E:Opponent's card ranks
+2B-E:will not change
+2C-E:Raise opponent's gimmick
+2D-E:card's points by 50
+2E-E:Lower opponent's gimmick
+2F-E:card's points by 50
 
 BLOCKFIXED 490680 08 14
 00-E:
-01-E:
-02-E:
-03-E:
-04-E:
-05-E:
-06-E:
-07-E:
-08-E:
-09-E:
-0A-E:
-0B-E:
-0C-E:
-0D-E:
-0E-E:
-0F-E:
-10-E:
-11-E:
-12-E:
-13-E:
+01-E:Gimica Guy
+02-E:Selemo
+03-E:Enokin
+04-E:Enokin
+05-E:Pothead
+06-E:Nance
+07-E:Nance
+08-E:Kaizo
+09-E:Dario
+0A-E:Soy Guy
+0B-E:Big Bertha
+0C-E:Jack
+0D-E:QuizKid
+0E-E:Hanzon
+0F-E:Hanzoro
+10-E:Hanzone
+11-E:Hanzochi
+12-E:Hanzora
+13-E:Hanzo
 
 BLOCKFIXED 490688 16 0B
-00-E:
-01-E:
-02-E:
-03-E:
-04-E:
-05-E:
-06-E:
-07-E:
-08-E:
-09-E:
-0A-E:
+00-E:Gimica Noob
+01-E:Gimica Learner
+02-E:Gimica Player
+03-E:Gimica Regular
+04-E:Gimica Rover
+05-E:Gimica Phenom
+06-E:Gimica Celebrity
+07-E:Gimica Prodigy
+08-E:Gimica Champ
+09-E:Gimica Legend
+0A-E:Gimica Master
 
 BLOCKFIXED 490690 03 0B
-00-E:
-01-E:
-02-E:
-03-E:
-04-E:
-05-E:
-06-E:
-07-E:
-08-E:
-09-E:
-0A-E:
+00-E:5
+01-E:10
+02-E:20
+03-E:30
+04-E:40
+05-E:50
+06-E:60
+07-E:70
+08-E:80
+09-E:90
+0A-E:100
 
 BLOCKFIXED 490698 12 10
-00-E:
+00-E:Battle CPU Player
 01-E:
-02-E:
+02-E:Battle IRL Player
 03-E:
-04-E:
-05-E:
-06-E:
-07-E:
-08-E:
+04-E:Character Card
+05-E:information
+06-E:View your Gimica
+07-E:Rank
+08-E:Close Menu
 09-E:
-0A-E:
+0A-E:Doesn't want it
 0B-E:
-0C-E:
+0C-E:Verifying Cable
 0D-E:
-0E-E:
+0E-E:Cable Not Connected
 0F-E:
 
 # Note: these will center automatically.
 BLOCKFIXED 4906A0 24 30
 00-E:????????
 01-E:
-02-E:
-03-E:
-04-E:
-05-E:
-06-E:
-07-E:
-08-E:
-09-E:
-0A-E:
-0B-E:
-0C-E:
-0D-E:
-0E-E:
-0F-E:
-10-E:
-11-E:
-12-E:
-13-E:
-14-E:
-15-E:
-16-E:
-17-E:
-18-E:
-19-E:
-1A-E:
-1B-E:
-1C-E:
-1D-E:
-1E-E:
-1F-E:
-20-E:
-21-E:
-22-E:
-23-E:
-24-E:
-25-E:
-26-E:
-27-E:
-28-E:
-29-E:
-2A-E:
-2B-E:
-2C-E:
-2D-E:
-2E-E:
-2F-E:
+02-E:Raise your gimmick
+03-E:card's points by 50
+04-E:Lower your gimmick
+05-E:card's points by 50
+06-E:Raise your gimmick
+07-E:card's rank by 2
+08-E:Prevents your rank
+09-E:from changing
+0A-E:Restores your HP
+0B-E:by 50
+0C-E:Raise your gimmick
+0D-E:card's rank by 1
+0E-E:Lower your gimmick
+0F-E:card's rank by 1
+10-E:Raise your gimmick
+11-E:card's points by 25
+12-E:Lower your gimmick
+13-E:card's points by 25
+14-E:Restores your HP
+15-E:by 25
+16-E:25 direct damage
+17-E:to your opponent
+18-E:Reduce a gimmick card's
+19-E:damage taken by 25
+1A-E:Reduce a gimmick card's
+1B-E:damage taken to 0
+1C-E:Transforms into another
+1D-E:character card
+1E-E:Raise opponent's gimmick
+1F-E:card's points by 25
+20-E:Lower opponent's gimmick
+21-E:card's points by 25
+22-E:50 direct damage
+23-E:to your opponent
+24-E:Raise opponent's gimmick
+25-E:card's rank by 1
+26-E:Lower opponent's gimmick
+27-E:card's rank by 1
+28-E:Raise opponent's gimmick
+29-E:card's rank by 2
+2A-E:Opponent's card ranks
+2B-E:will not change
+2C-E:Raise opponent's gimmick
+2D-E:card's points by 50
+2E-E:Lower opponent's gimmick
+2F-E:card's points by 50
 
 BLOCKFIXED 4906B0 0B 01
 00-E:
@@ -1085,197 +1085,197 @@ BLOCKFIXED 4906A8 0B 0A
 09-E:No Damage
 
 BLOCKFIXED 4907AC 1C 20
-00-E:
+00-E:This is the menu screen.
 01-E:
-02-E:
-03-E:
-04-E:
+02-E:You can pick gimmicks
+03-E:from here.
+04-E:Press [F5]...
 05-E:
-06-E:
+06-E:This is the Gimmick menu.
 07-E:
-08-E:
-09-E:
-0A-E:
-0B-E:
-0C-E:
-0D-E:
-0E-E:
-0F-E:
-10-E:
-11-E:
-12-E:
-13-E:
-14-E:
-15-E:
-16-E:
+08-E:You can see a lot of info
+09-E:about your gimmicks here.
+0A-E:Press L and R here to
+0B-E:adjust their difficulty!
+0C-E:Harder commands will deal
+0D-E:more damage to enemies!
+0E-E:Lower the difficulty with
+0F-E:the L button...
+10-E:And your damage will be
+11-E:lower with that gimmick.
+12-E:Raise the level with
+13-E:the R button...
+14-E:And your damage with that
+15-E:gimmick will be higher!
+16-E:Try it out yourself!
 17-E:
-18-E:
-19-E:
-1A-E:
-1B-E:
-1C-E:
-1D-E:
-1E-E:
+18-E:If you wanna see how to use
+19-E:a gimmick, press [F5].
+1A-E:You don't have to press
+1B-E:[F5] to adust its level.
+1C-E:You can test it out
+1D-E:afterwards by pushing start!
+1E-E:Give it a try later!
 1F-E:
 
 BLOCKFIXED 4907B4 1C 0A
-00-E:
-01-E:
-02-E:
+00-E:You can use items you've
+01-E:got by selecting Items.
+02-E:Press [F5]...
 03-E:
-04-E:
-05-E:
-06-E:
-07-E:
-08-E:
-09-E:
+04-E:Here's where you use them.
+05-E:Pick an item and press [F5].
+06-E:Then, pick who you want to
+07-E:use it on with [F5] as well.
+08-E:That's how you can
+09-E:heal yourself!
 
 BLOCKFIXED 4907BC 1C 16
-00-E:
-01-E:
-02-E:
-03-E:
-04-E:
-05-E:
-06-E:
+00-E:Our old friend, the menu
+01-E:screen. To use a Cell...
+02-E:Pick the Item menu and
+03-E:press [F5].
+04-E:The Cell I just gave you is
+05-E:in here!
+06-E:Select it with [F5]...
 07-E:
-08-E:
-09-E:
-0A-E:
-0B-E:
-0C-E:
+08-E:And we're off to the
+09-E:gimmick screen!
+0A-E:Pick the gimmick you'd like to
+0B-E:use it on here!
+0C-E:Then press [F5]!
 0D-E:
-0E-E:
-0F-E:
-10-E:
-11-E:
-12-E:
-13-E:
-14-E:
-15-E:
+0E-E:Look! This number went up!
+0F-E:And thus, its attack power!
+10-E:There are many types of Cells.
+11-E:That one was a Time Cell.
+12-E:You can use those to power
+13-E:up your Timing Gimmicks!
+14-E:Be on the lookout for the
+15-E:other types of cells too!
 
 BLOCKFIXED 4907C4 1C 12
-00-E:
-01-E:
-02-E:
-03-E:
-04-E:
-05-E:
-06-E:
-07-E:
-08-E:
+00-E:You may equip up to 4
+01-E:gimmicks during battle.
+02-E:Select Gimmicks and pick
+03-E:the ones you like!
+04-E:Choose whose equipment you'd
+05-E:like to change...
+06-E:And then select the gimmicks
+07-E:you want them to equip!
+08-E:BUT!
 09-E:
-0A-E:
-0B-E:
-0C-E:
-0D-E:
-0E-E:
-0F-E:
-10-E:
-11-E:
+0A-E:This mark means it's one
+0B-E:you've already got equipped.
+0C-E:Pick one that doesn't have
+0D-E:that mark beside it...
+0E-E:And push [F5] to swap
+0F-E:it out!
+10-E:Give it a go yourself
+11-E:later on!
 
 BLOCKFIXED 4907CC 1C 27
-00-E:
-01-E:
-02-E:
-03-E:
-04-E:
-05-E:
-06-E:
-07-E:
-08-E:
-09-E:
-0A-E:
-0B-E:
-0C-E:
-0D-E:
-0E-E:
-0F-E:
-10-E:
-11-E:
-12-E:
-13-E:
-14-E:
-15-E:
+00-E:About deckbuilding... Let's
+01-E:swap out a card in your
+02-E:deck for one that isn't...
+03-E:Which card, which card...
+04-E:Move between your deck and
+05-E:your stock with [FB][F9]...
+06-E:...You can swap cards
+07-E:from either or, no matter
+08-E:which side you pick...
+09-E:Ok, let's swap in one of
+0A-E:these... Use [F8][FA] to
+0B-E:pick one and push [F5]...
+0C-E:OK, into the deck it goes...
+0D-E:Select a card with [F8][FA] and...
+0E-E:Hit [F5] to swap it out...
+0F-E:Pick a decked card while
+10-E:holding one from your
+11-E:stock...
+12-E:Once you've decided which
+13-E:one you wanna swap out,
+14-E:press [F5] and then...
+15-E:Look. All swapped out.
 16-E:
 17-E:
-18-E:
-19-E:
-1A-E:
-1B-E:
-1C-E:
-1D-E:
-1E-E:
-1F-E:
+18-E:If you wanna look at a
+19-E:card's picture or info...
+1A-E:Just hit the select button...
+1B-E:[FB][F9] moves between deck
+1C-E:and stock... [F8][FA] moves
+1D-E:between individual cards.
+1E-E:Press [F7] to return to the
+1F-E:previous screen.
 20-E:
-21-E:
-22-E:
-23-E:
-24-E:
-25-E:
-26-E:
+21-E:That's it! Let me fix
+22-E:your deck back up to how
+23-E:it was before...
+24-E:There! All back to
+25-E:normal again...
+26-E:So long...
 
 # Overworld area names.
 BLOCKFIXED 49F61C 10 11 08
-00-E:Spill
-01-E:Forest
-02-E:Palace
-03-E:Lab 1
-04-E:Mayonia
-05-E:Lab 2
-06-E:Lagoon
-07-E:Lab 3
+00-E:The Spillage
+01-E:Pokypine
+02-E:G.Palace
+03-E:Hanzo 1
+04-E:Mayonen
+05-E:Hanzo 2
+06-E:NampLagoon
+07-E:Hanzo 3
 08-E:Oystown
-09-E:Lab 4
-0A-E:Valley
-0B-E:Lab 5
+09-E:Hanzo 4
+0A-E:TartarValley
+0B-E:Hanzo 5
 0C-E:Soy City
-0D-E:Lab 6
-0E-E:Vinedome
+0D-E:Hanzo 6
+0E-E:Balsamic
 0F-E:
-10-E:Coliseum
+10-E:Lardosseum
 
 BLOCKFIXED 49F62C 24 18 1B
-00-E:
-01-E:
-02-E:
-03-E:
-04-E:
-05-E:
-06-E:
-07-E:
-08-E:
-09-E:
-0A-E:
-0B-E:
-0C-E:
-0D-E:
-0E-E:
-0F-E:
-10-E:
-11-E:
-12-E:
-13-E:
-14-E:
-15-E:
-16-E:
-17-E:
+00-E:Use when you have no cards.
+01-E:Your Pts [F8]50
+02-E:Your Pts [FA]50
+03-E:Your rank [F8]2
+04-E:Keep your rank
+05-E:Heals 50 HP
+06-E:Your rank [F8]1
+07-E:Your rank [FA]50
+08-E:Your pts [F8]25
+09-E:Your Pts [FA]25
+0A-E:Heals 25 HP
+0B-E:25 DMG to opponent
+0C-E:Reduce DMG by 25
+0D-E:Reduce DMG to 0
+0E-E:Transforms card
+0F-E:Opponent Pts [F8]25
+10-E:Opponent Pts [FA]25
+11-E:50 DMG to opponent
+12-E:Opponent's rank [F8]1
+13-E:Opponent's rank [F8]1
+14-E:Opponent's rank [FA]2
+15-E:Keep opponent's rank
+16-E:Opponent Pts [F8]50
+17-E:Opponent Pts [FA]50
 
 BLOCKFIXED 49F634 30 04
-00-E:
+00-E: Preparing for Link Battle
 01-E:
-02-E:
-03-E:
+02-E: Opponent is not yet
+03-E:   ready
 
 BLOCKFIXED 49F63C 16 01
 00-E:[EF]Waiting for turn
 
 # Was block at 639BA8 04 04, moved in battle_menu.asm.
 BLOCKSTART 7F0000 06 04
-00-E:Gimck.
+00-E:Fight
 01-E:Item
 02-E:Run
-03-E:Cool
+03-E:AWE!
 
 # Centering is a bit broken with the VWF...
 # For annoying reasons, hard limit of 1A in length.
@@ -1287,63 +1287,63 @@ DYNPOINTER 04F9E0 1A 04F9BA 04F9C2 #639C40
 00-E:[EF][EF][EF][EF][EF][EF][EF][EF][EF][EF][EF]Failed!
 
 TERMSTRING 02ADFC FF 0A #62BF73
-00-E:
+00-E:Times used
 TERMSTRING 02AECC FF 05 #62BF7A
-00-E:
+00-E:Total
 TERMSTRING 02AED4 FF 06 #62BF7F
-00-E:
+00-E:Attack
 TERMSTRING 02AEF4 FF 04 #62BF84
-00-E:
+00-E:Cell
 TERMSTRING 02AEFC FF 0A #62BF88
-00-E:
+00-E:Difficulty
 TERMSTRING 02AF04 FF 04 #62BF8D
-00-E:
+00-E:   [F4]
 
 RESTRUCT 62C250 08 58 7F001E 10 40 32
-00-E:GearYoYo
-01-E:NoisFace
+00-E:Gear-Yo
+01-E:Kendama
 02-E:Chomper
-03-E:Crane
+03-E:Origami
 04-E:TurtGlov
-05-E:DualSwrd
-06-E:RabShoes
-07-E:Hopper
+05-E:TwinDragon
+06-E:RabiShoes
+07-E:BunnyHop
 08-E:CupidBow
 09-E:Judgment
 0A-E:Elec.Eel
-0B-E:SlotBzka
+0B-E:SlotZooka
 0C-E:SeedBomb
-0D-E:BoyPeach
-0E-E:Maghand
+0D-E:Momotaro
+0E-E:Mag-Mitt
 0F-E:LinGlove
-10-E:TailWag
-11-E:Cannon
+10-E:Tail Wag
+11-E:Dragonfire
 12-E:Fumigatr
 13-E:H.Vulcan
 14-E:SuperFan
 15-E:Cyclooka
-16-E:Zapper
+16-E:Zap Drum
 17-E:Popocon
 18-E:Yokozuna
 19-E:Blazer
-1A-E:Volcano
-1B-E:Piramet
-1C-E:SneaCar
-1D-E:Train
-1E-E:Balloon
-1F-E:UFO Rod
-20-E:Spdrshot
-21-E:LndRockt
-22-E:SunLaser
+1A-E:Erupter
+1B-E:Pyramet
+1C-E:SneaKar
+1D-E:ChooChoo
+1E-E:Puffer
+1F-E:UFO-Cast
+20-E:SpiderGun
+21-E:RocketPak
+22-E:Sun Beam
 23-E:Bouncer
 24-E:Firehog
 25-E:Sesame
-26-E:Bananer
-27-E:Riceball
-28-E:KarateDg
-29-E:Meowzer
-2A-E:BubblHrn
-2B-E:Flatuler
+26-E:NanaBoard
+27-E:BowlingRice
+28-E:Dojo Pup
+29-E:Lucky Cat
+2A-E:Pop-Horn
+2B-E:FartHorn
 2C-E:LoveSong
 2D-E:StarScop
 2E-E:Hotafant
@@ -1352,62 +1352,62 @@ RESTRUCT 62C250 08 58 7F001E 10 40 32
 31-E:Shadow
 
 RESTRUCT 62C258 1A 58 7F002E 30 40 32
-00-E:Hit [F5] at the right time!
-01-E:
-02-E:
-03-E:
-04-E:
-05-E:
-06-E:
-07-E:
-08-E:
-09-E:
-0A-E:
-0B-E:
-0C-E:
-0D-E:
+00-E:Hit [F5] in the red zone!
+01-E:Hold [F5] and aim for the red zone!
+02-E:Connect the bars with [F5]!
+03-E:Stop on the luck symbol with [F5]!
+04-E:Hit [F5] when balls are in the red zone!
+05-E:Hit [F5] or [F7] in the red zone!
+06-E:Stop the rabbit in the red zone with [F5]!
+07-E:Hold, release [F5] to launch ball to red!
+08-E:[F5] when the ball and red zone cross!
+09-E:[F5] to catch the ball in the square!
+0A-E:Hit [F5] to stop the timer close to 0.00!
+0B-E:Hit [F5] to stop the slots on 777!
+0C-E:[F5] to stop the ball where it was red!
+0D-E:[F5] to stop all peaches in the blue!
 0E-E:Tap [F5] to fill the bar up!
-0F-E:
-10-E:
-11-E:
-12-E:
-13-E:
-14-E:
-15-E:
-16-E:
-17-E:
-18-E:
-19-E:
-1A-E:
-1B-E:
-1C-E:
-1D-E:
-1E-E:
-1F-E:
-20-E:
-21-E:
-22-E:
-23-E:
-24-E:
-25-E:
-26-E:
-27-E:
-28-E:
-29-E:
-2A-E:
-2B-E:
-2C-E:
-2D-E:
-2E-E:
-2F-E:
-30-E:
-31-E:
+0F-E:Tap the displayed button to fill the bar!
+10-E:Alternate tapping [FB] and [F9]!
+11-E:Tap [F5] while bar is between [F6][F6]!
+12-E:Grab the trash with [F5] and [F7] taps!
+13-E:Tap the button on the bar to fill it!
+14-E:Tap [F5] to keep ball in the red zone!
+15-E:Tap [F5] to reach red with [F6] above it!
+16-E:Fill the bar! Alternate tapping [F5] and [F7]!
+17-E:Tap [F5] when there is no ! mark!
+18-E:Tap [F5]! Keep the bar right of the arrow!
+19-E:Get in the red with limited [F5] taps!
+1A-E:[F5] to pick a panel! Hope for a volcano!
+1B-E:Memorize and enter the shown panels!
+1C-E:Memorize and enter the shown panels!
+1D-E:Memorize and select the shown panels!
+1E-E:Select the panels that changed!
+1F-E:Count the falling aliens!
+20-E:Put the red zone where the ball was!
+21-E:Input the correct numbers!
+22-E:Catch the flying ball with [FC]!
+23-E:Count the right weather icon!
+24-E:Locate the face panel!
+25-E:Locate the face panels!
+26-E:Press the onscreen buttons!
+27-E:Press the opposite direction shown!
+28-E:Grab the balls in the grid with [FC][F5]!
+29-E:Pick the panels from low to high!
+2A-E:Clear the panels with matching inputs!
+2B-E:Push the button combinations!
+2C-E:Input the highlighted panels!
+2D-E:[F5] or [FB]? Which has most?
+2E-E:Catch balls in a bucket!
+2F-E:Collect balls with the snowman!
+30-E:Do the opposite of the yellow panels!
+31-E:Find the matching panel pair!
 
 RESTRUCT 630BDC 04 1C 7F1980 07 08 04
 00-E:Demille
-01-E:Aresa
+01-E:Alesa
 02-E:Sofubi
-03-E:Relic
+03-E:Lelk
 
 RESTRUCT 630E5C 08 10 7F0C9E 10 10 61
 00-E:
@@ -1420,127 +1420,127 @@ RESTRUCT 630E5C 08 10 7F0C9E 10 10 61
 07-E:
 08-E:
 09-E:
-0A-E:
+0S-E:
 0B-E:
-0C-E:TBattery
-0D-E:CBattery
-0E-E:NBattery
-0F-E:SBattery
-10-E:T.Volt
-11-E:C.Volt
-12-E:E.Volt
-13-E:S.Volt
-14-E:T.Star
-15-E:C.Star
-16-E:E.Star
-17-E:S.Star
+0C-E:TimeCell
+0D-E:TapCell
+0E-E:FunCell
+0F-E:QuikCell
+10-E:TimeVolt
+11-E:TapVolt
+12-E:FunVolt
+13-E:QuikVolt
+14-E:TimeStar
+15-E:TapStar
+16-E:FunStar
+17-E:QuikStar
 18-E:
-19-E:R.Drop
-1A-E:A.Drop
-1B-E:Coffee
-1C-E:WakeBell
-1D-E:Whisper
-1E-E:M.Apple
-1F-E:B.Apple
-20-E:D.Apple
-21-E:Cologne
-22-E:
-23-E:
-24-E:
-25-E:
+19-E:RainDrop
+1A-E:AuraDrop
+1B-E:Dr. Java
+1C-E:Wake Bell
+1D-E:Hanzo Box
+1E-E:Mach Apple
+1F-E:Bari Apple
+20-E:2x Apple
+21-E:Eau d'Escape
+22-E:TimeKill
+23-E:TapKill
+24-E:QuikKill
+25-E:FunKill
 26-E:Fruit
-27-E:R.Gummy
-28-E:W.Gummy
-29-E:P.Gummy
-2A-E:G.Gummy
+27-E:Red Gel
+28-E:White Gel
+29-E:Peach Gel
+2A-E:Gold Gel
 2B-E:Cookie
 2C-E:Milk
 2D-E:Pudding
 2E-E:
 2F-E:Parts
 30-E:
-31-E:SpeedJar
-32-E:LifeJar
+31-E:Can-o-Quick
+32-E:Can-o-Life
 33-E:
-34-E:ModRing
+34-E:Ringturner
 35-E:
-36-E:Pacifier
-37-E:P.Key 1
-38-E:P.Key 2
-39-E:P.Key 3
-3A-E:Gold Pot
-3B-E:Pillow
-3C-E:Last Pin
-3D-E:G.Memory
-3E-E:B.Memory
-3F-E:R.Memory
+36-E:Binky
+37-E:PalaceKey1
+38-E:PalaceKey2
+39-E:PalaceKey3
+3A-E:Golden Pot
+3B-E:ArtsyPillow
+3C-E:End Hand
+3D-E:Greemory
+3E-E:Blumory
+3F-E:Redmory
 40-E:Sheep 1
 41-E:Sheep 2
 42-E:Sheep 3
-43-E:Look
-44-E:BakuKey
-45-E:D.Pillow
-46-E:StartPin
-47-E:Sesakey
-48-E:Contract
-49-E:Tickets
+43-E:DrecoGaze
+44-E:Boom Key
+45-E:DreamPillow
+46-E:OriginHand
+47-E:Sesame Key
+48-E:Deposit
+49-E:FreeTicket
 4A-E:License
 4B-E:Candy
 4C-E:Music
-4D-E:ChrchKey
+4D-E:Chapel Key
 4E-E:GTicket2
-4F-E:S.Diamnd
-50-E:Mask
+4F-E:D. Skull
+50-E:??? Mask
 51-E:GTicket
 52-E:Letter
-53-E:Doll
-54-E:G.Banana
-55-E:R.Banana
-56-E:Coupon
-57-E:B.Banana
+53-E:Winch Doll
+54-E:Greenana
+55-E:Rednana
+56-E:Gym Pass
+57-E:Blunana
 58-E:Gold Key
-59-E:Gum
+59-E:Gillygum
 5A-E:L.Ticket
-5B-E:MusicBox
-5C-E:Bellmush
+5B-E:Music Box
+5C-E:Belmush
 5D-E:Hotpot
 5E-E:Hotpot
 5F-E:Battery
-60-E:Spring
+60-E:Wow!Coil
 
 RESTRUCT 63146C 08 10 7F15DE 10 10 20
-00-E:V.Shirt
-01-E:P.Jacket
-02-E:M.Jacket
-03-E:ThrnShrt
-04-E:Go Shirt
-05-E:SkulShrt
-06-E:T.Jacket
-07-E:4D Shirt
-08-E:S.Jacket
-09-E:N.Skirt
+00-E:Vinyl Shirt
+01-E:ModelJacket
+02-E:Mayo Jacket
+03-E:Thorn Shirt
+04-E:Go-Go Shirt
+05-E:Skull Shirt
+06-E:Tech Jacket
+07-E:4-D Shirt
+08-E:Star Jacket
+09-E:Nylon Skirt
 0A-E:Fur
-0B-E:Apron
-0C-E:Dress
-0D-E:GhstRobe
-0E-E:M.Skirt
-0F-E:D.Collar
-10-E:StarRobe
-11-E:LardSuit
+0B-E:Metal Apron
+0C-E:Scaly Dress
+0D-E:Ghost Robe
+0E-E:Metro Skirt
+0F-E:Gem Collar
+10-E:Star Robe
+11-E:Lard Suit
 12-E:Bat Suit
-13-E:Digisuit
-14-E:H.Suit
-15-E:StarSuit
-16-E:NinjaCot
-17-E:Skirt
-18-E:LitSkirt
-19-E:StarCoat
+13-E:Digi Suit
+14-E:Storm Suit
+15-E:Star Suit
+16-E:Ninja Coat
+17-E:Check Skirt
+18-E:Spark Skirt
+19-E:Star Coat
 1A-E:Diaper
-1B-E:M.Jersey
-1C-E:MoonGown
-1D-E:CsmoCape
-1E-E:SumoJckt
-1F-E:Plt.Cape
+1B-E:MachJersey
+1C-E:Moon Gown
+1D-E:Cosmo Cape
+1E-E:SumoJacket
+1F-E:Platna Cape
 
 DYNPOINTER 04D490 1A 04D474 04D47C #632E04
 00-E:Poison damage
@@ -1549,10 +1549,10 @@ DYNPOINTER 04D62C 1A 04D612 04D61A #632E04
 
 # Sleep and woke up can only be 12 (18 decimal) long.
 RESTRUCT 632E14 08 08 7F17DE 18 18 04
-00-E: is asleep
-01-E: is paralyzed
-02-E: woke up
-03-E: is no longer paralyzed
+00-E: is asleep!
+01-E: is paralyzed!
+02-E: woke up!
+03-E: is paralyzed no more!
 
 DYNPOINTER 04E1FC 1A 04E1E6 04E1EE #632E34
 00-E:All
@@ -1566,48 +1566,48 @@ BLOCKSTART 632E38 10 02
 
 # I'm not sure these are actually used in the game anywhere.
 BLOCKSTART 632E58 10 02
-00-E:
-01-E:
+00-E:Escaped!
+01-E:Was able to escape!
 
 DYNPOINTER 0504F0 1A 0504CE 0504D6 #632E78
-00-E:
+00-E:Storing up power...
 
 FIXEDPOINTER 0CD947 20  #639729
-00-E:
+00-E:[CENTER_HV][SIZE_BIG]Breaking[END]
 FIXEDPOINTER 0CD951 20  #639736
-00-E:
+00-E:[CENTER_HV][SIZE_BIG]Weather news[END]
 FIXEDPOINTER 0CD982 20  #639752
-00-E:
+00-E:[CENTER_HV][SIZE_BIG]Today...[END]
 FIXEDPOINTER 0CD9E0 20  #639760
-00-E:
+00-E:[CENTER_HV][SIZE_BIG]Is nice! [NOTE][END]
 FIXEDPOINTER 0CDA2A 20  #63976A
-00-E:
+00-E:[CENTER_HV][SIZE_BIG]Hmm...?[END]
 FIXEDPOINTER 0CDAFF 20  #639777
-00-E:
+00-E:[CENTER_HV][SIZE_BIG]?!?![END]
 
 RESTRUCT 639784 08 2C 7F19A0 18 48 08
-00-E:
-01-E:
-02-E:
-03-E:
-04-E:
-05-E:
+00-E:Mecha-Mecha Panic
+01-E:TomatoRobo Mk.2
+02-E:Weather Report?
+03-E:Choco-Muncher
+04-E:Mole Rush
+05-E:Invincible Song
 06-E: 
 07-E: 
 
 RESTRUCT 63978C 1A 2C 7F19B8 30 48 08
-00-E:
-01-E:
-02-E:
-03-E:
-04-E:
-05-E:
+00-E:Hit all foes, but you fall asleep
+01-E:Sucks enemy HP, healing you
+02-E:Hit all foes, earn 3x the usual Topar
+03-E:May slay all foes in a single hit
+04-E:Attack all foes and get items
+05-E:Become invincible for 3 turns
 06-E: 
 07-E: 
 
 # Could be made longer, but slight trickiness to it.
 BLOCKSTART 639BB4 04 01
-00-E:Cool
+00-E:AWE!
 
 RESTRUCT 639558 1A 1A 7F12AE 30 30 11
 00-E:Restores 20 HP
@@ -1622,11 +1622,11 @@ RESTRUCT 639558 1A 1A 7F12AE 30 30 11
 09-E:Fully revives an ally
 0A-E:Cures a poison
 0B-E:Wakes an ally up
-0C-E:Cures Gimmick Stop
+0C-E:Fixes a janky Gimmick
 0D-E:Speed up 50 [F2] 3 turns
 0E-E:Def. up [F2] for 3 turns
 0F-E:Speed, Def. up for 3 turns
-10-E:Always escape
+10-E:Escape without fail
 
 DYNPOINTER 050968 0D 05094A 0 #639C80
 00-E:You won!
@@ -1642,7 +1642,7 @@ BLOCKSTART 639C93 0B 01
 00-E:leveled up!
 
 DYNPOINTER 050CFC 10 050C8E 0 #639C9E
-00-E:Strength
+00-E:HP
 
 DYNPOINTER 050D04 10 050C9E 0 #639CA4
 00-E:Speed
@@ -1684,128 +1684,128 @@ RESTRUCT 62C188 12 12 7F185E 20 20 09
 08-E:Someone has that name
 
 POINTERLIST 649A08 04 24 31
-00-E:[CENTER_H]Spill[PAUSE 14][END]
-01-E:[CENTER_H]Forest[PAUSE 14][END]
-02-E:[CENTER_H]Palace[PAUSE 14][END]
-03-E:[CENTER_H]Mayonia[PAUSE 14][END]
-04-E:[CENTER_H]Lagoon[PAUSE 14][END]
+00-E:[CENTER_H]The Spillage[PAUSE 14][END]
+01-E:[CENTER_H]Pokypine Woods[PAUSE 14][END]
+02-E:[CENTER_H]Gimmick Palace[PAUSE 14][END]
+03-E:[CENTER_H]Mayonen Land[PAUSE 14][END]
+04-E:[CENTER_H]NampLagoon[PAUSE 14][END]
 05-E:[CENTER_H]Oystown[PAUSE 14][END]
 06-E:[CENTER_H]Tartar Valley[PAUSE 14][END]
 07-E:[CENTER_H]Soy City[PAUSE 14][END]
-08-E:[CENTER_H]Vinedome[PAUSE 14][END]
-09-E:[CENTER_H]Lab 1[PAUSE 14][END]
-0A-E:[CENTER_H]Lab 2[PAUSE 14][END]
-0B-E:[CENTER_H]Lab 3[PAUSE 14][END]
-0C-E:[CENTER_H]Lab 4[PAUSE 14][END]
-0D-E:[CENTER_H]Lab 5[PAUSE 14][END]
-0E-E:[CENTER_H]Lab 6[PAUSE 14][END]
-0F-E:
-10-E:
-11-E:
-12-E:
-13-E:
-14-E:
-15-E:
-16-E:
-17-E:
-18-E:
-19-E:
-1A-E:
-1B-E:
-1C-E:
-1D-E:
-1E-E:[CENTER_H]Coliseum[PAUSE 14][END]
-1F-E:
-20-E:
-21-E:
-22-E:
-23-E:
-24-E:
-25-E:
-26-E:
-27-E:
-28-E:
-29-E:
-2A-E:
-2B-E:
-2C-E:
-2D-E:
-2E-E:
-2F-E:
-30-E:
+08-E:[CENTER_H]Balsamic Dome[PAUSE 14][END]
+09-E:[CENTER_H]Hanzo Lab 1[PAUSE 14][END]
+0A-E:[CENTER_H]Hanzo Lab 2[PAUSE 14][END]
+0B-E:[CENTER_H]Hanzo Lab 3[PAUSE 14][END]
+0C-E:[CENTER_H]Hanzo Lab 4[PAUSE 14][END]
+0D-E:[CENTER_H]Hanzo Lab 5[PAUSE 14][END]
+0E-E:[CENTER_H]Hanzo Lab 6[PAUSE 14][END]
+0F-E:[CENTER_H]Kaizo Lab[PAUSE 14][END]
+10-E:[CENTER_H]Toy Ruin[PAUSE 14][END]
+11-E:[CENTER_H]Tomato Lake[PAUSE 14][END]
+12-E:[CENTER_H]Mayo Hot Springs[PAUSE 14][END]
+13-E:[CENTER_H]Mushroom Labo[PAUSE 14][END]
+14-E:[CENTER_H]The Mayo Hole[PAUSE 14][END]
+15-E:[CENTER_H]Oops Manor[PAUSE 14][END]
+16-E:[CENTER_H]Rock Isle[PAUSE 14][END]
+17-E:[CENTER_H]Alcatraz Hotel[PAUSE 14][END]
+18-E:[CENTER_H]Lagoon Station[PAUSE 14][END]
+19-E:[CENTER_H]Sunken Ship[PAUSE 14][END]
+1A-E:[CENTER_H]The Ouch Dome[PAUSE 14][END]
+1B-E:[CENTER_H]Sewers 1[PAUSE 14][END]
+1C-E:[CENTER_H]Sewers 2[PAUSE 14][END]
+1D-E:[CENTER_H]Sofubi's Villa[PAUSE 14][END]
+1E-E:[CENTER_H]The Lardosseum[PAUSE 14][END]
+1F-E:[CENTER_H]Toy Cemetery[PAUSE 14][END]
+20-E:[CENTER_H]Magical Living Room[PAUSE 14][END]
+21-E:[CENTER_H]Mt. S'creme[PAUSE 14][END]
+22-E:[CENTER_H]Moon Chapel[PAUSE 14][END]
+23-E:[CENTER_H]Soy Police Station[PAUSE 14][END]
+24-E:[CENTER_H]Visitor Center[PAUSE 14][END]
+25-E:[CENTER_H]The Subway[PAUSE 14][END]
+26-E:[CENTER_H]Soy Bank[PAUSE 14][END]
+27-E:[CENTER_H]Secret Safe[PAUSE 14][END]
+28-E:[CENTER_H]Soy T.V.[PAUSE 14][END]
+29-E:[CENTER_H]The Soytellite[PAUSE 14][END]
+2A-E:[CENTER_H]Tomorrow Dungeon[PAUSE 14][END]
+2B-E:[CENTER_H]Yesterday Dungeon[PAUSE 14][END]
+2C-E:[CENTER_H]Other Dome[PAUSE 14][END]
+2D-E:[CENTER_H]REM Maze[PAUSE 14][END]
+2E-E:[CENTER_H]NREM Maze[PAUSE 14][END]
+2F-E:[CENTER_H]Chekkit's Room[PAUSE 14][END]
+30-E:[CENTER_H]Tomato Head[PAUSE 14][END]
 
 # More Gimica text, needs code changes to make longer.
 BLOCKSTART 47038C 0A 17 #64B2D8/49F684
-00-E:
-01-E:
-02-E:
-03-E:
-04-E:
-05-E:
-06-E:
-07-E:
-08-E:
-09-E:
-0A-E:
-0B-E:
-0C-E:
-0D-E:
-0E-E:
-0F-E:
-10-E:
-11-E:
-12-E:
-13-E:
-14-E:
-15-E:
-16-E:
+00-E:Demille
+01-E:Alesa
+02-E:Sofubi
+03-E:Lelk
+04-E:Pasaran
+05-E:Enokin
+06-E:Nance
+07-E:Selemo
+08-E:Kaizo
+09-E:Pothead
+0A-E:T.Robo
+0B-E:Jack
+0C-E:Bertha
+0D-E:QuizKid
+0E-E:Brikky
+0F-E:Grikky
+10-E:Abira
+11-E:Oops
+12-E:Ouch
+13-E:What
+14-E:Lilby
+15-E:Shadup
+16-E:Chekkit
 
 # More Gimica text, needs code changes to make longer.
 BLOCKSTART 470472 0A 32 #64B334/49F684
-00-E:GearYoYo
-01-E:NoisFace
+00-E:Gear-Yo
+01-E:Kendama
 02-E:Chomper
-03-E:Crane
+03-E:Origami
 04-E:TurtGlov
-05-E:DualSwrd
-06-E:RabShoes
-07-E:Hopper
+05-E:TwinDragon
+06-E:RabiShoes
+07-E:BunnyHop
 08-E:CupidBow
 09-E:Judgment
 0A-E:Elec.Eel
-0B-E:SlotBzka
+0B-E:SlotZooka
 0C-E:SeedBomb
-0D-E:BoyPeach
-0E-E:Maghand
+0D-E:Momotaro
+0E-E:Mag-Mitt
 0F-E:LinGlove
-10-E:TailWag
-11-E:Cannon
+10-E:Tail Wag
+11-E:Dragonfire
 12-E:Fumigatr
 13-E:H.Vulcan
 14-E:SuperFan
 15-E:Cyclooka
-16-E:Zapper
+16-E:Zap Drum
 17-E:Popocon
 18-E:Yokozuna
 19-E:Blazer
-1A-E:Volcano
-1B-E:Piramet
-1C-E:SneaCar
-1D-E:Train
-1E-E:Balloon
-1F-E:Pole UFO
-20-E:SpdrShot
-21-E:LndRockt
-22-E:SunLaser
+1A-E:Erupter
+1B-E:Pyramet
+1C-E:SneaKar
+1D-E:ChooChoo
+1E-E:Puffer
+1F-E:UFO-Cast
+20-E:SpiderGun
+21-E:RocketPak
+22-E:Sun Beam
 23-E:Bouncer
 24-E:Firehog
 25-E:Sesame
-26-E:Bananer
-27-E:Riceball
-28-E:KarateDg
-29-E:Meowzer
-2A-E:BubblHrn
-2B-E:Flatuler
+26-E:NanaBoard
+27-E:BowlingRice
+28-E:Dojo Pup
+29-E:Lucky Cat
+2A-E:Pop-Horn
+2B-E:FartHorn
 2C-E:LoveSong
 2D-E:StarScop
 2E-E:Hotafant
@@ -1815,69 +1815,69 @@ BLOCKSTART 470472 0A 32 #64B334/49F684
 
 # More Gimica text, needs code changes to make longer.
 BLOCKSTART 470666 1B 32 #64B3FC/49F684
-00-E:
-01-E:
-02-E:
-03-E:
-04-E:
-05-E:
-06-E:
-07-E:
-08-E:
-09-E:
-0A-E:
-0B-E:
-0C-E:
-0D-E:
-0E-E:
-0F-E:
-10-E:
-11-E:
-12-E:
-13-E:
-14-E:
-15-E:
-16-E:
-17-E:
-18-E:
-19-E:
-1A-E:
-1B-E:
-1C-E:
-1D-E:
-1E-E:
-1F-E:
-20-E:
-21-E:
-22-E:
-23-E:
-24-E:
-25-E:
-26-E:
-27-E:
-28-E:
-29-E:
-2A-E:
-2B-E:
-2C-E:
-2D-E:
-2E-E:
-2F-E:
-30-E:
-31-E:
+00-E: 1 Yellow  21
+01-E: 1 Yellow  70
+02-E: 1 Yellow  63
+03-E: 1 Yellow  82
+04-E: 1 Yellow  85
+05-E: 1 Yellow 100
+06-E: 1 Yellow  54
+07-E: 1 Yellow  90
+08-E: 1 Yellow  70
+09-E: 1 Yellow 105
+0A-E: 1 Yellow  73
+0B-E: 1 Yellow  92
+0C-E: 1 Yellow  86
+0D-E: 1 Yellow 118
+0E-E: 2 Red     27
+0F-E: 2 Red     55
+10-E: 2 Red     70
+11-E: 2 Red    116
+12-E: 2 Red     74
+13-E: 2 Red     76
+14-E: 2 Red     58
+15-E: 2 Red     68
+16-E: 2 Red     81
+17-E: 2 Red     86
+18-E: 2 Red     94
+19-E: 2 Red     97
+1A-E: 0 Green   40
+1B-E: 0 Green   77
+1C-E: 0 Green   52
+1D-E: 0 Green  123
+1E-E: 0 Green   37
+1F-E: 0 Green   56
+20-E: 0 Green   59
+21-E: 0 Green   68
+22-E: 0 Green   68
+23-E: 0 Green   74
+24-E: 0 Green   82
+25-E: 0 Green  102
+26-E: 3 Blue    77
+27-E: 3 Blue    87
+28-E: 3 Blue    47
+29-E: 3 Blue    59
+2A-E: 3 Blue    28
+2B-E: 3 Blue    80
+2C-E: 3 Blue    90
+2D-E: 3 Blue   120
+2E-E: 3 Blue    84
+2F-E: 3 Blue   112
+30-E: 3 Blue    74
+31-E: 3 Blue    91
 
 # Will require some code changes to tweak this text.
 BLOCKSTART 470BAC 18 08 #64B4C4/49F690
-00-E:
-01-E:
-02-E:
-03-E:
-04-E:
-05-E:
-06-E:
-07-E:
+00-E:   PLAYER          ENEMY
+01-E: 0               0
+02-E: 1               1
+03-E: 2               2
+04-E: 3               3
+05-E: 4               4
+06-E: Q               Q
+07-E: Move using the D-Pad
 BLOCKSTART 470C6C 17 01 #64B4C4/49F690
-00-E:
+00-E: Select cards with L and R
 # Must start with a space for now.
 BLOCKSTART 470C83 18 01 #64B4C4/49F690
-00-E:
+00-E: Press start when finished
