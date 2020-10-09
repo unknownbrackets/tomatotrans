@@ -1,136 +1,136 @@
 NAMES:
-00-E:Celemo
-01-E:Celemo
-02-E:Watchman
-03-E:Nutter
-04-E:Spikely
-05-E:Woosh
-06-E:CuttyPie
+00-E:Selemo
+01-E:Selemo
+02-E:Watchman Kid
+03-E:Shishkabadon
+04-E:Chickling
+05-E:Pataball
+06-E:Cupie
 07-E:Hitman
-08-E:Roboy
-09-E:Boo Box
-0A-E:Nutter
-0B-E:CuttyPie
-0C-E:Hack
-0D-E:Slash
-0E-E:Soarmato
-0F-E:Sumato
+08-E:Boronga-Z
+09-E:Jackbox
+0A-E:Shishkabadon
+0B-E:Cupie
+0C-E:Brikky
+0D-E:Grikky
+0E-E:Flying Tomato
+0F-E:Tomappa
 10-E:Tomikely
-11-E:Dadpole
-12-E:Froobs
+11-E:Badfrog
+12-E:Badfrog Gal
 13-E:Badpole
 14-E:Badpole
-15-E:Drillbit
-16-E:FauxFrog
-17-E:Potfan
-18-E:Matobot
-19-E:FabFace
+15-E:Drilla-Killa
+16-E:Goldpole
+17-E:Pothead
+18-E:Tomato Robo
+19-E:Prettyface
 1A-E:Oops
-1B-E:Mirarror
-1C-E:Windbath
-1D-E:Hack
-1E-E:Slash
-1F-E:Blowfish
-20-E:Pinchmas
-21-E:Pinchmas
-22-E:Pinchmas
+1B-E:Miracle Mirror
+1C-E:Wind-up Bath
+1D-E:Brikky
+1E-E:Grikky
+1F-E:Chewing Guppy
+20-E:Hermie
+21-E:Hermie
+22-E:Hermie
 23-E:Eggnog
 24-E:Seebass
 25-E:Seebass
 26-E:Seebass
 27-E:Sawbass
 28-E:Kissea
-29-E:Cap.Size
-2A-E:Cap.Size
-2B-E:Cap.Size
-2C-E:Cap.Size
-2D-E:Cap.Size
-2E-E:Minilick
-2F-E:Octolina
+29-E:Capn' Garco
+2A-E:Capn' Garco
+2B-E:Capn' Garco
+2C-E:Capn' Garco
+2D-E:Capn' Garco
+2E-E:Miralick
+2F-E:Octorina
 30-E:Scallop
-31-E:Pompador
-32-E:SuprMike
-33-E:BigDonut
-34-E:Fudjinn
-35-E:Wh.Choco
-36-E:St.Choco
-37-E:Buffet
+31-E:Pompadour
+32-E:Super Mic
+33-E:Big Donut
+34-E:Chocolina
+35-E:White Choco
+36-E:Strawberry Choco
+37-E:Viking
 38-E:Eeklair
 39-E:Slime
 3A-E:Butcher
 3B-E:Rowch
 3C-E:Bigmouse
-3D-E:Genipede
-3E-E:Poochie
+3D-E:Gatorpede
+3E-E:Poochy
 3F-E:Crony
 40-E:Crony
-41-E:Chibary
-42-E:Fudgy
-43-E:Snakid
+41-E:Shishkabari
+42-E:Chocolin
+43-E:Conda Kid
 44-E:Red Baby
-45-E:Snakid
-46-E:BlueBaby
-47-E:Snakid
-48-E:GreenBby
-49-E:Hack
-4A-E:Slash
+45-E:Conda Kid
+46-E:Blue Baby
+47-E:Conda Kid
+48-E:Green Baby
+49-E:Brikky
+4A-E:Grikky
 4B-E:What
-4C-E:Slurp
-4D-E:LardJuic
+4C-E:Suckin' Straw
+4D-E:Lard Juice
 4E-E:Snakeyez
-4F-E:Dropeye
+4F-E:Lickylicky
 50-E:Brainiac
-51-E:Screamy
-52-E:JunkHntr
-53-E:Anatoman
-54-E:InvisMan
+51-E:Shrieker
+52-E:Junk Hunter
+53-E:Cyborg
+54-E:Invisidude
 55-E:Notewisp
 56-E:Ghozart
 57-E:Blue Eye
 58-E:Gray Eye
 59-E:Pink Eye
-5A-E:GreenEye
+5A-E:Green Eye
 5B-E:Blue Eye
-5C-E:Lunaroot
+5C-E:Magic Root
 5D-E:Tip
 5E-E:Lilby
-5F-E:DethLlby
-60-E:DethLlby
-61-E:DethLlby
+5F-E:Death Lilby
+60-E:Death Lilby
+61-E:Death Lilby
 62-E:Cybercop
 63-E:Killborg
 64-E:Bugsy
 65-E:RoadKill
-66-E:DJScrach
+66-E:DJ Scrach
 67-E:Snatcher
 68-E:Grubber
-69-E:GoldDigr
+69-E:Gold Digger
 6A-E:McRuffry
 6B-E:Ewzze
-6C-E:BotlNeck
+6C-E:Bottleneck
 6D-E:AshRoach
 6E-E:Sparrat
-6F-E:Berry
-70-E:Aid-Bot
-71-E:Abet-Bot
-72-E:Abet-Bot
-73-E:Hack
-74-E:Slash
-75-E:Connectr
+6F-E:Phantom Thief Berri
+70-E:Helper Robo
+71-E:Helper Robo-G
+72-E:Helper Robo-G
+73-E:Brikky
+74-E:Grikky
+75-E:Coupling
 76-E:Left Arm
 77-E:RightArm
-78-E:Mister E
+78-E:Mystery Loop
 79-E:Shapely
 7A-E:Dreamir
-7B-E:DevlWink
-7C-E:GigaDemi
-7D-E:MobilArt
-7E-E:CursClay
-7F-E:OnDaLamb
-80-E:Berry
+7B-E:Devil's Wink
+7C-E:Giga Demille
+7D-E:Walking Art
+7E-E:Cursed Clay
+7F-E:Lost Sheep
+80-E:Phantom Thief Berri
 81-E:Busy Bot
-82-E:BusyBotB
-83-E:BusyBotB
+82-E:Busy Bot-B
+83-E:Busy Bot-B
 84-E:Kukupo
 85-E:KukuCopy
 86-E:KukuCopy
@@ -141,301 +141,301 @@ NAMES:
 8B-E:PopoCopy
 8C-E:Chekkit
 8D-E:Left Arm
-8E-E:RightArm
+8E-E:Right Arm
 8F-E:Fauxmato
-90-E:Plummoth
-91-E:Scarcrow
+90-E:Mogeha
+91-E:S.C.Arecrow
 92-E:Tinimato
 93-E:Megamato
-94-E:Pottyboy
-95-E:Pottyboy
-96-E:Pottyboy
+94-E:Potty Rider
+95-E:Potty Rider
+96-E:Potty Rider
 97-E:Debugger
-98-E:Mato Box
-99-E:Mystbolt
-9A-E:Hackpres
-9B-E:Genompop
-9C-E:Dragear
-9D-E:Navila
-9E-E:Soarmato
+98-E:Tomato Box
+99-E:Mystery Bolt
+9A-E:Brikkypress
+9B-E:Papa Genome
+9C-E:Rattlin' Dragon
+9D-E:Nabira
+9E-E:Flying Tomato
 9F-E:Sumato
-A0-E:MatoGear
-A1-E:MatoMech
+A0-E:Tomato Walker
+A1-E:Tomato Mecha
 A2-E:StarMato
 A3-E:StarMato
 A4-E:StarMato
 A5-E:Detector
-A6-E:Squealer
-A7-E:Squealer
-A8-E:Squealer
-A9-E:GimikBot
-AA-E:GimikBot
-AB-E:GimikBot
-AC-E:GimikBot
-AD-E:GimikBot
-AE-E:Hack
-AF-E:Slash
-B0-E:Avila
+A6-E:Great Boronga
+A7-E:Great Boronga
+A8-E:Great Boronga
+A9-E:Gimmick Robo
+AA-E:Gimmick Robo
+AB-E:Gimmick Robo
+AC-E:Gimmick Robo
+AD-E:Gimmick Robo
+AE-E:Brikky
+AF-E:Grikky
+B0-E:Abira
 B1-E:Left Arm
-B2-E:RightArm
-B3-E:Avilas
-B4-E:LPacfier
-B5-E:RPacfier
+B2-E:Right Arm
+B3-E:Abiwrath
+B4-E:Left Binky
+B5-E:Right Binky
 
 ATTACKS:
-00-E:Finguns
+00-E:Gatlin' Fingers
 01-E:Critical
-02-E:Spiker
+02-E:Chick Drill
 03-E:Critical
 04-E:Critical
-05-E:PoisClaw
+05-E:Poison Claw
 06-E:Run
-07-E:JunkPnch
+07-E:Junk Punch
 08-E:Kakiiin!
 09-E:Critical
-0A-E:HackKick
-0B-E:SlshPnch
+0A-E:Brikky Kick
+0B-E:Grikky Punch
 0C-E:Critical
-0D-E:PoisDril
+0D-E:Poison Drill
 0E-E:Critical
 0F-E:Ribbical
-10-E:PoisBurp
-11-E:Care
+10-E:Poison Belch
+11-E:Beautify
 12-E:Wiggle
 13-E:Ribbical
-14-E:SpinDril
-15-E:BurnDril
-16-E:HotWater
+14-E:Spin Drill
+15-E:Burn Drill
+16-E:Hot Water
 17-E:Ooh!
 18-E:Charge
-19-E:MiniLasr
-1A-E:Hurry Up
+19-E:Mini Laser
+1A-E:Hurry Up!
 1B-E:Critical
-1C-E:Heartbrk
+1C-E:Heartbreaker
 1D-E:Allure
-1E-E:PoisShwr
-1F-E:MirrBeam
-20-E:NicePack
-21-E:BublBath
+1E-E:Poison Shower
+1F-E:Mirror Beam
+20-E:Neatly Pack
+21-E:Bubblebath
 22-E:Critical
-23-E:Roller
-24-E:StikyGum
+23-E:Rikky Roller
+24-E:Sticky Gum
 25-E:Critical
 26-E:Barrier
 27-E:Critical
-28-E:PoisFang
-29-E:FeedTime
+28-E:Poison Fang
+29-E:Feed Time!
 2A-E:Critical
-2B-E:GreatLuv
+2B-E:Great Love
 2C-E:Seduce
-2D-E:Flap
-2E-E:Saber
-2F-E:Bomb
+2D-E:Jank Flap
+2E-E:Jank Saber
+2F-E:Jank Bomb
 30-E:Flutter
-31-E:BoomBomb
+31-E:Jink Bomb
 32-E:Critical
-33-E:CoinGulp
+33-E:Coin Gulp
 34-E:Ink
 35-E:Critical
-36-E:PrlFlash
-37-E:PrlShld
+36-E:Pearl Flash
+37-E:Pearl Shield
 38-E:Critical
 39-E:Blaagh!
 3A-E:Encore!
-3B-E:LoveLook
-3C-E:RckPoisn
-3D-E:Goodnite
-3E-E:Yummy
-3F-E:RingHug
-40-E:ChocShwr
-41-E:ChocoDnc
+3B-E:Smoldering Stare
+3C-E:Rock Poison
+3D-E:Nighty-night!
+3E-E:De-li-cious!
+3F-E:Ring Binder
+40-E:Choco Shower
+41-E:Choco Dance
 42-E:Critical
-43-E:Pickax
-44-E:GooCream
-45-E:WhtShwer
-46-E:Strberry
+43-E:Jank Pick
+44-E:Gooey Cream
+45-E:White Shower
+46-E:Strawberry
 47-E:Critical
-48-E:FeedTime
-49-E:Goo
+48-E:Feed Time!
+49-E:Janky Goo
 4A-E:Punch
-4B-E:StarHook
+4B-E:Comet Hook
 4C-E:Critical
-4D-E:GatrClaw
-4E-E:GatrFang
-4F-E:BoneBash
-50-E:DinrTime
-51-E:ChocStik
+4D-E:Gator Claw
+4E-E:Gator Fang
+4F-E:Bone Bash
+50-E:Dinner Time!
+51-E:Choco Stick
 52-E:Critical
-53-E:LaughSnd
+53-E:Laughing Tone
 54-E:Bite
 55-E:Critical
-56-E:AngerSnd
+56-E:Angry Tone
 57-E:Bite
 58-E:Critical
-59-E:SadSound
+59-E:Sad Tone
 5A-E:Bite
-5B-E:LovePwr
+5B-E:Power of Love
 5C-E:Tear Gun
-5D-E:BurpBeam
+5D-E:Burp Beam
 5E-E:Pewzooka
-5F-E:SpinPnch
-60-E:SuprHmmr
-61-E:AngrFire
+5F-E:Spin Punch
+60-E:Super Hammer
+61-E:Angry Fire
 62-E:Sucker
-63-E:LardShoe
-64-E:MeatWall
+63-E:Lard Juice
+64-E:Meat Wall
 65-E:Bite
-66-E:P.Topper
+66-E:Topar Slurp
 67-E:Critical
 68-E:War Cry
-69-E:CmboPnch
+69-E:Combo Punch
 6A-E:PSI Beam
-6B-E:PoisCttr
-6C-E:Devil Ax
+6B-E:Poison Cutter
+6C-E:Devil Axe
 6D-E:Critical
 6E-E:Eye Beam
-6F-E:Slp Seed
-70-E:BugBreth
+6F-E:Sleep Seed
+70-E:Bug Breath
 71-E:Nutrient
 72-E:SuckRoot
-73-E:RootSabr
+73-E:Root Sabre
 74-E:Critical
-75-E:PoisCttr
-76-E:WingDart
-77-E:Doll
-78-E:DarkMoon
-79-E:ColdSigh
-7A-E:DarkWind
-7B-E:DevlGaze
-7C-E:HellYell
-7D-E:GhstNote
-7E-E:GhstNote
-7F-E:CheerSng
+75-E:Poison Cutter
+76-E:Wing Dart
+77-E:Marionette
+78-E:Dark Moon
+79-E:Frigid Sigh
+7A-E:Dark Gale
+7B-E:Devil Gaze
+7C-E:Hell Yell
+7D-E:Ghost Note
+7E-E:Ghost Note
+7F-E:Cheer Song
 80-E:Big Note
-81-E:CrashAtk
-82-E:NeoShowr
-83-E:HellRoll
-84-E:Beat
+81-E:Crash Attack
+82-E:Neo Shower
+83-E:Hell Roller
+84-E:Janky Beat
 85-E:Punch
-86-E:CometUpr
+86-E:Comet Uppercut
 87-E:Critical
 88-E:Natto
 89-E:Rampage
-8A-E:BoozBrth
-8B-E:TprYoink
-8C-E:GooThorn
-8D-E:CoinGulp
+8A-E:Booze Breath
+8B-E:Topar Taker
+8C-E:Gooey Thorn
+8D-E:Coin Gulp
 8E-E:Critical
-8F-E:Sparta
-90-E:LitCandy
+8F-E:Spartan Punch
+90-E:Lightning Treat
 91-E:Mallet
-92-E:WeakStrm
-93-E:Siren
-94-E:PstlBeam
-95-E:PoisClaw
-96-E:TopprMug
+92-E:Weak Typhoon
+93-E:Annoying Siren
+94-E:Pistol Beam
+95-E:Poison Claw
+96-E:Topar Mug
 97-E:Catclaw
-98-E:Helpunch
+98-E:Help Punch
 99-E:Bon!
-9A-E:Blammer
-9B-E:Fall
+9A-E:Hollow Hammer
+9B-E:Angry Fall
 9C-E:Poot Gas
-9D-E:Elbow
-9E-E:IffyPill
-9F-E:Elecuttr
-A0-E:E.M.Moon
+9D-E:Elbow Force
+9E-E:Iffy Pill
+9F-E:Electro Cutter
+A0-E:ElectroLunetic Pulse
 A1-E:X-Plasma
-A2-E:ChargPwr
-A3-E:ZapPower
+A2-E:Charge Power
+A3-E:Zap Power
 A4-E:Zap Beam
 A5-E:Scratch
-A6-E:EatMoney
-A7-E:Iffy Eye
+A6-E:Moneymunch
+A7-E:Sketchy Eye
 A8-E:PootPoot
 A9-E:Rainglow
-AA-E:CursDoll
-AB-E:Clay
-AC-E:MobiusLt
-AD-E:Face
-AE-E:Drill
-AF-E:Card
-B0-E:CBarrier
+AA-E:Cursed Doll
+AB-E:Janky Clay
+AC-E:Mobius Ray
+AD-E:Janky Face
+AE-E:Driller
+AF-E:Jank Card
+B0-E:Crystal Barrier
 B1-E:ZZZzzz
-B2-E:SlowTimr
-B3-E:TopprMug
+B2-E:Slow Timer
+B3-E:Topar Mug
 B4-E:Catclaw
-B5-E:Helpunch
+B5-E:Help Punch
 B6-E:Bon!
 B7-E:Heheh
-B8-E:F. Blizz
-B9-E:AngrBeak
-BA-E:K. Storm
-BB-E:Po-po
-BC-E:BBQChckn
-BD-E:BeakDril
-BE-E:Bomber
+B8-E:Flizzard
+B9-E:Angry Beak
+BA-E:Kupopo Storm
+BB-E:Po-po!
+BC-E:BBQ Chicken
+BD-E:Drill Peck
+BE-E:Popo Bomber
 BF-E:Critical
 C0-E:Art Seal
-C1-E:Paint
-C2-E:Paint
-C3-E:Paint
-C4-E:Paint
-C5-E:MatoShwr
-C6-E:Powder
+C1-E:Janky Paint
+C2-E:Janky Paint
+C3-E:Janky Paint
+C4-E:Janky Paint
+C5-E:Tomato Shower
+C6-E:Jankpowder
 C7-E:Critical
 C8-E:Critical
 C9-E:Blow
 CA-E:Typhoon
-CB-E:UltrDash
-CC-E:BugSpray
-CD-E:MatoBomb
-CE-E:Bolt
-CF-E:?Barrier
-D0-E:Papadanc
+CB-E:Ultra Dash
+CC-E:Bug Spray
+CD-E:Tomato Bomb
+CE-E:Screwbolt
+CF-E:Mystery Barrier
+D0-E:Papadance
 D1-E:Snore
 D2-E:Breath
-D3-E:NomDragn
-D4-E:HvyLaser
-D5-E:MatoCrsh
-D6-E:SprSonic
-D7-E:BeautyTr
+D3-E:Dragon Munch
+D4-E:Heavy Laser
+D5-E:Tomato Crusher
+D6-E:Supersonic
+D7-E:Nabira Beauty
 D8-E:Critical
 D9-E:Critical
-DA-E:StarShot
-DB-E:FlowDash
-DC-E:MatoMssl
-DD-E:TrashGas
-DE-E:CometAtk
-DF-E:RtrnHole
-E0-E:JunkBeam
+DA-E:Star Shooter
+DB-E:Flowing Dash
+DC-E:Tomato Missile
+DD-E:Trash Gas
+DE-E:Comet Attack
+DF-E:Return Hole
+E0-E:Junk Beam
 E1-E:Typhoon
-E2-E:GmkPunch
-E3-E:CpyPaint
-E4-E:HmrPress
+E2-E:Gimmick Punch
+E3-E:Copy Paint
+E4-E:Hammer Press
 E5-E:Massage
 E6-E:Compress
 E7-E:Critical
-E8-E:HackLasr
+E8-E:Brikky Laser
 E9-E:Massage
-EA-E:SlashGun
-EB-E:WillPowr
-EC-E:Panicrsh
-ED-E:PsychoBm
-EE-E:CoolBeam
-EF-E:LuvDream
-F0-E:FrshPack
-F1-E:Gaa!
-F2-E:A. Storm
-F3-E:GmkPanic
+EA-E:Grikky Gun
+EB-E:Willpower
+EC-E:Panic Rush
+ED-E:Psycho Beam
+EE-E:Cool Beam
+EF-E:Love Dream
+F0-E:Fresh Pack
+F1-E:Gwah!
+F2-E:Abira Storm
+F3-E:Gimmick Panic
 F4-E:Critical
-F5-E:MatoSuck
-F6-E:MatoFlsh
-F7-E:Awesome
-F8-E:MatoHeal
-F9-E:Typhoon
-FA-E:PoisStrm
-FB-E:Tic-Toc
-FC-E:CritPanc
+F5-E:Tomato Sucker
+F6-E:Tomato Flash
+F7-E:Awesome Ain't It?
+F8-E:Tomato Heal
+F9-E:REM Typhoon
+FA-E:Toxic Storm
+FB-E:Tick-Tock Panic
+FC-E:Critical Panic
 FD-E:Teething
 FE-E:Critical
-FF-E:BlckHole
+FF-E:Black Hole

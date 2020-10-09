@@ -1,41 +1,86 @@
-00-E:
+00-E:Ok... So for the rules...[BREAK]
+First of all, we each have 200HP.[END]
 
-01-E:
+01-E:My HP's on the left...[END]
 
-02-E:
+02-E:And your HP is on the right.[BREAK]
+Anyhow, if your HP hits 0[BREAK]
+or if you have less[BREAK]
+HP than your opponent at[BREAK]
+the end of a match, you lose.[END]
 
-03-E:
+03-E:There's 2 cards in the middle.[BREAK]
+You use their power to deal[BREAK]
+damage to your opponent...[END]
 
-04-E:
+04-E:The one on the left is my Gimmick Card.[END]
 
-05-E:
+05-E:The right one's yours.[BREAK]
+These Gimmick Cards are[BREAK]
+the same as the gimmicks[BREAK]
+you've collected. But, they[BREAK]
+come out at random...[BREAK]
+The cards, from strongest[BREAK]
+to weakest, are...[END]
 
-06-E:
+06-E:1st: Blue.[END]
 
-07-E:
+07-E:2nd: Red.[END]
 
-08-E:
+08-E:3rd: Yellow.[END]
 
-09-E:
+09-E:The weakest ones are green.[BREAK]
+But, green cards are special...[BREAK]
+They trump the strongest blue cards...[BREAK]
+When it comes to cards of the same[BREAK]
+color, the higher number wins.[BREAK]
+That's how the cards stack up[BREAK]
+against each other.[BREAK]
+Got it? Next up, damage calculation.[END]
 
-0A-E:
+0A-E:Just take the higher number, and...[END]
 
-0B-E:
+0B-E:Subtract the smaller number from it.[BREAK]
+But color beats number,[BREAK]
+so don't get all excited just cause you[BREAK]
+have big numbers. You may still[BREAK]
+end up taking damage...[END]
 
-0C-E:
+0C-E:In summary...[BREAK]
+Color decides the winner...[BREAK]
+Damage is the difference[BREAK]
+between the two numbers.[BREAK]
+But it'd be pretty weak if[BREAK]
+that was the whole game.[END]
 
-0D-E:
+0D-E:On the bottom, you've got 5 cards...[BREAK]
+These are Character Cards...[BREAK]
+You can augment the power of your[BREAK]
+Gimmick cards by playing them.[BREAK]
+For instance...[END]
 
-0E-E:
+0E-E:Rank Up moves a card up 1 color.[END]
 
-0F-E:
+0F-E:Rank Down moves a card down 1 color.[END]
 
-10-E:
+10-E:Point Up increases a card's number.[END]
 
-11-E:
+11-E:Point Down decreases a card's number.[END]
 
-12-E:
+12-E:There's a lot of other cards too,[BREAK]
+so try 'em out for yourself.[BREAK]
+You must always play a card.[BREAK]
+Think carefully about the order[BREAK]
+you wanna play 'em in.[BREAK]
+I can play the same cards that you[BREAK]
+can, and it's exciting not knowing[BREAK]
+how a match'll turn out.[BREAK]
+Whosever HP hits zero first, or is[BREAK]
+the lowest after their 5 cards have[BREAK]
+been played, is the loser.[END]
 
-13-E:
+13-E:Once you run out of playable cards,[BREAK]
+all that will remain is the tomato[BREAK]
+on the left, which is not a card.[END]
 
-14-E:
+14-E:So, them's the rules. Got it?[END]
