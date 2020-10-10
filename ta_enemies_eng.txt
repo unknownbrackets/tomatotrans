@@ -40,11 +40,11 @@ NAMES:
 26-E:Seebass
 27-E:Sawbass
 28-E:Kissea
-29-E:Capn' Garco
-2A-E:Capn' Garco
-2B-E:Capn' Garco
-2C-E:Capn' Garco
-2D-E:Capn' Garco
+29-E:Cap'n Garco
+2A-E:Cap'n Garco
+2B-E:Cap'n Garco
+2C-E:Cap'n Garco
+2D-E:Cap'n Garco
 2E-E:Miralick
 2F-E:Octorina
 30-E:Scallop
@@ -297,7 +297,7 @@ ATTACKS:
 6F-E:Sleep Seed
 70-E:Bug Breath
 71-E:Nutrient
-72-E:SuckRoot
+72-E:Suck Root
 73-E:Root Sabre
 74-E:Critical
 75-E:Poison Cutter
@@ -418,7 +418,7 @@ E7-E:Critical
 E8-E:Brikky Laser
 E9-E:Massage
 EA-E:Grikky Gun
-EB-E:Willpower
+EB-E:Mindbender
 EC-E:Panic Rush
 ED-E:Psycho Beam
 EE-E:Cool Beam

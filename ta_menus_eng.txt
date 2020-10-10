@@ -94,7 +94,7 @@ BLOCKFIXED 4903F8 10 61 0A
 1D-E:Hanzo Box
 1E-E:Mach Apple
 1F-E:Bari Apple
-20-E:2x Apple
+20-E:Double Apple
 21-E:Eau d'Escape
 22-E:TimeKill
 23-E:TapKill
@@ -170,7 +170,7 @@ BLOCKFIXED 490410 0C 20 09
 00-E:Vinyl Shirt
 01-E:ModelJacket
 02-E:Mayo Jacket
-03-E:Thorn Shirt
+03-E:Spike Shirt
 04-E:Go-Go Shirt
 05-E:Skull Shirt
 06-E:Tech Jacket
@@ -208,32 +208,32 @@ BLOCKFIXED 490420 0C 32 08
 01-E:Kendama
 02-E:Chomper
 03-E:Origami
-04-E:TurtGlov
+04-E:Shell Fist
 05-E:TwinDragon
 06-E:RabiShoes
-07-E:BunnyHop
-08-E:CupidBow
+07-E:Bunny Hop
+08-E:Cupid Bow
 09-E:Judgment
 0A-E:Elec.Eel
 0B-E:SlotZooka
 0C-E:SeedBomb
 0D-E:Momotaro
 0E-E:Mag-Mitt
-0F-E:LinGlove
+0F-E:A-B Glove
 10-E:Tail Wag
 11-E:Dragonfire
-12-E:Fumigatr
-13-E:H.Vulcan
+12-E:Fumigator
+13-E:Bee Gatling
 14-E:SuperFan
 15-E:Cyclooka
 16-E:Zap Drum
 17-E:Popocon
 18-E:Yokozuna
-19-E:Blazer
+19-E:Flame Doll
 1A-E:Erupter
 1B-E:Pyramet
 1C-E:SneaKar
-1D-E:ChooChoo
+1D-E:Choo-Choo
 1E-E:Puffer
 1F-E:UFO-Cast
 20-E:SpiderGun
@@ -241,7 +241,7 @@ BLOCKFIXED 490420 0C 32 08
 22-E:Sun Beam
 23-E:Bouncer
 24-E:Firehog
-25-E:Sesame
+25-E:SesameTop
 26-E:NanaBoard
 27-E:BowlingRice
 28-E:Dojo Pup
@@ -249,11 +249,11 @@ BLOCKFIXED 490420 0C 32 08
 2A-E:Pop-Horn
 2B-E:FartHorn
 2C-E:LoveSong
-2D-E:StarScop
+2D-E:StarScope
 2E-E:Hotafant
 2F-E:Mansnow
 30-E:ShuriGun
-31-E:Shadow
+31-E:Shadowreel
 
 # Not sure this is used anywhere.
 BLOCKFIXED 490428 1A 01
@@ -551,7 +551,7 @@ A0-E:Mask with a question mark on it.
 A1-E:
 A2-E:A ticket to ride the Mt. S'creme
 A3-E:gondola.
-A4-E:A letter addressed to Sofubi.
+A4-E:A letter addressed to [NAME3].
 A5-E:Found at his villa.
 A6-E:A doll with a rope used for 
 A7-E:rescuing those stuck in a Bananaconda.
@@ -560,7 +560,7 @@ A9-E:treat.
 AA-E:Red Bananacondas love these.
 AB-E:
 AC-E:Passes to use the gym and
-AD-E:cafeteria at Sofubi's villa.
+AD-E:cafeteria at [NAME3]'s villa.
 AE-E:Blue Bananaconda's favorite.
 AF-E:
 B0-E:A gorgeous golden key.
@@ -865,7 +865,7 @@ BLOCKFIXED 490638 01 0A
 09-E:9
 
 BLOCKFIXED 490640 1C 01 1A
-00-J:Already equipped!
+00-E:Already equipped!
 
 BLOCKFIXED 490648 1C 03 1A
 00-E:START: Begin or cancel
@@ -1304,32 +1304,32 @@ RESTRUCT 62C250 08 58 7F001E 10 40 32
 01-E:Kendama
 02-E:Chomper
 03-E:Origami
-04-E:TurtGlov
+04-E:Shell Fist
 05-E:TwinDragon
 06-E:RabiShoes
-07-E:BunnyHop
-08-E:CupidBow
+07-E:Bunny Hop
+08-E:Cupid Bow
 09-E:Judgment
 0A-E:Elec.Eel
 0B-E:SlotZooka
 0C-E:SeedBomb
 0D-E:Momotaro
 0E-E:Mag-Mitt
-0F-E:LinGlove
+0F-E:A-B Glove
 10-E:Tail Wag
 11-E:Dragonfire
-12-E:Fumigatr
-13-E:H.Vulcan
+12-E:Fumigator
+13-E:Bee Gatling
 14-E:SuperFan
 15-E:Cyclooka
 16-E:Zap Drum
 17-E:Popocon
 18-E:Yokozuna
-19-E:Blazer
+19-E:Flame Doll
 1A-E:Erupter
 1B-E:Pyramet
 1C-E:SneaKar
-1D-E:ChooChoo
+1D-E:Choo-Choo
 1E-E:Puffer
 1F-E:UFO-Cast
 20-E:SpiderGun
@@ -1337,7 +1337,7 @@ RESTRUCT 62C250 08 58 7F001E 10 40 32
 22-E:Sun Beam
 23-E:Bouncer
 24-E:Firehog
-25-E:Sesame
+25-E:SesameTop
 26-E:NanaBoard
 27-E:BowlingRice
 28-E:Dojo Pup
@@ -1345,21 +1345,21 @@ RESTRUCT 62C250 08 58 7F001E 10 40 32
 2A-E:Pop-Horn
 2B-E:FartHorn
 2C-E:LoveSong
-2D-E:StarScop
+2D-E:StarScope
 2E-E:Hotafant
 2F-E:Mansnow
 30-E:ShuriGun
-31-E:Shadow
+31-E:Shadowreel
 
 RESTRUCT 62C258 1A 58 7F002E 30 40 32
 00-E:Hit [F5] in the red zone!
-01-E:Hold [F5] and aim for the red zone!
+01-E:Hold & release [F5]! Aim for the red zone!
 02-E:Connect the bars with [F5]!
 03-E:Stop on the luck symbol with [F5]!
 04-E:Hit [F5] when balls are in the red zone!
 05-E:Hit [F5] or [F7] in the red zone!
 06-E:Stop the rabbit in the red zone with [F5]!
-07-E:Hold, release [F5] to launch ball to red!
+07-E:Hold & release [F5]! Aim for the red zone!
 08-E:[F5] when the ball and red zone cross!
 09-E:[F5] to catch the ball in the square!
 0A-E:Hit [F5] to stop the timer close to 0.00!
@@ -1390,7 +1390,7 @@ RESTRUCT 62C258 1A 58 7F002E 30 40 32
 23-E:Count the right weather icon!
 24-E:Locate the face panel!
 25-E:Locate the face panels!
-26-E:Press the onscreen buttons!
+26-E:Input the onscreen commands!
 27-E:Press the opposite direction shown!
 28-E:Grab the balls in the grid with [FC][F5]!
 29-E:Pick the panels from low to high!
@@ -1404,10 +1404,10 @@ RESTRUCT 62C258 1A 58 7F002E 30 40 32
 31-E:Find the matching panel pair!
 
 RESTRUCT 630BDC 04 1C 7F1980 07 08 04
-00-E:Demille
+00-E:DeMille
 01-E:Alesa
 02-E:Sofubi
-03-E:Lelk
+03-E:Rellek
 
 RESTRUCT 630E5C 08 10 7F0C9E 10 10 61
 00-E:
@@ -1425,15 +1425,15 @@ RESTRUCT 630E5C 08 10 7F0C9E 10 10 61
 0C-E:TimeCell
 0D-E:TapCell
 0E-E:FunCell
-0F-E:QuikCell
+0F-E:QuickCell
 10-E:TimeVolt
 11-E:TapVolt
 12-E:FunVolt
-13-E:QuikVolt
+13-E:QuickVolt
 14-E:TimeStar
 15-E:TapStar
 16-E:FunStar
-17-E:QuikStar
+17-E:QuickStar
 18-E:
 19-E:RainDrop
 1A-E:AuraDrop
@@ -1442,11 +1442,11 @@ RESTRUCT 630E5C 08 10 7F0C9E 10 10 61
 1D-E:Hanzo Box
 1E-E:Mach Apple
 1F-E:Bari Apple
-20-E:2x Apple
+20-E:Double Apple
 21-E:Eau d'Escape
 22-E:TimeKill
 23-E:TapKill
-24-E:QuikKill
+24-E:QuickKill
 25-E:FunKill
 26-E:Fruit
 27-E:Red Gel
@@ -1512,7 +1512,7 @@ RESTRUCT 63146C 08 10 7F15DE 10 10 20
 00-E:Vinyl Shirt
 01-E:ModelJacket
 02-E:Mayo Jacket
-03-E:Thorn Shirt
+03-E:Spike Shirt
 04-E:Go-Go Shirt
 05-E:Skull Shirt
 06-E:Tech Jacket
@@ -1713,7 +1713,7 @@ POINTERLIST 649A08 04 24 31
 1A-E:[CENTER_H]The Ouch Dome[PAUSE 14][END]
 1B-E:[CENTER_H]Sewers 1[PAUSE 14][END]
 1C-E:[CENTER_H]Sewers 2[PAUSE 14][END]
-1D-E:[CENTER_H]Sofubi's Villa[PAUSE 14][END]
+1D-E:[CENTER_H]Chez le [NAME3][PAUSE 14][END]
 1E-E:[CENTER_H]The Lardosseum[PAUSE 14][END]
 1F-E:[CENTER_H]Toy Cemetery[PAUSE 14][END]
 20-E:[CENTER_H]Magical Living Room[PAUSE 14][END]
@@ -1736,10 +1736,10 @@ POINTERLIST 649A08 04 24 31
 
 # More Gimica text, needs code changes to make longer.
 BLOCKSTART 47038C 0A 17 #64B2D8/49F684
-00-E:Demille
-01-E:Alesa
-02-E:Sofubi
-03-E:Lelk
+00-E:[NAME1]
+01-E:[NAME2]
+02-E:[NAME3]
+03-E:[NAME4]
 04-E:Pasaran
 05-E:Enokin
 06-E:Nance
@@ -1766,32 +1766,32 @@ BLOCKSTART 470472 0A 32 #64B334/49F684
 01-E:Kendama
 02-E:Chomper
 03-E:Origami
-04-E:TurtGlov
+04-E:Shell Fist
 05-E:TwinDragon
 06-E:RabiShoes
-07-E:BunnyHop
-08-E:CupidBow
+07-E:Bunny Hop
+08-E:Cupid Bow
 09-E:Judgment
 0A-E:Elec.Eel
 0B-E:SlotZooka
 0C-E:SeedBomb
 0D-E:Momotaro
 0E-E:Mag-Mitt
-0F-E:LinGlove
+0F-E:A-B Glove
 10-E:Tail Wag
 11-E:Dragonfire
-12-E:Fumigatr
-13-E:H.Vulcan
+12-E:Fumigator
+13-E:Bee Gatling
 14-E:SuperFan
 15-E:Cyclooka
 16-E:Zap Drum
 17-E:Popocon
 18-E:Yokozuna
-19-E:Blazer
+19-E:Flame Doll
 1A-E:Erupter
 1B-E:Pyramet
 1C-E:SneaKar
-1D-E:ChooChoo
+1D-E:Choo-Choo
 1E-E:Puffer
 1F-E:UFO-Cast
 20-E:SpiderGun
@@ -1799,7 +1799,7 @@ BLOCKSTART 470472 0A 32 #64B334/49F684
 22-E:Sun Beam
 23-E:Bouncer
 24-E:Firehog
-25-E:Sesame
+25-E:SesameTop
 26-E:NanaBoard
 27-E:BowlingRice
 28-E:Dojo Pup
@@ -1807,11 +1807,11 @@ BLOCKSTART 470472 0A 32 #64B334/49F684
 2A-E:Pop-Horn
 2B-E:FartHorn
 2C-E:LoveSong
-2D-E:StarScop
+2D-E:StarScope
 2E-E:Hotafant
 2F-E:Mansnow
 30-E:ShuriGun
-31-E:Shadow
+31-E:Shadowreel
 
 # More Gimica text, needs code changes to make longer.
 BLOCKSTART 470666 1B 32 #64B3FC/49F684
