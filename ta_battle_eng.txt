@@ -86,8 +86,8 @@
 # 26 Seebass / ギョロン
 0D11BB-E:Yum yum!
 # 29 Capn' Garco / ガ-ゴせんちょう
-0D0FE2-E:Here's you a nice gift!
-0D0FE9-E:Well then...
+0D0FE2-E:I've got a nice present for yarr!
+0D0FE9-E:Let's see...
 0D0FF0-E:I'll mess up your gimmicks!
 0D1004-E:Merrrrry Christmas!
 0D100E-E:I've got a present for yarr!
@@ -159,7 +159,7 @@
 0D2732-E:I can't take it anymore!
 # 47 Conda Kid / ノミコンダキッズ
 0D2756-E:*sobsob* I lost!
-0D2788-E:Waaaah! I'm being punished!
+0D2788-E:Waaaah! Time for your punishment!
 # 49 Brikky / ブリッキ
 0D3185-E:Brikky: Grihhy!
 0D318C-E:Brikky: My jawzh dishlochaded!
@@ -293,11 +293,11 @@
 0D4222-E:Different colors are...
 0D4229-E:Awful art!
 # 8D Left Arm / ひだりうで
-0D4071-E:Here we go! Invinsible!
+0D4071-E:Here we go! Invincible
 # 8E Right Arm / みぎうで
-0D4489-E:The invincibility of...
-0D4490-E:many colors!
-0D4557-E:Having all like colors...
+0D4489-E:Having different colors...
+0D4490-E:This is invincible art!
+0D4557-E:Having like colors...
 0D455E-E:This is invincible art!
 0D4570-E:Guh...
 0D458E-E:The colors are all the same!
@@ -305,7 +305,7 @@
 0D459E-E:The colors are different!
 0D45BD-E:My arm! My arm!
 0D45C4-E:Horrible art!!
-0D4383-E:Artistic battle mode!
+0D4383-E:artistic battle mode!
 # 92 Tinimato / とマッちゃん
 0D16F8-E:Yeowch! You'll pay for that!
 0D16D9-E:Let's go everyone!
@@ -396,7 +396,7 @@
 0D3C76-E:Grikky: How very selfish!
 0D3C2C-E:Grikky: I'm gonna shoot ya down!
 0D3C16-E:Grikky: You were useless, Brikky!
-0D3C59-E:Grikky: I feel the love!
+0D3C59-E:Grikky: I'm feelin' the love!
 0D3C45-E:Grikky: Don't flatter me!
 0D3C4C-E:Grikky: You're the cool one, Brikky!
 0D3C38-E:Grikky: Combo time!
