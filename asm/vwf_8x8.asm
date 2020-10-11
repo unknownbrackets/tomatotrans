@@ -770,9 +770,9 @@ ldrb r7,[r4,5]
 
 ; Grab the destination address into r3.
 ldr r3,[r4,8]
-; Grab the top nibble - 6 means vram, so we apply our offset.
-lsr r0,r3,24
-cmp r0,6
+; Grab the top nibble - 0x060..... means vram, so we apply our offset.
+lsr r0,r3,20
+cmp r0,0x60
 bne @@normalAlign
 
 ; Down align to the tile.
