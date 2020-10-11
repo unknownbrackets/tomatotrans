@@ -318,10 +318,10 @@ BLOCKFIXED 490430 24 64
 37-E:them correctly from left to right.
 38-E:Memorize the panels in the block
 39-E:gap, then enter them in that order.
-3A-E:Memorize the scrolling panels and pick
+3A-E:Memorize scrolling panels and pick
 3B-E:them in order with [FB][F9] and [F5].
 3C-E:Memorize the starting panels. Select
-3D-E:the ones that changed using [FB][F9] and [F5].
+3D-E:the changed ones using [FB][F9] and [F5].
 3E-E:Count the falling aliens, then
 3F-E:answer using [F8][FA]. Confirm with [F5].
 40-E:Hover the red zone over where a ball
@@ -344,8 +344,8 @@ BLOCKFIXED 490430 24 64
 51-E:with [FC] and grab them with [F5].
 52-E:Select the number panels from least
 53-E:to greatest using [FB][F9] and [F5].
-54-E:Clear the panels from left-to-right
-55-E:by pressing the corresponding buttons!
+54-E:Clear panels from left-to-right by
+55-E:pressing the corresponding buttons!
 56-E:Press the displayed button combos
 57-E:using [FC] and [F5][F7] at the same time.
 58-E:Press the button indicated by the
@@ -482,7 +482,7 @@ BLOCKFIXED 490448 24 C2
 5C-E:DUMMY
 5D-E:
 5E-E:Gimmick powerup item
-5F-E:Increases a gimmick's number of uses by 1
+5F-E:Increases a gimmick's uses by 1
 60-E:DUMMY
 61-E:
 62-E:Powerup item
@@ -553,8 +553,8 @@ A2-E:A ticket to ride the Mt. S'creme
 A3-E:gondola.
 A4-E:A letter addressed to [NAME3].
 A5-E:Found at his villa.
-A6-E:A doll with a rope used for 
-A7-E:rescuing those stuck in a Bananaconda.
+A6-E:A doll with a rope used to rescue
+A7-E:those stuck in a Bananaconda.
 A8-E:A Green Bananaconda's favorite
 A9-E:treat.
 AA-E:Red Bananacondas love these.
@@ -1130,7 +1130,7 @@ BLOCKFIXED 4907B4 1C 0A
 08-E:That's how you can
 09-E:heal yourself!
 
-BLOCKFIXED 4907BC 1C 16
+BLOCKFIXED 4907BC 20 16 1A
 00-E:Our old friend, the menu
 01-E:screen. To use a Cell...
 02-E:Pick the Item menu and
@@ -1174,7 +1174,7 @@ BLOCKFIXED 4907C4 1C 12
 10-E:Give it a go yourself
 11-E:later on!
 
-BLOCKFIXED 4907CC 1A 27 1A
+BLOCKFIXED 4907CC 20 27 1A
 00-E:About deckbuilding... Let's
 01-E:swap out a card in your
 02-E:deck for one that isn't...
