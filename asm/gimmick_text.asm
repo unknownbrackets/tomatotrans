@@ -84,7 +84,7 @@ ldr r4,[0x080655D8] ; 0x03001AD2
 ldrb r0,[r4]
 
 ; This is our offset to the text in our new buffer.
-lsl r5,r0,5
+lsl r5,r0,6
 ; This is the copy size, multiply to calculate.
 mov r2,0x58
 mul r0,r2
