@@ -903,7 +903,7 @@ BLOCKFIXED 490670 30 0F 1A
 0D-E:[F8][FA]: Select a card
 0E-E:SELECT: View card details
 
-BLOCKFIXED 490678 0D 30
+BLOCKFIXED 490678 18 30
 00-E:????????
 01-E:
 02-E:Raise your gimmick
@@ -1174,7 +1174,7 @@ BLOCKFIXED 4907C4 1C 12
 10-E:Give it a go yourself
 11-E:later on!
 
-BLOCKFIXED 4907CC 1C 27
+BLOCKFIXED 4907CC 1A 27 1A
 00-E:About deckbuilding... Let's
 01-E:swap out a card in your
 02-E:deck for one that isn't...
