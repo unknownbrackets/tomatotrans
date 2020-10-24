@@ -5463,9 +5463,9 @@ D-disregard that.[SIMPLEWAIT][END]
 4E2-E:This is the [COLOR_ON]Gimica[COLOR_OFF][BREAK]
 reception window.[SIMPLEWAIT][END]
 
-4E3-E:[CENTER_H][TICKEROFF]
-The entrance is to the[BREAK]
-right.[WAIT]
+4E3-E:[TICKEROFF]
+[CENTER_H]The entrance is to the[BREAK]
+[CENTER_H]right.[WAIT]
 [CENTER_H]Please proceed.[PAUSE 0F][END]
 
 4E4-E:Tough luck![WAIT]

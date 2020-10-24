@@ -201,9 +201,9 @@ BLOCKFIXED 490410 0C 20 09
 1F-E:Platna Cape
 
 # This must be the same size as 490420.
-BLOCKFIXED 490418 0C 01 08
+BLOCKFIXED 490418 10 01 08
 00-E:
-BLOCKFIXED 490420 0C 32 08
+BLOCKFIXED 490420 10 32 08
 00-E:Gear-Yo
 01-E:Kendama
 02-E:Chomper
@@ -287,7 +287,7 @@ BLOCKFIXED 490430 24 64
 18-E:Stop the ball in the vanishing
 19-E:red zone using [F5].
 1A-E:Stop all the moving peaches in the
-1B-E:blue zone simultaneously [F5].
+1B-E:blue zone simultaneously with [F5].
 1C-E:Press [F5] rapidly to fill up
 1D-E:the bar completely.
 1E-E:Tap the button shown on the end
@@ -318,8 +318,8 @@ BLOCKFIXED 490430 24 64
 37-E:them correctly from left to right.
 38-E:Memorize the panels in the block
 39-E:gap, then enter them in that order.
-3A-E:Memorize scrolling panels and pick
-3B-E:them in order with [FB][F9] and [F5].
+3A-E:Memorize the scrolling panels and
+3B-E:pick them in order with [FB][F9] and [F5].
 3C-E:Memorize the starting panels. Select
 3D-E:the changed ones using [FB][F9] and [F5].
 3E-E:Count the falling aliens, then
@@ -359,7 +359,7 @@ BLOCKFIXED 490430 24 64
 60-E:Push the [FC] in the opposite direction
 61-E:indicated by the yellow panels.
 62-E:Flip cards 2 at a time and find the
-63-E:matching pair using [FB][F9] and [F5].
+63-E:spiral pair using [FB][F9] and [F5].
 
 BLOCKFIXED 490438 0C 12 08
 00-E:The Spillage
@@ -1001,7 +1001,8 @@ BLOCKFIXED 490690 03 0B
 09-E:90
 0A-E:100
 
-BLOCKFIXED 490698 12 10
+# Not sure where this text is used...
+BLOCKFIXED 490698 18 10
 00-E:Battle CPU Player
 01-E:
 02-E:Battle IRL Player
@@ -1109,10 +1110,10 @@ BLOCKFIXED 4907AC 1C 20
 15-E:gimmick will be higher!
 16-E:Try it out yourself!
 17-E:
-18-E:If you wanna see how to use
-19-E:a gimmick, press [F5].
-1A-E:You don't have to press
-1B-E:[F5] to adust its level.
+18-E:Press [F5] when you're ready
+19-E:to continue.
+1A-E:You don't have to press [F5]
+1B-E:to confirm the level change.
 1C-E:You can test it out
 1D-E:afterwards by pushing start!
 1E-E:Give it a try later!
@@ -1264,8 +1265,8 @@ BLOCKFIXED 49F62C 24 18 1B
 BLOCKFIXED 49F634 30 04
 00-E: Preparing for Link Battle
 01-E:
-02-E: Opponent is not yet
-03-E:   ready
+02-E: Opponent is not yet ready
+03-E: 
 
 BLOCKFIXED 49F63C 16 01
 00-E:[EF]Waiting for turn
@@ -1288,8 +1289,8 @@ DYNPOINTER 04F9E0 1A 04F9BA 04F9C2 #639C40
 
 TERMSTRING 02ADFC FF 0A #62BF73
 00-E:Times used
-TERMSTRING 02AECC FF 05 #62BF7A
-00-E:Total
+TERMSTRING 02AECC FF 0A #62BF7A
+00-E:Successful
 TERMSTRING 02AED4 FF 06 #62BF7F
 00-E:Attack
 TERMSTRING 02AEF4 FF 04 #62BF84
@@ -1353,13 +1354,13 @@ RESTRUCT 62C250 08 58 7F001E 10 40 32
 
 RESTRUCT 62C258 1A 58 7F002E 30 40 32
 00-E:Hit [F5] in the red zone!
-01-E:Hold & release [F5]! Aim for the red zone!
+01-E:Hold and release [F5]! Aim for the red!
 02-E:Connect the bars with [F5]!
 03-E:Stop on the luck symbol with [F5]!
 04-E:Hit [F5] when balls are in the red zone!
 05-E:Hit [F5] or [F7] in the red zone!
 06-E:Stop the rabbit in the red zone with [F5]!
-07-E:Hold & release [F5]! Aim for the red zone!
+07-E:Hold and release [F5]! Aim for the red!
 08-E:[F5] when the ball and red zone cross!
 09-E:[F5] to catch the ball in the square!
 0A-E:Hit [F5] to stop the timer close to 0.00!
@@ -1369,7 +1370,7 @@ RESTRUCT 62C258 1A 58 7F002E 30 40 32
 0E-E:Tap [F5] to fill the bar up!
 0F-E:Tap the displayed button to fill the bar!
 10-E:Alternate tapping [FB] and [F9]!
-11-E:Tap [F5] while bar is between [F6][F6]!
+11-E:Tap [F5] while the bar is between [F6]and[F6]!
 12-E:Grab the trash with [F5] and [F7] taps!
 13-E:Tap the button on the bar to fill it!
 14-E:Tap [F5] to keep ball in the red zone!
@@ -1397,11 +1398,11 @@ RESTRUCT 62C258 1A 58 7F002E 30 40 32
 2A-E:Clear the panels with matching inputs!
 2B-E:Push the button combinations!
 2C-E:Input the highlighted panels!
-2D-E:[F5] or [FB]? Which has most?
+2D-E:[F5] or [F7]? Which side has the most?
 2E-E:Catch balls in a bucket!
 2F-E:Collect balls with the snowman!
 30-E:Do the opposite of the yellow panels!
-31-E:Find the matching panel pair!
+31-E:Find the pair of spiral panels!
 
 RESTRUCT 630BDC 04 1C 7F1980 07 08 04
 00-E:DeMille
@@ -1477,7 +1478,7 @@ RESTRUCT 630E5C 08 10 7F0C9E 10 10 61
 40-E:Sheep 1
 41-E:Sheep 2
 42-E:Sheep 3
-43-E:DrecoGaze
+43-E:Dreco Gaze
 44-E:Boom Key
 45-E:DreamPillow
 46-E:OriginHand
@@ -1565,7 +1566,7 @@ BLOCKSTART 632E38 10 02
 01-E: topar lost
 
 # I'm not sure these are actually used in the game anywhere.
-BLOCKSTART 632E58 10 02
+BLOCKSTART 632E58 13 02
 00-E:Escaped!
 01-E:Was able to escape!
 
@@ -1781,7 +1782,7 @@ BLOCKSTART 470472 0A 32 #64B334/49F684
 10-E:Tail Wag
 11-E:Dragonfire
 12-E:Fumigator
-13-E:Bee Gatling
+13-E:BeeGatling
 14-E:SuperFan
 15-E:Cyclooka
 16-E:Zap Drum
@@ -1801,7 +1802,7 @@ BLOCKSTART 470472 0A 32 #64B334/49F684
 24-E:Firehog
 25-E:SesameTop
 26-E:NanaBoard
-27-E:BowlingRice
+27-E:BowlngRice
 28-E:Dojo Pup
 29-E:Lucky Cat
 2A-E:Pop-Horn
@@ -1876,8 +1877,8 @@ BLOCKSTART 470BAC 18 08 #64B4C4/49F690
 05-E: 4               4
 06-E: Q               Q
 07-E: Move using the D-Pad
-BLOCKSTART 470C6C 17 01 #64B4C4/49F690
+BLOCKSTART 470C6C 1A 01 #64B4C4/49F690
 00-E: Select cards with L and R
 # Must start with a space for now.
-BLOCKSTART 470C83 18 01 #64B4C4/49F690
+BLOCKSTART 470C83 1A 01 #64B4C4/49F690
 00-E: Press start when finished
