@@ -906,54 +906,54 @@ BLOCKFIXED 490670 30 0F 1A
 BLOCKFIXED 490678 18 30
 00-E:????????
 01-E:
-02-E:Raise your gimmick
-03-E:card's points by 50
-04-E:Lower your gimmick
-05-E:card's points by 50
-06-E:Raise your gimmick
+02-E:Raise your card's
+03-E:PTS by 50
+04-E:Lower your card's
+05-E:PTS by 50
+06-E:Raise your card's
 07-E:card's rank by 2
 08-E:Prevents your rank
 09-E:from changing
 0A-E:Restores your HP
 0B-E:by 50
-0C-E:Raise your gimmick
+0C-E:Raise your card's
 0D-E:card's rank by 1
-0E-E:Lower your gimmick
+0E-E:Lower your card's
 0F-E:card's rank by 1
-10-E:Raise your gimmick
-11-E:card's points by 25
-12-E:Lower your gimmick
-13-E:card's points by 25
+10-E:Raise your card's
+11-E:PTS by 25
+12-E:Lower your card's
+13-E:PTS by 25
 14-E:Restores your HP
 15-E:by 25
 16-E:25 direct damage
 17-E:to your opponent
-18-E:Reduce a gimmick card's
+18-E:Reduce a card's
 19-E:damage taken by 25
-1A-E:Reduce a gimmick card's
+1A-E:Reduce a card's
 1B-E:damage taken to 0
-1C-E:Transforms into another
+1C-E:Changes into another
 1D-E:character card
-1E-E:Raise opponent's gimmick
-1F-E:card's points by 25
-20-E:Lower opponent's gimmick
-21-E:card's points by 25
+1E-E:Raise opponent's
+1F-E:card's PTS by 25
+20-E:Lower opponent's
+21-E:card's PTS by 25
 22-E:50 direct damage
 23-E:to your opponent
-24-E:Raise opponent's gimmick
+24-E:Raise opponent's
 25-E:card's rank by 1
-26-E:Lower opponent's gimmick
+26-E:Lower opponent's
 27-E:card's rank by 1
-28-E:Raise opponent's gimmick
+28-E:Raise opponent's
 29-E:card's rank by 2
-2A-E:Opponent's card ranks
+2A-E:Opponent's rank
 2B-E:will not change
-2C-E:Raise opponent's gimmick
-2D-E:card's points by 50
-2E-E:Lower opponent's gimmick
-2F-E:card's points by 50
+2C-E:Raise opponent's
+2D-E:card's PTS by 50
+2E-E:Lower opponent's
+2F-E:card's PTS by 50
 
-BLOCKFIXED 490680 08 14
+BLOCKFIXED 490680 0C 14 09
 00-E:
 01-E:Gimica Guy
 02-E:Selemo
@@ -1024,52 +1024,52 @@ BLOCKFIXED 490698 18 10
 BLOCKFIXED 4906A0 24 30
 00-E:????????
 01-E:
-02-E:Raise your gimmick
-03-E:card's points by 50
-04-E:Lower your gimmick
-05-E:card's points by 50
-06-E:Raise your gimmick
+02-E:Raise your card's
+03-E:PTS by 50
+04-E:Lower your card's
+05-E:PTS by 50
+06-E:Raise your card's
 07-E:card's rank by 2
 08-E:Prevents your rank
 09-E:from changing
 0A-E:Restores your HP
 0B-E:by 50
-0C-E:Raise your gimmick
+0C-E:Raise your card's
 0D-E:card's rank by 1
-0E-E:Lower your gimmick
+0E-E:Lower your card's
 0F-E:card's rank by 1
-10-E:Raise your gimmick
-11-E:card's points by 25
-12-E:Lower your gimmick
-13-E:card's points by 25
+10-E:Raise your card's
+11-E:PTS by 25
+12-E:Lower your card's
+13-E:PTS by 25
 14-E:Restores your HP
 15-E:by 25
 16-E:25 direct damage
 17-E:to your opponent
-18-E:Reduce a gimmick card's
+18-E:Reduce a card's
 19-E:damage taken by 25
-1A-E:Reduce a gimmick card's
+1A-E:Reduce a card's
 1B-E:damage taken to 0
-1C-E:Transforms into another
+1C-E:Changes into another
 1D-E:character card
-1E-E:Raise opponent's gimmick
-1F-E:card's points by 25
-20-E:Lower opponent's gimmick
-21-E:card's points by 25
+1E-E:Raise opponent's
+1F-E:card's PTS by 25
+20-E:Lower opponent's
+21-E:card's PTS by 25
 22-E:50 direct damage
 23-E:to your opponent
-24-E:Raise opponent's gimmick
+24-E:Raise opponent's
 25-E:card's rank by 1
-26-E:Lower opponent's gimmick
+26-E:Lower opponent's
 27-E:card's rank by 1
-28-E:Raise opponent's gimmick
+28-E:Raise opponent's
 29-E:card's rank by 2
-2A-E:Opponent's card ranks
+2A-E:Opponent's rank
 2B-E:will not change
-2C-E:Raise opponent's gimmick
-2D-E:card's points by 50
-2E-E:Lower opponent's gimmick
-2F-E:card's points by 50
+2C-E:Raise opponent's
+2D-E:card's PTS by 50
+2E-E:Lower opponent's
+2F-E:card's PTS by 50
 
 BLOCKFIXED 4906B0 0B 01
 00-E:
