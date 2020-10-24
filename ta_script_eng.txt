@@ -97,14 +97,14 @@ sudden...[WAIT]
 Should I try sleeping on[BREAK]
 this bed with the dream[WAIT]
 pillow?[BREAK]
- [MENU1]Sleep... [MENU2]Not yet![MENU_END][END]
+ [MENU1]Sleep...  [MENU2]Not yet![MENU_END][END]
 
 011-E:[NAME1]: *yaaaaawn* I'm[BREAK]
 real sleepy all of a[WAIT]
 sudden...[WAIT]
 Should I take a rest on[BREAK]
 this bed?[BREAK]
- [MENU1]Sleep... [MENU2]Not yet![MENU_END][END]
+ [MENU1]Sleep...  [MENU2]Not yet![MENU_END][END]
 
 012-E:Which pillow should I use?[BREAK]
  [MENU1]Dream  [MENU2]Artsy[MENU_END][END]
@@ -483,7 +483,7 @@ beauty really shine?[SIMPLEWAIT][END]
 05E-E:Thank you very much.[SIMPLEWAIT][END]
 
 05F-E:It's a comfy looking sofa.[WAIT]
- [MENU1]Nap on it [MENU2]Nah[MENU_END][END]
+ [MENU1]Nap on it   [MENU2]Nah[MENU_END][END]
 
 060-E:[NAME2]: Yay! It's so soft[BREAK]
 and fluffy![SIMPLEWAIT][END]
@@ -543,7 +543,7 @@ you will find the answers[BREAK]
 that you seek.[SIMPLEWAIT][END]
 
 070-E:It's a soft looking sofa.[WAIT]
- [MENU1]Sleep! [MENU2]Not now![MENU_END][END]
+ [MENU1]Sleep!   [MENU2]Not now![MENU_END][END]
 
 071-E:[NAME3]: Oh![WAIT]
 This is pretty[BREAK]
@@ -567,7 +567,7 @@ That's too bad...[SIMPLEWAIT][END]
 
 079-E:Sleep with the[BREAK]
 dream pillow?[WAIT]
- [MENU1]Sleep [MENU2]Not yet![MENU_END][END]
+ [MENU1]Sleep   [MENU2]Not yet![MENU_END][END]
 
 07A-E:[NAME1]: Mmm... This[BREAK]
 is great... ZZZ...[SIMPLEWAIT][END]
@@ -1173,10 +1173,10 @@ jumping into the wall scroll![SIMPLEWAIT][END]
 we do...?[SIMPLEWAIT][END]
 
 100-E:Help Mo![BREAK]
- [MENU1]OK! [MENU2]Later[MENU_END][END]
+ [MENU1]OK!   [MENU2]Later[MENU_END][END]
 
 101-E:Are you leaving Mo?[BREAK]
- [MENU1]Not yet  [MENU2]Seeya[MENU_END][END]
+ [MENU1]Not yet   [MENU2]Seeya[MENU_END][END]
 
 102-E:Want Mo to give[BREAK]
 you an explanation?[WAIT]
@@ -1371,7 +1371,7 @@ into the wall scroll![SIMPLEWAIT][END]
 have made it too far yet![SIMPLEWAIT][END]
 
 137-E:Are you ready?[BREAK]
- [MENU1]Yes! [MENU2]Not yet![MENU_END][END]
+ [MENU1]Yes!  [MENU2]Not yet![MENU_END][END]
 
 138-E:OK! Jump with all[BREAK]
 you've got!!![SIMPLEWAIT][END]
@@ -1564,7 +1564,7 @@ you would be able to do it![WAIT]
 Mo has a special course[BREAK]
 prepared just for you.[WAIT]
 Will you try it?[WAIT]
- [MENU1]Let's go! [MENU2]Nah[MENU_END][END]
+ [MENU1]Let's go!  [MENU2]Nah[MENU_END][END]
 
 169-E:Good work! You did it![BREAK]
 Now, come here with Mo![SIMPLEWAIT][END]
@@ -1706,7 +1706,7 @@ There's a sweet prize if[BREAK]
 you can beat the top time![SIMPLEWAIT][END]
 
 18D-E:Whaddaya say?[BREAK]
- [MENU1]Yeah! [MENU2]Not now[MENU_END][END]
+ [MENU1]Yeah!  [MENU2]Not now[MENU_END][END]
 
 18E-E:Are you ready?[BREAK]
 Let's go![SIMPLEWAIT][END]
@@ -1900,11 +1900,11 @@ Did you say you're into[BREAK]
 Me too, man![WAIT]
 I just built a deck, so[BREAK]
 let's have a duel![CONTINUE]
- [MENU1]Let's go! [MENU2]Maybe later[MENU_END][END]
+ [MENU1]Let's go!   [MENU2]Maybe later[MENU_END][END]
 
 1B9-E:Selemo: Do you want to[BREAK]
 play some Gimica?[BREAK]
- [MENU1]Let's go! [MENU2]Maybe later[MENU_END][END]
+ [MENU1]Let's go!   [MENU2]Maybe later[MENU_END][END]
 
 1BA-E:Selemo: I won't hold back![SIMPLEWAIT][END]
 
@@ -1955,7 +1955,7 @@ Do you know about[BREAK]
 [COLOR_ON]Gimica[COLOR_OFF]? Let's play a round![SIMPLEWAIT][END]
 
 1C5-E:Enokin: Shall we duel?[BREAK]
- [MENU1]Let's go! [MENU2]Maybe later[MENU_END][END]
+ [MENU1]Let's go!   [MENU2]Maybe later[MENU_END][END]
 
 1C6-E:Enokin: Hmhmhm!!!![BREAK]
 I'll play you using my[WAIT]
@@ -1999,7 +1999,7 @@ Gimica wafting from over[WAIT]
 there![SIMPLEWAIT][END]
 
 1D2-E:Pothead: Wanna duel?[BREAK]
- [MENU1]Let's go! [MENU2]Maybe later[MENU_END][END]
+ [MENU1]Let's go!   [MENU2]Maybe later[MENU_END][END]
 
 1D3-E:Pothead: I won't lose![SIMPLEWAIT][END]
 
@@ -2049,7 +2049,7 @@ Hm? You play Gimica too?[BREAK]
 Great! Let's duel then![SIMPLEWAIT][END]
 
 1DF-E:Nance: Shall we duel?[BREAK]
- [MENU1]Let's go! [MENU2]Maybe later[MENU_END][END]
+ [MENU1]Let's go!   [MENU2]Maybe later[MENU_END][END]
  
 1E0-E:Nance: Bring it on![SIMPLEWAIT][END]
 
@@ -2104,7 +2104,7 @@ Heh-heh-heh...[SIMPLEWAIT][END]
 
 1ED-E:Kaizo: Shall we duel?[BREAK]
 Heh-heh-heh...[BREAK]
- [MENU1]Let's go! [MENU2]Maybe later[MENU_END][END]
+ [MENU1]Let's go!   [MENU2]Maybe later[MENU_END][END]
 
 1EE-E:Kaizo: Heh-heh-heh...[SIMPLEWAIT][END]
 
@@ -2149,7 +2149,7 @@ You must want to play[BREAK]
 Gimica! I can tell![SIMPLEWAIT][END]
 
 1F9-E:Dario: Want to play Gimica?[BREAK]
- [MENU1]Let's go! [MENU2]Maybe later[MENU_END][END]
+ [MENU1]Let's go!   [MENU2]Maybe later[MENU_END][END]
 
 1FA-E:Dario: Fun fun![SIMPLEWAIT][END]
 
@@ -2193,7 +2193,7 @@ here today due to budget[WAIT]
 constraints![SIMPLEWAIT][END]
 
 205-E:Take the challenge?[BREAK]
- [MENU1]Let's go! [MENU2]Maybe later[MENU_END][END]
+ [MENU1]Let's go!   [MENU2]Maybe later[MENU_END][END]
 
 206-E:[NAME1], the genuine[BREAK]
 article and [COLOR_ON]Thumb Champ[COLOR_OFF],[WAIT]
@@ -2251,7 +2251,7 @@ come to their aid?[SIMPLEWAIT][END]
 
 210-E:Big Bertha: Care to play[BREAK]
 some Gimica?[BREAK]
- [MENU1]Let's go! [MENU2]Maybe later[MENU_END][END]
+ [MENU1]Let's go!   [MENU2]Maybe later[MENU_END][END]
 
 211-E:I've got a powerful[BREAK]
 hunger... For battle![SIMPLEWAIT][END]
@@ -2315,7 +2315,7 @@ sweat.[SIMPLEWAIT][END]
 21B-E:Perhaps...[SIMPLEWAIT][END]
 
 21C-E:Gimica, is it?[BREAK]
- [MENU1]Gimica it is! [MENU2]Wrong![MENU_END][END]
+ [MENU1]Gimica it is!  [MENU2]Wrong![MENU_END][END]
 
 21D-E:Very well, let us duel.[BREAK]
 Please be gentle.[SIMPLEWAIT][END]
@@ -2362,7 +2362,7 @@ a quiz!?[SIMPLEWAIT][END]
 Quiz Kid you idiot![SIMPLEWAIT][END]
 
 227-E:So, shall we Gimica?[BREAK]
- [MENU1]Let's Gimica! [MENU2]No way![MENU_END][END]
+ [MENU1]Let's Gimica!  [MENU2]No way![MENU_END][END]
 
 228-E:If you lose, I will give[BREAK]
 you a !!! present[WAIT]
@@ -2402,7 +2402,7 @@ players of all, the[BREAK]
 [COLOR_ON]Hanzo Bros.![COLOR_OFF][SIMPLEWAIT][END]
 
 231-E:Hanzon: Let's duel![BREAK]
- [MENU1]Let's go! [MENU2]Maybe later[MENU_END][END]
+ [MENU1]Let's go!   [MENU2]Maybe later[MENU_END][END]
 
 232-E:Hanzon: You won't beat me![SIMPLEWAIT][END]
 
@@ -2439,7 +2439,7 @@ But, I bet my deck is[BREAK]
 better than yours![COLOR_OFF][SIMPLEWAIT][END]
 
 23B-E:Hanzoro: Let's play![BREAK]
- [MENU1]Let's go! [MENU2]Maybe later[MENU_END][END]
+ [MENU1]Let's go!   [MENU2]Maybe later[MENU_END][END]
 
 23C-E:Hanzoro: Yes! Let's![SIMPLEWAIT][END]
 
@@ -2479,7 +2479,7 @@ But, I'm even stronger[BREAK]
 than they are![SIMPLEWAIT][END]
 
 245-E:Hanzochi: Let's play![BREAK]
- [MENU1]Let's go! [MENU2]Maybe later[MENU_END][END]
+ [MENU1]Let's go!   [MENU2]Maybe later[MENU_END][END]
 
 246-E:Hanzochi: Here we go![SIMPLEWAIT][END]
 
@@ -2519,7 +2519,7 @@ But, I look forward to[BREAK]
 facing you![SIMPLEWAIT][END]
 
 24F-E:Hanzone: Let's duel![BREAK]
- [MENU1]Let's go! [MENU2]Maybe later[MENU_END][END]
+ [MENU1]Let's go!   [MENU2]Maybe later[MENU_END][END]
  
 250-E:Hanzone: You won't beat[BREAK]
 me![SIMPLEWAIT][END]
@@ -2558,7 +2558,7 @@ But, you won't be able[BREAK]
 to beat me![SIMPLEWAIT][END]
 
 259-E:Hanzora: Let's duel![BREAK]
- [MENU1]Let's go! [MENU2]Maybe later[MENU_END][END]
+ [MENU1]Let's go!   [MENU2]Maybe later[MENU_END][END]
 
 25A-E:Hanzora: Watch and learn![SIMPLEWAIT][END]
 
@@ -2596,7 +2596,7 @@ But first...[WAIT]
 [SIZE_TALL][CENTER_HV]Let's Gimica!!![SIZE_NORMAL][PAUSE 0F][SIMPLEWAIT][END]
 
 263-E:Hanzo: Let's play![BREAK]
- [MENU1]Let's go! [MENU2]Maybe later[MENU_END][END]
+ [MENU1]Let's go!   [MENU2]Maybe later[MENU_END][END]
 
 264-E:Hanzo: Let me show you[BREAK]
 what I've learned on my[WAIT]
@@ -3873,7 +3873,7 @@ you will open them[WAIT]
 automatically.[SIMPLEWAIT][END]
 
 371-E:Quit?[BREAK]
- [MENU1]Quit [MENU2]No way[MENU_END][END]
+ [MENU1]Quit   [MENU2]No way[MENU_END][END]
 
 372-E:Do you already know the[BREAK]
 secret to the[WAIT]
@@ -4623,7 +4623,7 @@ different folks.[SIMPLEWAIT][END]
 [CENTER_H]department store![WAIT]
 How can I be of service[BREAK]
 today?[WAIT]
- [MENU1]Info please [MENU2]Nevermind[MENU_END][END]
+ [MENU1]Info please  [MENU2]Nevermind[MENU_END][END]
 
 420-E:We sell items on the first[BREAK]
 floor, and clothing on the[WAIT]
@@ -4973,7 +4973,7 @@ here may enter![SIMPLEWAIT][END]
 finished. Hm? You[WAIT]
 want to go to the[BREAK]
 roof?[WAIT]
- [MENU1]Yes! [MENU2]Nope[MENU_END][END]
+ [MENU1]Yes!  [MENU2]Nope[MENU_END][END]
 
 474-E:[NAME1]: Whew... What a[BREAK]
 shock. So... This[WAIT]
@@ -5043,7 +5043,7 @@ heck of a beatdown this[WAIT]
 time too![SIMPLEWAIT][END]
 
 483-E:Try the quiz?[BREAK]
- [MENU1]Let's go [MENU2]No way[MENU_END][END]
+ [MENU1]Let's go  [MENU2]No way[MENU_END][END]
 
 484-E:Wanna hear the[BREAK]
 rules?[BREAK]
@@ -5060,7 +5060,7 @@ one, and you get[WAIT]
  [MENU1]Got it!  [MENU2]Huh?[MENU_END][END]
 
 486-E:Wanna try again?[BREAK]
-[MENU1]Let's go [MENU2]No thanks[MENU_END][END]
+[MENU1]Let's go  [MENU2]No thanks[MENU_END][END]
 
 487-E:[CENTER_HV]Let's begin![SIMPLEWAIT][END]
 
@@ -5949,7 +5949,7 @@ how battles work?[BREAK]
 
 55A-E:But, it's real[BREAK]
 important stuff![WAIT]
-[MENU1]Sure. [MENU2]Nah.[MENU_END][END]
+[MENU1]Sure.  [MENU2]Nah.[MENU_END][END]
 
 55B-E:Selemo: You're really[BREAK]
 gonna turn this down?[WAIT]
@@ -6486,7 +6486,7 @@ Our associate, the[BREAK]
 Spy Ant, shot this video![SIMPLEWAIT][END]
 
 5D8-E:View [COLOR_ON]spy data 1[COLOR_OFF]?[BREAK]
-[MENU1]Watch it [MENU2] Later[MENU_END][END]
+[MENU1]Watch it  [MENU2] Later[MENU_END][END]
 
 5D9-E:Your next target is Super[BREAK]
 Kid [COLOR_ON]Ouch[COLOR_OFF] at [COLOR_ON]NampLagoon[COLOR_OFF]![WAIT]
@@ -6683,7 +6683,7 @@ correctly...[SIMPLEWAIT][END]
 fabulous prize![SIMPLEWAIT][END]
 
 605-E:Try the quiz?[BREAK]
- [MENU1]Let's go [MENU2]No way[MENU_END][END]
+ [MENU1]Let's go  [MENU2]No way[MENU_END][END]
 
 606-E:Need the rules?[BREAK]
  [MENU1]Yes   [MENU2]No[MENU_END][END]
@@ -6743,7 +6743,7 @@ results![WAIT]
 [CENTER_H]You got them all wrong![SIMPLEWAIT][END]
 
 614-E:Wanna try again?[BREAK]
-[MENU1]Let's go [MENU2]No thanks[MENU_END][END]
+[MENU1]Let's go  [MENU2]No thanks[MENU_END][END]
 
 615-E:Here's your !!![BREAK]
 as promised![SIMPLEWAIT][END]
@@ -6758,7 +6758,7 @@ might just do the trick[WAIT]
 here![WAIT]
 Swap it with the[BREAK]
 takopyon's old spring?[CONTINUE]
- [MENU1]Do it [MENU2]No way[MENU_END][END]
+ [MENU1]Do it  [MENU2]No way[MENU_END][END]
 
 618-E:[CENTER_H]The takopyon is[BREAK]
 [CENTER_H]back in action![SIMPLEWAIT][END]
@@ -6839,7 +6839,7 @@ high![SIMPLEWAIT][END]
 
 629-E:[CENTER_H]Wanna know what[BREAK]
 [CENTER_H]the secret sound is?[CONTINUE]
- [MENU1]Yes! [MENU2]Nah![MENU_END][END]
+ [MENU1]Yes!  [MENU2]Nah![MENU_END][END]
 
 62A-E:[CENTER_HV]Wahahahaha!!![WAIT]
 [CENTER_H]Jumping on the[BREAK]
@@ -7049,7 +7049,7 @@ all...[WAIT]
 I would like you to find a[BREAK]
 replacement [COLOR_ON]battery[COLOR_OFF] for[WAIT]
 me...[CONTINUE]
- [MENU1]OK! [MENU2]No Way[MENU_END][END]
+ [MENU1]OK!  [MENU2]No Way[MENU_END][END]
 
 659-E:I... see...[SIMPLEWAIT][END]
 
@@ -7341,7 +7341,7 @@ For a measly 10 topar,[BREAK]
 you can hop on in and[WAIT]
 blast off to Rock Isle![WAIT]
 You down?[CONTINUE]
- [MENU1]I'm down [MENU2]No way[MENU_END][END]
+ [MENU1]I'm down  [MENU2]No way[MENU_END][END]
 
 68F-E:Hey hey![BREAK]
 What's good, brother?[WAIT]
@@ -7684,7 +7684,7 @@ too![SIMPLEWAIT][END]
 6CA-E:Hey you! That song just[BREAK]
 now, was that electrifying[WAIT]
 enough for ya?[BREAK]
- [MENU1]Yeah [MENU2]No[MENU_END][END]
+ [MENU1]Yeah  [MENU2]No[MENU_END][END]
 
 6CB-E:Grikky: Gah![BREAK]
 Lies! Slander![SIMPLEWAIT][END]
@@ -7907,7 +7907,7 @@ saved up![SIMPLEWAIT][END]
 
 6F6-E:Attempt the Octo Missile[BREAK]
 Challenge for 10 Topar?[CONTINUE]
- [MENU1]Let's go! [MENU2]No[MENU_END][END]
+ [MENU1]Let's go!  [MENU2]No[MENU_END][END]
 
 6F7-E:When the cursor is on top[BREAK]
 of the Octo Monster,[WAIT]
@@ -7993,7 +7993,7 @@ room to check how the[BREAK]
 face looks.[SIMPLEWAIT][END]
 
 709-E:Play the Lucky Roulette?[WAIT]
- [MENU1]Let's go! [MENU2]Nah[MENU_END][END]
+ [MENU1]Let's go!  [MENU2]Nah[MENU_END][END]
 
 70A-E:[CENTER_HV]Roulette Start![SIMPLEWAIT][END]
 
@@ -8356,7 +8356,7 @@ of a mama![SIMPLEWAIT][END]
 out.[SIMPLEWAIT][END]
 
 752-E:View [COLOR_ON]spy data #2[COLOR_OFF]?[BREAK]
- [MENU1]Yes [MENU2]Later[MENU_END][END]
+ [MENU1]Yes  [MENU2]Later[MENU_END][END]
 
 753-E:Next, it's off to the candy[BREAK]
 land of Oystown![WAIT]
@@ -8427,7 +8427,7 @@ be able to open up the[WAIT]
 menu screen in the middle[BREAK]
 of the game, so...[WAIT]
 Are you ready?[CONTINUE]
- [MENU1]Sure [MENU2]Hang on...[MENU_END][END]
+ [MENU1]Sure  [MENU2]Hang on...[MENU_END][END]
 
 75D-E:Good luck!![SIMPLEWAIT][END]
 
@@ -8583,7 +8583,7 @@ let's...[SIMPLEWAIT][END]
 77F-E:[CENTER_H]The golden key[BREAK]
 [CENTER_H]might work here![CONTINUE]
 Try it?[BREAK]
- [MENU1]Sure [MENU2]No way[MENU_END][END]
+ [MENU1]Sure  [MENU2]No way[MENU_END][END]
 
 780-E:[CENTER_H]This present egg's a[BREAK]
 [CENTER_H]different color than[WAIT]
@@ -8603,15 +8603,15 @@ floors?[CONTINUE]
 
 783-E:Q3: On what date did this[BREAK]
 ship sink?[CONTINUE]
-[MENU1]Dec.24 [MENU2]Dec.25[MENU_END][END]
+[MENU1]Dec.24  [MENU2]Dec.25[MENU_END][END]
 
 784-E:Q4: When this ship is[BREAK]
 turned into a theme park,[WAIT]
 what -topia will it be?[CONTINUE]
-[MENU1]Sunk [MENU2]Jank[MENU_END][END]
+[MENU1]Sunk  [MENU2]Jank[MENU_END][END]
 
 785-E:Try the quiz?[BREAK]
- [MENU1]Try it [MENU2]No way[MENU_END][END]
+ [MENU1]Try it  [MENU2]No way[MENU_END][END]
 
 786-E:Wanna hear the rules?[BREAK]
  [MENU1]Sure  [MENU2]No need[MENU_END][END]
@@ -8629,7 +8629,7 @@ one, and you get[WAIT]
 788-E:[CENTER_HV]Let's begin![SIMPLEWAIT][END]
 
 789-E:Wanna try again?[BREAK]
-[MENU1]Let's go [MENU2]No thanks[MENU_END][END]
+[MENU1]Let's go  [MENU2]No thanks[MENU_END][END]
 
 78A-E:This is the toy cemetery.[WAIT]
 Broken toys... Dead toys...[BREAK]
@@ -9428,7 +9428,7 @@ I actually remembered it[BREAK]
 this time![SIMPLEWAIT][END]
 
 839-E:View [COLOR_ON]Spy Data 4[COLOR_OFF]?[BREAK]
- [MENU1]Sure [MENU2]Later[MENU_END][END]
+ [MENU1]Sure  [MENU2]Later[MENU_END][END]
 
 83A-E:Well then, I'll be waiting[BREAK]
 for you up ahead![CONTINUE]
@@ -9637,7 +9637,7 @@ GA!!![SIMPLEWAIT][END]
 that's everything I can[WAIT]
 do here.[WAIT]
 What should we do?[BREAK]
- [MENU1]Move on! [MENU2]Go back[MENU_END][END]
+ [MENU1]Move on!  [MENU2]Go back[MENU_END][END]
 
 86C-E:[NAME2]: Agh! What's[BREAK]
 going on!!! It's a dead end![SIMPLEWAIT][END]
@@ -9666,7 +9666,7 @@ gonna turn you into scrap![SIMPLEWAIT][END]
 
 874-E:[NAME2]: Is my work[BREAK]
 finished here?[WAIT]
- [MENU1]Yep [MENU2]Nope[MENU_END][END]
+ [MENU1]Yep  [MENU2]Nope[MENU_END][END]
 
 875-E:[NAME2]: Are we going[BREAK]
 back?[WAIT]
@@ -9801,7 +9801,7 @@ special tomato juice...[WAIT]
 Even [NAME1] should be[BREAK]
 able to drink this![WAIT]
 Drink it?[CONTINUE]
- [MENU1]Chug it [MENU2]Nah[MENU_END][END]
+ [MENU1]Chug it  [MENU2]Nah[MENU_END][END]
 
 891-E:Return to the entrance of[BREAK]
 Gimmick Palace?[CONTINUE]
@@ -9809,7 +9809,7 @@ Gimmick Palace?[CONTINUE]
 
 892-E:Jump to the top floor of[BREAK]
 Gimmick Palace?[CONTINUE]
- [MENU1]No way [MENU2]Jump it[MENU_END][END]
+ [MENU1]No way  [MENU2]Jump it[MENU_END][END]
 
 893-E:[CENTER_HV]~Tomato Pond~[WAIT]
 [CENTER_H]Also known as:[WAIT]
@@ -9821,7 +9821,7 @@ Gimmick Palace?[CONTINUE]
 894-E:[NAME1]: Someone dropped[BREAK]
 some gelatin behind the[WAIT]
 sign! Should I...?[BREAK]
- [MENU1]Eat it! [MENU2]No way![MENU_END][END]
+ [MENU1]Eat it!  [MENU2]No way![MENU_END][END]
 
 895-E:Welcome...[BREAK]
 to The Lucifer Lodge.[WAIT]
@@ -10103,7 +10103,7 @@ end of this adventure?[SIMPLEWAIT][END]
 from yours truly.[SIMPLEWAIT][END]
 
 8C2-E:View [COLOR_ON]Spy Data 5[COLOR_OFF]?[BREAK]
- [MENU1]Sure [MENU2]Later[MENU_END][END]
+ [MENU1]Sure  [MENU2]Later[MENU_END][END]
 
 8C3-E:Mackby: Well then,[BREAK]
 see you around![WAIT]
@@ -10121,13 +10121,13 @@ take you to [COLOR_ON]Shadap[COLOR_OFF]'s[WAIT]
 [COLOR_ON]Soytellite[COLOR_OFF] as promised![SIMPLEWAIT][END]
 
 8C6-E:Try the quiz?[BREAK]
- [MENU1]Let's go [MENU2]No way[MENU_END][END]
+ [MENU1]Let's go  [MENU2]No way[MENU_END][END]
 
 8C7-E:This is a special quiz,[BREAK]
 so it's also more[WAIT]
 dangerous.[WAIT]
 Are you ready?[BREAK]
- [MENU1]OK [MENU2]Not yet[MENU_END][END]
+ [MENU1]OK  [MENU2]Not yet[MENU_END][END]
 
 8C8-E:[CENTER_HV][SIZE_TALL]QUIZ SPECIAL!![SIMPLEWAIT][END]
 
@@ -10163,7 +10163,7 @@ want![CONTINUE]
 
 8CE-E:[TICKEROFF]
 Q1: What monster is this?[WAIT]
- [MENU1]Kurulina [MENU2]Chocolina[MENU_END][END]
+ [MENU1]Kurulina  [MENU2]Chocolina[MENU_END][END]
 
 8CF-E:[TICKEROFF]
 Q2: Which of these is[BREAK]
@@ -10205,7 +10205,7 @@ makes this sound?[SIMPLEWAIT][END]
 8D7-E:[TICKEROFF]
 Q1: Which gimmick[BREAK]
 makes this sound?[BREAK]
- [MENU1]Pop-horn  [MENU2]Erupter[MENU_END][END]
+ [MENU1]Pop-Horn  [MENU2]Erupter[MENU_END][END]
 
 8D8-E:[TICKEROFF]
 Q2: What town is[BREAK]
@@ -10214,7 +10214,7 @@ this song from?[SIMPLEWAIT][END]
 8D9-E:[TICKEROFF]
 Q2: What town is this[BREAK]
 song from?[BREAK]
- [MENU1]NanpLagoon [MENU2]Mayonen[MENU_END][END]
+ [MENU1]NanpLagoon  [MENU2]Mayonen[MENU_END][END]
 
 8DA-E:[TICKEROFF]
 Q3: What song is this?[SIMPLEWAIT][END]
@@ -10291,7 +10291,7 @@ you opened?[PAUSE 0A][BREAK]
 Q: The elevation of[BREAK]
 Mt. Everest?[PAUSE 0A][BREAK]
 [TICKEROFF]
- [MENU1]29290ft [MENU2]29029ft[MENU_END][END]
+ [MENU1]29290ft  [MENU2]29029ft[MENU_END][END]
 
 8E8-E:[TICKEROFF]
 Q: The missiles fired at[BREAK]
@@ -10303,12 +10303,12 @@ the Octo Monsters..?[PAUSE 0A][BREAK]
 Q: Kid who likes[BREAK]
 mushrooms...?[PAUSE 0A][BREAK]
 [TICKEROFF]
-[MENU1]Enokim [MENU2]Enokin[MENU_END][END]
+[MENU1]Enokim  [MENU2]Enokin[MENU_END][END]
 
 8EA-E:[TICKEROFF]
 Q: The 2nd Hanzo?[PAUSE 0A][BREAK]
 [TICKEROFF]
- [MENU1]Hanzon [MENU2]Hanzoro[MENU_END][END]
+ [MENU1]Hanzon  [MENU2]Hanzoro[MENU_END][END]
 
 8EB-E:[TICKEROFF]
 Q:59372-38471＝?[PAUSE 0A][BREAK]
@@ -10324,12 +10324,12 @@ The BBQs?[PAUSE 0A][BREAK]
 8ED-E:[TICKEROFF]
 Q: [NAME1]'s 3rd Gimmick?[PAUSE 0A][BREAK]
 [TICKEROFF]
- [MENU1]Erupter [MENU2]MagMitt[MENU_END][END]
+ [MENU1]Erupter  [MENU2]MagMitt[MENU_END][END]
 
 8EE-E:[TICKEROFF]
 Q: A thing Ouch likes?[PAUSE 0A][BREAK]
 [TICKEROFF]
- [MENU1]Lard Juice [MENU2]Donuts[MENU_END][END]
+ [MENU1]Lard Juice  [MENU2]Donuts[MENU_END][END]
 
 8EF-E:[TICKEROFF]
 Q: What runs under[BREAK]
@@ -10341,7 +10341,7 @@ Oystown?[PAUSE 0A][BREAK]
 Q: The hotel on[BREAK]
 Rock Isle?[PAUSE 0A][BREAK]
 [TICKEROFF]
- [MENU1]Azkaban [MENU2]Alcatraz[MENU_END][END]
+ [MENU1]Azkaban  [MENU2]Alcatraz[MENU_END][END]
 
 8F1-E:[TICKEROFF]
 Q: The color of[BREAK]
@@ -10358,23 +10358,23 @@ are there?[PAUSE 0A][BREAK]
 8F3-E:[TICKEROFF]
 Q: Star????? Valley[PAUSE 0A][BREAK]
 [TICKEROFF]
- [MENU1]Bucks [MENU2]Shade[MENU_END][END]
+ [MENU1]Bucks  [MENU2]Shade[MENU_END][END]
 
 8F4-E:[TICKEROFF]
 Q: A creature that does[BREAK]
 long distance licks?[PAUSE 0A][BREAK]
 [TICKEROFF]
- [MENU1]Kameberon  [MENU2]Shishkadon[MENU_END][END]
+ [MENU1]Lickmeleon  [MENU2]Takopyon[MENU_END][END]
 
 8F5-E:[TICKEROFF]
 Q: Hello in Japanese?[PAUSE 0A][BREAK]
 [TICKEROFF]
-[MENU1]Arigato [MENU2]Konnichiwa[MENU_END][END]
+[MENU1]Arigato  [MENU2]Konnichiwa[MENU_END][END]
 
 8F6-E:[TICKEROFF]
 Q: Wanted the MiraClam?[PAUSE 0A][BREAK]
 [TICKEROFF]
-[MENU1]Octorina [MENU2]Tacorina[MENU_END][END]
+[MENU1]Octorina  [MENU2]Tacorina[MENU_END][END]
 
 8F7-E:[TICKEROFF]
 Q: Who records the[BREAK]
@@ -10385,18 +10385,18 @@ spy data?[PAUSE 0A][BREAK]
 8F8-E:[TICKEROFF]
 Q: UFO Corona...[PAUSE 0A][BREAK]
 [TICKEROFF]
-[MENU1]Mark 2 [MENU2]Mark 3[MENU_END][END]
+[MENU1]Mark 2  [MENU2]Mark 3[MENU_END][END]
 
 8F9-E:[TICKEROFF]
 Q: The year this[BREAK]
 game was released?[PAUSE 0A][BREAK]
 [TICKEROFF]
- [MENU1]2003 [MENU2]2002[MENU_END][END]
+ [MENU1]2003  [MENU2]2002[MENU_END][END]
 
 8FA-E:[TICKEROFF]
 Q: Hates tomatoes?[PAUSE 0A][BREAK]
 [TICKEROFF]
- [MENU1]Droppers [MENU2]Toppers[MENU_END][END]
+ [MENU1]Droppers  [MENU2]Toppers[MENU_END][END]
 
 8FB-E:[TICKEROFF]
 Q: The reverse playback[BREAK]
@@ -10407,7 +10407,7 @@ kid's color?[PAUSE 0A][BREAK]
 8FC-E:[TICKEROFF]
 Q: Is red in cards[PAUSE 0A][BREAK]
 [TICKEROFF]
- [MENU1]Spade [MENU2]Diamond[MENU_END][END]
+ [MENU1]Spade  [MENU2]Diamond[MENU_END][END]
 
 8FD-E:[TICKEROFF]
 Q:86479-69472＝?[PAUSE 0A][BREAK]
@@ -10422,12 +10422,12 @@ Q: Hello in reverse[PAUSE 0A][BREAK]
 8FF-E:[TICKEROFF]
 Q: The third Toy Part?[PAUSE 0A][BREAK]
 [TICKEROFF]
- [MENU1]Gear [MENU2]Spring[MENU_END][END]
+ [MENU1]Gear  [MENU2]Spring[MENU_END][END]
 
 900-E:[TICKEROFF]
 Q: Is this game good?[PAUSE 0A][BREAK]
 [TICKEROFF]
- [MENU1]Yeah! [MENU2]No...[MENU_END][END]
+ [MENU1]Yeah!  [MENU2]No...[MENU_END][END]
 
 901-E:[CENTER_HV][SIZE_TALL]QUIZ OVER!!![SIMPLEWAIT][END]
 
@@ -10540,7 +10540,7 @@ let's stop by the oldest[BREAK]
 here's the last spy data![SIMPLEWAIT][END]
 
 91C-E:View [COLOR_ON]spy data 6[COLOR_OFF]?[BREAK]
- [MENU1]Sure [MENU2]Later[MENU_END][END]
+ [MENU1]Sure  [MENU2]Later[MENU_END][END]
 
 91D-E:[NAME1]: At last...[BREAK]
 To [COLOR_ON]Gimmick Palace[COLOR_OFF]![SIMPLEWAIT][END]
@@ -10645,10 +10645,10 @@ reason...[CONTINUE]
 Let's lay down on this bed.[WAIT]
 Sleep with the dream[BREAK]
 pillow?[WAIT]
- [MENU1]Night... [MENU2]Not yet[MENU_END][END]
+ [MENU1]Night...  [MENU2]Not yet[MENU_END][END]
 
 936-E:Go to which dome?[BREAK]
- [MENU1]Front [MENU2]Back[MENU_END][END]
+ [MENU1]Front  [MENU2]Back[MENU_END][END]
 
 937-E:[NAME4]: OK [NAME1]![WAIT]
 Put all 6 [COLOR_ON]Toy Parts[COLOR_OFF] right[BREAK]
@@ -11305,7 +11305,7 @@ that restores your HP?[CONTINUE]
 
 9CC-E:Q2: The barenaked bird[BREAK]
 Popoku's cry of anger?[CONTINUE]
- [MENU1]POPOPO! [MENU2]POPPOPO![MENU_END][END]
+ [MENU1]POPOPO!  [MENU2]POPPOPO![MENU_END][END]
 
 9CD-E:Q3: One of the[BREAK]
 backgrounds in the[WAIT]
@@ -11316,10 +11316,10 @@ written on it?[CONTINUE]
 9CE-E:Q4: The first monster you[BREAK]
 encounter in the[WAIT]
 REM Maze?[CONTINUE]
-[MENU1]Mystery Loop [MENU2]Dreamir[MENU_END][END]
+[MENU1]Mystery Loop  [MENU2]Dreamir[MENU_END][END]
 
 9CF-E:Try the quiz?[BREAK]
- [MENU1]Let's go [MENU2]No way[MENU_END][END]
+ [MENU1]Let's go  [MENU2]No way[MENU_END][END]
 
 9D0-E:Wanna hear the[BREAK]
 rules?[BREAK]
@@ -11338,7 +11338,7 @@ one, and you get[WAIT]
 9D2-E:[CENTER_HV]Let's begin![SIMPLEWAIT][END]
 
 9D3-E:Wanna try again?[BREAK]
-[MENU1]Let's go [MENU2]No thanks[MENU_END][END]
+[MENU1]Let's go  [MENU2]No thanks[MENU_END][END]
 
 9D4-E:Gah! You always ALWAYS[BREAK]
 do nothing but win!!![WAIT]
@@ -11666,7 +11666,7 @@ A2F-E:Selemo:[TICKEROFF]
  Huh!?!?!?!?!?!?!?!?!?!?!?!?[SIMPLEWAIT][END]
 
 A30-E:Try it!!!!![CONTINUE]
- [MENU1]Whatever [MENU2]No![MENU_END][END]
+ [MENU1]Whatever  [MENU2]No![MENU_END][END]
 
 A31-E:Selemo: Whew. Ok! Press[BREAK]
 the [COLOR_ON]Start Button[COLOR_OFF] to open[WAIT]
@@ -11699,7 +11699,7 @@ A37-E:Selemo: I'm gonna ask you[BREAK]
 ONE MORE TIME![WAIT]
 Do you[SIMPLEWAIT] wanna[WAIT]
 [CENTER_HV][SIZE_BIG]KNOW!?[WAIT]
-[SIZE_NORMAL][CENTER_V][MENU1]OK! [MENU2]Please![MENU_END][END]
+[SIZE_NORMAL][CENTER_V][MENU1]OK!  [MENU2]Please![MENU_END][END]
 
 A38-E:Selemo: OK! Push [COLOR_ON]Start[COLOR_OFF][BREAK]
 and open up the menu![END]
@@ -11741,7 +11741,7 @@ A41-E:Selemo: But... these[BREAK]
 things'll make your[WAIT]
 gimmicks super strong...[WAIT]
 You sure?[BREAK]
- [MENU1]Tell me [MENU2]I'm sure[MENU_END][END]
+ [MENU1]Tell me  [MENU2]I'm sure[MENU_END][END]
 
 A42-E:Selemo: Hm? You don't[BREAK]
 have any cells yet?[SIMPLEWAIT][END]
@@ -12488,7 +12488,7 @@ AEA-E:Sorry I'm like this, but[BREAK]
 you've got me all worried![WAIT]
 Do you know about[BREAK]
 ''[COLOR_ON]AWE![COLOR_OFF]''...?[WAIT]
- [MENU1]Awe? [MENU2]Yup[MENU_END][END]
+ [MENU1]Awe?  [MENU2]Yup[MENU_END][END]
 
 AEB-E:It's AWEsome![WAIT]
 ...but for real, it's a[BREAK]
@@ -12498,7 +12498,7 @@ up enough AWE! points![CONTINUE]
 Here, let me show you![SIMPLEWAIT][END]
 
 AEC-E:Oh... Really?[BREAK]
- [MENU1]Psh no [MENU2]Really[MENU_END][END]
+ [MENU1]Psh no  [MENU2]Really[MENU_END][END]
 
 AED-E:I see...[WAIT]
 Well, if you're lying[BREAK]
@@ -12743,7 +12743,7 @@ Wanna hear more?[WAIT]
 
 B2A-E:Did you have a[BREAK]
 question?[WAIT]
- [MENU1]Lots [MENU2]Nope[MENU_END][END]
+ [MENU1]Lots  [MENU2]Nope[MENU_END][END]
 
 B2B-E:Oh... I see...[SIMPLEWAIT][END]
 
@@ -12931,7 +12931,7 @@ B5D-E:[CENTER_HV]Bon appetit![SIMPLEWAIT][END]
 
 B5E-E:Well zen, how was[BREAK]
 eet?[WAIT]
- [MENU1]Tasty [MENU2]Gross...[MENU_END][END]
+ [MENU1]Tasty  [MENU2]Gross...[MENU_END][END]
 
 B5F-E:[CENTER_HV][SIZE_BIG]TRES BIEN![WAIT]
 [SIZE_NORMAL]Do come again![CONTINUE]
@@ -12959,40 +12959,33 @@ B65-E:The guy to my[BREAK]
 right is a [COLOR_ON]liar[COLOR_OFF].[SIMPLEWAIT][END]
 
 B66-E:The guy to my left[BREAK]
-is telling the[WAIT]
-[COLOR_ON]truth[COLOR_OFF].[SIMPLEWAIT][END]
+is telling the [COLOR_ON]truth[COLOR_OFF].[SIMPLEWAIT][END]
 
-B67-E:The guy to my[BREAK]
-right is telling[WAIT]
-the [COLOR_ON]truth[COLOR_OFF].[SIMPLEWAIT][END]
+B67-E:The guy to my right is[BREAK]
+telling the [COLOR_ON]truth[COLOR_OFF].[SIMPLEWAIT][END]
 
 B68-E:The guy [NUMBER] places[BREAK]
-to my left is[WAIT]
-a [COLOR_ON]liar[COLOR_OFF].[SIMPLEWAIT][END]
+to my left is a [COLOR_ON]liar[COLOR_OFF].[SIMPLEWAIT][END]
 
 B69-E:The guy [NUMBER] places[BREAK]
-to my right is[WAIT]
-a [COLOR_ON]liar[COLOR_OFF].[SIMPLEWAIT][END]
+to my right is a [COLOR_ON]liar[COLOR_OFF].[SIMPLEWAIT][END]
 
-B6A-E:The guy [NUMBER] places[BREAK]
-to my right is[WAIT]
-telling the [COLOR_ON]truth[COLOR_OFF].[SIMPLEWAIT][END]
+B6A-E:The guy [NUMBER] places to my[BREAK]
+right is telling the [COLOR_ON]truth[COLOR_OFF].[SIMPLEWAIT][END]
 
-B6B-E:The guy [NUMBER] places[BREAK]
-to my left is[WAIT]
-telling the [COLOR_ON]truth[COLOR_OFF].[SIMPLEWAIT][END]
+B6B-E:The guy [NUMBER] places to my[BREAK]
+left is telling the [COLOR_ON]truth[COLOR_OFF].[SIMPLEWAIT][END]
 
 B6C-E:I [COLOR_ON]have[COLOR_OFF] the key![BREAK]
- [MENU1]I dunno [MENU2]It's you![MENU_END][END]
+ [MENU1]I dunno  [MENU2]It's you![MENU_END][END]
 
-B6D-E:Huh? Key?[BREAK]
-I [COLOR_ON]Don't have[COLOR_OFF] it![WAIT]
- [MENU1]I dunno [MENU2]It's you![MENU_END][END]
+B6D-E:Huh? Key? I [COLOR_ON]don't have[COLOR_OFF] it![WAIT]
+ [MENU1]I dunno  [MENU2]It's you![MENU_END][END]
 
-B6E-E:I'm telling the[BREAK]
-[COLOR_ON]truth[COLOR_OFF].[SIMPLEWAIT][END]
+B6E-E:I was telling the[BREAK]
+[COLOR_ON]truth[COLOR_OFF]...[SIMPLEWAIT][END]
 
-B6F-E:I'm [COLOR_ON]lying[COLOR_OFF]...[SIMPLEWAIT][END]
+B6F-E:I was [COLOR_ON]lying[COLOR_OFF]...[SIMPLEWAIT][END]
 
 B70-E:[CENTER_HV][SIZE_BIG]GAH![SIMPLEWAIT][END]
 
@@ -13015,7 +13008,7 @@ B73-E:[CENTER_H]Move the safes on top[BREAK]
 [CENTER_H]give up![SIMPLEWAIT][END]
 
 B74-E:What's wrong?[BREAK]
- [MENU1]I give up [MENU2]Nothing[MENU_END][END]
+ [MENU1]I give up  [MENU2]Nothing[MENU_END][END]
 
 B75-E:[CENTER_HV]Move ahead![SIMPLEWAIT][END]
 
@@ -13081,7 +13074,7 @@ B86-E:Selemo: At any rate, I've[BREAK]
 got a story to tell you[WAIT]
 from the journey![WAIT]
 Wanna hear it?[BREAK]
- [MENU1]Sure [MENU2]No thanks[MENU_END][END]
+ [MENU1]Sure  [MENU2]No thanks[MENU_END][END]
 
 B87-E:Really now...[SIMPLEWAIT] But, I've also[BREAK]
 got a present for you...[BREAK]
@@ -13140,8 +13133,8 @@ B94-E:[CENTER_H]Press [COLOR_ON][A_BUTTON][COLOR_OFF] to burrow[BREAK]
 [CENTER_H]on them![SIMPLEWAIT][END]
 
 B95-E:[NAME4]: What should[BREAK]
-we do?[BREAK]
- [MENU1]Go back [MENU2]Move on![MENU_END][END]
+we do?[WAIT]
+ [MENU1]Go back  [MENU2]Move on![MENU_END][END]
 
 B96-E:[NAME4]: Let me[BREAK]
 handle this place![BREAK]
@@ -13178,7 +13171,7 @@ GI GI GI... GI...[SIMPLEWAIT][END]
 B9F-E:[NAME4]: Looks like my[BREAK]
 work is done here![WAIT]
 What should we do?[BREAK]
- [MENU1]Move on! [MENU2]Go back[MENU_END][END]
+ [MENU1]Move on!  [MENU2]Go back[MENU_END][END]
 
 BA0-E:Nyo-ho-ho...[WAIT]
 I sell items~[BREAK]
