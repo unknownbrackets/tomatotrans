@@ -471,6 +471,78 @@ static bool InsertGimmickMenuIcons(FILE *ta, uint32_t &nextPos) {
 	return true;
 }
 
+static bool InsertGimmickBattleIcons(FILE *ta, uint32_t &nextPos) {
+	// This palette is shared by several other gimmicks.
+	Palette pal = LoadPaletteAt(ta, 0x0051F5D4, 0, 1);
+
+	Tileset unorderedCraneTileset(false);
+	Tileset unorderedCatTileset(false);
+
+	Tilemap craneTilemap(unorderedCraneTileset);
+	if (!TilemapAndPaletteFromPNG(craneTilemap, pal, "images/crane_panels_eng.png", true)) {
+		return false;
+	}
+
+	Tilemap catTilemap(unorderedCatTileset);
+	if (!TilemapAndPaletteFromPNG(catTilemap, pal, "images/luckycat_panels_eng.png", true)) {
+		return false;
+	}
+
+	// The tiles need to be in a specific order for the gimmick battle UI.
+	Tileset craneTileset(false);
+	Tileset catTileset(false);
+	for (int y = 0; y < 4; ++y) {
+		for (int x = 0; x < 2; ++x) {
+			craneTileset.Add(unorderedCraneTileset.At(craneTilemap.At(x, y) & 0x3FF));
+		}
+	}
+	for (int y = 0; y < 6; ++y) {
+		for (int x = 0; x < 16; ++x) {
+			catTileset.Add(unorderedCatTileset.At(catTilemap.At(x, y) & 0x3FF));
+		}
+	}
+
+	// The tileset is now ready, let's compress.
+	std::vector<uint8_t> buf;
+	buf.resize(craneTileset.ByteSize16());
+	craneTileset.Encode16(buf.data());
+	std::vector<uint8_t> compressed = compress_gba_lz77(buf, LZ77_VRAM_SAFE);
+	if (compressed.size() > 164) {
+		// Okay, need to relocate.
+		nextPos = (nextPos + 3) & ~3;
+		fseek(ta, 0x00052404, SEEK_SET);
+		WriteLE32(ta, nextPos | 0x08000000);
+
+		fseek(ta, nextPos, SEEK_SET);
+		fwrite(compressed.data(), 1, compressed.size(), ta);
+		nextPos += (uint32_t)compressed.size();
+	} else {
+		fseek(ta, 0x00599058, SEEK_SET);
+		fwrite(compressed.data(), 1, compressed.size(), ta);
+	}
+
+	buf.resize(catTileset.ByteSize16());
+	catTileset.Encode16(buf.data());
+	compressed = compress_gba_lz77(buf, LZ77_VRAM_SAFE);
+	if (compressed.size() > 1011) {
+		// Okay, need to relocate.
+		nextPos = (nextPos + 3) & ~3;
+		fseek(ta, 0x0005CFE0, SEEK_SET);
+		WriteLE32(ta, nextPos | 0x08000000);
+		fseek(ta, 0x0005D0F8, SEEK_SET);
+		WriteLE32(ta, nextPos | 0x08000000);
+
+		fseek(ta, nextPos, SEEK_SET);
+		fwrite(compressed.data(), 1, compressed.size(), ta);
+		nextPos += (uint32_t)compressed.size();
+	} else {
+		fseek(ta, 0x0059B990, SEEK_SET);
+		fwrite(compressed.data(), 1, compressed.size(), ta);
+	}
+
+	return true;
+}
+
 static bool InsertGimicaCard(FILE *ta, uint32_t &nextPos) {
 	Palette pal = LoadPaletteAt(ta, 0x00485BD0, 0, 1);
 
@@ -624,6 +696,10 @@ bool InsertImages(FILE *ta, uint32_t &nextPos) {
 	}
 	if (!InsertGimmickMenuIcons(ta, nextPos)) {
 		printf("Failed to insert gimmick menu icons\n");
+		failed = true;
+	}
+	if (!InsertGimmickBattleIcons(ta, nextPos)) {
+		printf("Failed to insert gimmick battle icons\n");
 		failed = true;
 	}
 	if (!InsertGimicaCard(ta, nextPos)) {
