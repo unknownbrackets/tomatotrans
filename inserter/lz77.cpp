@@ -1,6 +1,6 @@
 #include <cstdint>
 #include <cstdio>
-#include <map>
+#include <unordered_map>
 #include <vector>
 #include "lz77.h"
 
@@ -36,7 +36,7 @@ private:
 
 	const std::vector<uint8_t> &input_;
 	std::vector<uint8_t> output_;
-	std::multimap<uint32_t, size_t> index_;
+	std::unordered_map<uint32_t, std::vector<size_t>> index_;
 	int flags_ = 0;
 };
 
@@ -68,7 +68,7 @@ void LZ77GBACompressor::BuildIndex() {
 	uint32_t hash = (input_[0] << 16) | (input_[1] << 8);
 	for (size_t i = 2; i < input_.size(); ++i) {
 		hash = (hash | input_[i]) << 8;
-		index_.emplace(hash, i);
+		index_[hash].push_back(i);
 	}
 }
 
@@ -94,9 +94,9 @@ LZ77GBACompressor::Scenario LZ77GBACompressor::TryReverseWaste(size_t src, int w
 
 	uint32_t hash = (input_[src - 3] << 24) | (input_[src - 2] << 16) | (input_[src - 1] << 8);
 	const bool checkVRAM = (flags_ & LZ77_VRAM_SAFE) != 0;
-	auto matches = index_.equal_range(hash);
-	for (auto it = matches.first; it != matches.second; ++it) {
-		const size_t &found_pos = it->second;
+	const auto &matches = index_.at(hash);
+	for (size_t i = 0; i < matches.size(); ++i) {
+		const size_t found_pos = matches[i];
 		if (found_pos >= src - 1) {
 			break;
 		}
@@ -238,9 +238,9 @@ LZ77GBACompressor::Scenario LZ77GBACompressor::TryForwardWaste(size_t src, int w
 
 	uint32_t hash = (input_[src] << 24) | (input_[src + 1] << 16) | (input_[src + 2] << 8);
 	const bool checkVRAM = (flags_ & LZ77_VRAM_SAFE) != 0;
-	auto matches = index_.equal_range(hash);
-	for (auto it = matches.first; it != matches.second; ++it) {
-		const size_t &found_pos = it->second;
+	const auto &matches = index_.at(hash);
+	for (size_t i = 0; i < matches.size(); ++i) {
+		const size_t found_pos = matches[i];
 		if (found_pos >= src) {
 			break;
 		}

@@ -338,7 +338,7 @@ static bool InsertTitleScreen(FILE *ta, uint32_t &nextPos) {
 		palbuf.resize(9 * 16);
 		pal.Encode(palbuf.data(), 7, 9);
 		fwrite(palbuf.data(), sizeof(uint16_t), palbuf.size(), ta);
-		nextPos += palbuf.size() * sizeof(uint16_t);
+		nextPos += (uint32_t)palbuf.size() * sizeof(uint16_t);
 	}
 
 	if (!SaveTilemap(ta, logo, 0x0500, 0x0045C384, nextPos)) {
