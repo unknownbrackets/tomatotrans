@@ -7,7 +7,6 @@
 class LZ77GBACompressor {
 public:
 	LZ77GBACompressor(const std::vector<uint8_t> &input) : input_(input) {
-		BuildIndex();
 	}
 
 	std::vector<uint8_t> Compress(int flags, int max_scenarios);
@@ -16,6 +15,7 @@ private:
 	constexpr static int MAX_BACKREF_OFFSET = 0xFFF;
 	constexpr static int MIN_BACKREF_LEN = 3;
 	constexpr static int MAX_BACKREF_LEN = 3 + 0xF;
+	constexpr static int INDEX_HORIZON_DIST = 0x4000;
 
 	struct Scenario {
 		explicit Scenario(int w = 1) : waste(w) {
@@ -30,13 +30,15 @@ private:
 	void CompressReverse(int max_scenarios);
 	void CompressForward(int max_scenarios);
 
-	void BuildIndex();
-	Scenario TryReverseWaste(size_t src, int waste);
-	Scenario TryForwardWaste(size_t src, int waste);
+	void BuildIndex(uint32_t newHorizon);
+	inline bool IndexContains(uint32_t src, int range);
+	Scenario TryReverseWaste(uint32_t src, int waste);
+	Scenario TryForwardWaste(uint32_t src, int waste);
 
 	const std::vector<uint8_t> &input_;
 	std::vector<uint8_t> output_;
-	std::unordered_map<uint32_t, std::vector<size_t>> index_;
+	std::unordered_map<uint32_t, std::vector<uint32_t>> index_;
+	uint32_t indexHorizon_ = 0xFFFFFFFF;
 	int flags_ = 0;
 };
 
@@ -59,24 +61,37 @@ std::vector<uint8_t> LZ77GBACompressor::Compress(int flags, int max_scenarios) {
 	return output_;
 }
 
-void LZ77GBACompressor::BuildIndex() {
-	if (input_.size() < 3) {
+void LZ77GBACompressor::BuildIndex(uint32_t newHorizon) {
+	if (input_.size() - newHorizon < 3) {
 		return;
 	}
 	index_.clear();
 
-	uint32_t hash = (input_[0] << 16) | (input_[1] << 8);
-	for (size_t i = 2; i < input_.size(); ++i) {
+	uint32_t hash = (input_[newHorizon] << 16) | (input_[newHorizon + 1] << 8);
+	uint32_t end = newHorizon + INDEX_HORIZON_DIST + 1;
+	if (end > (uint32_t)input_.size())
+		end = (uint32_t)input_.size();
+	for (uint32_t i = newHorizon + 2; i < end; ++i) {
 		hash = (hash | input_[i]) << 8;
 		index_[hash].push_back(i);
 	}
+
+	indexHorizon_ = newHorizon;
 }
 
-LZ77GBACompressor::Scenario LZ77GBACompressor::TryReverseWaste(size_t src, int waste) {
+bool LZ77GBACompressor::IndexContains(uint32_t src, int range) {
+	uint32_t earliest = src > (uint32_t)MAX_BACKREF_OFFSET - range ? src - MAX_BACKREF_OFFSET - 1 - range : 0;
+	if (earliest < indexHorizon_) {
+		return false;
+	}
+	return src <= indexHorizon_ + INDEX_HORIZON_DIST - range;
+}
+
+LZ77GBACompressor::Scenario LZ77GBACompressor::TryReverseWaste(uint32_t src, int waste) {
 	Scenario plan{ waste };
 	// Start out in debt, our match has to save more.
 	plan.saved_bytes = -2 - waste;
-	if ((size_t)waste + MIN_BACKREF_LEN >= src) {
+	if ((uint32_t)waste + MIN_BACKREF_LEN >= src) {
 		return plan;
 	}
 
@@ -84,7 +99,7 @@ LZ77GBACompressor::Scenario LZ77GBACompressor::TryReverseWaste(size_t src, int w
 	src -= waste;
 
 	// We have at most this many bytes to encode.
-	int left = src - MIN_BACKREF_LEN > (size_t)MAX_BACKREF_LEN ? MAX_BACKREF_LEN : (int)src - MIN_BACKREF_LEN;
+	int left = src - MIN_BACKREF_LEN > MAX_BACKREF_LEN ? MAX_BACKREF_LEN : src - MIN_BACKREF_LEN;
 	if (left < MIN_BACKREF_LEN) {
 		return plan;
 	}
@@ -96,7 +111,7 @@ LZ77GBACompressor::Scenario LZ77GBACompressor::TryReverseWaste(size_t src, int w
 	const bool checkVRAM = (flags_ & LZ77_VRAM_SAFE) != 0;
 	const auto &matches = index_.at(hash);
 	for (size_t i = 0; i < matches.size(); ++i) {
-		const size_t found_pos = matches[i];
+		const uint32_t found_pos = matches[i];
 		if (found_pos >= src - 1) {
 			break;
 		}
@@ -104,7 +119,7 @@ LZ77GBACompressor::Scenario LZ77GBACompressor::TryReverseWaste(size_t src, int w
 			continue;
 		}
 
-		int found_off = (int)(src - 1 - found_pos);
+		int found_off = src - 1 - found_pos;
 		if (checkVRAM && found_off <= 1) {
 			continue;
 		}
@@ -147,9 +162,13 @@ void LZ77GBACompressor::CompressReverse(int max_scenarios) {
 	// This gives us the smartest backreference decisions.
 	ptrdiff_t total_saved = 0;
 	size_t compressed_size = 0;
-	for (size_t src = input_.size(); src > 0; ) {
+	for (uint32_t src = (uint32_t)input_.size(); src > 0; ) {
 		if (src == 0 || src > input_.size()) {
 			break;
+		}
+
+		if (!IndexContains(src, -max_scenarios)) {
+			BuildIndex(src > INDEX_HORIZON_DIST ? src - INDEX_HORIZON_DIST : 0);
 		}
 
 		// Default plan is no backref.
@@ -216,19 +235,19 @@ void LZ77GBACompressor::CompressReverse(int max_scenarios) {
 	}
 }
 
-LZ77GBACompressor::Scenario LZ77GBACompressor::TryForwardWaste(size_t src, int waste) {
+LZ77GBACompressor::Scenario LZ77GBACompressor::TryForwardWaste(uint32_t src, int waste) {
 	Scenario plan{ waste };
 	// Start out in debt, our match has to save more.
 	plan.saved_bytes = -2 - waste;
 	// According to this plan, we'll have this many src bytes to match.
 	src += waste;
 
-	if (src == 0 || src + waste >= input_.size()) {
+	if (src == 0 || (size_t)src + waste >= input_.size()) {
 		return plan;
 	}
 
 	// We have at most this many bytes to encode.
-	int left = input_.size() - src > (size_t)MAX_BACKREF_LEN ? MAX_BACKREF_LEN : (int)(input_.size() - src);
+	int left = input_.size() - src > MAX_BACKREF_LEN ? MAX_BACKREF_LEN : (int)(input_.size() - src);
 	if (left < MIN_BACKREF_LEN) {
 		return plan;
 	}
@@ -240,7 +259,7 @@ LZ77GBACompressor::Scenario LZ77GBACompressor::TryForwardWaste(size_t src, int w
 	const bool checkVRAM = (flags_ & LZ77_VRAM_SAFE) != 0;
 	const auto &matches = index_.at(hash);
 	for (size_t i = 0; i < matches.size(); ++i) {
-		const size_t found_pos = matches[i];
+		const uint32_t found_pos = matches[i];
 		if (found_pos >= src) {
 			break;
 		}
@@ -248,7 +267,7 @@ LZ77GBACompressor::Scenario LZ77GBACompressor::TryForwardWaste(size_t src, int w
 			continue;
 		}
 
-		int found_off = (int)(src - found_pos);
+		int found_off = src - found_pos;
 		if (checkVRAM && found_off <= 1) {
 			continue;
 		}
@@ -293,7 +312,7 @@ void LZ77GBACompressor::CompressForward(int max_scenarios) {
 	*pos++ = (input_.size() >> 16) & 0xFF;
 
 	ptrdiff_t total_saved = 0;
-	for (size_t src = 0; src < input_.size(); ) {
+	for (uint32_t src = 0; src < (uint32_t)input_.size(); ) {
 		uint8_t *quadflags = pos++;
 		uint8_t nowflags = 0;
 
@@ -301,6 +320,10 @@ void LZ77GBACompressor::CompressForward(int max_scenarios) {
 			if (src >= input_.size()) {
 				*pos++ = 0;
 				continue;
+			}
+
+			if (!IndexContains(src, max_scenarios)) {
+				BuildIndex(src > MAX_BACKREF_OFFSET - 1 ? src - MAX_BACKREF_OFFSET - 1 : 0);
 			}
 
 			// Default plan is no backref.
