@@ -84,7 +84,7 @@ bool LZ77GBACompressor::IndexContains(uint32_t src, int range) {
 	if (earliest < indexHorizon_) {
 		return false;
 	}
-	return src <= indexHorizon_ + INDEX_HORIZON_DIST - range;
+	return src < indexHorizon_ + INDEX_HORIZON_DIST - range;
 }
 
 LZ77GBACompressor::Scenario LZ77GBACompressor::TryReverseWaste(uint32_t src, int waste) {
