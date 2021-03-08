@@ -69,7 +69,7 @@ static void WriteRelocs(FILE *ta, const uint32_t relocs[], size_t c, uint32_t pt
 	}
 }
 
-static bool SaveTilemapAsChips(FILE *ta, const Tilemap &tilemap, int mapID, uint32_t oldSize, uint32_t chipmapPos, uint32_t chipsetPos, uint32_t &nextPos) {
+static bool SaveTilemapAsChips(FILE *ta, const Tilemap &tilemap, uint32_t mapID, uint32_t bg, uint32_t oldSize, uint32_t chipmapPos, uint32_t chipsetPos, uint32_t &nextPos) {
 	Chipmap chipmap;
 	if (!chipmap.FromTilemap(tilemap)) {
 		return false;
@@ -89,7 +89,7 @@ static bool SaveTilemapAsChips(FILE *ta, const Tilemap &tilemap, int mapID, uint
 	} else {
 		nextPos = (nextPos + 3) & ~3;
 
-		const uint32_t relocations[]{ 0x0031E7B4 + 12 * (uint32_t)mapID + 8 };
+		const uint32_t relocations[]{ 0x0031E7B4 + 12 * mapID + (bg - 1) * 4 };
 		WriteRelocs(ta, relocations, std::size(relocations), nextPos);
 
 		fseek(ta, nextPos, SEEK_SET);
@@ -195,16 +195,67 @@ static bool InsertIntroMaps(FILE *ta, uint32_t &nextPos) {
 	if (!SaveCompressedTileset(ta, tileset, params, nextPos)) {
 		return false;
 	}
+	// We could also update table at 0x0015B84C, which specifies the tileset size clearing.
+	// But it's not important.
 
-	if (!SaveTilemapAsChips(ta, tilemap0000, 0x0000, 544, 0x0027B864, 0x0032DF2C, nextPos)) {
+	if (!SaveTilemapAsChips(ta, tilemap0000, 0x0000, 3, 544, 0x0027B864, 0x0032DF2C, nextPos)) {
 		return false;
 	}
-	if (!SaveTilemapAsChips(ta, tilemap0070, 0x0070, 432, 0x0027B288, 0x0032DC5C, nextPos)) {
+	if (!SaveTilemapAsChips(ta, tilemap0070, 0x0070, 3, 432, 0x0027B288, 0x0032DC5C, nextPos)) {
 		return false;
 	}
-	if (!SaveTilemapAsChips(ta, tilemap01CC, 0x0070, 288, 0x0027B648, 0x0032DE0C, nextPos)) {
+	if (!SaveTilemapAsChips(ta, tilemap01CC, 0x0070, 3, 288, 0x0027B648, 0x0032DE0C, nextPos)) {
 		return false;
 	}
+	return true;
+}
+
+static bool InsertRockIsleMaps(FILE *ta, uint32_t &nextPos) {
+	// One common palette and tileset for each of the layers.
+	Palette pal(0, 15);
+	Tileset tileset;
+
+	// TODO: Overrides?
+	Tilemap tilemap005Fbg1(tileset);
+	if (!TilemapAndPaletteFromPNG(tilemap005Fbg1, pal, "images/map005F_bg1_eng.png", false)) {
+		return false;
+	}
+
+	Tilemap tilemap005Fbg2(tileset);
+	if (!TilemapAndPaletteFromPNG(tilemap005Fbg2, pal, "images/map005F_bg2_eng.png", false)) {
+		return false;
+	}
+
+	Tilemap tilemap005Fbg3(tileset);
+	if (!TilemapAndPaletteFromPNG(tilemap005Fbg3, pal, "images/map005F_bg3_eng.png", false)) {
+		return false;
+	}
+
+	// The tileset is now ready, let's compress.
+	static const uint32_t relocations[]{
+		0x0015BA3C + 4 * 0x005F,
+	};
+	SaveTilesetParams params{ 16, 12064, 0x0019272C, relocations, std::size(relocations) };
+	if (!SaveCompressedTileset(ta, tileset, params, nextPos)) {
+		return false;
+	}
+	// We could also update table at 0x0015B84C, which specifies the tileset size clearing.
+	// But it's not important.
+
+	if (!SaveTilemapAsChips(ta, tilemap005Fbg1, 0x005F, 1, 280, 0x0027d9d0, 0x003311d4, nextPos)) {
+		return false;
+	}
+	if (!SaveTilemapAsChips(ta, tilemap005Fbg2, 0x005F, 2, 616, 0x0027dc64, 0x003312ec, nextPos)) {
+		return false;
+	}
+	if (!SaveTilemapAsChips(ta, tilemap005Fbg3, 0x005F, 3, 744, 0x0027def8, 0x00331554, nextPos)) {
+		return false;
+	}
+
+	if (!SavePalette(ta, pal, 0, 15, 0x0025b578)) {
+		return false;
+	}
+
 	return true;
 }
 
@@ -626,6 +677,10 @@ bool InsertImages(FILE *ta, uint32_t &nextPos) {
 	bool failed = false;
 	if (!InsertIntroMaps(ta, nextPos)) {
 		printf("Failed to insert intro maps\n");
+		failed = true;
+	}
+	if (!InsertRockIsleMaps(ta, nextPos)) {
+		printf("Failed to insert Rock Isle maps\n");
 		failed = true;
 	}
 	if (!InsertDefeatScreen(ta, nextPos)) {
