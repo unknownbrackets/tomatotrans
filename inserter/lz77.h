@@ -8,3 +8,4 @@ enum LZ77Flags {
 };
 
 std::vector<uint8_t> compress_gba_lz77(const std::vector<uint8_t> &input, int flags);
+std::vector<uint8_t> decompress_gba_lz77(const std::vector<uint8_t> &input);

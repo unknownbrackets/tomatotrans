@@ -9,13 +9,15 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-static Palette LoadPaletteAt(FILE *ta, uint32_t pos, uint8_t base, uint8_t count) {
+static Palette LoadPaletteAt(FILE *ta, uint32_t pos, uint8_t base, uint8_t count, int8_t subset = -1) {
+	uint8_t subcount = subset == -1 ? count : subset;
+
 	Palette pal(base, count);
 	fseek(ta, pos, SEEK_SET);
 	std::vector<uint16_t> buf;
-	buf.resize(count * 16);
-	fread(buf.data(), 2, count * 16, ta);
-	pal.Load(base, count, buf.data());
+	buf.resize(subcount * 16);
+	fread(buf.data(), 2, subcount * 16, ta);
+	pal.Load(base, subcount, buf.data());
 	return pal;
 }
 
@@ -69,8 +71,7 @@ static void WriteRelocs(FILE *ta, const uint32_t relocs[], size_t c, uint32_t pt
 	}
 }
 
-static bool SaveTilemapAsChips(FILE *ta, const Tilemap &tilemap, uint32_t mapID, uint32_t bg, uint32_t oldSize, uint32_t chipmapPos, uint32_t chipsetPos, uint32_t &nextPos) {
-	Chipmap chipmap;
+static bool SaveTilemapAsChips(FILE *ta, const Tilemap &tilemap, Chipmap &chipmap, uint32_t mapID, uint32_t bg, uint32_t oldSize, uint32_t chipmapPos, uint32_t chipsetPos, uint32_t &nextPos) {
 	if (!chipmap.FromTilemap(tilemap)) {
 		return false;
 	}
@@ -96,6 +97,11 @@ static bool SaveTilemapAsChips(FILE *ta, const Tilemap &tilemap, uint32_t mapID,
 		nextPos += (uint32_t)buf.size();
 	}
 	return fwrite(buf.data(), 1, buf.size(), ta) == buf.size();
+}
+
+static bool SaveTilemapAsChips(FILE *ta, const Tilemap &tilemap, uint32_t mapID, uint32_t bg, uint32_t oldSize, uint32_t chipmapPos, uint32_t chipsetPos, uint32_t &nextPos) {
+	Chipmap chipmap;
+	return SaveTilemapAsChips(ta, tilemap, chipmap, mapID, bg, oldSize, chipmapPos, chipsetPos, nextPos);
 }
 
 static bool SaveTilemap(FILE *ta, const Tilemap &tilemap, uint32_t oldSize, uint32_t oldPos, uint32_t &nextPos) {
@@ -212,10 +218,34 @@ static bool InsertIntroMaps(FILE *ta, uint32_t &nextPos) {
 
 static bool InsertRockIsleMaps(FILE *ta, uint32_t &nextPos) {
 	// One common palette and tileset for each of the layers.
-	Palette pal(0, 15);
+	Palette pal = LoadPaletteAt(ta, 0x0025B578, 0, 15, 6);
 	Tileset tileset;
 
-	// TODO: Overrides?
+	// Some of the tiles have overrides, we have to keep those.
+	std::vector<uint8_t> oldTilesetCompressed;
+	oldTilesetCompressed.resize(12064);
+	fseek(ta, 0x0019272C, SEEK_SET);
+	fread(oldTilesetCompressed.data(), 1, oldTilesetCompressed.size(), ta);
+	std::vector<uint8_t> oldTilesetData = decompress_gba_lz77(oldTilesetCompressed);
+	tileset.Load16(oldTilesetData.data(), 0x20C);
+
+	// This is the elevator door that uses overrides.
+	static const int keep[]{
+		0x081, 0x082, 0x0A0, 0x0A1, 0x0C0, 0x0C1,
+		0x1FB, 0x1FC, 0x1FD, 0x1FE, 0x1FF, 0x200,
+		0x201, 0x202, 0x203, 0x204, 0x205, 0x206,
+		0x207, 0x208, 0x209, 0x20A, 0x20B, 0x20C,
+		0xFFF,
+	};
+	int nextKeep = 0;
+	for (int i = 0; i < 0x20C; ++i) {
+		if (i == keep[nextKeep]) {
+			nextKeep++;
+			continue;
+		}
+		tileset.Free(i);
+	}
+
 	Tilemap tilemap005Fbg1(tileset);
 	if (!TilemapAndPaletteFromPNG(tilemap005Fbg1, pal, "images/map005F_bg1_eng.png", false)) {
 		return false;
@@ -230,6 +260,20 @@ static bool InsertRockIsleMaps(FILE *ta, uint32_t &nextPos) {
 	if (!TilemapAndPaletteFromPNG(tilemap005Fbg3, pal, "images/map005F_bg3_eng.png", false)) {
 		return false;
 	}
+
+	// Plot some animation tile numbers, not actually in the tileset.
+	// This part is for the sea in the background.
+	for (int x = 50; x <= 65; x += 2) {
+		tilemap005Fbg3.Override(x + 0, 6, 0x4302);
+		tilemap005Fbg3.Override(x + 1, 6, 0x4303);
+		tilemap005Fbg3.Override(x + 0, 7, 0x4300);
+		tilemap005Fbg3.Override(x + 1, 7, 0x4301);
+	}
+	// Add bottom left corner, might not be important.
+	tilemap005Fbg3.Override(0, 18, 0x03FF);
+	tilemap005Fbg3.Override(1, 18, 0x03FF);
+	tilemap005Fbg3.Override(0, 19, 0x03FF);
+	tilemap005Fbg3.Override(1, 19, 0x03FF);
 
 	// The tileset is now ready, let's compress.
 	static const uint32_t relocations[]{

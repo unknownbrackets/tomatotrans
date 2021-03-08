@@ -496,8 +496,19 @@ bool Tilemap::FromImage(const uint8_t *image, int width, int height, const Palet
 	return true;
 }
 
+void Tilemap::Override(int x, int y, uint16_t value) {
+	tiles_[y * width_ + x] = value;
+}
+
 void Tilemap::EncodeMap(uint8_t *dest) const {
 	memcpy(dest, tiles_.data(), ByteSizeMap());
+}
+
+Chip::Chip(uint16_t a1, uint16_t b1, uint16_t a2, uint16_t b2) {
+	tiles_[0] = a1;
+	tiles_[1] = b1;
+	tiles_[2] = a2;
+	tiles_[3] = b2;
 }
 
 Chip Chip::FromTilemap(const Tilemap &tilemap, int x, int y) {
@@ -517,21 +528,45 @@ bool Chip::Match(const Chip &other) const {
 	return memcmp(tiles_, other.tiles_, sizeof(tiles_)) == 0;
 }
 
+void Chipset::InsertAt(uint16_t index, const Chip &chip) {
+	if (index >= chips_.size()) {
+		chips_.resize(index + 1);
+		free_.resize(index + 1, true);
+	}
+
+	chips_[index] = chip;
+	free_[index] = false;
+}
+
 int Chipset::FindOrAdd(const Chip &chip) {
+	size_t nextFree = chips_.size();
+
 	for (size_t i = 0; i < chips_.size(); ++i) {
 		if (chips_[i].Match(chip)) {
+			free_[i] = false;
 			return (uint16_t)i;
+		} else if (free_[i] && nextFree == chips_.size()) {
+			nextFree = i;
 		}
 	}
 
-	if (chips_.size() >= 0xFFFF) {
+	if (nextFree >= 0xFFFF) {
 		// Not good, out of chips.
 		return -1;
 	}
 
-	size_t i = chips_.size();
-	chips_.push_back(chip);
-	return (uint16_t)i;
+	if (nextFree == chips_.size()) {
+		chips_.push_back(chip);
+		free_.push_back(false);
+	} else {
+		chips_[nextFree] = chip;
+		free_[nextFree] = false;
+	}
+	return (uint16_t)nextFree;
+}
+
+void Chipmap::InsertChipAt(uint16_t index, const Chip &chip) {
+	chipset_.InsertAt(index, chip);
 }
 
 bool Chipmap::FromTilemap(const Tilemap &tilemap) {

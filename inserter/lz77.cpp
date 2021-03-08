@@ -396,3 +396,49 @@ std::vector<uint8_t> compress_gba_lz77(const std::vector<uint8_t> &input, int fl
 
 	return best;
 }
+
+std::vector<uint8_t> decompress_gba_lz77(const std::vector<uint8_t> &input) {
+	std::vector<uint8_t> data;
+	if (input.size() < 4 || input[0] != 0x10) {
+		fprintf(stderr, "Input data too small to decompress via LZ77.\n");
+		return data;
+	}
+
+	uint32_t sz = input[1] | (input[2] << 8) | (input[3] < 16);
+	data.resize(sz);
+
+	uint32_t outpos = 0;
+	size_t inpos = 4;
+	while (outpos < sz && inpos < input.size()) {
+		uint8_t quad = input[inpos++];
+		if (quad == 0) {
+			memcpy(&data[outpos], &input[inpos], 8);
+			inpos += 8;
+			outpos += 8;
+			continue;
+		}
+
+		for (uint8_t bit = 0x80; bit != 0; bit >>= 1) {
+			if ((quad & bit) != 0) {
+				uint32_t offset = ((input[inpos + 0] & 0x0F) << 8) | input[inpos + 1];
+				uint32_t len = 3 + (input[inpos + 0] >> 4);
+				inpos += 2;
+
+				if (len > sz - outpos) {
+					len = sz - outpos;
+				}
+
+				uint32_t srcpos = outpos - 1 - offset;
+				for (uint32_t i = 0; i < len; ++i) {
+					data[outpos++] = data[srcpos + i];
+				}
+			} else if (outpos < sz) {
+				data[outpos++] = input[inpos++];
+			} else {
+				break;
+			}
+		}
+	}
+
+	return data;
+}

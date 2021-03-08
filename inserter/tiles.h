@@ -103,6 +103,7 @@ public:
 	}
 
 	bool FromImage(const uint8_t *image, int width, int height, const Palette &pal, bool is256);
+	void Override(int x, int y, uint16_t value);
 
 	uint16_t At(int x, int y) const {
 		return tiles_[y * width_ + x];
@@ -144,6 +145,10 @@ private:
 
 class Chip {
 public:
+	Chip() {
+	}
+
+	explicit Chip(uint16_t a1, uint16_t b1, uint16_t a2, uint16_t b2);
 	static Chip FromTilemap(const Tilemap &tilemap, int x, int y);
 
 	void Encode(uint8_t *dest) const;
@@ -156,6 +161,7 @@ private:
 
 class Chipset {
 public:
+	void InsertAt(uint16_t index, const Chip &chip);
 	int FindOrAdd(const Chip &chip);
 
 	size_t ByteSize() const {
@@ -171,10 +177,12 @@ public:
 
 private:
 	std::vector<Chip> chips_;
+	std::vector<bool> free_;
 };
 
 class Chipmap {
 public:
+	void InsertChipAt(uint16_t index, const Chip &chip);
 	bool FromTilemap(const Tilemap &tilemap);
 
 	int Width() const {
