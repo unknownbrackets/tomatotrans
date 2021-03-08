@@ -39,27 +39,6 @@ bool Palette::FromImage16(const uint8_t *image, int width, int height) {
 			if (!FromTile16(src, width)) {
 				return false;
 			}
-
-			/*
-			uint16_t c = ColorTo555(src);
-			if ((c & 0x8000) != 0 || existing.count(c) != 0) {
-				// Transparent is always index 0, or existing.
-				continue;
-			}
-
-			if (nextFree == 256) {
-				return false;
-			}
-
-			colors_[nextFree] = c;
-			used_[nextFree] = true;
-			existing.insert(c);
-			for (int i = start; i < end; ++i) {
-				if (!used_[i]) {
-					nextFree = i;
-					break;
-				}
-			}*/
 		}
 	}
 

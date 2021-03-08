@@ -9,7 +9,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-
 static Palette LoadPaletteAt(FILE *ta, uint32_t pos, uint8_t base, uint8_t count) {
 	Palette pal(base, count);
 	fseek(ta, pos, SEEK_SET);
@@ -63,6 +62,13 @@ static bool TilemapAndPaletteFromPNG(Tilemap &tilemap, Palette &pal, const char 
 	return success;
 }
 
+static void WriteRelocs(FILE *ta, const uint32_t relocs[], size_t c, uint32_t ptr) {
+	for (size_t i = 0; i < c; ++i) {
+		fseek(ta, relocs[i], SEEK_SET);
+		WriteLE32(ta, ptr | 0x08000000);
+	}
+}
+
 static bool SaveTilemapAsChips(FILE *ta, const Tilemap &tilemap, int mapID, uint32_t oldSize, uint32_t chipmapPos, uint32_t chipsetPos, uint32_t &nextPos) {
 	Chipmap chipmap;
 	if (!chipmap.FromTilemap(tilemap)) {
@@ -80,19 +86,16 @@ static bool SaveTilemapAsChips(FILE *ta, const Tilemap &tilemap, int mapID, uint
 
 	if (buf.size() <= oldSize) {
 		fseek(ta, chipsetPos, SEEK_SET);
-		fwrite(buf.data(), 1, buf.size(), ta);
 	} else {
 		nextPos = (nextPos + 3) & ~3;
+
+		const uint32_t relocations[]{ 0x0031E7B4 + 12 * (uint32_t)mapID + 8 };
+		WriteRelocs(ta, relocations, std::size(relocations), nextPos);
+
 		fseek(ta, nextPos, SEEK_SET);
-		fwrite(buf.data(), 1, buf.size(), ta);
-
-		fseek(ta, 0x0031E7B4 + 12 * mapID + 8, SEEK_SET);
-		WriteLE32(ta, nextPos | 0x08000000);
-
 		nextPos += (uint32_t)buf.size();
 	}
-
-	return true;
+	return fwrite(buf.data(), 1, buf.size(), ta) == buf.size();
 }
 
 static bool SaveTilemap(FILE *ta, const Tilemap &tilemap, uint32_t oldSize, uint32_t oldPos, uint32_t &nextPos) {
@@ -104,9 +107,60 @@ static bool SaveTilemap(FILE *ta, const Tilemap &tilemap, uint32_t oldSize, uint
 	fseek(ta, oldPos, SEEK_SET);
 	buf.resize(tilemap.ByteSizeMap());
 	tilemap.EncodeMap(buf.data());
-	fwrite(buf.data(), 1, buf.size(), ta);
+	return fwrite(buf.data(), 1, buf.size(), ta) == buf.size();
+}
 
-	return true;
+static std::vector<uint8_t> CompressTileset(const Tileset &tileset, int depth) {
+	std::vector<uint8_t> buf;
+	if (depth == 16) {
+		buf.resize(tileset.ByteSize16());
+		tileset.Encode16(buf.data());
+	} else {
+		buf.resize(tileset.ByteSize256());
+		tileset.Encode256(buf.data());
+	}
+	return compress_gba_lz77(buf, LZ77_VRAM_SAFE);
+}
+
+struct SaveTilesetParams {
+	int depth;
+	uint32_t oldSize;
+	uint32_t oldPos;
+	const uint32_t *relocs;
+	size_t relocCount;
+};
+
+static bool SaveCompressedTileset(FILE *ta, const Tileset &tileset, const SaveTilesetParams &params, uint32_t &nextPos) {
+	std::vector<uint8_t> compressed = CompressTileset(tileset, params.depth);
+	if (compressed.size() > params.oldSize) {
+		nextPos = (nextPos + 3) & ~3;
+
+		// Relocate the pointers...
+		WriteRelocs(ta, params.relocs, params.relocCount, nextPos);
+
+		fseek(ta, nextPos, SEEK_SET);
+		nextPos += (uint32_t)compressed.size();
+	} else {
+		fseek(ta, params.oldPos, SEEK_SET);
+	}
+	return fwrite(compressed.data(), 1, compressed.size(), ta) == compressed.size();
+}
+
+static bool SavePalette(FILE *ta, const Palette &pal, uint8_t base, uint8_t count, uint32_t pos) {
+	std::vector<uint16_t> palbuf;
+	fseek(ta, pos, SEEK_SET);
+	palbuf.resize(count * 16);
+	pal.Encode(palbuf.data(), base, count);
+	return fwrite(palbuf.data(), sizeof(uint16_t), palbuf.size(), ta) == palbuf.size();
+}
+
+static bool SaveNewPalette(FILE *ta, const Palette &pal, uint8_t base, uint8_t count, uint32_t &nextPos) {
+	nextPos = (nextPos + 3) & ~3;
+	if (SavePalette(ta, pal, base, count, nextPos)) {
+		nextPos += count * 16 * (uint32_t)sizeof(uint16_t);
+		return true;
+	}
+	return false;
 }
 
 static bool InsertIntroMaps(FILE *ta, uint32_t &nextPos) {
@@ -132,26 +186,14 @@ static bool InsertIntroMaps(FILE *ta, uint32_t &nextPos) {
 	}
 
 	// The tileset is now ready, let's compress.
-	std::vector<uint8_t> buf;
-	buf.resize(tileset.ByteSize16());
-	tileset.Encode16(buf.data());
-	std::vector<uint8_t> compressed = compress_gba_lz77(buf, LZ77_VRAM_SAFE);
-	if (compressed.size() > 2816) {
-		nextPos = (nextPos + 3) & ~3;
-		// Relocate the pointers...
-		fseek(ta, 0x0015BA3C + 4 * 0x0000, SEEK_SET);
-		WriteLE32(ta, nextPos | 0x08000000);
-		fseek(ta, 0x0015BA3C + 4 * 0x0070, SEEK_SET);
-		WriteLE32(ta, nextPos | 0x08000000);
-		fseek(ta, 0x0015BA3C + 4 * 0x01CC, SEEK_SET);
-		WriteLE32(ta, nextPos | 0x08000000);
-
-		fseek(ta, nextPos, SEEK_SET);
-		fwrite(compressed.data(), 1, compressed.size(), ta);
-		nextPos += (uint32_t)compressed.size();
-	} else {
-		fseek(ta, 0x00186D30, SEEK_SET);
-		fwrite(compressed.data(), 1, compressed.size(), ta);
+	static const uint32_t relocations[]{
+		0x0015BA3C + 4 * 0x0000,
+		0x0015BA3C + 4 * 0x0070,
+		0x0015BA3C + 4 * 0x01CC,
+	};
+	SaveTilesetParams params{ 16, 2816, 0x00186D30, relocations, std::size(relocations) };
+	if (!SaveCompressedTileset(ta, tileset, params, nextPos)) {
+		return false;
 	}
 
 	if (!SaveTilemapAsChips(ta, tilemap0000, 0x0000, 544, 0x0027B864, 0x0032DF2C, nextPos)) {
@@ -225,18 +267,17 @@ static bool InsertDefeatScreen(FILE *ta, uint32_t &nextPos) {
 	buf.resize(tileset.ByteSize16());
 	tileset.Encode16(buf.data());
 	if (buf.size() > 0x3400) {
-		// Okay, need to relocate.
 		nextPos = (nextPos + 3) & ~3;
-		fseek(ta, 0x0002A684, SEEK_SET);
-		WriteLE32(ta, nextPos | 0x08000000);
+
+		static const uint32_t relocations[]{ 0x0002A684 };
+		WriteRelocs(ta, relocations, std::size(relocations), nextPos);
 
 		fseek(ta, nextPos, SEEK_SET);
-		fwrite(buf.data(), 1, buf.size(), ta);
 		nextPos += (uint32_t)buf.size();
 	} else {
 		fseek(ta, 0x0063B8D0, SEEK_SET);
-		fwrite(buf.data(), 1, buf.size(), ta);
 	}
+	fwrite(buf.data(), 1, buf.size(), ta);
 
 	if (!SaveTilemap(ta, regularBG, 0x04B0, 0x0063ECD2, nextPos)) {
 		return false;
@@ -290,41 +331,22 @@ static bool InsertTitleScreen(FILE *ta, uint32_t &nextPos) {
 	}
 
 	// The tileset is now ready, let's compress.
-	std::vector<uint8_t> buf;
-	buf.resize(tileset.ByteSize256());
-	tileset.Encode256(buf.data());
-	std::vector<uint8_t> compressed = compress_gba_lz77(buf, LZ77_VRAM_SAFE);
-	if (compressed.size() > 9460) {
-		// Okay, need to relocate.
-		nextPos = (nextPos + 3) & ~3;
-		fseek(ta, 0x00082A18, SEEK_SET);
-		WriteLE32(ta, nextPos | 0x08000000);
-		fseek(ta, 0x000863E8, SEEK_SET);
-		WriteLE32(ta, nextPos | 0x08000000);
-
-		fseek(ta, nextPos, SEEK_SET);
-		fwrite(compressed.data(), 1, compressed.size(), ta);
-		nextPos += (uint32_t)compressed.size();
-	} else {
-		fseek(ta, 0x0049FAB8, SEEK_SET);
-		fwrite(compressed.data(), 1, compressed.size(), ta);
+	static const uint32_t relocations[]{ 0x00082A18, 0x000863E8 };
+	SaveTilesetParams params{ 256, 9460, 0x0049FAB8, relocations, std::size(relocations) };
+	if (!SaveCompressedTileset(ta, tileset, params, nextPos)) {
+		return false;
 	}
 
 	if (pal.TotalUsage() <= 128) {
-		std::vector<uint16_t> palbuf;
-		fseek(ta, 0x0045BB64, SEEK_SET);
-		palbuf.resize(128);
-		pal.Encode(palbuf.data(), 8, 8);
-		fwrite(palbuf.data(), sizeof(uint16_t), palbuf.size(), ta);
+		if (!SavePalette(ta, pal, 8, 8, 0x0045BB64)) {
+			return false;
+		}
 	} else {
 		static const uint32_t relocationPtrs[]{ 0x00082A20, 0x000863D0 };
 		static const uint32_t relocationDests[]{ 0x00082A24, 0x000863D4 };
 		static const uint32_t relocationSizes[]{ 0x00082A28, 0x000863D8 };
 		nextPos = (nextPos + 3) & ~3;
-		for (uint32_t p : relocationPtrs) {
-			fseek(ta, p, SEEK_SET);
-			WriteLE32(ta, nextPos | 0x08000000);
-		}
+		WriteRelocs(ta, relocationPtrs, std::size(relocationPtrs), nextPos);
 		for (uint32_t p : relocationDests) {
 			fseek(ta, p, SEEK_SET);
 			WriteLE32(ta, 0x050000E0);
@@ -333,12 +355,9 @@ static bool InsertTitleScreen(FILE *ta, uint32_t &nextPos) {
 			fseek(ta, p, SEEK_SET);
 			WriteLE32(ta, 0x80000090);
 		}
-		std::vector<uint16_t> palbuf;
-		fseek(ta, nextPos, SEEK_SET);
-		palbuf.resize(9 * 16);
-		pal.Encode(palbuf.data(), 7, 9);
-		fwrite(palbuf.data(), sizeof(uint16_t), palbuf.size(), ta);
-		nextPos += (uint32_t)palbuf.size() * sizeof(uint16_t);
+		if (!SaveNewPalette(ta, pal, 7, 9, nextPos)) {
+			return false;
+		}
 	}
 
 	if (!SaveTilemap(ta, logo, 0x0500, 0x0045C384, nextPos)) {
@@ -396,36 +415,21 @@ static bool InsertTitleButtons(FILE *ta, uint32_t &nextPos) {
 	}
 
 	// The tileset is now ready, let's compress.
-	std::vector<uint8_t> buf;
-	buf.resize(tileset.ByteSize16());
-	tileset.Encode16(buf.data());
-	std::vector<uint8_t> compressed = compress_gba_lz77(buf, LZ77_VRAM_SAFE);
-	if (compressed.size() > 1056) {
-		// Okay, need to relocate.
-		nextPos = (nextPos + 3) & ~3;
-		fseek(ta, 0x00082F44, SEEK_SET);
-		WriteLE32(ta, nextPos | 0x08000000);
-
-		fseek(ta, nextPos, SEEK_SET);
-		fwrite(compressed.data(), 1, compressed.size(), ta);
-		nextPos += (uint32_t)compressed.size();
-	} else {
-		fseek(ta, 0x0049F698, SEEK_SET);
-		fwrite(compressed.data(), 1, compressed.size(), ta);
+	static const uint32_t relocations[]{ 0x00082F44 };
+	SaveTilesetParams params{ 16, 1056, 0x0049F698, relocations, std::size(relocations) };
+	if (!SaveCompressedTileset(ta, tileset, params, nextPos)) {
+		return false;
 	}
 
 	// And also insert the updated palette.
-	std::vector<uint16_t> palbuf;
-	palbuf.resize(16);
-	pal.Encode(palbuf.data(), 0, 1);
-	fseek(ta, 0x0045BB04, SEEK_SET);
-	fwrite(palbuf.data(), sizeof(uint16_t), palbuf.size(), ta);
+	if (!SavePalette(ta, pal, 0, 1, 0x0045BB04)) {
+		return false;
+	}
 
 	return true;
 }
 
 static bool InsertGimmickMenuIcons(FILE *ta, uint32_t &nextPos) {
-	// We don't change the palette, just reuse.  Should we?
 	Palette pal(7, 1);
 
 	Tileset tileset;
@@ -462,11 +466,9 @@ static bool InsertGimmickMenuIcons(FILE *ta, uint32_t &nextPos) {
 	fwrite(buf.data(), 1, buf.size(), ta);
 
 	// And also insert the updated palette.
-	std::vector<uint16_t> palbuf;
-	palbuf.resize(16);
-	pal.Encode(palbuf.data(), 7, 1);
-	fseek(ta, 0x00489308, SEEK_SET);
-	fwrite(palbuf.data(), sizeof(uint16_t), palbuf.size(), ta);
+	if (!SavePalette(ta, pal, 7, 1, 0x00489308)) {
+		return false;
+	}
 
 	return true;
 }
@@ -503,41 +505,16 @@ static bool InsertGimmickBattleIcons(FILE *ta, uint32_t &nextPos) {
 	}
 
 	// The tileset is now ready, let's compress.
-	std::vector<uint8_t> buf;
-	buf.resize(craneTileset.ByteSize16());
-	craneTileset.Encode16(buf.data());
-	std::vector<uint8_t> compressed = compress_gba_lz77(buf, LZ77_VRAM_SAFE);
-	if (compressed.size() > 164) {
-		// Okay, need to relocate.
-		nextPos = (nextPos + 3) & ~3;
-		fseek(ta, 0x00052404, SEEK_SET);
-		WriteLE32(ta, nextPos | 0x08000000);
-
-		fseek(ta, nextPos, SEEK_SET);
-		fwrite(compressed.data(), 1, compressed.size(), ta);
-		nextPos += (uint32_t)compressed.size();
-	} else {
-		fseek(ta, 0x00599058, SEEK_SET);
-		fwrite(compressed.data(), 1, compressed.size(), ta);
+	static const uint32_t craneRelocs[]{ 0x00599058 };
+	SaveTilesetParams craneParams{ 16, 164, 0x00599058, craneRelocs, std::size(craneRelocs) };
+	if (!SaveCompressedTileset(ta, craneTileset, craneParams, nextPos)) {
+		return false;
 	}
 
-	buf.resize(catTileset.ByteSize16());
-	catTileset.Encode16(buf.data());
-	compressed = compress_gba_lz77(buf, LZ77_VRAM_SAFE);
-	if (compressed.size() > 1011) {
-		// Okay, need to relocate.
-		nextPos = (nextPos + 3) & ~3;
-		fseek(ta, 0x0005CFE0, SEEK_SET);
-		WriteLE32(ta, nextPos | 0x08000000);
-		fseek(ta, 0x0005D0F8, SEEK_SET);
-		WriteLE32(ta, nextPos | 0x08000000);
-
-		fseek(ta, nextPos, SEEK_SET);
-		fwrite(compressed.data(), 1, compressed.size(), ta);
-		nextPos += (uint32_t)compressed.size();
-	} else {
-		fseek(ta, 0x0059B990, SEEK_SET);
-		fwrite(compressed.data(), 1, compressed.size(), ta);
+	static const uint32_t catRelocs[]{ 0x0005CFE0, 0x0005D0F8 };
+	SaveTilesetParams catParams{ 16, 1011, 0x0059B990, catRelocs, std::size(catRelocs) };
+	if (!SaveCompressedTileset(ta, catTileset, catParams, nextPos)) {
+		return false;
 	}
 
 	return true;
@@ -586,27 +563,10 @@ static bool InsertGimicaCard(FILE *ta, uint32_t &nextPos) {
 	}
 
 	// The tileset is now ready, let's compress.
-	std::vector<uint8_t> buf;
-	buf.resize(tileset.ByteSize16());
-	tileset.Encode16(buf.data());
-	std::vector<uint8_t> compressed = compress_gba_lz77(buf, LZ77_VRAM_SAFE);
-	if (compressed.size() > 801) {
-		// Okay, need to relocate.
-		static const uint32_t relocations[]{ 0x0007E804, 0x000801C8, 0x000819A0, 0x0008BC14 };
-
-		nextPos = (nextPos + 3) & ~3;
-		for (uint32_t reloc : relocations)
-		{
-			fseek(ta, reloc, SEEK_SET);
-			WriteLE32(ta, nextPos | 0x08000000);
-		}
-
-		fseek(ta, nextPos, SEEK_SET);
-		fwrite(compressed.data(), 1, compressed.size(), ta);
-		nextPos += (uint32_t)compressed.size();
-	} else {
-		fseek(ta, 0x004858B4, SEEK_SET);
-		fwrite(compressed.data(), 1, compressed.size(), ta);
+	static const uint32_t relocations[]{ 0x0007E804, 0x000801C8, 0x000819A0, 0x0008BC14 };
+	SaveTilesetParams params{ 16, 801, 0x004858B4, relocations, std::size(relocations) };
+	if (!SaveCompressedTileset(ta, tileset, params, nextPos)) {
+		return false;
 	}
 
 	return true;
@@ -647,30 +607,16 @@ static bool InsertShopBanners(FILE *ta, uint32_t &nextPos) {
 		}
 
 		// The tileset is now ready, let's compress.
-		std::vector<uint8_t> buf;
-		buf.resize(tileset.ByteSize16());
-		tileset.Encode16(buf.data());
-		std::vector<uint8_t> compressed = compress_gba_lz77(buf, LZ77_VRAM_SAFE);
-		if (compressed.size() > originalSizes[i]) {
-			// Okay, need to relocate.
-			nextPos = (nextPos + 3) & ~3;
-			fseek(ta, tilesetPtrBase + i * 4, SEEK_SET);
-			WriteLE32(ta, nextPos | 0x08000000);
-
-			fseek(ta, nextPos, SEEK_SET);
-			fwrite(compressed.data(), 1, compressed.size(), ta);
-			nextPos += (uint32_t)compressed.size();
-		} else {
-			fseek(ta, tilesetPtr & ~0x08000000, SEEK_SET);
-			fwrite(compressed.data(), 1, compressed.size(), ta);
+		const uint32_t relocations[]{ tilesetPtrBase + i * 4 };
+		SaveTilesetParams params{ 16, originalSizes[i], tilesetPtr & ~0x08000000, relocations, std::size(relocations) };
+		if (!SaveCompressedTileset(ta, tileset, params, nextPos)) {
+			return false;
 		}
 
 		// And also insert the updated palette.
-		std::vector<uint16_t> palbuf;
-		palbuf.resize(16);
-		pal.Encode(palbuf.data(), 0, 1);
-		fseek(ta, palettePtr & ~0x08000000, SEEK_SET);
-		fwrite(palbuf.data(), sizeof(uint16_t), palbuf.size(), ta);
+		if (!SavePalette(ta, pal, 0, 1, palettePtr & ~0x08000000)) {
+			return false;
+		}
 	}
 
 	return true;
