@@ -408,6 +408,27 @@ static bool InsertRockIsleMaps(FILE *ta, uint32_t &nextPos) {
 	return true;
 }
 
+static bool InsertThiefMap(FILE *ta, uint32_t &nextPos) {
+	// This palette is reused across multiple tilemaps.
+	Palette pal = LoadPaletteAt(ta, 0x0026acf8, 0, 15);
+	Tileset tileset;
+	LoadCompressedTileset(ta, tileset, 0x00232B1C, 14329, 0x300);
+	// We also can't change the tileset, so lock it.
+	tileset.LockSize();
+
+	Tilemap tilemap01B1(tileset);
+	if (!TilemapFromPNG(tilemap01B1, pal, "images/map01B1_bg2_eng.png", false)) {
+		return false;
+	}
+
+	// Since we're not allowing the palette or tileset to change, this is simple.
+	if (!SaveTilemapAsChips(ta, tilemap01B1, { 0x01B1 }, 2, 824, 0x002dbdf0, 0x00394044, nextPos)) {
+		return false;
+	}
+
+	return true;
+}
+
 static bool InsertDefeatScreen(FILE *ta, uint32_t &nextPos) {
 	// We don't change the palette, just reuse.  Should we?
 	Palette pal = LoadPaletteAt(ta, 0x0063FF98, 0, 16);
@@ -831,6 +852,7 @@ bool InsertImages(FILE *ta, uint32_t &nextPos) {
 		{ InsertIntroMaps, "intro maps" },
 		{ InsertSpillMaps, "Spill maps" },
 		{ InsertRockIsleMaps, "Rock Isle maps" },
+		{ InsertThiefMap, "thief map" },
 		{ InsertDefeatScreen, "defeat screen" },
 		{ InsertTitleScreen, "title screen" },
 		{ InsertTitleButtons, "title buttons" },
