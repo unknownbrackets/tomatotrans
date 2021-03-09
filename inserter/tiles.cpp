@@ -266,6 +266,22 @@ int Palette::FindIndex256(const uint8_t *color4) const {
 	return -1;
 }
 
+bool Palette::To555Tile16(const uint8_t *input, uint16_t *output, uint8_t palette) const {
+	if (palette < validBase_ || palette >= validEnd_) {
+		return false;
+	}
+
+	uint16_t base = palette * 16;
+	for (int i = 0; i < 64; ++i) {
+		if (input[i] == 0) {
+			output[i] = 0x8000;
+		} else {
+			output[i] = colors_[base + input[i]];
+		}
+	}
+	return true;
+}
+
 Tile Tile::Load16(const uint8_t *src) {
 	Tile tile;
 	for (int i = 0; i < 32; ++i) {
@@ -293,16 +309,7 @@ void Tile::Encode256(uint8_t *dest) const {
 
 bool Tile::From16(const uint8_t *image, const Palette &pal, uint8_t *palette, int pixelStride) {
 	// First, find a common ground palette.
-	uint16_t common = 0xFFFF;
-	for (int y = 0; y < 8; ++y) {
-		for (int x = 0; x < 8; ++x) {
-			const uint8_t *src = image + (y * pixelStride + x) * 4;
-			common = pal.FindPaletteMask16(src, common);
-			if (common == 0) {
-				return false;
-			}
-		}
-	}
+	uint16_t common = FindPalettes(image, pal, pixelStride);
 
 	// Okay, great.  Now we can get the indexes for the first matching palette.
 	for (int y = 0; y < 8; ++y) {
@@ -317,6 +324,20 @@ bool Tile::From16(const uint8_t *image, const Palette &pal, uint8_t *palette, in
 	}
 
 	return true;
+}
+
+uint16_t Tile::FindPalettes(const uint8_t *image, const Palette &pal, int pixelStride) {
+	uint16_t common = 0xFFFF;
+	for (int y = 0; y < 8; ++y) {
+		for (int x = 0; x < 8; ++x) {
+			const uint8_t *src = image + (y * pixelStride + x) * 4;
+			common = pal.FindPaletteMask16(src, common);
+			if (common == 0) {
+				return 0;
+			}
+		}
+	}
+	return common;
 }
 
 bool Tile::From256(const uint8_t *image, const Palette &pal, int pixelStride) {
@@ -355,21 +376,109 @@ bool Tile::Match(const Tile &other, bool *hflip, bool *vflip) const {
 		return true;
 	}
 
-	// Last chance, not looking good.
+	if (MatchHFlip(other, false)) {
+		*hflip = true;
+		*vflip = false;
+		return true;
+	}
+	// Last chance is horizontal and vertical flip.
+	if (MatchHFlip(other, true)) {
+		*hflip = true;
+		*vflip = true;
+		return true;
+	}
+
+	return false;
+}
+
+bool Tile::MatchHFlip(const Tile &other, bool vflip) const {
 	for (int y = 0; y < 8; ++y) {
+		int yy = vflip ? 7 - y : y;
 		for (int x = 0; x < 8; ++x) {
-			if (pixels_[y * 8 + x] != other.pixels_[y * 8 + (7 - x)]) {
+			if (pixels_[y * 8 + x] != other.pixels_[yy * 8 + (7 - x)]) {
 				return false;
 			}
 		}
 	}
-
-	*hflip = true;
-	*vflip = false;
 	return true;
 }
 
+void TilesetLookupCache::Add(int index, const Tile &tile) {
+	uint8_t pixels[64];
+	tile.Encode256(pixels);
+
+	Entry entry;
+	for (int p = 0; p < 16; ++p) {
+		if (!pal_.To555Tile16(pixels, entry.pixels, p)) {
+			continue;
+		}
+
+		entry.index = (index & 0x0FFF) | (p << 12);
+		entries_.push_back(entry);
+
+		FlipV(entry);
+		entries_.push_back(entry);
+
+		FlipH(entry);
+		entries_.push_back(entry);
+
+		// Only horizontal.
+		FlipV(entry);
+		entries_.push_back(entry);
+	}
+}
+
+int TilesetLookupCache::Find16(const uint8_t *image, int pixelStride) {
+	Entry match;
+	for (int y = 0; y < 8; ++y) {
+		for (int x = 0; x < 8; ++x) {
+			const uint8_t *src = image + (y * pixelStride + x) * 4;
+			uint16_t c = pal_.ColorTo555(src);
+			if (c & 0x8000) {
+				c = 0x8000;
+			}
+			match.pixels[y * 8 + x] = c;
+		}
+	}
+
+	// Okay, now find that entry.
+	for (const Entry &entry : entries_) {
+		if (memcmp(match.pixels, entry.pixels, sizeof(match.pixels)) == 0) {
+			return entry.index;
+		}
+	}
+
+	return -1;
+}
+
+void TilesetLookupCache::FlipV(Entry &entry) {
+	entry.index ^= 0x0800;
+	uint16_t buf[16];
+	// Only need half, because we swap.
+	for (int y = 0; y < 4; ++y) {
+		// Swap the top - y row with bottom + y.
+		memcpy(buf, &entry.pixels[y * 8], sizeof(uint16_t) * 8);
+		memcpy(&entry.pixels[y * 8], &entry.pixels[(7 - y) * 8], sizeof(uint16_t) * 8);
+		memcpy(&entry.pixels[(7 - y) * 8], buf, sizeof(uint16_t) * 8);
+	}
+}
+
+void TilesetLookupCache::FlipH(Entry &entry) {
+	entry.index ^= 0x0400;
+	for (int y = 0; y < 8; ++y) {
+		// Only need to go half to mirror, since we swap.
+		for (int x = 0; x < 4; ++x) {
+			uint16_t buf = entry.pixels[y * 8 + x];
+			entry.pixels[y * 8 + x] = entry.pixels[y * 8 + 7 - x];
+			entry.pixels[y * 8 + 7 - x] = buf;
+		}
+	}
+}
+
 void Tileset::Load16(uint8_t *data, int count) {
+	if (sizeLocked_ && count != (int)tiles_.size()) {
+		return;
+	}
 	tiles_.resize(count);
 	free_.resize(count, false);
 	for (size_t i = 0; i < tiles_.size(); ++i) {
@@ -407,6 +516,9 @@ int Tileset::Add(const Tile &tile) {
 		return -1;
 	}
 	if (i == tiles_.size()) {
+		if (sizeLocked_) {
+			return -1;
+		}
 		tiles_.push_back(tile);
 		free_.push_back(false);
 	} else {
@@ -432,9 +544,24 @@ void Tileset::Free(int i) {
 	}
 }
 
+void Tileset::LockSize() {
+	sizeLocked_ = true;
+}
+
 void Tileset::Clear() {
 	tiles_.clear();
 	free_.clear();
+	sizeLocked_ = false;
+}
+
+void Tileset::PopulateCache(TilesetLookupCache &cache) const {
+	for (size_t i = 0; i < tiles_.size(); ++i) {
+		if (free_[i]) {
+			continue;
+		}
+
+		cache.Add((int)i, tiles_[i]);
+	}
 }
 
 bool Tilemap::FromImage(const uint8_t *image, int width, int height, const Palette &pal, bool is256) {
@@ -457,6 +584,12 @@ bool Tilemap::FromImage(const uint8_t *image, int width, int height, const Palet
 		return true;
 	};
 
+	// Palettes can have duplicate entries, so we compare the expanded colors.
+	TilesetLookupCache cache(pal);
+	if (!is256_) {
+		tileset_.PopulateCache(cache);
+	}
+
 	const uint8_t *lastSrc = nullptr;
 	uint16_t lastIndex = 0;
 	for (int y = 0; y < height_; ++y) {
@@ -469,22 +602,31 @@ bool Tilemap::FromImage(const uint8_t *image, int width, int height, const Palet
 				continue;
 			}
 
-			Tile tile;
-			uint8_t palette = 0;
+			int index = -1;
 			if (is256) {
+				Tile tile;
 				if (!tile.From256(src, pal, width)) {
 					fprintf(stderr, "Could not palette tile at %d,%d\n", x, y);
 					return false;
 				}
+				index = tileset_.FindOrAdd(tile, 0);
 			} else {
-				if (!tile.From16(src, pal, &palette, width)) {
-					fprintf(stderr, "Could not palette tile at %d,%d\n", x, y);
-					return false;
+				index = cache.Find16(src, width);
+				if (index == -1) {
+					Tile tile;
+					uint8_t palette = 0;
+					if (!tile.From16(src, pal, &palette, width)) {
+						fprintf(stderr, "Could not palette tile at %d,%d\n", x, y);
+						return false;
+					}
+					index = tileset_.FindOrAdd(tile, palette);
+					if (index != -1) {
+						cache.Add(index, tile);
+					}
 				}
 			}
-			int index = tileset_.FindOrAdd(tile, palette);
 			if (index == -1) {
-				fprintf(stderr, "Could not allocate tile\n");
+				fprintf(stderr, "Could not allocate tile at %d,%d\n", x, y);
 				return false;
 			}
 			lastSrc = src;

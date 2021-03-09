@@ -1,6 +1,8 @@
 #include <cstdint>
 #include <vector>
 
+class TilesetLookupCache;
+
 class Palette {
 public:
 	Palette(uint8_t base, uint8_t count);
@@ -15,6 +17,7 @@ public:
 
 	// Finds palettes that contain a color, so you can make all of a tile use the same palette.
 	uint16_t FindPaletteMask16(const uint8_t *color4, uint16_t lastMask = 0xFFFF) const;
+	// Find the index for a color within palette mask.
 	int FindIndex16(const uint8_t *color4, uint16_t paletteMask, uint8_t *palette) const;
 	int FindIndex256(const uint8_t *color4) const;
 
@@ -29,10 +32,14 @@ private:
 		return (r << 0) | (g << 5) | (b << 10) | (a << 15);
 	}
 
+	bool To555Tile16(const uint8_t *input, uint16_t *output, uint8_t palette) const;
+
 	uint16_t colors_[256]{};
 	bool used_[256]{};
 	uint8_t validBase_ = 16;
 	uint8_t validEnd_ = 0;
+
+	friend class TilesetLookupCache;
 };
 
 class Tile {
@@ -48,7 +55,31 @@ public:
 	bool Match(const Tile &other, bool *hflip, bool *vflip) const;
 
 private:
+	static uint16_t FindPalettes(const uint8_t *image, const Palette &pal, int pixelStride);
+	bool MatchHFlip(const Tile &other, bool vflip) const;
+
 	uint8_t pixels_[64];
+};
+
+class TilesetLookupCache {
+public:
+	TilesetLookupCache(const Palette &pal) : pal_(pal) {
+	}
+
+	void Add(int index, const Tile &tile);
+	int Find16(const uint8_t *image, int pixelStride);
+
+private:
+	struct Entry {
+		uint16_t pixels[64];
+		uint16_t index;
+	};
+
+	void FlipV(Entry &entry);
+	void FlipH(Entry &entry);
+
+	const Palette &pal_;
+	std::vector<Entry> entries_;
 };
 
 class Tileset {
@@ -63,6 +94,7 @@ public:
 	int FindOrAdd(const Tile &tile, uint8_t palette);
 	int Add(const Tile &tile);
 	void Free(int i);
+	void LockSize();
 	void Clear();
 
 	size_t ByteSize16() const {
@@ -91,10 +123,13 @@ public:
 		return tiles_[i];
 	}
 
+	void PopulateCache(TilesetLookupCache &cache) const;
+
 private:
 	std::vector<Tile> tiles_;
 	std::vector<bool> free_;
 	bool allowFlip_ = true;
+	bool sizeLocked_ = false;
 };
 
 class Tilemap {
