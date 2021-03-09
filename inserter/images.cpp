@@ -9,15 +9,13 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-static Palette LoadPaletteAt(FILE *ta, uint32_t pos, uint8_t base, uint8_t count, int8_t subset = -1) {
-	uint8_t subcount = subset == -1 ? count : subset;
-
+static Palette LoadPaletteAt(FILE *ta, uint32_t pos, uint8_t base, uint8_t count) {
 	Palette pal(base, count);
 	fseek(ta, pos, SEEK_SET);
 	std::vector<uint16_t> buf;
-	buf.resize(subcount * 16);
-	fread(buf.data(), 2, subcount * 16, ta);
-	pal.Load(base, subcount, buf.data());
+	buf.resize(count * 16);
+	fread(buf.data(), 2, count * 16, ta);
+	pal.Load(base, count, buf.data());
 	return pal;
 }
 
@@ -64,6 +62,32 @@ static bool TilemapAndPaletteFromPNG(Tilemap &tilemap, Palette &pal, const char 
 	return success;
 }
 
+struct TilemapLayers {
+	TilemapLayers(Tileset &tileset) : bg1(tileset), bg2(tileset), bg3(tileset) {
+	}
+
+	Tilemap bg1;
+	Tilemap bg2;
+	Tilemap bg3;
+};
+
+static bool TilemapsAndPaletteFromPNG(TilemapLayers &tilemaps, Palette &pal, const char *filename, bool is256) {
+	char bgfilename[512];
+	snprintf(bgfilename, sizeof(bgfilename), filename, 1);
+	if (!TilemapAndPaletteFromPNG(tilemaps.bg1, pal, bgfilename, is256)) {
+		return false;
+	}
+	snprintf(bgfilename, sizeof(bgfilename), filename, 2);
+	if (!TilemapAndPaletteFromPNG(tilemaps.bg2, pal, bgfilename, is256)) {
+		return false;
+	}
+	snprintf(bgfilename, sizeof(bgfilename), filename, 3);
+	if (!TilemapAndPaletteFromPNG(tilemaps.bg3, pal, bgfilename, is256)) {
+		return false;
+	}
+	return true;
+}
+
 static void WriteRelocs(FILE *ta, const uint32_t relocs[], size_t c, uint32_t ptr) {
 	for (size_t i = 0; i < c; ++i) {
 		fseek(ta, relocs[i], SEEK_SET);
@@ -71,7 +95,8 @@ static void WriteRelocs(FILE *ta, const uint32_t relocs[], size_t c, uint32_t pt
 	}
 }
 
-static bool SaveTilemapAsChips(FILE *ta, const Tilemap &tilemap, Chipmap &chipmap, uint32_t mapID, uint32_t bg, uint32_t oldSize, uint32_t chipmapPos, uint32_t chipsetPos, uint32_t &nextPos) {
+static bool SaveTilemapAsChips(FILE *ta, const Tilemap &tilemap, const std::vector<uint32_t> &mapIDs, uint32_t bg, uint32_t oldSize, uint32_t chipmapPos, uint32_t chipsetPos, uint32_t &nextPos) {
+	Chipmap chipmap;
 	if (!chipmap.FromTilemap(tilemap)) {
 		return false;
 	}
@@ -90,18 +115,16 @@ static bool SaveTilemapAsChips(FILE *ta, const Tilemap &tilemap, Chipmap &chipma
 	} else {
 		nextPos = (nextPos + 3) & ~3;
 
-		const uint32_t relocations[]{ 0x0031E7B4 + 12 * mapID + (bg - 1) * 4 };
-		WriteRelocs(ta, relocations, std::size(relocations), nextPos);
+		std::vector<uint32_t> relocations;
+		for (uint32_t mapID : mapIDs) {
+			relocations.push_back(0x0031E7B4 + 12 * mapID + (bg - 1) * 4);
+		}
+		WriteRelocs(ta, relocations.data(), relocations.size(), nextPos);
 
 		fseek(ta, nextPos, SEEK_SET);
 		nextPos += (uint32_t)buf.size();
 	}
 	return fwrite(buf.data(), 1, buf.size(), ta) == buf.size();
-}
-
-static bool SaveTilemapAsChips(FILE *ta, const Tilemap &tilemap, uint32_t mapID, uint32_t bg, uint32_t oldSize, uint32_t chipmapPos, uint32_t chipsetPos, uint32_t &nextPos) {
-	Chipmap chipmap;
-	return SaveTilemapAsChips(ta, tilemap, chipmap, mapID, bg, oldSize, chipmapPos, chipsetPos, nextPos);
 }
 
 static bool SaveTilemap(FILE *ta, const Tilemap &tilemap, uint32_t oldSize, uint32_t oldPos, uint32_t &nextPos) {
@@ -169,6 +192,33 @@ static bool SaveNewPalette(FILE *ta, const Palette &pal, uint8_t base, uint8_t c
 	return false;
 }
 
+static bool LoadCompressedTileset(FILE *ta, Tileset &tileset, uint32_t ptr, uint32_t sz, int count, const int *keep = nullptr) {
+	std::vector<uint8_t> compressed;
+	compressed.resize(sz);
+	fseek(ta, ptr, SEEK_SET);
+	if (fread(compressed.data(), 1, compressed.size(), ta) != compressed.size()) {
+		return false;
+	}
+	std::vector<uint8_t> data = decompress_gba_lz77(compressed);
+	if (data.empty()) {
+		return false;
+	}
+	tileset.Load16(data.data(), count);
+
+	if (keep != nullptr) {
+		int nextKeep = 0;
+		for (int i = 0; i < count; ++i) {
+			if (i == keep[nextKeep]) {
+				nextKeep++;
+				continue;
+			}
+			tileset.Free(i);
+		}
+	}
+
+	return true;
+}
+
 static bool InsertIntroMaps(FILE *ta, uint32_t &nextPos) {
 	// We don't change the palette, just reuse.
 	Palette pal = LoadPaletteAt(ta, 0x00259D18, 0, 15);
@@ -204,30 +254,101 @@ static bool InsertIntroMaps(FILE *ta, uint32_t &nextPos) {
 	// We could also update table at 0x0015B84C, which specifies the tileset size clearing.
 	// But it's not important.
 
-	if (!SaveTilemapAsChips(ta, tilemap0000, 0x0000, 3, 544, 0x0027B864, 0x0032DF2C, nextPos)) {
+	if (!SaveTilemapAsChips(ta, tilemap0000, { 0x0000 }, 3, 544, 0x0027B864, 0x0032DF2C, nextPos)) {
 		return false;
 	}
-	if (!SaveTilemapAsChips(ta, tilemap0070, 0x0070, 3, 432, 0x0027B288, 0x0032DC5C, nextPos)) {
+	if (!SaveTilemapAsChips(ta, tilemap0070, { 0x0070 }, 3, 432, 0x0027B288, 0x0032DC5C, nextPos)) {
 		return false;
 	}
-	if (!SaveTilemapAsChips(ta, tilemap01CC, 0x0070, 3, 288, 0x0027B648, 0x0032DE0C, nextPos)) {
+	if (!SaveTilemapAsChips(ta, tilemap01CC, { 0x0070 }, 3, 288, 0x0027B648, 0x0032DE0C, nextPos)) {
 		return false;
 	}
 	return true;
 }
 
-static bool InsertRockIsleMaps(FILE *ta, uint32_t &nextPos) {
+static bool InsertSpillMaps(FILE *ta, uint32_t &nextPos) {
 	// One common palette and tileset for each of the layers.
-	Palette pal = LoadPaletteAt(ta, 0x0025B578, 0, 15, 6);
+	// Only 9 and A are referenced by animations, but let's just load the whole thing.
+	Palette pal = LoadPaletteAt(ta, 0x002566b8, 0, 15);
 	Tileset tileset;
 
+	// This is the lid above the entrance to Selemo's place.
+	static const int keep[]{
+		0x20B, 0x20C, 0x20D, 0x20E, 0x20F, 0x210, 0x211, 0x212, 0x213, 0x214, 0x215, 0x216,
+		0x217, 0x218, 0x219, 0x21A, 0x21B, 0x21C, 0x21D, 0x21E, 0x21F, 0x220, 0x221, 0x222,
+		0x223, 0x224, 0x225, 0x226, 0x227, 0x228, 0x229, 0x22A, 0x22B, 0x22C, 0x22D, 0x22E,
+		// Is this even valid?  It looks like it points to tilemap data...
+		0x251,
+		0xFFF,
+	};
 	// Some of the tiles have overrides, we have to keep those.
-	std::vector<uint8_t> oldTilesetCompressed;
-	oldTilesetCompressed.resize(12064);
-	fseek(ta, 0x0019272C, SEEK_SET);
-	fread(oldTilesetCompressed.data(), 1, oldTilesetCompressed.size(), ta);
-	std::vector<uint8_t> oldTilesetData = decompress_gba_lz77(oldTilesetCompressed);
-	tileset.Load16(oldTilesetData.data(), 0x20C);
+	LoadCompressedTileset(ta, tileset, 0x0015c1f4, 12173, 0x240, keep);
+
+	// Also used by 012C and 0158.
+	TilemapLayers tilemaps0001(tileset);
+	if (!TilemapsAndPaletteFromPNG(tilemaps0001, pal, "images/map0001_bg%d_eng.png", false)) {
+		return false;
+	}
+	TilemapLayers tilemaps0002(tileset);
+	if (!TilemapsAndPaletteFromPNG(tilemaps0002, pal, "images/map0002_bg%d_eng.png", false)) {
+		return false;
+	}
+
+	// Add the animated tiles (not actually in our tileset.)
+	// This is the cat that bobs its head.
+	uint16_t tile = 0xA300;
+	for (int y = 14; y <= 15; ++y) {
+		for (int x = 15; x <= 17; ++x) {
+			tilemaps0001.bg1.Override(x, y, tile++);
+		}
+	}
+
+	static const uint32_t relocations[]{
+		0x0015BA3C + 4 * 0x0001,
+		0x0015BA3C + 4 * 0x0002,
+		0x0015BA3C + 4 * 0x012C,
+		0x0015BA3C + 4 * 0x0158,
+	};
+	SaveTilesetParams params{ 16, 12173, 0x0015c1f4, relocations, std::size(relocations) };
+	if (!SaveCompressedTileset(ta, tileset, params, nextPos)) {
+		return false;
+	}
+	// We could also update table at 0x0015B84C, which specifies the tileset size clearing.
+	// But it's not important.
+
+	if (!SaveTilemapAsChips(ta, tilemaps0001.bg1, { 0x0001, 0x012C, 0x0158 }, 1, 168, 0x0026fa80, 0x0031fedc, nextPos)) {
+		return false;
+	}
+	if (!SaveTilemapAsChips(ta, tilemaps0001.bg2, { 0x0001, 0x012C, 0x0158 }, 2, 664, 0x0026fc60, 0x0031ff84, nextPos)) {
+		return false;
+	}
+	if (!SaveTilemapAsChips(ta, tilemaps0001.bg3, { 0x0001, 0x012C, 0x0158 }, 3, 984, 0x0026fe40, 0x0032021c, nextPos)) {
+		return false;
+	}
+
+	if (!SaveTilemapAsChips(ta, tilemaps0002.bg1, { 0x0002 }, 1, 40, 0x00270020, 0x003205f4, nextPos)) {
+		return false;
+	}
+	if (!SaveTilemapAsChips(ta, tilemaps0002.bg2, { 0x0002 }, 2, 528, 0x002701ec, 0x0032061c, nextPos)) {
+		return false;
+	}
+	if (!SaveTilemapAsChips(ta, tilemaps0002.bg3, { 0x0002 }, 3, 1024, 0x002703b8, 0x0032082c, nextPos)) {
+		return false;
+	}
+
+	if (!SavePalette(ta, pal, 0, 15, 0x002566b8)) {
+		return false;
+	}
+
+	return true;
+}
+
+static bool InsertRockIsleMaps(FILE *ta, uint32_t &nextPos) {
+	// One common palette and tileset for each of the layers.
+	// Only the first 6 palettes have any data.
+	Palette pal = LoadPaletteAt(ta, 0x0025B578, 0, 6);
+	pal.Resize(0, 15);
+	Tileset tileset;
 
 	// This is the elevator door that uses overrides.
 	static const int keep[]{
@@ -237,43 +358,27 @@ static bool InsertRockIsleMaps(FILE *ta, uint32_t &nextPos) {
 		0x207, 0x208, 0x209, 0x20A, 0x20B, 0x20C,
 		0xFFF,
 	};
-	int nextKeep = 0;
-	for (int i = 0; i < 0x20C; ++i) {
-		if (i == keep[nextKeep]) {
-			nextKeep++;
-			continue;
-		}
-		tileset.Free(i);
-	}
+	// Some of the tiles have overrides, we have to keep those.
+	LoadCompressedTileset(ta, tileset, 0x0019272C, 12064, 0x20C, keep);
 
-	Tilemap tilemap005Fbg1(tileset);
-	if (!TilemapAndPaletteFromPNG(tilemap005Fbg1, pal, "images/map005F_bg1_eng.png", false)) {
-		return false;
-	}
-
-	Tilemap tilemap005Fbg2(tileset);
-	if (!TilemapAndPaletteFromPNG(tilemap005Fbg2, pal, "images/map005F_bg2_eng.png", false)) {
-		return false;
-	}
-
-	Tilemap tilemap005Fbg3(tileset);
-	if (!TilemapAndPaletteFromPNG(tilemap005Fbg3, pal, "images/map005F_bg3_eng.png", false)) {
+	TilemapLayers tilemaps005F(tileset);
+	if (!TilemapsAndPaletteFromPNG(tilemaps005F, pal, "images/map005F_bg%d_eng.png", false)) {
 		return false;
 	}
 
 	// Plot some animation tile numbers, not actually in the tileset.
 	// This part is for the sea in the background.
 	for (int x = 50; x <= 65; x += 2) {
-		tilemap005Fbg3.Override(x + 0, 6, 0x4302);
-		tilemap005Fbg3.Override(x + 1, 6, 0x4303);
-		tilemap005Fbg3.Override(x + 0, 7, 0x4300);
-		tilemap005Fbg3.Override(x + 1, 7, 0x4301);
+		tilemaps005F.bg3.Override(x + 0, 6, 0x4302);
+		tilemaps005F.bg3.Override(x + 1, 6, 0x4303);
+		tilemaps005F.bg3.Override(x + 0, 7, 0x4300);
+		tilemaps005F.bg3.Override(x + 1, 7, 0x4301);
 	}
 	// Add bottom left corner, might not be important.
-	tilemap005Fbg3.Override(0, 18, 0x03FF);
-	tilemap005Fbg3.Override(1, 18, 0x03FF);
-	tilemap005Fbg3.Override(0, 19, 0x03FF);
-	tilemap005Fbg3.Override(1, 19, 0x03FF);
+	tilemaps005F.bg3.Override(0, 18, 0x03FF);
+	tilemaps005F.bg3.Override(1, 18, 0x03FF);
+	tilemaps005F.bg3.Override(0, 19, 0x03FF);
+	tilemaps005F.bg3.Override(1, 19, 0x03FF);
 
 	// The tileset is now ready, let's compress.
 	static const uint32_t relocations[]{
@@ -286,13 +391,13 @@ static bool InsertRockIsleMaps(FILE *ta, uint32_t &nextPos) {
 	// We could also update table at 0x0015B84C, which specifies the tileset size clearing.
 	// But it's not important.
 
-	if (!SaveTilemapAsChips(ta, tilemap005Fbg1, 0x005F, 1, 280, 0x0027d9d0, 0x003311d4, nextPos)) {
+	if (!SaveTilemapAsChips(ta, tilemaps005F.bg1, { 0x005F }, 1, 280, 0x0027d9d0, 0x003311d4, nextPos)) {
 		return false;
 	}
-	if (!SaveTilemapAsChips(ta, tilemap005Fbg2, 0x005F, 2, 616, 0x0027dc64, 0x003312ec, nextPos)) {
+	if (!SaveTilemapAsChips(ta, tilemaps005F.bg2, { 0x005F }, 2, 616, 0x0027dc64, 0x003312ec, nextPos)) {
 		return false;
 	}
-	if (!SaveTilemapAsChips(ta, tilemap005Fbg3, 0x005F, 3, 744, 0x0027def8, 0x00331554, nextPos)) {
+	if (!SaveTilemapAsChips(ta, tilemaps005F.bg3, { 0x005F }, 3, 744, 0x0027def8, 0x00331554, nextPos)) {
 		return false;
 	}
 
@@ -724,6 +829,7 @@ bool InsertImages(FILE *ta, uint32_t &nextPos) {
 	};
 	constexpr static Inserter inserters[] = {
 		{ InsertIntroMaps, "intro maps" },
+		{ InsertSpillMaps, "Spill maps" },
 		{ InsertRockIsleMaps, "Rock Isle maps" },
 		{ InsertDefeatScreen, "defeat screen" },
 		{ InsertTitleScreen, "title screen" },
