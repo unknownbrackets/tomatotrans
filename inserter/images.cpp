@@ -718,42 +718,29 @@ static bool InsertShopBanners(FILE *ta, uint32_t &nextPos) {
 }
 
 bool InsertImages(FILE *ta, uint32_t &nextPos) {
+	struct Inserter {
+		bool (* f)(FILE *ta, uint32_t &nextPos);
+		const char *desc;
+	};
+	constexpr static Inserter inserters[] = {
+		{ InsertIntroMaps, "intro maps" },
+		{ InsertRockIsleMaps, "Rock Isle maps" },
+		{ InsertDefeatScreen, "defeat screen" },
+		{ InsertTitleScreen, "title screen" },
+		{ InsertTitleButtons, "title buttons" },
+		{ InsertGimmickMenuIcons, "gimmick menu icons" },
+		{ InsertGimmickBattleIcons, "gimmick battle icons" },
+		{ InsertGimicaCard, "gimica card" },
+		{ InsertShopBanners, "shop banners" },
+	};
+
 	bool failed = false;
-	if (!InsertIntroMaps(ta, nextPos)) {
-		printf("Failed to insert intro maps\n");
-		failed = true;
+	for (const Inserter &inserter : inserters) {
+		if (!inserter.f(ta, nextPos)) {
+			printf("Failed to insert %s\n", inserter.desc);
+			failed = true;
+		}
 	}
-	if (!InsertRockIsleMaps(ta, nextPos)) {
-		printf("Failed to insert Rock Isle maps\n");
-		failed = true;
-	}
-	if (!InsertDefeatScreen(ta, nextPos)) {
-		printf("Failed to insert defeat screen\n");
-		failed = true;
-	}
-	if (!InsertTitleScreen(ta, nextPos)) {
-		printf("Failed to insert title screen\n");
-		failed = true;
-	}
-	if (!InsertTitleButtons(ta, nextPos)) {
-		printf("Failed to insert title buttons\n");
-		failed = true;
-	}
-	if (!InsertGimmickMenuIcons(ta, nextPos)) {
-		printf("Failed to insert gimmick menu icons\n");
-		failed = true;
-	}
-	if (!InsertGimmickBattleIcons(ta, nextPos)) {
-		printf("Failed to insert gimmick battle icons\n");
-		failed = true;
-	}
-	if (!InsertGimicaCard(ta, nextPos)) {
-		printf("Failed to insert gimica card\n");
-		failed = true;
-	}
-	if (!InsertShopBanners(ta, nextPos)) {
-		printf("Failed to insert shop banners\n");
-		failed = true;
-	}
+
 	return !failed;
 }
