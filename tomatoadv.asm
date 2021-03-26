@@ -53,7 +53,7 @@
 ; Adjust the buttons on the title screen.
 .include "asm/title_screen.asm"
 
-; Similar for the credits.
+; Adjust buttons and replace text drawing routine.
 .include "asm/credits.asm"
 
 .close

@@ -1,0 +1,364 @@
+[SMALL]STAFF CREDITS
+
+[SMALL]SCENARIO DIRECTOR
+  Hiroyuki Kubota
+
+
+[SMALL]EVENT DIRECTOR
+  Keiko Hatori
+[SIGNAL]
+  Hiroshi Kikuchi
+
+  Tomohiro Kobayashi
+
+
+[SMALL]BATTLE DATA
+  Takashi Satou
+
+
+[SMALL]MAP DATA
+  Naohide Usami
+
+
+[SMALL]PLANNING
+  Yuuji Abe
+
+  Takahiko Kodaira
+
+  Takahiro Murakami
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[SMALL]MAIN PROGRAM
+  Masami Satou
+
+  Atsushi Iwase
+
+
+[SMALL]EVENT PROGRAM
+  Masato Masuda
+
+  Osamu Shimura
+
+
+[SMALL]FIELD PROGRAM
+  Eiyou Andou
+
+
+[SMALL]BATTLE PROGRAM
+  Takayuki Kudou
+
+  Kenichi Koyano
+
+
+[SMALL]MENU PROGRAM
+  Kazutoshi Inoue
+
+  Hiroki Niwa
+
+
+[SMALL]MESSAGE PROGRAM
+  Kouichi Iijima
+
+
+[SMALL]GIMICA PROGRAM
+  Toshiaki Tarui
+
+  Tomoya Tateishi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[SMALL]CHARACTER DESIGN
+  Shuuji Kamohara
+
+
+[SMALL]SUBCHARACTERS
+  Makoto Katou
+
+
+[SMALL]MAP GRAPHICS
+  Hiroko Onose
+
+  Toshizou Morikawa
+
+  Hiroyuki Motoki
+
+  Yasuyuki Sakuma
+
+  Toshio Suou
+
+  Ken Fujii
+
+  Saki Hoshino
+
+  Shinobu Itou
+
+
+[SMALL]MONSTER GRAPHICS
+  Daisuke Hirayama
+
+  Chihiro Oomiya
+
+
+[SMALL]GIMMICK GRAPHICS
+  Junichirou Shibuya
+
+  Takuya Horiuchi
+
+
+[SMALL]MENU GRAPHICS
+  Hiroyuki Yotsutsuji
+
+
+[SMALL]GIMICA GRAPHICS
+  Tetsuya Ooi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[SMALL]MUSIC
+  Youko Sakai
+
+
+[SMALL]SOUND EFFECTS
+  Akira Takemoto
+
+
+[SMALL]SOUND ENGINEERING
+  Kiyomi Tanaka
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[SMALL]ARTWORK
+  Yoshitaka Nishikawa
+
+  Aya Takano
+
+
+[SMALL]COORDINATION
+  Toshiharu Izuno
+
+  Masamichi Fujiwara
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[SMALL]SPECIAL THANKS
+  Hirofumi Horikawa
+
+  Tomokazu Koga
+
+  Keizou Kokubo
+
+  Ryuuichi Satou
+
+  Chizuko Hitotsumatsu
+
+  Ayako Enomoto
+
+  Hiromi Shimodaira
+
+  Tsutomu Kitada
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[SMALL]PRODUCERS
+  Shinji Hatano
+
+  Tetsuo Mizuno
+
+  Hirofumi Yokota
+
+  Yasushi Mizutani
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[SMALL]EXECUTIVE PRODUCER
+  Hiroshi Yamauchi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[SMALL]DIRECTORS
+  Yoshihiko Maekawa
+
+  Chihiro Fujioka
+
+  Jin Itou
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[ICON 00]
+[ICON 01]
+[ICON 02]
+[ICON 03]
+[ICON 04]
+[ICON 05]
+[ICON 06]
+[ICON 07]
+[ICON 08]
+
+
+
+
+
+[END]

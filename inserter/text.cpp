@@ -1579,5 +1579,95 @@ uint32_t InsertGimicaTutorialText(FILE *fout, uint32_t &afterTextPos)
 
 	fclose(fin);
 	return insertions;
+}
 
+uint32_t InsertCreditsText(FILE *fout, uint32_t &afterTextPos)
+{
+	FILE *fin = fopen("ta_credits_eng.txt", "r");
+	if (!fin)
+	{
+		printf("Couldn't open ta_gimica_tutorial_eng.txt!\n");
+		return 0;
+	}
+
+	std::vector<uint8_t> data;
+	// Speed is the first byte, let's keep the original value.
+	data.push_back(4);
+
+	bool ended = false;
+	while (!feof(fin))
+	{
+		char str[5000]{};
+		if (!fgets(str, 5000, fin))
+			continue;
+		if (str[0] == '\0')
+			continue;
+
+		for (size_t pos = 0, n = strlen(str); pos < n; )
+		{
+			uint32_t param;
+			if (strncmp(str + pos, "[SMALL]", strlen("[SMALL]")) == 0)
+			{
+				data.push_back(0xFD);
+				pos += strlen("[SMALL]");
+			}
+			else if (strncmp(str + pos, "[SIGNAL]", strlen("[SIGNAL]")) == 0)
+			{
+				data.push_back(0xFB);
+				pos += strlen("[SIGNAL]");
+			}
+			else if (strncmp(str + pos, "[ICON ", strlen("[ICON ")) == 0 && sscanf(str + pos, "[ICON %02X]", &param) > 0)
+			{
+				data.push_back(0xFA);
+				data.push_back(param);
+				pos += strlen("[ICON 00]");
+			}
+			else if (strncmp(str + pos, "[END]", strlen("[END]")) == 0)
+			{
+				data.push_back(0xFE);
+				ended = true;
+				break;
+			}
+			// Ignore a blank line (don't write 0 length.)
+			else if (str[pos] == '\r' || str[pos] == '\n')
+				pos++;
+			else
+			{
+				char encoded[5000];
+				PrepString(str, encoded, (int)pos);
+				int len = ConvComplexString(encoded, 4999, true);
+				if (len >= 0xFA) {
+					printf("Credits line too long: %s\n", str);
+					len = 0xF9;
+				}
+
+				data.push_back((uint8_t)len);
+				size_t dest = data.size();
+				data.resize(dest + len);
+				memcpy(&data[dest], encoded, len);
+				// We encoded to the end of the line.
+				break;
+			}
+		}
+
+		// Encode the line break.
+		if (!ended)
+			data.push_back(0xFF);
+	}
+
+	if (data.size() <= 2216) {
+		// We can insert it in place.
+		fseek(fout, 0x0062AAC8, SEEK_SET);
+	} else {
+		fseek(fout, 0x0002ACC4, SEEK_SET);
+		WriteLE32(fout, afterTextPos | 0x08000000);
+
+		fseek(fout, afterTextPos, SEEK_SET);
+		afterTextPos += (int)data.size();
+	}
+
+	fwrite(&data[0], 1, data.size(), fout);
+
+	fclose(fin);
+	return 1;
 }

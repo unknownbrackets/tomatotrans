@@ -6,7 +6,7 @@
 @WidthIndex equ 0x08649C4C
 
 .org 0x0806FA50
-.region 0x00806FAB8-.,0x00
+.region 0x0806FAB8-.,0x00
 .func GetNext8x8Char
 push r14
 

@@ -28,6 +28,7 @@ int main(int argc, char **argv)
 	totalInsertions += InsertEnemies(fout, afterTextPos);
 	totalInsertions += InsertBattleText(fout, afterTextPos);
 	totalInsertions += InsertGimicaTutorialText(fout, afterTextPos);
+	totalInsertions += InsertCreditsText(fout, afterTextPos);
 
 	if (InsertImages(fout, afterTextPos)) {
 		printf("Inserted updated images\n");
