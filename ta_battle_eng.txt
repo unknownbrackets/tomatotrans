@@ -1,15 +1,15 @@
 # 00 Selemo
 0D1A41-E:This is the battle screen.
 0D1A4A-E:Whenever you attack an enemy...
-0D1A53-E:You always use gimmicks.
+0D1A53-E:You always use Gimmicks.
 0D1A63-E:Press the [F5] button here.
-0D1A76-E:Pick the gimmick you want...
+0D1A76-E:Pick the Gimmick you want...
 0D1A7F-E:...even though you've only got one...
 0D1A88-E:And hit [F5] again.
 0D1A99-E:Now pick your target.
 0D1AA2-E:Press [F5].
 0D1AB9-E:All right! This is it!
-0D1AC2-E:When you use a gimmick,
+0D1AC2-E:When you use a Gimmick,
 0D1ACB-E:if you do the command just right,
 0D1AD4-E:you'll deal more damage
 0D1ADD-E:to the enemy!
@@ -27,14 +27,14 @@
 0D1B95-E:Yeowch... That's the ticket!
 0D1BA4-E:Oww...
 0D1BAD-E:You need some more practice...
-0D1BC2-E:Also, each gimmick can only
+0D1BC2-E:Also, each Gimmick can only
 0D1BCB-E:be used a limited number of
 0D1BD4-E:times before it runs out.
 0D1BE3-E:This number is that limit!
-0D1BEC-E:Use up all your gimmicks...
+0D1BEC-E:Use up all your Gimmicks...
 0D1C02-E:And you'll recover them all!
 0D1C0B-E:But, once you've obtained some
-0D1C14-E:other gimmicks...
+0D1C14-E:other Gimmicks...
 0D1C23-E:You have to use up ALL of the
 0D1C2C-E:ones that you have equipped
 0D1C35-E:before they'll recover!

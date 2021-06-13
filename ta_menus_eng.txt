@@ -1088,14 +1088,14 @@ BLOCKFIXED 4906A8 0B 0A
 BLOCKFIXED 4907AC 1C 20
 00-E:This is the menu screen.
 01-E:
-02-E:You can pick gimmicks
+02-E:You can pick Gimmicks
 03-E:from here.
 04-E:Press [F5]...
 05-E:
 06-E:This is the Gimmick menu.
 07-E:
 08-E:You can see a lot of info
-09-E:about your gimmicks here.
+09-E:about your Gimmicks here.
 0A-E:Press L and R here to
 0B-E:adjust their difficulty!
 0C-E:Harder commands will deal
@@ -1103,11 +1103,11 @@ BLOCKFIXED 4907AC 1C 20
 0E-E:Lower the difficulty with
 0F-E:the L button...
 10-E:And your damage will be
-11-E:lower with that gimmick.
+11-E:lower with that Gimmick.
 12-E:Raise the level with
 13-E:the R button...
 14-E:And your damage with that
-15-E:gimmick will be higher!
+15-E:Gimmick will be higher!
 16-E:Try it out yourself!
 17-E:
 18-E:Press [F5] when you're ready
