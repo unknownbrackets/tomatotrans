@@ -1153,7 +1153,7 @@ BLOCKFIXED 4907BC 20 16 1A
 12-E:You can use those to power
 13-E:up your Timing Gimmicks!
 14-E:Be on the lookout for the
-15-E:other types of cells too!
+15-E:other types of Cells too!
 
 BLOCKFIXED 4907C4 1C 12
 00-E:You may equip up to 4

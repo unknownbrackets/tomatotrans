@@ -191,7 +191,7 @@ ATTACKS:
 05-E:Poison Claw
 06-E:Run
 07-E:Junk Punch
-08-E:Kakiiin!
+08-E:SMAAAASH!!
 09-E:Critical
 0A-E:Brikky Kick
 0B-E:Grikky Punch
