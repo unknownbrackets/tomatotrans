@@ -416,15 +416,17 @@ void TilesetLookupCache::Add(int index, const Tile &tile) {
 		entry.index = (index & 0x0FFF) | (p << 12);
 		entries_.push_back(entry);
 
-		FlipV(entry);
-		entries_.push_back(entry);
+		if (allowFlip_) {
+			FlipV(entry);
+			entries_.push_back(entry);
 
-		FlipH(entry);
-		entries_.push_back(entry);
+			FlipH(entry);
+			entries_.push_back(entry);
 
-		// Only horizontal.
-		FlipV(entry);
-		entries_.push_back(entry);
+			// Only horizontal.
+			FlipV(entry);
+			entries_.push_back(entry);
+		}
 	}
 }
 
@@ -585,7 +587,7 @@ bool Tilemap::FromImage(const uint8_t *image, int width, int height, const Palet
 	};
 
 	// Palettes can have duplicate entries, so we compare the expanded colors.
-	TilesetLookupCache cache(pal);
+	TilesetLookupCache cache(pal, tileset_.AllowFlip());
 	if (!is256_) {
 		tileset_.PopulateCache(cache);
 	}

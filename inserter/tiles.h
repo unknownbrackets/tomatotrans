@@ -63,7 +63,7 @@ private:
 
 class TilesetLookupCache {
 public:
-	TilesetLookupCache(const Palette &pal) : pal_(pal) {
+	TilesetLookupCache(const Palette &pal, bool allowFlip) : pal_(pal), allowFlip_(allowFlip) {
 	}
 
 	void Add(int index, const Tile &tile);
@@ -80,6 +80,7 @@ private:
 
 	const Palette &pal_;
 	std::vector<Entry> entries_;
+	bool allowFlip_;
 };
 
 class Tileset {
@@ -124,6 +125,9 @@ public:
 	}
 
 	void PopulateCache(TilesetLookupCache &cache) const;
+	bool AllowFlip() const {
+		return allowFlip_;
+	}
 
 private:
 	std::vector<Tile> tiles_;
