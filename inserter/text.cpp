@@ -1565,6 +1565,8 @@ uint32_t InsertGimicaTutorialText(FILE *fout, uint32_t &afterTextPos)
 	else
 	{
 		// We'll put it in free space.  Overwrite the pointers it looks up.
+		// But make sure we're aligned, first.
+		afterTextPos = (afterTextPos + 3) & ~3;
 		fseek(fout, 0x00091390, SEEK_SET);
 		WriteLE32(fout, afterTextPos | 0x08000000);
 		fseek(fout, 0x0009140C, SEEK_SET);
