@@ -72,7 +72,7 @@ BLOCKFIXED 4903F8 10 61 0A
 07-E:
 08-E:
 09-E:
-0S-E:
+0A-E:
 0B-E:
 0C-E:Time Cell
 0D-E:Tap Cell
@@ -738,7 +738,7 @@ BLOCKFIXED 490530 05 01
 00-E:Parts
 
 BLOCKFIXED 490538 07 01
-00-E:Gimica Card
+00-E:Card
 
 BLOCKFIXED 490540 03 01
 00-E:EFF
@@ -884,7 +884,7 @@ BLOCKFIXED 490660 07 01
 00-E:Deck
 
 BLOCKFIXED 490668 07 01
-00-E:Cards
+00-E:Stock
 
 BLOCKFIXED 490670 30 0F 1A
 00-E:You may not adjust your deck
@@ -907,51 +907,51 @@ BLOCKFIXED 490678 18 30
 00-E:????????
 01-E:
 02-E:Raise your card's
-03-E:PTS by 50
+03-E:points by 50
 04-E:Lower your card's
-05-E:PTS by 50
+05-E:points by 50
 06-E:Raise your card's
-07-E:card's rank by 2
-08-E:Prevents your rank
-09-E:from changing
+07-E:rank by 2
+08-E:Your card's rank
+09-E:will not change
 0A-E:Restores your HP
 0B-E:by 50
 0C-E:Raise your card's
-0D-E:card's rank by 1
+0D-E:rank by 1
 0E-E:Lower your card's
-0F-E:card's rank by 1
+0F-E:rank by 1
 10-E:Raise your card's
-11-E:PTS by 25
+11-E:points by 25
 12-E:Lower your card's
-13-E:PTS by 25
+13-E:points by 25
 14-E:Restores your HP
 15-E:by 25
 16-E:25 direct damage
-17-E:to your opponent
+17-E:to your rival
 18-E:Reduce a card's
 19-E:damage taken by 25
 1A-E:Reduce a card's
 1B-E:damage taken to 0
 1C-E:Changes into another
 1D-E:character card
-1E-E:Raise opponent's
-1F-E:card's PTS by 25
-20-E:Lower opponent's
-21-E:card's PTS by 25
+1E-E:Raise rival card's
+1F-E:points by 25
+20-E:Lower rival card's
+21-E:points by 25
 22-E:50 direct damage
-23-E:to your opponent
-24-E:Raise opponent's
-25-E:card's rank by 1
-26-E:Lower opponent's
-27-E:card's rank by 1
-28-E:Raise opponent's
-29-E:card's rank by 2
-2A-E:Opponent's rank
+23-E:to your rival
+24-E:Raise rival card's
+25-E:rank by 1
+26-E:Lower rival card's
+27-E:rank by 1
+28-E:Raise rival card's
+29-E:rank by 2
+2A-E:Rival card's rank
 2B-E:will not change
-2C-E:Raise opponent's
-2D-E:card's PTS by 50
-2E-E:Lower opponent's
-2F-E:card's PTS by 50
+2C-E:Raise rival card's
+2D-E:points by 50
+2E-E:Lower rival card's
+2F-E:points by 50
 
 BLOCKFIXED 490680 0C 14 09
 00-E:
@@ -1025,51 +1025,51 @@ BLOCKFIXED 4906A0 24 30
 00-E:????????
 01-E:
 02-E:Raise your card's
-03-E:PTS by 50
+03-E:points by 50
 04-E:Lower your card's
-05-E:PTS by 50
+05-E:points by 50
 06-E:Raise your card's
-07-E:card's rank by 2
-08-E:Prevents your rank
-09-E:from changing
+07-E:rank by 2
+08-E:Your card's rank
+09-E:will not change
 0A-E:Restores your HP
 0B-E:by 50
 0C-E:Raise your card's
-0D-E:card's rank by 1
+0D-E:rank by 1
 0E-E:Lower your card's
-0F-E:card's rank by 1
+0F-E:rank by 1
 10-E:Raise your card's
-11-E:PTS by 25
+11-E:points by 25
 12-E:Lower your card's
-13-E:PTS by 25
+13-E:points by 25
 14-E:Restores your HP
 15-E:by 25
 16-E:25 direct damage
-17-E:to your opponent
+17-E:to your rival
 18-E:Reduce a card's
 19-E:damage taken by 25
 1A-E:Reduce a card's
 1B-E:damage taken to 0
 1C-E:Changes into another
 1D-E:character card
-1E-E:Raise opponent's
-1F-E:card's PTS by 25
-20-E:Lower opponent's
-21-E:card's PTS by 25
+1E-E:Raise rival card's
+1F-E:points by 25
+20-E:Lower rival card's
+21-E:points by 25
 22-E:50 direct damage
-23-E:to your opponent
-24-E:Raise opponent's
-25-E:card's rank by 1
-26-E:Lower opponent's
-27-E:card's rank by 1
-28-E:Raise opponent's
-29-E:card's rank by 2
-2A-E:Opponent's rank
+23-E:to your rival
+24-E:Raise rival card's
+25-E:rank by 1
+26-E:Lower rival card's
+27-E:rank by 1
+28-E:Raise rival card's
+29-E:rank by 2
+2A-E:Rival card's rank
 2B-E:will not change
-2C-E:Raise opponent's
-2D-E:card's PTS by 50
-2E-E:Lower opponent's
-2F-E:card's PTS by 50
+2C-E:Raise rival card's
+2D-E:points by 50
+2E-E:Lower rival card's
+2F-E:points by 50
 
 BLOCKFIXED 4906B0 0B 01
 00-E:
@@ -1238,34 +1238,34 @@ BLOCKFIXED 49F61C 10 11 08
 
 BLOCKFIXED 49F62C 24 18 1B
 00-E:Use when you have no cards.
-01-E:Your Pts [F8]50
-02-E:Your Pts [FA]50
-03-E:Your rank [F8]2
-04-E:Keep your rank
-05-E:Heals 50 HP
-06-E:Your rank [F8]1
-07-E:Your rank [FA]50
-08-E:Your pts [F8]25
-09-E:Your Pts [FA]25
-0A-E:Heals 25 HP
-0B-E:25 DMG to opponent
-0C-E:Reduce DMG by 25
-0D-E:Reduce DMG to 0
-0E-E:Transforms card
-0F-E:Opponent Pts [F8]25
-10-E:Opponent Pts [FA]25
-11-E:50 DMG to opponent
-12-E:Opponent's rank [F8]1
-13-E:Opponent's rank [F8]1
-14-E:Opponent's rank [FA]2
-15-E:Keep opponent's rank
-16-E:Opponent Pts [F8]50
-17-E:Opponent Pts [FA]50
+01-E:Raise your card's points by 50
+02-E:Lower your card's points by 50
+03-E:Raise your card's rank by 2
+04-E:Your card's rank will not change
+05-E:Restores your HP by 50
+06-E:Raise your card's rank by 1
+07-E:Lower your card's rank by 1
+08-E:Raise your card's points by 25
+09-E:Lower your card's points by 25
+0A-E:Restores your HP by 25
+0B-E:25 direct damage to your rival
+0C-E:Reduce card's damage taken by 25
+0D-E:Reduce card's damage taken to 0
+0E-E:Transforms into another card
+0F-E:Raise rival card's points by 25
+10-E:Lower rival card's points by 25
+11-E:50 direct damage to your rival
+12-E:Raise rival card's rank by 1
+13-E:Lower rival card's rank by 1
+14-E:Raise rival card's rank by 2
+15-E:Rival card's rank will not change
+16-E:Raise rival card's points by 50
+17-E:Lower rival card's points by 50
 
 BLOCKFIXED 49F634 30 04
 00-E: Preparing for Link Battle
 01-E:
-02-E: Opponent is not yet ready
+02-E: Rival is not yet ready
 03-E: 
 
 BLOCKFIXED 49F63C 16 01
@@ -1421,7 +1421,7 @@ RESTRUCT 630E5C 08 10 7F0C9E 10 10 61
 07-E:
 08-E:
 09-E:
-0S-E:
+0A-E:
 0B-E:
 0C-E:Time Cell
 0D-E:Tap Cell
