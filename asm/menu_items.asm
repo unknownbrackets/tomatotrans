@@ -301,7 +301,7 @@ pop r4-r7,r15
 .org 0x0807DF7C
 .region 0x0807DFB4-.,0x00
 .func ShopItemsListParams
-push r15
+push r14
 add sp,-8
 
 ; Move r0 to r2 already for 080306E8.

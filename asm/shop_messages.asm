@@ -1,3 +1,7 @@
+; This moves the equipped icon to give a bit more space for clothing names.
+.org 0x0807DD62
+mov r1,0x58
+
 ; This updates the item descriptions.  We patch to give more space for the text.
 .org 0x0807D2E8
 .region 0x0807D4BC-.,0x00
