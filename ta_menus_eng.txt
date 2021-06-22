@@ -74,21 +74,21 @@ BLOCKFIXED 4903F8 10 61 0A
 09-E:
 0S-E:
 0B-E:
-0C-E:TimeCell
-0D-E:TapCell
-0E-E:FunCell
-0F-E:QuickCell
-10-E:TimeVolt
-11-E:TapVolt
-12-E:FunVolt
-13-E:QuickVolt
-14-E:TimeStar
-15-E:TapStar
-16-E:FunStar
-17-E:QuickStar
+0C-E:Time Cell
+0D-E:Tap Cell
+0E-E:Excite Cell
+0F-E:Speed Cell
+10-E:Time Volt
+11-E:Tap Volt
+12-E:Excite Volt
+13-E:Speed Volt
+14-E:Time Star
+15-E:Tap Star
+16-E:Excite Star
+17-E:Speed Star
 18-E:
-19-E:RainDrop
-1A-E:AuraDrop
+19-E:Rain Drop
+1A-E:Aura Drop
 1B-E:Dr. Java
 1C-E:Wake Bell
 1D-E:Hanzo Box
@@ -96,10 +96,10 @@ BLOCKFIXED 4903F8 10 61 0A
 1F-E:Bari Apple
 20-E:Double Apple
 21-E:Eau d'Escape
-22-E:TimeKill
-23-E:TapKill
-24-E:QuickKill
-25-E:FunKill
+22-E:Time Kill
+23-E:Tap Kill
+24-E:Speed Kill
+25-E:Excite Kill
 26-E:Fruit
 27-E:Red Gel
 28-E:White Gel
@@ -168,7 +168,7 @@ BLOCKFIXED 490408 0C 01 09
 00-E:
 BLOCKFIXED 490410 0C 20 09
 00-E:Vinyl Shirt
-01-E:ModelJacket
+01-E:Model Jacket
 02-E:Mayo Jacket
 03-E:Spike Shirt
 04-E:Go-Go Shirt
@@ -194,10 +194,10 @@ BLOCKFIXED 490410 0C 20 09
 18-E:Spark Skirt
 19-E:Star Coat
 1A-E:Diaper
-1B-E:MachJersey
+1B-E:Mach Jersey
 1C-E:Moon Gown
 1D-E:Cosmo Cape
-1E-E:SumoJacket
+1E-E:Sumo Jacket
 1F-E:Platna Cape
 
 # This must be the same size as 490420.
@@ -1423,21 +1423,21 @@ RESTRUCT 630E5C 08 10 7F0C9E 10 10 61
 09-E:
 0S-E:
 0B-E:
-0C-E:TimeCell
-0D-E:TapCell
-0E-E:FunCell
-0F-E:QuickCell
-10-E:TimeVolt
-11-E:TapVolt
-12-E:FunVolt
-13-E:QuickVolt
-14-E:TimeStar
-15-E:TapStar
-16-E:FunStar
-17-E:QuickStar
+0C-E:Time Cell
+0D-E:Tap Cell
+0E-E:Excite Cell
+0F-E:Speed Cell
+10-E:Time Volt
+11-E:Tap Volt
+12-E:Excite Volt
+13-E:Speed Volt
+14-E:Time Star
+15-E:Tap Star
+16-E:Excite Star
+17-E:Speed Star
 18-E:
-19-E:RainDrop
-1A-E:AuraDrop
+19-E:Rain Drop
+1A-E:Aura Drop
 1B-E:Dr. Java
 1C-E:Wake Bell
 1D-E:Hanzo Box
@@ -1445,10 +1445,10 @@ RESTRUCT 630E5C 08 10 7F0C9E 10 10 61
 1F-E:Bari Apple
 20-E:Double Apple
 21-E:Eau d'Escape
-22-E:TimeKill
-23-E:TapKill
-24-E:QuickKill
-25-E:FunKill
+22-E:Time Kill
+23-E:Tap Kill
+24-E:Speed Kill
+25-E:Excite Kill
 26-E:Fruit
 27-E:Red Gel
 28-E:White Gel
@@ -1511,7 +1511,7 @@ RESTRUCT 630E5C 08 10 7F0C9E 10 10 61
 
 RESTRUCT 63146C 08 10 7F15DE 10 10 20
 00-E:Vinyl Shirt
-01-E:ModelJacket
+01-E:Model Jacket
 02-E:Mayo Jacket
 03-E:Spike Shirt
 04-E:Go-Go Shirt
@@ -1537,10 +1537,10 @@ RESTRUCT 63146C 08 10 7F15DE 10 10 20
 18-E:Spark Skirt
 19-E:Star Coat
 1A-E:Diaper
-1B-E:MachJersey
+1B-E:Mach Jersey
 1C-E:Moon Gown
 1D-E:Cosmo Cape
-1E-E:SumoJacket
+1E-E:Sumo Jacket
 1F-E:Platna Cape
 
 DYNPOINTER 04D490 1A 04D474 04D47C #632E04

@@ -1865,13 +1865,13 @@ Try to break that record![SIMPLEWAIT][END]
 1B0-E:Get out there 'n have a[BREAK]
 great run![SIMPLEWAIT][END]
 
-1B1-E:[CENTER_H]Got [COLOR_ON]WhiteGel[COLOR_OFF]![SIMPLEWAIT][END]
+1B1-E:[CENTER_H]Got [COLOR_ON]White Gel[COLOR_OFF]![SIMPLEWAIT][END]
 
 1B2-E:[TICKEROFF]
-[CENTER_H]Got [COLOR_ON]FunCell[COLOR_OFF]![PAUSE 0C][END]
+[CENTER_H]Got [COLOR_ON]Excite Cell[COLOR_OFF]![PAUSE 0C][END]
 
 1B3-E:[TICKEROFF]
-[CENTER_H]Got [COLOR_ON]QuikCell[COLOR_OFF]![PAUSE 0C][END]
+[CENTER_H]Got [COLOR_ON]Speed Cell[COLOR_OFF]![PAUSE 0C][END]
 
 1B4-E:...Is what I WOULD say,[BREAK]
 but I'm fresh out of[WAIT]
@@ -11745,7 +11745,7 @@ A45-E:Selemo: Hmm? Where'd[BREAK]
 that thing run off to...?[SIMPLEWAIT][END]
 
 A46-E:Selemo: Hm? You don't[BREAK]
-have any TimeCells?[SIMPLEWAIT][END]
+have any Time Cells?[SIMPLEWAIT][END]
 
 A47-E:Oh.[SETPAUSE] There it is.[CONTINUE]
 Hang on a sec.[SIMPLEWAIT][END]
@@ -11753,7 +11753,7 @@ Hang on a sec.[SIMPLEWAIT][END]
 A48-E:Selemo: Here you go![SIMPLEWAIT][END]
 
 A49-E:Mkay, I'll lend you a[BREAK]
-TimeCell for the purposes[CONTINUE]
+Time Cell for the purposes[CONTINUE]
 of this explanation![SIMPLEWAIT][END]
 
 A4A-E:Selemo: Open the[BREAK]
