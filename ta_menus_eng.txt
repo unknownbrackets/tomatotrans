@@ -1235,8 +1235,7 @@ BLOCKFIXED 49F61C 10 11 08
 0F-E:
 10-E:Coliseum
 
-# Code changes required to make longer, shares size with 470C83/49F690
-BLOCKFIXED 49F62C 1B 18
+BLOCKFIXED 49F62C 24 18 1B
 00-E:
 01-E:
 02-E:
@@ -1882,29 +1881,3 @@ BLOCKSTART 470C6C 17 01 #64B4C4/49F690
 # Must start with a space for now.
 BLOCKSTART 470C83 18 01 #64B4C4/49F690
 00-E:
-
-# More Gimica text, needs code changes to make longer.
-BLOCKSTART 470088 1B 17 #/49F684
-00-E:
-01-E:
-02-E:
-03-E:
-04-E:
-05-E:
-06-E:
-07-E:
-08-E:
-09-E:
-0A-E:
-0B-E:
-0C-E:
-0D-E:
-0E-E:
-0F-E:
-10-E:
-11-E:
-12-E:
-13-E:
-14-E:
-15-E:
-16-E:

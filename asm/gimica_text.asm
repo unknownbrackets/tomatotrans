@@ -17,3 +17,25 @@ db 0x01
 ; Also the Gimica hub place description.
 .org 0x08490627
 db 0x01
+
+; 08091934 reuses size information from another text block.
+; We want to use our inserted string size.
+.org 0x08091B50
+dw 0x0849F62C
+.org 0x08091B32
+.region 0x08091B46-.,0x00
+; Grab the text block.
+ldr r2,[0x08091B50] ; 0x0849F62C
+ldr r3,[r2,0]
+ldr r2,[r2,4]
+str r2,[sp]
+
+; And now the index.
+lsl r0,r5,24
+asr r0,r0,24
+
+; Dest in VRAM.
+ldr r1,[0x08091B58] ; 0x0600C020
+
+mov r2,0
+.endregion
