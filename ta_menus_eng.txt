@@ -387,54 +387,54 @@ BLOCKFIXED 490440 12 03
 02-E:[EF][EF][EF][EF]Yes[EF][EF][EF][EF] No
 
 BLOCKFIXED 490448 24 C2
-00-E:
+00-E:DUMMY
 01-E:
-02-E:
+02-E:DUMMY
 03-E:
-04-E:
+04-E:DUMMY
 05-E:
-06-E:
+06-E:DUMMY
 07-E:
-08-E:
+08-E:DUMMY
 09-E:
-0A-E:
+0A-E:DUMMY
 0B-E:
-0C-E:
+0C-E:DUMMY
 0D-E:
-0E-E:
+0E-E:DUMMY
 0F-E:
-10-E:
+10-E:DUMMY
 11-E:
-12-E:
+12-E:DUMMY
 13-E:
-14-E:
+14-E:DUMMY
 15-E:
-16-E:
+16-E:DUMMY
 17-E:
 18-E:Gimmick powerup item
-19-E:Timing gimmick POW up 1
+19-E:Timing Gimmick ATK up 1
 1A-E:Gimmick powerup item
-1B-E:Tap gimmick POW up 1
+1B-E:Tap Gimmick ATK up 1
 1C-E:Gimmick powerup item
-1D-E:Excite gimmick POW up 1
+1D-E:Excite Gimmick ATK up 1
 1E-E:Gimmick powerup item
-1F-E:Speed gimmick POW up 1
+1F-E:Speed Gimmick ATK up 1
 20-E:Gimmick powerup item
-21-E:Timing gimmick POW up 3
+21-E:Timing Gimmick ATK up 3
 22-E:Gimmick powerup item
-23-E:Tap gimmick POW up 3
+23-E:Tap Gimmick ATK up 3
 24-E:Gimmick powerup item
-25-E:Excite gimmick POW up 3
+25-E:Excite Gimmick ATK up 3
 26-E:Gimmick powerup item
-27-E:Speed gimmick POW up 3
+27-E:Speed Gimmick ATK up 3
 28-E:Gimmick powerup item
-29-E:Timing gimmick POW up 5
+29-E:Timing Gimmick ATK up 5
 2A-E:Gimmick powerup item
-2B-E:Tap gimmick POW up 5
+2B-E:Tap Gimmick ATK up 5
 2C-E:Gimmick powerup item
-2D-E:Excite gimmick POW up 5
+2D-E:Excite Gimmick ATK up 5
 2E-E:Gimmick powerup item
-2F-E:Speed gimmick POW up 5
+2F-E:Speed Gimmick ATK up 5
 30-E:DUMMY
 31-E:
 32-E:Battle-use healing item
@@ -446,13 +446,13 @@ BLOCKFIXED 490448 24 C2
 38-E:Battle-use healing item
 39-E:Awakens a sleeping ally
 3A-E:Battle-use repair item
-3B-E:Fixes a janky gimmick
+3B-E:Fixes a janky Gimmick
 3C-E:Battle-use powerup item
-3D-E:SPD up 50[F2] for 3 turns
+3D-E:Speed up 50[F2] for 3 turns
 3E-E:Battle-use powerup item
-3F-E:DEF up 15[F2] for 3 turns
+3F-E:Def. up 15[F2] for 3 turns
 40-E:Battle-use powerup item
-41-E:SPD and DEF up for 3 turns
+41-E:Speed and Def. up for 3 turns
 42-E:Battle-use escape item
 43-E:Escape battle without fail
 44-E:DUMMY
@@ -482,18 +482,18 @@ BLOCKFIXED 490448 24 C2
 5C-E:DUMMY
 5D-E:
 5E-E:Gimmick powerup item
-5F-E:Increases a gimmick's uses by 1
+5F-E:Increases a Gimmick's uses by 1
 60-E:DUMMY
 61-E:
 62-E:Powerup item
-63-E:Increase a character's SPD by 5
+63-E:Increase a character's Speed by 5
 64-E:Powerup item
-65-E:Increase a character's MAX HP by 5
+65-E:Increase a character's max HP by 5
 66-E:DUMMY
 67-E:
 68-E:Escape item.
 69-E:Exits a dungeon
-6A-E:
+6A-E:DUMMY
 6B-E:
 6C-E:An ordinary, commonplace
 6D-E:pacifier.
@@ -591,7 +591,7 @@ BLOCKFIXED 490458 20 04
 
 BLOCKFIXED 490450 20 10
 00-E:Adjust the difficulty of,
-01-E:equip, and test gimmicks.
+01-E:equip, and test Gimmicks.
 02-E:Use healing and other
 03-E:types of items here.
 04-E:If you get cool clothes,
@@ -755,8 +755,8 @@ BLOCKFIXED 490558 05 01
 BLOCKFIXED 490560 05 01
 00-E:EXP
 
-BLOCKFIXED 490568 04 01
-00-E:SPD
+BLOCKFIXED 490568 06 01 04
+00-E:Speed
 
 BLOCKFIXED 490570 04 01
 00-E:DEF
@@ -1137,12 +1137,12 @@ BLOCKFIXED 4907BC 20 16 1A
 02-E:Pick the Item menu and
 03-E:press [F5].
 04-E:The Cell I just gave you is
-05-E:in here!
+05-E:right here!
 06-E:Select it with [F5]...
 07-E:
 08-E:And we're off to the
-09-E:gimmick screen!
-0A-E:Pick the gimmick you'd like to
+09-E:Gimmick screen!
+0A-E:Pick the Gimmick you'd like to
 0B-E:use it on here!
 0C-E:Then press [F5]!
 0D-E:
@@ -1157,12 +1157,12 @@ BLOCKFIXED 4907BC 20 16 1A
 
 BLOCKFIXED 4907C4 1C 12
 00-E:You may equip up to 4
-01-E:gimmicks during battle.
+01-E:Gimmicks during battle.
 02-E:Select Gimmicks and pick
 03-E:the ones you like!
 04-E:Choose whose equipment you'd
 05-E:like to change...
-06-E:And then select the gimmicks
+06-E:And then select the Gimmicks
 07-E:you want them to equip!
 08-E:BUT!
 09-E:
@@ -1624,7 +1624,7 @@ RESTRUCT 639558 1A 1A 7F12AE 30 30 11
 0A-E:Cures a poison
 0B-E:Wakes an ally up
 0C-E:Fixes a janky Gimmick
-0D-E:Speed up 50 [F2] 3 turns
+0D-E:Speed up 50 [F2] for 3 turns
 0E-E:Def. up [F2] for 3 turns
 0F-E:Speed, Def. up for 3 turns
 10-E:Escape without fail
