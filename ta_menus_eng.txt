@@ -312,8 +312,8 @@ BLOCKFIXED 490430 24 64
 31-E:right of the center arrow.
 32-E:Get the bar in the red with limited
 33-E:[F5] taps. Faster taps fill it more.
-34-E:Use [FB][F9] to pick a ? panel. Hope
-35-E:you get one with a volcano!
+34-E:Use [FB][F9] to pick a ? panel.
+35-E:Hope you get one with a volcano!
 36-E:Memorize the panels, then enter
 37-E:them correctly from left to right.
 38-E:Memorize the panels in the block
@@ -574,7 +574,7 @@ B7-E:shocking melody.
 B8-E:When eaten, a beautifying
 B9-E:mushroom. Makes a great gift.
 BA-E:Pot which keeps water warm
-BB-E:indefinitely. Full of hot water.
+BB-E:indefinitely. Full of mayo water.
 BC-E:Pot which keeps water warm
 BD-E:indefinitely. Currently empty.
 BE-E:A battery which will move
@@ -1704,7 +1704,7 @@ POINTERLIST 649A08 04 24 31
 10-E:[CENTER_H]Toy Ruin[PAUSE 14][END]
 11-E:[CENTER_H]Tomato Lake[PAUSE 14][END]
 12-E:[CENTER_H]Mayo Hot Springs[PAUSE 14][END]
-13-E:[CENTER_H]Mushroom Labo[PAUSE 14][END]
+13-E:[CENTER_H]Mushroom Research[PAUSE 14][END]
 14-E:[CENTER_H]The Mayo Hole[PAUSE 14][END]
 15-E:[CENTER_H]Oops Manor[PAUSE 14][END]
 16-E:[CENTER_H]Rock Isle[PAUSE 14][END]
