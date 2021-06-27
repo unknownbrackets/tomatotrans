@@ -45,9 +45,9 @@ NAMES:
 2B-E:Cap'n Garco
 2C-E:Cap'n Garco
 2D-E:Cap'n Garco
-2E-E:Miralick
+2E-E:Mirrolick
 2F-E:Octorina
-30-E:Scallop
+30-E:Clam Muscle
 31-E:Pompadour
 32-E:Super Mic
 33-E:Big Donut

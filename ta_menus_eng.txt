@@ -109,7 +109,7 @@ BLOCKFIXED 4903F8 10 61 0A
 2C-E:Milk
 2D-E:Pudding
 2E-E:
-2F-E:Parts
+2F-E:Extra Parts
 30-E:
 31-E:Can-o-Quick
 32-E:Can-o-Life
@@ -150,9 +150,9 @@ BLOCKFIXED 4903F8 10 61 0A
 55-E:Rednana
 56-E:Gym Pass
 57-E:Blunana
-58-E:Gold Key
+58-E:Golden Key
 59-E:Gillygum
-5A-E:L.Ticket
+5A-E:Lagoon Ticket
 5B-E:Music Box
 5C-E:Belmush
 5D-E:Hotpot
@@ -1165,13 +1165,13 @@ BLOCKFIXED 4907C4 1C 12
 06-E:And then select the Gimmicks
 07-E:you want them to equip!
 08-E:BUT!
-09-E:
+09-E: 
 0A-E:This mark means it's one
 0B-E:you've already got equipped.
 0C-E:Pick one that doesn't have
 0D-E:that mark beside it...
-0E-E:And push [F5] to swap
-0F-E:it out!
+0E-E:And push [F5] to swap it out!
+0F-E: 
 10-E:Give it a go yourself
 11-E:later on!
 
@@ -1458,7 +1458,7 @@ RESTRUCT 630E5C 08 10 7F0C9E 10 10 61
 2C-E:Milk
 2D-E:Pudding
 2E-E:
-2F-E:Parts
+2F-E:Extra Parts
 30-E:
 31-E:Can-o-Quick
 32-E:Can-o-Life
@@ -1499,9 +1499,9 @@ RESTRUCT 630E5C 08 10 7F0C9E 10 10 61
 55-E:Rednana
 56-E:Gym Pass
 57-E:Blunana
-58-E:Gold Key
+58-E:Golden Key
 59-E:Gillygum
-5A-E:L.Ticket
+5A-E:Lagoon Ticket
 5B-E:Music Box
 5C-E:Belmush
 5D-E:Hotpot
@@ -1621,7 +1621,7 @@ RESTRUCT 639558 1A 1A 7F12AE 30 30 11
 07-E:Restores all HP to all
 08-E:Revives a fallen ally
 09-E:Fully revives an ally
-0A-E:Cures a poison
+0A-E:Cures poison
 0B-E:Wakes an ally up
 0C-E:Fixes a janky Gimmick
 0D-E:Speed up 50 [F2] for 3 turns
