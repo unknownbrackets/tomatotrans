@@ -24,7 +24,7 @@
 0D1B67-E:so complete the command before
 0D1B70-E:all these lights light up!
 0D1B80-E:All right, let's start!
-0D1B95-E:Yeowch... That's the ticket!
+0D1B95-E:Yeowch... that's the ticket!
 0D1BA4-E:Oww...
 0D1BAD-E:You need some more practice...
 0D1BC2-E:Also, each Gimmick can only
@@ -97,14 +97,14 @@
 0D10E3-E:Merrrrry Christmas!
 0D10ED-E:I've got a present for yarr!
 # 2B Capn' Garco / ガ-ゴせんちょう
-0D106D-E:You saw... Right through me!
+0D106D-E:You saw... right through me!
 0D108A-E:Which one's the real one?
 0D109D-E:Merrrrry Christmas!
 0D10A7-E:I've got a present for yarr!
 # 2C Capn' Garco / ガ-ゴせんちょう
 0D1109-E:Arrrgh! The jig is up!
 0D1110-E:Well done, my puppet!
-0D1117-E:But... It always messes up the
+0D1117-E:But... it always messes up the
 0D111E-E:names of my attacks...
 0D1137-E:Which one is it?
 0D114A-E:Merrrrry Christmas!
@@ -164,7 +164,7 @@
 0D3185-E:Brikky: Grihhy!
 0D318C-E:Brikky: My jawzh dishlochaded!
 0D31A6-E:Brikky: Grihhy!
-0D31AD-E:Brikky: My powah... Gone...
+0D31AD-E:Brikky: My powah... gone...
 0D3195-E:Brikky: Grihhy!
 0D319C-E:Brikky: Shending you powah!
 # 4A Grikky/ ゴリッキ
@@ -219,14 +219,14 @@
 0D34A1-E:Brikky: Yeah!! That's the stuff!
 0D34B3-E:Grikky: I can't move!!
 # 75 Coupling / コネクタ-
-0D2B0C-E:Owwwww... Not bad!
+0D2B0C-E:Owwwww... not bad!
 0D2B13-E:Power charging!
-0D2B2E-E:Owwwww... Not bad!
+0D2B2E-E:Owwwww... not bad!
 0D2B35-E:Power charging!
 0D2B4C-E:And now...
 0D2B53-E:Don't do like before...
 0D2C4F-E:Whoa! The coupling's broken!
-0D2C7C-E:Owwwww... Not bad!
+0D2C7C-E:Owwwww... not bad!
 0D2C83-E:Power charging!
 0D2C90-E:I, Shadap, am defeated at last...
 0D2D5E-E:Aim for minus, then minus again,
@@ -240,9 +240,9 @@
 0D2D30-E:Plus and minus...
 0D2D37-E:Not enough power...
 # 82 BusyBot-B / おたすけロボB
-0D380D-E:Self... Destruct... Activated...
+0D380D-E:Self... destruct... activated...
 # 83 BusyBot-B / おたすけロボB
-0D3845-E:Self... Destruct... Activated...
+0D3845-E:Self... destruct... activated...
 # 87 KukuCopy / ぶんれつククッポ
 0D12A6-E:Kupopo... (It's over...)
 0D134D-E:Kupopopo! (It's not over yet!)
@@ -401,7 +401,7 @@
 0D3C4C-E:Grikky: You're the cool one, Brikky!
 0D3C38-E:Grikky: Combo time!
 # B0 Abira / アビ-ラ
-0D2F80-E:D-... Do you see?
+0D2F80-E:D-... do you see?
 0D2F87-E:The binky... on my head...
 0D2F8E-E:Don't... attack...
 0D2F95-E:this thing...
