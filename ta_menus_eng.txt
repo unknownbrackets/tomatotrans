@@ -51,7 +51,7 @@ BLOCKFIXED 4903E0 0A 0A
 09-E:All
 
 BLOCKFIXED 4903E8 08 06
-00-E:Bolt
+00-E:Screw
 01-E:Gear
 02-E:Spring
 03-E:Bulb
@@ -365,7 +365,7 @@ BLOCKFIXED 490438 0C 12 08
 00-E:The Spillage
 01-E:Pokypine
 02-E:Toy Ruin
-03-E:G.Palace
+03-E:Gmk Palace
 04-E:Mayonen
 05-E:NampLagoon
 06-E:Oystown
@@ -491,12 +491,12 @@ BLOCKFIXED 490448 24 C2
 65-E:Increase a character's max HP by 5
 66-E:DUMMY
 67-E:
-68-E:Escape item.
+68-E:Escape item
 69-E:Exits a dungeon
 6A-E:DUMMY
 6B-E:
 6C-E:An ordinary, commonplace
-6D-E:pacifier.
+6D-E:pacifier
 6E-E:Gimmick Palace Door Key 1
 6F-E:
 70-E:Gimmick Palace Door Key 2
@@ -734,8 +734,8 @@ BLOCKFIXED 490520 03 01
 BLOCKFIXED 490528 10 01 08
 00-E:Special Item
 
-BLOCKFIXED 490530 05 01
-00-E:Parts
+BLOCKFIXED 490530 0A 01 08
+00-E:Toy Parts
 
 BLOCKFIXED 490538 07 01
 00-E:Card
@@ -1220,7 +1220,7 @@ BLOCKFIXED 4907CC 20 27 1A
 BLOCKFIXED 49F61C 10 11 08
 00-E:The Spillage
 01-E:Pokypine
-02-E:G.Palace
+02-E:Gmk Palace
 03-E:Hanzo 1
 04-E:Mayonen
 05-E:Hanzo 2
