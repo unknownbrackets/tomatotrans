@@ -158,8 +158,8 @@ str r0,[r3,12]
 
 ; Center in the 4 tiles available.
 mov r0,4
-; Move slightly right.
-add r2,r2,3
+; Move slightly left.
+add r2,r2,1
 bl CopyString8x8CenterR0
 
 @@return:
