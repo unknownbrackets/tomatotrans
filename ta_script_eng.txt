@@ -6910,12 +6910,11 @@ What a bad bunch we are![SIMPLEWAIT][END]
 647-E:Pasaran: [NAME1]...[SIMPLEWAIT][END]
 
 648-E:Oops: Wo-ho-ho![WAIT]
-So you want to[BREAK]
-fight again, hm?[SIMPLEWAIT][END]
+So you want to fight me[BREAK]
+again, hm?[SIMPLEWAIT][END]
 
-649-E:Oops: I'll take you[BREAK]
-down no matter[WAIT]
-where you're from![SIMPLEWAIT][END]
+649-E:Oops: I'll make you suffer[BREAK]
+again and again![SIMPLEWAIT][END]
 
 64A-E:View [COLOR_ON]spy data[COLOR_OFF]?[CONTINUE]
  [MENU1]Yes     [MENU2]No[MENU_END][END]
