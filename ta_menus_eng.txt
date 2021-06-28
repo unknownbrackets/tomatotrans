@@ -810,7 +810,7 @@ BLOCKFIXED 4905D8 09 01
 
 BLOCKFIXED 4905E0 14 06
 00-E:Thanks!
-01-E:At maximum topar!
+01-E:At maximum Topar!
 02-E:Currently equipped
 03-E:Too poor
 04-E:Can't carry more
@@ -1562,8 +1562,8 @@ DYNPOINTER 04FD6C 1A 04FD52 04FD5A #632E34
 
 # Length is a bit harder to change.
 BLOCKSTART 632E38 10 02
-00-E: topar stolen
-01-E: topar lost
+00-E: Topar stolen
+01-E: Topar lost
 
 # I'm not sure these are actually used in the game anywhere.
 BLOCKSTART 632E58 13 02
