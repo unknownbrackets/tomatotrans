@@ -2,14 +2,14 @@ NAMES:
 00-E:Selemo
 01-E:Selemo
 02-E:Watchman Kid
-03-E:Shishkabadon
+03-E:Pokymaton
 04-E:Chickling
 05-E:Pataball
 06-E:Cupie
 07-E:Hitman
 08-E:Boronga-Z
 09-E:Jackbox
-0A-E:Shishkabadon
+0A-E:Pokymaton
 0B-E:Cupie
 0C-E:Brikky
 0D-E:Grikky
@@ -54,7 +54,7 @@ NAMES:
 34-E:Chocolina
 35-E:White Choco
 36-E:Strawberry Choco
-37-E:Viking
+37-E:Glutton
 38-E:Eeklair
 39-E:Slime
 3A-E:Butcher
@@ -64,7 +64,7 @@ NAMES:
 3E-E:Poochy
 3F-E:Crony
 40-E:Crony
-41-E:Shishkabari
+41-E:Pokyrina
 42-E:Chocolin
 43-E:Conda Kid
 44-E:Red Baby

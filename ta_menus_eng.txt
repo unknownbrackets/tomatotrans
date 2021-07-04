@@ -93,7 +93,7 @@ BLOCKFIXED 4903F8 10 61 0A
 1C-E:Wake Bell
 1D-E:Hanzo Box
 1E-E:Mach Apple
-1F-E:Bari Apple
+1F-E:Barrier Apple
 20-E:Double Apple
 21-E:Eau d'Escape
 22-E:Time Kill
@@ -224,7 +224,7 @@ BLOCKFIXED 490420 10 32 08
 11-E:Dragonfire
 12-E:Fumigator
 13-E:Bee Gatling
-14-E:SuperFan
+14-E:Super Fan
 15-E:Cyclooka
 16-E:Zap Drum
 17-E:Popocon
@@ -586,8 +586,8 @@ C1-E:something, somewhere.
 BLOCKFIXED 490458 20 04
 00-E:Adjust Gimmicks
 01-E:
-02-E:
-03-E:
+02-E:Adjust the difficulty of,
+03-E:equip, and test Gimmicks.
 
 BLOCKFIXED 490450 20 10
 00-E:Adjust the difficulty of,
@@ -977,12 +977,12 @@ BLOCKFIXED 490680 0C 14 09
 
 BLOCKFIXED 490688 16 0B
 00-E:Gimica Noob
-01-E:Gimica Learner
+01-E:Gimica Amateur
 02-E:Gimica Player
 03-E:Gimica Regular
 04-E:Gimica Rover
 05-E:Gimica Phenom
-06-E:Gimica Celebrity
+06-E:Gimica Bigwig
 07-E:Gimica Prodigy
 08-E:Gimica Champ
 09-E:Gimica Legend
@@ -1074,13 +1074,13 @@ BLOCKFIXED 4906A0 24 30
 BLOCKFIXED 4906B0 0B 01
 00-E:
 BLOCKFIXED 4906A8 0B 0A
-00-E:Rank Up
-01-E:Rank Dn
-02-E:HP Up
-03-E:Point Up
-04-E:Point Dn
-05-E:HP Down
-06-E:Damage Dn
+00-E:Rank [F8]
+01-E:Rank [FA]
+02-E:HP [F8]
+03-E:Point [F8]
+04-E:Point [FA]
+05-E:HP [FA]
+06-E:Damage [FA]
 07-E:Rank Keep
 08-E:Random
 09-E:No Damage
@@ -1321,7 +1321,7 @@ RESTRUCT 62C250 08 58 7F001E 10 40 32
 11-E:Dragonfire
 12-E:Fumigator
 13-E:Bee Gatling
-14-E:SuperFan
+14-E:Super Fan
 15-E:Cyclooka
 16-E:Zap Drum
 17-E:Popocon
@@ -1373,7 +1373,7 @@ RESTRUCT 62C258 1A 58 7F002E 30 40 32
 11-E:Tap [F5] while the bar is between [F6]and[F6]!
 12-E:Grab the trash with [F5] and [F7] taps!
 13-E:Tap the button on the bar to fill it!
-14-E:Tap [F5] to keep ball in the red zone!
+14-E:Tap [F5] to keep the ball in the red zone!
 15-E:Tap [F5] to reach red with [F6] above it!
 16-E:Fill the bar! Alternate tapping [F5] and [F7]!
 17-E:Tap [F5] when there is no ! mark!
@@ -1442,7 +1442,7 @@ RESTRUCT 630E5C 08 10 7F0C9E 10 10 61
 1C-E:Wake Bell
 1D-E:Hanzo Box
 1E-E:Mach Apple
-1F-E:Bari Apple
+1F-E:Barrier Apple
 20-E:Double Apple
 21-E:Eau d'Escape
 22-E:Time Kill
@@ -1783,7 +1783,7 @@ BLOCKSTART 470472 0A 32 #64B334/49F684
 11-E:Dragonfire
 12-E:Fumigator
 13-E:BeeGatling
-14-E:SuperFan
+14-E:Super Fan
 15-E:Cyclooka
 16-E:Zap Drum
 17-E:Popocon
