@@ -117,11 +117,11 @@ BLOCKFIXED 4903F8 10 61 0A
 34-E:Ringturner
 35-E:
 36-E:Binky
-37-E:PalaceKey1
-38-E:PalaceKey2
-39-E:PalaceKey3
+37-E:Palace Key 1
+38-E:Palace Key 2
+39-E:Palace Key 3
 3A-E:Golden Pot
-3B-E:ArtsyPillow
+3B-E:Artsy Pillow
 3C-E:End Hand
 3D-E:Greemory
 3E-E:Blumory
@@ -131,19 +131,19 @@ BLOCKFIXED 4903F8 10 61 0A
 42-E:Sheep 3
 43-E:Dreco Gaze
 44-E:Boom Key
-45-E:DreamPillow
-46-E:OriginHand
+45-E:Dream Pillow
+46-E:Origin Hand
 47-E:Sesame Key
 48-E:Deposit
-49-E:FreeTicket
+49-E:Free Ticket
 4A-E:License
 4B-E:Candy
 4C-E:Music
 4D-E:Chapel Key
-4E-E:GTicket2
+4E-E:Gondola Card 2
 4F-E:D. Skull
 50-E:??? Mask
-51-E:GTicket
+51-E:Gondola Card
 52-E:Letter
 53-E:Winch Doll
 54-E:Greenana
@@ -1217,22 +1217,22 @@ BLOCKFIXED 4907CC 20 27 1A
 26-E:So long...
 
 # Overworld area names.
-BLOCKFIXED 49F61C 10 11 08
+BLOCKFIXED 49F61C 10 11 0A
 00-E:The Spillage
 01-E:Pokypine
-02-E:Gmk Palace
-03-E:Hanzo 1
-04-E:Mayonen
-05-E:Hanzo 2
+02-E:Gimmick Palace
+03-E:Hanzo Lab 1
+04-E:Mayonen Land
+05-E:Hanzo Lab 2
 06-E:NampLagoon
-07-E:Hanzo 3
+07-E:Hanzo Lab 3
 08-E:Oystown
-09-E:Hanzo 4
-0A-E:TartarValley
-0B-E:Hanzo 5
+09-E:Hanzo Lab 4
+0A-E:Tartar Valley
+0B-E:Hanzo Lab 5
 0C-E:Soy City
-0D-E:Hanzo 6
-0E-E:Balsamic
+0D-E:Hanzo Lab 6
+0E-E:Balsamic Dome
 0F-E:
 10-E:Lardosseum
 
@@ -1466,11 +1466,11 @@ RESTRUCT 630E5C 08 10 7F0C9E 10 10 61
 34-E:Ringturner
 35-E:
 36-E:Binky
-37-E:PalaceKey1
-38-E:PalaceKey2
-39-E:PalaceKey3
+37-E:Palace Key 1
+38-E:Palace Key 2
+39-E:Palace Key 3
 3A-E:Golden Pot
-3B-E:ArtsyPillow
+3B-E:Artsy Pillow
 3C-E:End Hand
 3D-E:Greemory
 3E-E:Blumory
@@ -1480,19 +1480,19 @@ RESTRUCT 630E5C 08 10 7F0C9E 10 10 61
 42-E:Sheep 3
 43-E:Dreco Gaze
 44-E:Boom Key
-45-E:DreamPillow
-46-E:OriginHand
+45-E:Dream Pillow
+46-E:Origin Hand
 47-E:Sesame Key
 48-E:Deposit
-49-E:FreeTicket
+49-E:Free Ticket
 4A-E:License
 4B-E:Candy
 4C-E:Music
 4D-E:Chapel Key
-4E-E:GTicket2
+4E-E:Gondola Card 2
 4F-E:D. Skull
 50-E:??? Mask
-51-E:GTicket
+51-E:Gondola Card
 52-E:Letter
 53-E:Winch Doll
 54-E:Greenana
