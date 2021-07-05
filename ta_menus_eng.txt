@@ -450,9 +450,9 @@ BLOCKFIXED 490448 24 C2
 3C-E:Battle-use powerup item
 3D-E:Speed up 50[F2] for 3 turns
 3E-E:Battle-use powerup item
-3F-E:Def. up 15[F2] for 3 turns
+3F-E:Defense up 15[F2] for 3 turns
 40-E:Battle-use powerup item
-41-E:Speed and Def. up for 3 turns
+41-E:Speed and Defense up for 3 turns
 42-E:Battle-use escape item
 43-E:Escape battle without fail
 44-E:DUMMY
@@ -683,11 +683,11 @@ BLOCKFIXED 4904C8 24 02
 00-E:L/R: Adjust difficulty  START: Try
 01-E:SELECT: Show description
 
-BLOCKFIXED 4904D0 04 01
-00-E:SPD
+BLOCKFIXED 4904D0 08 01 06
+00-E:Speed
 
-BLOCKFIXED 4904D8 04 01
-00-E:DEF
+BLOCKFIXED 4904D8 08 01 06
+00-E:Defense
 
 # This is centered originally, lining up the Yes/No.
 BLOCKFIXED 4904E0 1C 03 1A
@@ -758,8 +758,8 @@ BLOCKFIXED 490560 05 01
 BLOCKFIXED 490568 06 01 04
 00-E:Speed
 
-BLOCKFIXED 490570 04 01
-00-E:DEF
+BLOCKFIXED 490570 08 01 06
+00-E:Defense
 
 BLOCKFIXED 490578 08 01
 00-E:Next
@@ -1624,9 +1624,9 @@ RESTRUCT 639558 1A 1A 7F12AE 30 30 11
 0A-E:Cures poison
 0B-E:Wakes an ally up
 0C-E:Fixes a janky Gimmick
-0D-E:Speed up 50 [F2] for 3 turns
-0E-E:Def. up [F2] for 3 turns
-0F-E:Speed, Def. up for 3 turns
+0D-E:Speed up 50[F2] for 3 turns
+0E-E:Defense up 15[F2] for 3 turns
+0F-E:Speed, Defense up for 3 turns
 10-E:Escape without fail
 
 DYNPOINTER 050968 0D 05094A 0 #639C80
