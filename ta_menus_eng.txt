@@ -16,7 +16,7 @@ BLOCKFIXED 4903C0 0A 17
 0A-E:T.Robo
 0B-E:Jack
 0C-E:Bertha
-0D-E:QuizKid
+0D-E:Quiz Kid
 0E-E:Brikky
 0F-E:Grikky
 10-E:Abira
@@ -648,8 +648,8 @@ FIXEDPOINTER 0781D8 08  #459F38
 FIXEDPOINTER 0781DC 08  #4575AA
 00-E:Binkies
 
-BLOCKFIXED 490480 12 03
-00-E:   Go back?
+BLOCKFIXED 490480 24 03 1A
+00-E:[EF][EF][EF]Return to the dungeon start?
 01-E:
 02-E:[EF][EF][EF][EF][EF][EF][EF][EF]Yes[EF][EF] No
 
@@ -674,10 +674,10 @@ BLOCKFIXED 4904B0 0A 01 06
 BLOCKFIXED 4904B8 24 01
 00-E:Adjust Gimmicks for
 
-BLOCKFIXED 4904C0 1C 03 1A
-00-E:L/R:     Select difficulty
-01-E:START:  Test Gimmick
-02-E:SELECT:[EF]Show description
+BLOCKFIXED 4904C0 24 03 1A
+00-E:L/R: Adjust difficulty  START: Try
+01-E:SELECT: Show description
+02-E:[F5]: Swap with equipped Gimmick
 
 BLOCKFIXED 4904C8 24 02
 00-E:L/R: Adjust difficulty  START: Try
@@ -706,7 +706,7 @@ BLOCKFIXED 4904F8 06 01 06
 00-E:Load
 
 BLOCKFIXED 490500 08 01 06
-00-E:Delete
+00-E:Erase
 
 BLOCKFIXED 490508 08 06 06
 00-E:Pick a
@@ -744,7 +744,7 @@ BLOCKFIXED 490540 03 01
 00-E:EFF
 
 BLOCKFIXED 490548 04 01
-00-E:NUM
+00-E:Held
 
 BLOCKFIXED 490550 03 01
 00-E:LV
@@ -820,10 +820,10 @@ BLOCKFIXED 4905E8 0A 01 07
 00-E:can equip
 
 BLOCKFIXED 4905F0 04 01
-00-E:
+00-E:DEF
 
 BLOCKFIXED 4905F8 04 01
-00-E:
+00-E:All
 
 BLOCKFIXED 490600 08 01 05
 00-E:Effect
@@ -928,11 +928,11 @@ BLOCKFIXED 490678 18 30
 15-E:by 25
 16-E:25 direct damage
 17-E:to your rival
-18-E:Reduce a card's
-19-E:damage taken by 25
-1A-E:Reduce a card's
-1B-E:damage taken to 0
-1C-E:Changes into another
+18-E:Reduce damage
+19-E:taken by 25
+1A-E:Reduce damage
+1B-E:taken to 0
+1C-E:Change to another
 1D-E:character card
 1E-E:Raise rival card's
 1F-E:points by 25
@@ -967,7 +967,7 @@ BLOCKFIXED 490680 0C 14 09
 0A-E:Soy Guy
 0B-E:Big Bertha
 0C-E:Jack
-0D-E:QuizKid
+0D-E:Quiz Kid
 0E-E:Hanzon
 0F-E:Hanzoro
 10-E:Hanzone
@@ -1083,7 +1083,7 @@ BLOCKFIXED 4906A8 0B 0A
 06-E:Damage [FA]
 07-E:Rank Keep
 08-E:Random
-09-E:No Damage
+09-E:X Damage
 
 BLOCKFIXED 4907AC 1C 20
 00-E:This is the menu screen.
@@ -1750,7 +1750,7 @@ BLOCKSTART 47038C 0A 17 #64B2D8/49F684
 0A-E:T.Robo
 0B-E:Jack
 0C-E:Bertha
-0D-E:QuizKid
+0D-E:Quiz Kid
 0E-E:Brikky
 0F-E:Grikky
 10-E:Abira
