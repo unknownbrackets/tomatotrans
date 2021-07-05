@@ -275,3 +275,18 @@ bx r0
 .pool
 .endfunc
 .endregion
+
+; 0807A0EC updates sprites on clothing selection.  Here we adjust to give space for "Defense".
+; We just move each sprite right 16 pixels.
+.org 0x0807A27E
+mov r0,0xB8
+.org 0x0807A28A
+mov r0,0xB8
+.org 0x0807A29C
+mov r0,0xD8
+.org 0x0807A2A8
+mov r0,0xD8
+.org 0x0807A2B8
+mov r1,0xC0
+.org 0x0807A2C4
+mov r1,0xC0
