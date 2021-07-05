@@ -18,7 +18,7 @@ deal damage to your opponent.[END]
 These Gimmick Cards are related to[BREAK]
 the Gimmicks you've collected.[BREAK]
 But, they come out at random...[BREAK]
-The card rank is in the center.[BREAK]
+The card ranks are between them.[BREAK]
 From strongest to weakest, they're...[END]
 
 06-E:1st: Blue.[END]

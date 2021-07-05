@@ -141,7 +141,7 @@ BLOCKFIXED 4903F8 10 61 0A
 4C-E:Music
 4D-E:Chapel Key
 4E-E:Gondola Card 2
-4F-E:D. Skull
+4F-E:Diamond Skull
 50-E:??? Mask
 51-E:Gondola Card
 52-E:Letter
@@ -236,8 +236,8 @@ BLOCKFIXED 490420 10 32 08
 1D-E:Choo-Choo
 1E-E:Puffer
 1F-E:UFO-Cast
-20-E:SpiderGun
-21-E:RocketPak
+20-E:Spider Gun
+21-E:Rocket Pak
 22-E:Sun Beam
 23-E:Bouncer
 24-E:Firehog
@@ -303,7 +303,7 @@ BLOCKFIXED 490430 24 64
 28-E:Keep the ball in the red zone by
 29-E:tapping [F5] and reach the other side.
 2A-E:Tap [F5] and reach each red zone
-2B-E:while the [F6] is above it.
+2B-E:only once the [F6] is above it.
 2C-E:Alternate tapping [F5] and [F7]
 2D-E:to fill up the bar completely.
 2E-E:Tap [F5] rapidly to fill up the bar.
@@ -543,14 +543,14 @@ BLOCKFIXED 490448 24 C2
 99-E:called HELP ME!
 9A-E:A key found near the base of
 9B-E:the Rainthooven.
-9C-E:A non-expired ticket to ride
+9C-E:A non-expired card for riding
 9D-E:the Mt. S'creme gondola.
 9E-E:A diamond-shaped skull.
 9F-E:Kemlin wants this.
 A0-E:Mask with a question mark on it.
 A1-E:
-A2-E:A ticket to ride the Mt. S'creme
-A3-E:gondola.
+A2-E:A card that allows riding on the
+A3-E:Mt. S'creme gondola.
 A4-E:A letter addressed to [NAME3].
 A5-E:Found at his villa.
 A6-E:A doll with a rope used to rescue
@@ -1333,8 +1333,8 @@ RESTRUCT 62C250 08 58 7F001E 10 40 32
 1D-E:Choo-Choo
 1E-E:Puffer
 1F-E:UFO-Cast
-20-E:SpiderGun
-21-E:RocketPak
+20-E:Spider Gun
+21-E:Rocket Pak
 22-E:Sun Beam
 23-E:Bouncer
 24-E:Firehog
@@ -1355,7 +1355,7 @@ RESTRUCT 62C250 08 58 7F001E 10 40 32
 RESTRUCT 62C258 1A 58 7F002E 30 40 32
 00-E:Hit [F5] in the red zone!
 01-E:Hold and release [F5]! Aim for the red!
-02-E:Connect the bars with [F5]!
+02-E:Tap [F5] when the two bars connect!
 03-E:Stop on the luck symbol with [F5]!
 04-E:Hit [F5] when balls are in the red zone!
 05-E:Hit [F5] or [F7] in the red zone!
@@ -1490,7 +1490,7 @@ RESTRUCT 630E5C 08 10 7F0C9E 10 10 61
 4C-E:Music
 4D-E:Chapel Key
 4E-E:Gondola Card 2
-4F-E:D. Skull
+4F-E:Diamond Skull
 50-E:??? Mask
 51-E:Gondola Card
 52-E:Letter
