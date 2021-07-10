@@ -36,7 +36,7 @@ BLOCKFIXED 4903D8 0C 05
 01-E:HP Up
 02-E:Walk Heal HP
 03-E:EXP Up
-04-E:No Status
+04-E:Ward Effect
 
 BLOCKFIXED 4903E0 0A 0A
 00-E:
@@ -193,7 +193,7 @@ BLOCKFIXED 490410 0C 20 09
 17-E:Check Skirt
 18-E:Spark Skirt
 19-E:Star Coat
-1A-E:Diaper
+1A-E:Abira Diaper
 1B-E:Mach Jersey
 1C-E:Moon Gown
 1D-E:Cosmo Cape
@@ -214,7 +214,7 @@ BLOCKFIXED 490420 10 32 08
 07-E:Bunny Hop
 08-E:Cupid Bow
 09-E:Judgment
-0A-E:Elec.Eel
+0A-E:Electric Eel
 0B-E:SlotZooka
 0C-E:SeedBomb
 0D-E:Momotaro
@@ -247,7 +247,7 @@ BLOCKFIXED 490420 10 32 08
 28-E:Dojo Pup
 29-E:Lucky Cat
 2A-E:Pop-Horn
-2B-E:FartHorn
+2B-E:Fart-Horn
 2C-E:LoveSong
 2D-E:StarScope
 2E-E:Hotafant
@@ -267,7 +267,7 @@ BLOCKFIXED 490430 24 64
 04-E:Press [F5] when the two bars
 05-E:clamp together.
 06-E:Stop the spinning slots with [F5]
-07-E:and land on the luck symbol.
+07-E:and land on the star symbol.
 08-E:When the flowing balls reach the
 09-E:red zone, press [F5].
 0A-E:Push [F5] or [F7] depending on which
@@ -1311,7 +1311,7 @@ RESTRUCT 62C250 08 58 7F001E 10 40 32
 07-E:Bunny Hop
 08-E:Cupid Bow
 09-E:Judgment
-0A-E:Elec.Eel
+0A-E:Electric Eel
 0B-E:SlotZooka
 0C-E:SeedBomb
 0D-E:Momotaro
@@ -1344,7 +1344,7 @@ RESTRUCT 62C250 08 58 7F001E 10 40 32
 28-E:Dojo Pup
 29-E:Lucky Cat
 2A-E:Pop-Horn
-2B-E:FartHorn
+2B-E:Fart-Horn
 2C-E:LoveSong
 2D-E:StarScope
 2E-E:Hotafant
@@ -1356,7 +1356,7 @@ RESTRUCT 62C258 1A 58 7F002E 30 40 32
 00-E:Hit [F5] in the red zone!
 01-E:Hold and release [F5]! Aim for the red!
 02-E:Tap [F5] when the two bars connect!
-03-E:Stop on the luck symbol with [F5]!
+03-E:Stop on the star symbol with [F5]!
 04-E:Hit [F5] when balls are in the red zone!
 05-E:Hit [F5] or [F7] in the red zone!
 06-E:Stop the rabbit in the red zone with [F5]!
@@ -1536,7 +1536,7 @@ RESTRUCT 63146C 08 10 7F15DE 10 10 20
 17-E:Check Skirt
 18-E:Spark Skirt
 19-E:Star Coat
-1A-E:Diaper
+1A-E:Abira Diaper
 1B-E:Mach Jersey
 1C-E:Moon Gown
 1D-E:Cosmo Cape
@@ -1806,7 +1806,7 @@ BLOCKSTART 470472 0A 32 #64B334/49F684
 28-E:Dojo Pup
 29-E:Lucky Cat
 2A-E:Pop-Horn
-2B-E:FartHorn
+2B-E:Fart-Horn
 2C-E:LoveSong
 2D-E:StarScope
 2E-E:Hotafant
