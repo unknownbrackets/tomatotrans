@@ -5,7 +5,7 @@
 b 0x08074DAE
 .endregion
 
-; Essentially the same as the above, this is used with the ??????? text allowed too.
+; Essentially the same as the above in 08074CAC, this is used with the ??????? text allowed too.
 .org 0x08074CC8
 .region 0x08074D0A-.,0x00
 b 0x08074D0A

@@ -726,7 +726,7 @@ static bool InsertGimmickBattleIcons(FILE *ta, uint32_t &nextPos) {
 	}
 
 	// The tileset is now ready, let's compress.
-	static const uint32_t craneRelocs[]{ 0x00599058 };
+	static const uint32_t craneRelocs[]{ 0x00052404 };
 	SaveTilesetParams craneParams{ 16, 164, 0x00599058, craneRelocs, std::size(craneRelocs) };
 	if (!SaveCompressedTileset(ta, craneTileset, craneParams, nextPos)) {
 		return false;

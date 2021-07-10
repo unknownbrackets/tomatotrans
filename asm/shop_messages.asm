@@ -194,7 +194,7 @@ bl CopyString8x8ToVRAM
 add r7,0xD0
 add r7,0xD0
 
-; Now we're going to draw the status effects this equipment has.]
+; Now we're going to draw the status effects this equipment has.
 ; There might be 2, so r5=effectNum and r6=yPosition.
 mov r5,0
 mov r6,0
