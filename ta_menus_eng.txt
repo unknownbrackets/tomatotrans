@@ -138,7 +138,7 @@ BLOCKFIXED 4903F8 10 61 0A
 49-E:Free Ticket
 4A-E:License
 4B-E:Candy
-4C-E:Music
+4C-E:Organ Music
 4D-E:Chapel Key
 4E-E:Gondola Card 2
 4F-E:Diamond Skull
@@ -369,7 +369,7 @@ BLOCKFIXED 490438 0C 12 08
 04-E:Mayonen
 05-E:NampLagoon
 06-E:Oystown
-07-E:Tartar
+07-E:Tartar Val
 08-E:Soy City
 09-E:Balsamic
 0A-E:Hanzo 1
@@ -540,7 +540,7 @@ BLOCKFIXED 490448 24 C2
 96-E:Candy that gives you a booming
 97-E:voice if many are eaten.
 98-E:Sheet music to play a song
-99-E:called HELP ME!
+99-E:called Help Me!
 9A-E:A key found near the base of
 9B-E:the Rainthooven.
 9C-E:A non-expired card for riding
@@ -1487,7 +1487,7 @@ RESTRUCT 630E5C 08 10 7F0C9E 10 10 61
 49-E:Free Ticket
 4A-E:License
 4B-E:Candy
-4C-E:Music
+4C-E:Organ Music
 4D-E:Chapel Key
 4E-E:Gondola Card 2
 4F-E:Diamond Skull
