@@ -843,6 +843,179 @@ static bool InsertShopBanners(FILE *ta, uint32_t &nextPos) {
 	return true;
 }
 
+static bool InsertHanzoSigns(FILE *ta, uint32_t &nextPos) {
+	struct MapInfo {
+		uint32_t id;
+		int layer;
+		uint32_t palettePtr;
+		uint32_t tilesetPtr;
+		uint32_t tilesetSize;
+		int tilesetCount;
+		uint32_t chipmapPtr;
+		uint32_t chipsetPtr;
+		uint32_t chipsetSize;
+	};
+
+	static const MapInfo hanzoMaps[] = {
+		{ 0x002F, 2, 0x00259EF8, 0x00187830, 4673, 256, 0x0027BE24, 0x0032E1C4, 416 },
+		{ 0x00DE, 2, 0x0025A2B8, 0x00188A70, 4489, 268, 0x0027C07C, 0x0032E52C, 584 },
+		{ 0x00DF, 3, 0x0025A678, 0x00189BF8, 3897, 256, 0x0027C5A4, 0x0032EA64, 728 },
+		{ 0x00E0, 2, 0x0025AA38, 0x0018AB30, 10284, 544, 0x0027C70C, 0x0032ED3C, 1152 },
+		{ 0x00E1, 2, 0x0025ADF8, 0x0018D35C, 8841, 416, 0x0027CBC0, 0x0032F7F4, 904 },
+		{ 0x0168, 1, 0x0025B1B8, 0x0018F5E0, 7865, 416, 0x0027CE18, 0x0032FCD4, 384 },
+	};
+	for (size_t i = 0; i < std::size(hanzoMaps); ++i) {
+		const auto &info = hanzoMaps[i];
+		// Load the palette, which we won't change.
+		Palette pal = LoadPaletteAt(ta, info.palettePtr, 0, 15);
+
+		// Next, load the tileset.  This we do change, but carefully.
+		Tileset tileset;
+		if (!LoadCompressedTileset(ta, tileset, info.tilesetPtr, info.tilesetSize, info.tilesetCount)) {
+			return false;
+		}
+
+		// Allow reallocating the sign tiles.
+		if (info.id == 0x002F) {
+			for (int j = 0x0019; j <= 0x0020; ++j) {
+				tileset.Free(j);
+			}
+			for (int j = 0x0023; j <= 0x002A; ++j) {
+				tileset.Free(j);
+			}
+			for (int j = 0x00F4; j <= 0x00FF; ++j) {
+				tileset.Free(j);
+			}
+		} else if (info.id == 0x00DE) {
+			for (int j = 0x009F; j <= 0x00A6; ++j) {
+				tileset.Free(j);
+			}
+			for (int j = 0x00AF; j <= 0x00B6; ++j) {
+				tileset.Free(j);
+			}
+			for (int j = 0x010A; j <= 0x010B; ++j) {
+				tileset.Free(j);
+			}
+		} else if (info.id == 0x00DF) {
+			for (int j = 0x006D; j <= 0x0074; ++j) {
+				tileset.Free(j);
+			}
+			for (int j = 0x007B; j <= 0x0082; ++j) {
+				tileset.Free(j);
+			}
+			for (int j = 0x00F9; j <= 0x00FF; ++j) {
+				tileset.Free(j);
+			}
+		} else if (info.id == 0x00E0) {
+			for (int j = 0x0047; j <= 0x004E; ++j) {
+				tileset.Free(j);
+			}
+			for (int j = 0x005A; j <= 0x0061; ++j) {
+				tileset.Free(j);
+			}
+			for (int j = 0x021C; j <= 0x021F; ++j) {
+				tileset.Free(j);
+			}
+		} else if (info.id == 0x00E1) {
+			for (int j = 0x0039; j <= 0x0040; ++j) {
+				tileset.Free(j);
+			}
+			for (int j = 0x004E; j <= 0x0055; ++j) {
+				tileset.Free(j);
+			}
+			for (int j = 0x0199; j <= 0x019F; ++j) {
+				tileset.Free(j);
+			}
+		} else if (info.id == 0x0168) {
+			for (int j = 0x0044; j <= 0x004B; ++j) {
+				tileset.Free(j);
+			}
+			for (int j = 0x005D; j <= 0x0064; ++j) {
+				tileset.Free(j);
+			}
+			for (int j = 0x0197; j <= 0x019F; ++j) {
+				tileset.Free(j);
+			}
+		}
+
+		Tilemap bg(tileset);
+		char bgfilename[512];
+		snprintf(bgfilename, sizeof(bgfilename), "images/map%04X_bg%d_eng.png", info.id, info.layer);
+		if (!TilemapAndPaletteFromPNG(bg, pal, bgfilename, false)) {
+			return false;
+		}
+
+		if (info.id == 0x00DF) {
+			// These are used for ocean animations.
+			for (int x = 0; x < 36; ++x) {
+				if (x < 20 || x >= 30) {
+					bg.Override(x, 6, 0x1B00 + (x & 1));
+				}
+				if (x < 22 || x >= 30) {
+					bg.Override(x, 7, 0x1302 + (x & 1));
+				}
+				bg.Override(x, 18, 0x1302 + (x & 1));
+				bg.Override(x, 19, 0x1300 + (x & 1));
+			}
+
+			bg.Override(0, 14, 0x4305);
+			bg.Override(1, 14, 0x4306);
+			bg.Override(2, 14, 0x4305);
+			bg.Override(3, 14, 0x4306);
+			bg.Override(10, 14, 0x4305);
+			bg.Override(11, 14, 0x4306);
+			bg.Override(12, 14, 0x4305);
+			bg.Override(13, 14, 0x4306);
+			bg.Override(14, 14, 0x4305);
+			bg.Override(15, 14, 0x4306);
+
+			bg.Override(4, 15, 0x4304);
+			bg.Override(5, 15, 0x4305);
+			bg.Override(6, 15, 0x4306);
+			bg.Override(7, 15, 0x4305);
+			bg.Override(8, 15, 0x4306);
+			bg.Override(9, 15, 0x4304);
+
+			bg.Override(16, 16, 0x4304);
+			for (int x = 17; x < 33; ++x) {
+				bg.Override(x, 16, 0x4306 - (x & 1));
+			}
+			bg.Override(33, 16, 0x4306);
+		} else if (info.id == 0x00E0) {
+			bg.Override(14, 0, 0xA300);
+			bg.Override(28, 0, 0xA300);
+			bg.Override(4, 1, 0xA302);
+			bg.Override(10, 1, 0xA300);
+			bg.Override(21, 1, 0xA302);
+			bg.Override(25, 2, 0xA301);
+			bg.Override(1, 3, 0xA302);
+			bg.Override(11, 3, 0xA301);
+			bg.Override(16, 3, 0xA300);
+			bg.Override(27, 4, 0xA300);
+			bg.Override(5, 5, 0xA300);
+			bg.Override(1, 6, 0xA300);
+			bg.Override(12, 6, 0xA300);
+			bg.Override(28, 7, 0xA302);
+			bg.Override(3, 8, 0xA301);
+		}
+
+		// The tileset is now ready, let's compress.
+		const uint32_t relocations[]{
+			0x0015BA3C + 4 * info.id,
+		};
+		SaveTilesetParams params{ 16, info.tilesetSize, info.tilesetPtr, relocations, std::size(relocations) };
+		if (!SaveCompressedTileset(ta, tileset, params, nextPos)) {
+			return false;
+		}
+
+		if (!SaveTilemapAsChips(ta, bg, { info.id }, info.layer, info.chipsetSize, info.chipmapPtr, info.chipsetPtr, nextPos)) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 bool InsertImages(FILE *ta, uint32_t &nextPos) {
 	struct Inserter {
 		bool (* f)(FILE *ta, uint32_t &nextPos);
@@ -860,6 +1033,7 @@ bool InsertImages(FILE *ta, uint32_t &nextPos) {
 		{ InsertGimmickBattleIcons, "gimmick battle icons" },
 		{ InsertGimicaCard, "gimica card" },
 		{ InsertShopBanners, "shop banners" },
+		{ InsertHanzoSigns, "hanzo signs" },
 	};
 
 	bool failed = false;
