@@ -290,13 +290,13 @@ static int CompileCC(const char *str, int totalLength, int &strLoc, unsigned cha
        newStream[streamLen++] = 0xFF;
        newStream[streamLen++] = 0x12;
    }
-   else if (strcmp(ptr[0], "PAD_H") == 0)
+   else if (strcmp(ptr[0], "SET_X") == 0 || strcmp(ptr[0], "PAD_H") == 0)
    {
        newStream[streamLen++] = 0xFF;
        newStream[streamLen++] = 0x18;
 	   newStream[streamLen++] = hstrtoi(ptr[1]);
    }
-   else if (strcmp(ptr[0], "PAD_V") == 0)
+   else if (strcmp(ptr[0], "SET_Y") == 0 || strcmp(ptr[0], "PAD_V") == 0)
    {
        newStream[streamLen++] = 0xFF;
        newStream[streamLen++] = 0x19;

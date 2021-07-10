@@ -117,8 +117,8 @@ dw @@nextChar ; 0x14
 dw @@nextChar ; 0x15
 dw @@nextChar ; 0x16
 dw @@nextChar ; 0x17
-dw @@code18PadH ; 0x18 [PAD_H XX]
-dw @@ignoreParam ; 0x19 [PAD_V XX]
+dw @@ignoreParam ; 0x18 [SET_X XX]
+dw @@ignoreParam ; 0x19 [SET_Y XX]
 dw @@ignoreParam ; 0x1A [?? XX]
 dw @@nextChar ; 0x1B
 dw @@code1CESizeWide ; 0x1C [SIZE_WIDE]
@@ -135,12 +135,6 @@ dw @@nextChar ; 0x26 [CENTER_HV]
 
 @@ignoreParam:
 add r4,r4,1
-b @@nextChar
-
-@@code18PadH:
-ldrb r0,[r4,0]
-add r4,r4,1
-bl CalcLengthAppendWidth
 b @@nextChar
 
 @@code1CESizeWide:

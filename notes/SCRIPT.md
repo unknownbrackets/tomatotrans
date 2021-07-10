@@ -45,11 +45,11 @@ Like PAUSEBREAK, but without the BREAK.  Delays and continues on the same line.
 
 Equivalent to [PAUSE 0F].  Delays for a little and continues on the same line.
 
-### [PAD_H XX] / [FF 18 XX]
+### [SET_X XX] / [FF 18 XX]
 
 Move the x position of the text forward by XX pixels.  Not normally used in the game.
 
-### [PAD_V XX] / [FF 19 XX]
+### [SET_Y XX] / [FF 19 XX]
 
 Move the x position of the text down by XX pixels.  Not normally used in the game.
 
