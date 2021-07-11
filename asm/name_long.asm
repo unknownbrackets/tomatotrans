@@ -282,11 +282,17 @@ mov r4,r5
 ldr r5,[0x0802DE78] ; 0x03001EDC
 ldrh r0,[r7,4]
 add r5,r5,r0
+; And the checked name's length.
+ldrb r0,[r5,4]
 
 ; And now the current name to compare against.
 ldr r6,[0x0802DE84] ; 0x0300199C
 ; And its current length.
 ldrb r3,[r4,4]
+
+; If the lengths don't even match, easy - no match.  A subset is allowed.
+cmp r0,r3
+bne @@gotoNext
 
 ; The first four characters are easy.
 mov r2,0
@@ -299,9 +305,8 @@ bne @@gotoNext
 
 add r2,r2,1
 cmp r2,r3
-; We checked the length they had, so it's not the same.
-; Well, it's the same but shorter.  Confusing, but let's allow it.
-beq @@gotoNext
+; We know r3 is the length of both names, so if we hit that length - it's a match.
+beq @@gotoMatch
 cmp r2,4
 blo @@firstFourLoop
 
@@ -312,7 +317,7 @@ blo @@firstFourLoop
 	cmp r0,r1
 	bne @@gotoNext
 	cmp r3,5
-	beq @@gotoNext
+	beq @@gotoMatch
 .endif
 .if NameMaxLength > 5
 	ldrb r0,[r5,6]
@@ -320,7 +325,7 @@ blo @@firstFourLoop
 	cmp r0,r1
 	bne @@gotoNext
 	cmp r3,6
-	beq @@gotoNext
+	beq @@gotoMatch
 .endif
 
 ; Last one is actually at the end.
@@ -336,6 +341,7 @@ blo @@firstFourLoop
 .endif
 
 ; Okay, this was a perfect match, show an error message.
+@@gotoMatch:
 b 0x0802DE4E
 
 ; We try to jump to this MUCH earlier than the original code, so it's too far away.
