@@ -135,7 +135,7 @@ BLOCKFIXED 4903F8 10 61 0A
 46-E:Origin Hand
 47-E:Sesame Key
 48-E:Deposit
-49-E:Free Ticket
+49-E:Unlimited Pass
 4A-E:License
 4B-E:Candy
 4C-E:Organ Music
@@ -161,12 +161,12 @@ BLOCKFIXED 4903F8 10 61 0A
 60-E:Wow!Coil
 
 # For now assuming this needs the same size as 490410.
-BLOCKFIXED 490400 0C 01 09
+BLOCKFIXED 490400 0E 01 09
 00-E:Nothing
 # This must be the same size as 490410.
-BLOCKFIXED 490408 0C 01 09
+BLOCKFIXED 490408 0E 01 09
 00-E:
-BLOCKFIXED 490410 0C 20 09
+BLOCKFIXED 490410 0E 20 09
 00-E:Vinyl Shirt
 01-E:Model Jacket
 02-E:Mayo Jacket
@@ -198,7 +198,7 @@ BLOCKFIXED 490410 0C 20 09
 1C-E:Moon Gown
 1D-E:Cosmo Cape
 1E-E:Sumo Jacket
-1F-E:Platna Cape
+1F-E:Platinum Cape
 
 # This must be the same size as 490420.
 BLOCKFIXED 490418 10 01 08
@@ -357,7 +357,7 @@ BLOCKFIXED 490430 24 64
 5E-E:Move the snowman with [FC] and
 5F-E:collect a number of balls.
 60-E:Push the [FC] in the opposite direction
-61-E:indicated by the yellow panels.
+61-E:of the highlighted panel.
 62-E:Flip cards 2 at a time and find the
 63-E:spiral pair using [FB][F9] and [F5].
 
@@ -535,7 +535,7 @@ BLOCKFIXED 490448 24 C2
 91-E:Careful not to lose it.
 92-E:All-you-can-ride pass for
 93-E:the Soy City Subway.
-94-E:A license to walk on
+94-E:A license to travel on
 95-E:Soy City's Soyway.
 96-E:Candy that gives you a booming
 97-E:voice if many are eaten.
@@ -1484,7 +1484,7 @@ RESTRUCT 630E5C 08 10 7F0C9E 10 10 61
 46-E:Origin Hand
 47-E:Sesame Key
 48-E:Deposit
-49-E:Free Ticket
+49-E:Unlimited Pass
 4A-E:License
 4B-E:Candy
 4C-E:Organ Music
@@ -1541,7 +1541,7 @@ RESTRUCT 63146C 08 10 7F15DE 10 10 20
 1C-E:Moon Gown
 1D-E:Cosmo Cape
 1E-E:Sumo Jacket
-1F-E:Platna Cape
+1F-E:Platinum Cape
 
 DYNPOINTER 04D490 1A 04D474 04D47C #632E04
 00-E:Poison damage

@@ -101,7 +101,7 @@ NAMES:
 63-E:Killborg
 64-E:Bugsy
 65-E:RoadKill
-66-E:DJ Scrach
+66-E:DJ Scratchin'
 67-E:Snatcher
 68-E:Grubber
 69-E:Gold Digger
@@ -118,7 +118,7 @@ NAMES:
 74-E:Grikky
 75-E:Coupling
 76-E:Left Arm
-77-E:RightArm
+77-E:Right Arm
 78-E:Mystery Loop
 79-E:Shapely
 7A-E:Dreamir

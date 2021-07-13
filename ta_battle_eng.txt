@@ -202,9 +202,9 @@
 0D32BE-E:Come here, helper robos!
 0D32DE-E:Come here, helper robos!
 # 71 Helper Robo-G / おたすけロボG
-0D32FE-E:
+0D32FE-E:Self... destruct... activated...
 # 72 Helper Robo-G / おたすけロボG
-0D3326-E:
+0D3326-E:Self... destruct... activated...
 # 73 Brikky / ブリッキ
 0D3379-E:Brikky: They got me, Grikky...!
 # 74 Grikky / ゴリッキ
@@ -224,13 +224,13 @@
 0D2B2E-E:Owwwww... not bad!
 0D2B35-E:Power charging!
 0D2B4C-E:And now...
-0D2B53-E:Don't do like before...
+0D2B53-E:It won't be like before...
 0D2C4F-E:Whoa! The coupling's broken!
 0D2C7C-E:Owwwww... not bad!
 0D2C83-E:Power charging!
 0D2C90-E:I, Shadap, am defeated at last...
-0D2D5E-E:Aim for minus, then minus again,
-0D2D65-E:and lastly hit the coupling!
+0D2D5E-E:[CENTER]Aim for minus, then minus again,
+0D2D65-E:[CENTER]and lastly hit the coupling!
 0D2D7C-E:Plus and plus...
 0D2D83-E:FULL POWER! Take this!
 0D2D8D-E:Plus and minus...
