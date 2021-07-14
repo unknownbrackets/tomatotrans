@@ -42,7 +42,7 @@ BLOCKFIXED 4903E0 0A 0A
 00-E:
 01-E:Poison
 02-E:Sleep
-03-E:Critical
+03-E:Knockout
 04-E:Get Topar
 05-E:Speed Down
 06-E:DEF Down
@@ -216,7 +216,7 @@ BLOCKFIXED 490420 10 32 08
 09-E:Judgment
 0A-E:Electric Eel
 0B-E:SlotZooka
-0C-E:SeedBomb
+0C-E:Seed Bomb
 0D-E:Momotaro
 0E-E:Mag-Mitt
 0F-E:A-B Glove
@@ -243,11 +243,11 @@ BLOCKFIXED 490420 10 32 08
 24-E:Firehog
 25-E:SesameTop
 26-E:NanaBoard
-27-E:BowlingRice
+27-E:Bowling Rice
 28-E:Dojo Pup
 29-E:Lucky Cat
-2A-E:Pop-Horn
-2B-E:Fart-Horn
+2A-E:Pop Horn
+2B-E:Fart Horn
 2C-E:LoveSong
 2D-E:StarScope
 2E-E:Hotafant
@@ -337,9 +337,9 @@ BLOCKFIXED 490430 24 64
 4A-E:Pick the panels with faces on them.
 4B-E:Use [FB][F9] to move, [F5] to decide.
 4C-E:Press the buttons shown on screen
-4D-E:the number of times shown.
+4D-E:until the counter hits 0.
 4E-E:Press [FC] in the opposite direction
-4F-E:displayed some number of times.
+4F-E:displayed until the counter hits 0.
 50-E:Hover your cursor over the balls
 51-E:with [FC] and grab them with [F5].
 52-E:Select the number panels from least
@@ -358,8 +358,8 @@ BLOCKFIXED 490430 24 64
 5F-E:collect a number of balls.
 60-E:Push the [FC] in the opposite direction
 61-E:of the highlighted panel.
-62-E:Flip cards 2 at a time and find the
-63-E:spiral pair using [FB][F9] and [F5].
+62-E:Flip cards 2 at a time and find
+63-E:all matching pairs using [FB][F9] and [F5].
 
 BLOCKFIXED 490438 0C 12 08
 00-E:The Spillage
@@ -1313,7 +1313,7 @@ RESTRUCT 62C250 08 58 7F001E 10 40 32
 09-E:Judgment
 0A-E:Electric Eel
 0B-E:SlotZooka
-0C-E:SeedBomb
+0C-E:Seed Bomb
 0D-E:Momotaro
 0E-E:Mag-Mitt
 0F-E:A-B Glove
@@ -1340,11 +1340,11 @@ RESTRUCT 62C250 08 58 7F001E 10 40 32
 24-E:Firehog
 25-E:SesameTop
 26-E:NanaBoard
-27-E:BowlingRice
+27-E:Bowling Rice
 28-E:Dojo Pup
 29-E:Lucky Cat
-2A-E:Pop-Horn
-2B-E:Fart-Horn
+2A-E:Pop Horn
+2B-E:Fart Horn
 2C-E:LoveSong
 2D-E:StarScope
 2E-E:Hotafant
@@ -1402,7 +1402,7 @@ RESTRUCT 62C258 1A 58 7F002E 30 40 32
 2E-E:Catch balls in a bucket!
 2F-E:Collect balls with the snowman!
 30-E:Do the opposite of the yellow panels!
-31-E:Find the pair of spiral panels!
+31-E:Find all matching pairs!
 
 RESTRUCT 630BDC 04 1C 7F1980 07 08 04
 00-E:DeMille
@@ -1775,7 +1775,7 @@ BLOCKSTART 470472 0A 32 #64B334/49F684
 09-E:Judgment
 0A-E:Elec.Eel
 0B-E:SlotZooka
-0C-E:SeedBomb
+0C-E:Seed Bomb
 0D-E:Momotaro
 0E-E:Mag-Mitt
 0F-E:A-B Glove
@@ -1805,8 +1805,8 @@ BLOCKSTART 470472 0A 32 #64B334/49F684
 27-E:BowlngRice
 28-E:Dojo Pup
 29-E:Lucky Cat
-2A-E:Pop-Horn
-2B-E:Fart-Horn
+2A-E:Pop Horn
+2B-E:Fart Horn
 2C-E:LoveSong
 2D-E:StarScope
 2E-E:Hotafant
