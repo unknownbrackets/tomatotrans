@@ -123,7 +123,7 @@ NAMES:
 79-E:Shapely
 7A-E:Dreamir
 7B-E:Devil's Wink
-7C-E:Giga DeMille
+7C-E:[NAME1] Forgery
 7D-E:Walking Art
 7E-E:Cursed Clay
 7F-E:Lost Sheep
