@@ -263,7 +263,7 @@ bx r0
 ; Args: const char *str, uint8_t maxLen, uint8_t ignoreTrailingSpace
 ; Result struct: r0=str, r1=strLen, r2=pixelWidth, r3=tileWidth
 .func Calc8x8PixelWidth
-push r4
+push r4,r14
 cmp r2,0
 beq @@lengthReady
 
@@ -285,14 +285,36 @@ ldr r3,=@WidthIndex
 ; Save maxLen for later, and start our counter.
 mov r12,r1
 mov r4,0
+mov r1,0
 
 @@nextChar:
-; Pre-decrement so we can ldrb directly.  Doesn't matter if we add widths in reverse.
-sub r1,r1,1 ; Sets N/mi on negative, so we do the last one.
-bmi @@charsDone
+; Once we hit r12, we're done (even if it's 0.)
+cmp r1,r12
+bhs @@charsDone
+
 ldrb r2,[r0,r1]
-; And just grab the width directly.
+add r1,r1,1
+
+; Check for a control code (mainly, NAME codes.)
+cmp r2,0xFF
+beq @@handleCode
+
+; Not a control code, just grab the width directly.
 ldrb r2,[r3,r2]
+add r4,r4,r2
+b @@nextChar
+
+@@handleCode:
+; Okay, read in the code.
+ldrb r2,[r0,r1]
+add r1,r1,1
+sub r2,0x81 ; Sets flags like cmp.
+blo @@nextChar
+cmp r2,3 ; Already subtracted.
+bhi @@nextChar
+
+; Okay, this is a name code, name in r2.
+bl Calc8x8PixelWidthName
 add r4,r4,r2
 b @@nextChar
 .pool
@@ -308,8 +330,7 @@ add r3,r2,7
 lsr r3,r3,3
 
 @@return:
-pop r4
-bx r14
+pop r4,r15
 @@tooShort:
 mov r1,0
 mov r2,0
@@ -416,6 +437,75 @@ pop r4-r6,r15
 .endfunc
 .endregion
 
+.autoregion
+; Weird ABI for Calc8x8PixelWidth convenience.
+; Args: void *any1, void *any2, int charNum, uint8_t *widths
+; Return: void *any1, void *any2, int calculatedWidth, uint8_8 *widths
+.func Calc8x8PixelWidthName
+push r0-r1,r4-r5
+
+; Multiply charNum by 0x60 for the offset...
+; x * 0x60 = (x * 2 + x) * 0x20
+lsl r0,r2,1
+add r0,r0,r2
+lsl r0,r0,5
+; Read name length at offset 4.
+ldr r1,=0x03001EDC
+add r1,r1,r0
+ldrb r2,[r1,4]
+
+mov r4,0
+mov r5,0
+
+; At this point, r0=FREE, r1=charData, r2=nameLen, r4=width, r5=index
+@@nextChar4:
+; Read the first letter's width.
+ldrb r0,[r1,r5]
+ldrb r0,[r3,r0]
+add r4,r4,r0
+add r5,r5,1
+cmp r5,r2
+beq @@return
+cmp r5,4
+blo @@nextChar4
+
+.ifdef NameMaxLength
+.if NameMaxLength > 4
+	; Okay, next char is actually at 5 (not 4.)
+	ldrb r0,[r1,5]
+	ldrb r0,[r3,r0]
+	add r4,r4,r0
+	cmp r2,5
+	beq @@return
+.endif
+
+.if NameMaxLength > 5
+	; And then 6, because we avoid the length at 4...
+	ldrb r0,[r1,6]
+	ldrb r0,[r3,r0]
+	add r4,r4,r0
+	cmp r2,6
+	beq @@return
+.endif
+
+.if NameMaxLength > 6
+	mov r5,0x5E
+	ldrb r2,[r1,r5]
+	ldrb r0,[r3,r0]
+	add r4,r4,r0
+.endif
+.if NameMaxLength > 7
+	.error "Name too long"
+.endif
+.endif
+
+@@return:
+mov r2,r4
+pop r0-r1,r4-r5
+bx r14
+.pool
+.endfunc
+.endautoregion
 
 ; This is the function that typically draws indexed fixed strings.
 ; blockSize actually has the full 32 bits in the ROM, which we take advantage of.
