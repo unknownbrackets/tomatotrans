@@ -293,7 +293,7 @@
 0D4222-E:Different colors are...
 0D4229-E:Awful art!
 # 8D Left Arm / ひだりうで
-0D4071-E:Here we go! Invincible
+0D4071-E:Here we go!
 # 8E Right Arm / みぎうで
 0D4489-E:Having different colors...
 0D4490-E:This is invincible art!
@@ -305,7 +305,7 @@
 0D459E-E:The colors are different!
 0D45BD-E:My arm! My arm!
 0D45C4-E:Horrible art!!
-0D4383-E:artistic battle mode!
+0D4383-E:Invincible artistic battle mode!
 # 92 Tinimato / とマッちゃん
 0D16F8-E:Yeowch! You'll pay for that!
 0D16D9-E:Let's go everyone!

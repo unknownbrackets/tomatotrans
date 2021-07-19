@@ -121,15 +121,15 @@ BLOCKFIXED 4903F8 10 61 0A
 38-E:Palace Key 2
 39-E:Palace Key 3
 3A-E:Golden Pot
-3B-E:Artsy Pillow
+3B-E:Chekkit Pillow
 3C-E:End Hand
 3D-E:Greemory
 3E-E:Blumory
 3F-E:Redmory
-40-E:Sheep 1
-41-E:Sheep 2
-42-E:Sheep 3
-43-E:Dreco Gaze
+40-E:Sheep Doll 1
+41-E:Sheep Doll 2
+42-E:Sheep Doll 3
+43-E:Dreco's Visage
 44-E:Boom Key
 45-E:Dream Pillow
 46-E:Origin Hand
@@ -190,8 +190,8 @@ BLOCKFIXED 490410 0E 20 09
 14-E:Storm Suit
 15-E:Star Suit
 16-E:Ninja Coat
-17-E:Check Skirt
-18-E:Spark Skirt
+17-E:Chekkit Skirt
+18-E:Spark Coat
 19-E:Star Coat
 1A-E:Abira Diaper
 1B-E:Mach Jersey
@@ -507,21 +507,21 @@ BLOCKFIXED 490448 24 C2
 75-E:Would surely please a Pothead.
 76-E:An artistic pillow. Why?
 77-E:Who knows! Use it in a bed.
-78-E:Dreco's missing End Hand,
-79-E:found in the NREM Maze.
+78-E:Dreco's missing End Hand, found in
+79-E:the REM Maze and NREM Maze.
 7A-E:An invigorating green memory,
 7B-E:for Mr. Green Door.
 7C-E:A chilling blue memory,
 7D-E:for Mr. Blue Door.
 7E-E:A passionate red memory,
 7F-E:for Mr. Red Door.
-80-E:Sheep icon 1
+80-E:Doll that looks like a sheep #1.
 81-E:
-82-E:Sheep icon 2
+82-E:Doll that looks like a sheep #2.
 83-E:
-84-E:Sheep icon 3
+84-E:Doll that looks like a sheep #3.
 85-E:
-86-E:A gaze that takes you elsewhere.
+86-E:A ball that takes you elsewhere.
 87-E:Use it when you want to warp.
 88-E:REM and NREM Maze access
 89-E:key.
@@ -1470,15 +1470,15 @@ RESTRUCT 630E5C 08 10 7F0C9E 10 10 61
 38-E:Palace Key 2
 39-E:Palace Key 3
 3A-E:Golden Pot
-3B-E:Artsy Pillow
+3B-E:Chekkit Pillow
 3C-E:End Hand
 3D-E:Greemory
 3E-E:Blumory
 3F-E:Redmory
-40-E:Sheep 1
-41-E:Sheep 2
-42-E:Sheep 3
-43-E:Dreco Gaze
+40-E:Sheep Doll 1
+41-E:Sheep Doll 2
+42-E:Sheep Doll 3
+43-E:Dreco's Visage
 44-E:Boom Key
 45-E:Dream Pillow
 46-E:Origin Hand
@@ -1533,8 +1533,8 @@ RESTRUCT 63146C 08 10 7F15DE 10 10 20
 14-E:Storm Suit
 15-E:Star Suit
 16-E:Ninja Coat
-17-E:Check Skirt
-18-E:Spark Skirt
+17-E:Chekkit Skirt
+18-E:Spark Coat
 19-E:Star Coat
 1A-E:Abira Diaper
 1B-E:Mach Jersey

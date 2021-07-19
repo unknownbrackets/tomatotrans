@@ -123,7 +123,7 @@ NAMES:
 79-E:Shapely
 7A-E:Dreamir
 7B-E:Devil's Wink
-7C-E:Giga Demille
+7C-E:Giga DeMille
 7D-E:Walking Art
 7E-E:Cursed Clay
 7F-E:Lost Sheep
@@ -336,7 +336,7 @@ ATTACKS:
 96-E:Topar Mug
 97-E:Catclaw
 98-E:Help Punch
-99-E:Bon!
+99-E:Boom!
 9A-E:Hollow Hammer
 9B-E:Angry Fall
 9C-E:Poot Gas
@@ -358,18 +358,18 @@ AB-E:Janky Clay
 AC-E:Mobius Ray
 AD-E:Janky Face
 AE-E:Driller
-AF-E:Jank Card
+AF-E:Jank Talisman
 B0-E:Crystal Barrier
 B1-E:ZZZzzz
 B2-E:Slow Timer
 B3-E:Topar Mug
 B4-E:Catclaw
 B5-E:Help Punch
-B6-E:Bon!
+B6-E:Boom!
 B7-E:Heheh
 B8-E:Flizzard
 B9-E:Angry Beak
-BA-E:Kupopo Storm
+BA-E:Kukupo Storm
 BB-E:Po-po!
 BC-E:BBQ Chicken
 BD-E:Drill Peck
