@@ -96,10 +96,10 @@ BLOCKFIXED 4903F8 10 61 0A
 1F-E:Barrier Apple
 20-E:Double Apple
 21-E:Eau d'Escape
-22-E:Time Kill
-23-E:Tap Kill
-24-E:Speed Kill
-25-E:Excite Kill
+22-E:Time Killer
+23-E:Tap Killer
+24-E:Speed Killer
+25-E:Excite Killer
 26-E:Fruit
 27-E:Red Gel
 28-E:White Gel
@@ -243,12 +243,12 @@ BLOCKFIXED 490420 10 32 08
 24-E:Firehog
 25-E:SesameTop
 26-E:NanaBoard
-27-E:Bowling Rice
+27-E:BowlingRice
 28-E:Dojo Pup
 29-E:Lucky Cat
 2A-E:Pop Horn
 2B-E:Fart Horn
-2C-E:LoveSong
+2C-E:Love Song
 2D-E:StarScope
 2E-E:Hotafant
 2F-E:Mansnow
@@ -270,7 +270,7 @@ BLOCKFIXED 490430 24 64
 07-E:and land on the star symbol.
 08-E:When the flowing balls reach the
 09-E:red zone, press [F5].
-0A-E:Push [F5] or [F7] depending on which
+0A-E:Tap [F5] or [F7] depending on which
 0B-E:letter flows into the red zone.
 0C-E:Press [F5] to stop the moving
 0D-E:rabbit mark in the red zone.
@@ -294,7 +294,7 @@ BLOCKFIXED 490430 24 64
 1F-E:of the bar to fill it up completely.
 20-E:Alternate tapping [FB] and [F9]
 21-E:to fill up the bar.
-22-E:Tap [F5] a number of times while the
+22-E:Tap [F5] enough times while the
 23-E:bar is between [F6] and [F6].
 24-E:Tap [F5] to move [F9], [F7] to move [FB], and
 25-E:collect the pieces of trash.
@@ -310,8 +310,8 @@ BLOCKFIXED 490430 24 64
 2F-E:DON'T tap when the ! mark appears.
 30-E:Tap [F5] and keep the bar to the
 31-E:right of the center arrow.
-32-E:Get the bar in the red with limited
-33-E:[F5] taps. Faster taps fill it more.
+32-E:Reach red zone using all [F5] taps.
+33-E:Tap faster to fill more!
 34-E:Use [FB][F9] to pick a ? panel.
 35-E:Hope you get one with a volcano!
 36-E:Memorize the panels, then enter
@@ -319,7 +319,7 @@ BLOCKFIXED 490430 24 64
 38-E:Memorize the panels in the block
 39-E:gap, then enter them in that order.
 3A-E:Memorize the scrolling panels and
-3B-E:pick them in order with [FB][F9] and [F5].
+3B-E:select all with [FB][F9] and [F5].
 3C-E:Memorize the starting panels. Select
 3D-E:the changed ones using [FB][F9] and [F5].
 3E-E:Count the falling aliens, then
@@ -334,7 +334,7 @@ BLOCKFIXED 490430 24 64
 47-E:a certain weather icon appeared.
 48-E:Find the panel the face is hidden
 49-E:under. [FB][F9] moves, [F5] decides.
-4A-E:Pick the panels with faces on them.
+4A-E:Pick panels where faces appeared.
 4B-E:Use [FB][F9] to move, [F5] to decide.
 4C-E:Press the buttons shown on screen
 4D-E:until the counter hits 0.
@@ -348,14 +348,14 @@ BLOCKFIXED 490430 24 64
 55-E:pressing the corresponding buttons!
 56-E:Press the displayed button combos
 57-E:using [FC] and [F5][F7] at the same time.
-58-E:Press the button indicated by the
-59-E:yellow panel a number of times.
+58-E:Press the buttons highlighted in
+59-E:yellow until the counter hits 0.
 5A-E:Count the letters and pick the side
 5B-E:with the most. [F5] for A, [F7] for B.
-5C-E:Catch a number of falling balls
-5D-E:in the bucket using [FB][F9].
-5E-E:Move the snowman with [FC] and
-5F-E:collect a number of balls.
+5C-E:Catch falling balls in the bucket
+5D-E:using [FB][F9] until the counter hits 0.
+5E-E:Move the snowman with [FC] and collect
+5F-E:snowballs until the counter hits 0.
 60-E:Push the [FC] in the opposite direction
 61-E:of the highlighted panel.
 62-E:Flip cards 2 at a time and find
@@ -1219,7 +1219,7 @@ BLOCKFIXED 4907CC 2C 27 1A
 # Overworld area names.
 BLOCKFIXED 49F61C 10 11 0A
 00-E:The Spillage
-01-E:Pokypine
+01-E:Pokypine Wood
 02-E:Gimmick Palace
 03-E:Hanzo Lab 1
 04-E:Mayonen Land
@@ -1340,12 +1340,12 @@ RESTRUCT 62C250 08 58 7F001E 10 40 32
 24-E:Firehog
 25-E:SesameTop
 26-E:NanaBoard
-27-E:Bowling Rice
+27-E:BowlingRice
 28-E:Dojo Pup
 29-E:Lucky Cat
 2A-E:Pop Horn
 2B-E:Fart Horn
-2C-E:LoveSong
+2C-E:Love Song
 2D-E:StarScope
 2E-E:Hotafant
 2F-E:Mansnow
@@ -1370,7 +1370,7 @@ RESTRUCT 62C258 1A 58 7F002E 30 40 32
 0E-E:Tap [F5] to fill the bar up!
 0F-E:Tap the displayed button to fill the bar!
 10-E:Alternate tapping [FB] and [F9]!
-11-E:Tap [F5] while the bar is between [F6]and[F6]!
+11-E:Tap [F5] while bar is between [F6] and [F6]!
 12-E:Grab the trash with [F5] and [F7] taps!
 13-E:Tap the button on the bar to fill it!
 14-E:Tap [F5] to keep the ball in the red zone!
@@ -1378,7 +1378,7 @@ RESTRUCT 62C258 1A 58 7F002E 30 40 32
 16-E:Fill the bar! Alternate tapping [F5] and [F7]!
 17-E:Tap [F5] when there is no ! mark!
 18-E:Tap [F5]! Keep the bar right of the arrow!
-19-E:Get in the red with limited [F5] taps!
+19-E:Reach red zone using all [F5] taps!
 1A-E:[F5] to pick a panel! Hope for a volcano!
 1B-E:Memorize and enter the shown panels!
 1C-E:Memorize and enter the shown panels!
@@ -1390,7 +1390,7 @@ RESTRUCT 62C258 1A 58 7F002E 30 40 32
 22-E:Catch the flying ball with [FC]!
 23-E:Count the right weather icon!
 24-E:Locate the face panel!
-25-E:Locate the face panels!
+25-E:Locate the face panels with [FB][F9] and [F5]!
 26-E:Input the onscreen commands!
 27-E:Press the opposite direction shown!
 28-E:Grab the balls in the grid with [FC][F5]!
@@ -1399,8 +1399,8 @@ RESTRUCT 62C258 1A 58 7F002E 30 40 32
 2B-E:Push the button combinations!
 2C-E:Input the highlighted panels!
 2D-E:[F5] or [F7]? Which side has the most?
-2E-E:Catch balls in a bucket!
-2F-E:Collect balls with the snowman!
+2E-E:Catch balls in the bucket with [FB][F9]!
+2F-E:Collect snowballs using [FC]!
 30-E:Do the opposite of the yellow panels!
 31-E:Find all matching pairs!
 
@@ -1445,10 +1445,10 @@ RESTRUCT 630E5C 08 10 7F0C9E 10 10 61
 1F-E:Barrier Apple
 20-E:Double Apple
 21-E:Eau d'Escape
-22-E:Time Kill
-23-E:Tap Kill
-24-E:Speed Kill
-25-E:Excite Kill
+22-E:Time Killer
+23-E:Tap Killer
+24-E:Speed Killer
+25-E:Excite Killer
 26-E:Fruit
 27-E:Red Gel
 28-E:White Gel
@@ -1807,7 +1807,7 @@ BLOCKSTART 470472 0A 32 #64B334/49F684
 29-E:Lucky Cat
 2A-E:Pop Horn
 2B-E:Fart Horn
-2C-E:LoveSong
+2C-E:Love Song
 2D-E:StarScope
 2E-E:Hotafant
 2F-E:Mansnow
