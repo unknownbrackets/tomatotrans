@@ -970,8 +970,8 @@ BLOCKFIXED 490680 0C 14 09
 0D-E:Quiz Kid
 0E-E:Hanzon
 0F-E:Hanzoro
-10-E:Hanzone
-11-E:Hanzochi
+10-E:Hanzochi
+11-E:Hanzone
 12-E:Hanzora
 13-E:Hanzo
 
