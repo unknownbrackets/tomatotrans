@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <vector>
 #include "lz77.h"
+#include "rle.h"
 #include "tiles.h"
 #include "util.h"
 
@@ -139,7 +140,7 @@ static bool SaveTilemap(FILE *ta, const Tilemap &tilemap, uint32_t oldSize, uint
 	return fwrite(buf.data(), 1, buf.size(), ta) == buf.size();
 }
 
-static std::vector<uint8_t> CompressTileset(const Tileset &tileset, int depth) {
+static std::vector<uint8_t> CompressTileset(const Tileset &tileset, int depth, int useRLE) {
 	std::vector<uint8_t> buf;
 	if (depth == 16) {
 		buf.resize(tileset.ByteSize16());
@@ -147,6 +148,9 @@ static std::vector<uint8_t> CompressTileset(const Tileset &tileset, int depth) {
 	} else {
 		buf.resize(tileset.ByteSize256());
 		tileset.Encode256(buf.data());
+	}
+	if (useRLE) {
+		return compress_gba_rl(buf);
 	}
 	return compress_gba_lz77(buf, LZ77_VRAM_SAFE);
 }
@@ -157,10 +161,11 @@ struct SaveTilesetParams {
 	uint32_t oldPos;
 	const uint32_t *relocs;
 	size_t relocCount;
+	int useRLE;
 };
 
 static bool SaveCompressedTileset(FILE *ta, const Tileset &tileset, const SaveTilesetParams &params, uint32_t &nextPos) {
-	std::vector<uint8_t> compressed = CompressTileset(tileset, params.depth);
+	std::vector<uint8_t> compressed = CompressTileset(tileset, params.depth, params.useRLE);
 	if (compressed.size() > params.oldSize) {
 		nextPos = (nextPos + 3) & ~3;
 
@@ -199,7 +204,12 @@ static bool LoadCompressedTileset(FILE *ta, Tileset &tileset, uint32_t ptr, uint
 	if (fread(compressed.data(), 1, compressed.size(), ta) != compressed.size()) {
 		return false;
 	}
-	std::vector<uint8_t> data = decompress_gba_lz77(compressed);
+	std::vector<uint8_t> data;
+	if (compressed[0] == 0x10) {
+		data = decompress_gba_lz77(compressed);
+	} else {
+		data = decompress_gba_rl(compressed);
+	}
 	if (data.empty()) {
 		return false;
 	}
@@ -247,7 +257,7 @@ static bool InsertIntroMaps(FILE *ta, uint32_t &nextPos) {
 		0x0015BA3C + 4 * 0x0070,
 		0x0015BA3C + 4 * 0x01CC,
 	};
-	SaveTilesetParams params{ 16, 2816, 0x00186D30, relocations, std::size(relocations) };
+	SaveTilesetParams params{ 16, 2816, 0x00186D30, relocations, std::size(relocations), 0 };
 	if (!SaveCompressedTileset(ta, tileset, params, nextPos)) {
 		return false;
 	}
@@ -309,7 +319,7 @@ static bool InsertSpillMaps(FILE *ta, uint32_t &nextPos) {
 		0x0015BA3C + 4 * 0x012C,
 		0x0015BA3C + 4 * 0x0158,
 	};
-	SaveTilesetParams params{ 16, 12173, 0x0015c1f4, relocations, std::size(relocations) };
+	SaveTilesetParams params{ 16, 12173, 0x0015c1f4, relocations, std::size(relocations), 0 };
 	if (!SaveCompressedTileset(ta, tileset, params, nextPos)) {
 		return false;
 	}
@@ -384,7 +394,7 @@ static bool InsertRockIsleMaps(FILE *ta, uint32_t &nextPos) {
 	static const uint32_t relocations[]{
 		0x0015BA3C + 4 * 0x005F,
 	};
-	SaveTilesetParams params{ 16, 12064, 0x0019272C, relocations, std::size(relocations) };
+	SaveTilesetParams params{ 16, 12064, 0x0019272C, relocations, std::size(relocations), 0 };
 	if (!SaveCompressedTileset(ta, tileset, params, nextPos)) {
 		return false;
 	}
@@ -553,7 +563,7 @@ static bool InsertTitleScreen(FILE *ta, uint32_t &nextPos) {
 
 	// The tileset is now ready, let's compress.
 	static const uint32_t relocations[]{ 0x00082A18, 0x000863E8 };
-	SaveTilesetParams params{ 256, 9460, 0x0049FAB8, relocations, std::size(relocations) };
+	SaveTilesetParams params{ 256, 9460, 0x0049FAB8, relocations, std::size(relocations), 0 };
 	if (!SaveCompressedTileset(ta, tileset, params, nextPos)) {
 		return false;
 	}
@@ -637,7 +647,7 @@ static bool InsertTitleButtons(FILE *ta, uint32_t &nextPos) {
 
 	// The tileset is now ready, let's compress.
 	static const uint32_t relocations[]{ 0x00082F44 };
-	SaveTilesetParams params{ 16, 1056, 0x0049F698, relocations, std::size(relocations) };
+	SaveTilesetParams params{ 16, 1056, 0x0049F698, relocations, std::size(relocations), 0 };
 	if (!SaveCompressedTileset(ta, tileset, params, nextPos)) {
 		return false;
 	}
@@ -727,14 +737,49 @@ static bool InsertGimmickBattleIcons(FILE *ta, uint32_t &nextPos) {
 
 	// The tileset is now ready, let's compress.
 	static const uint32_t craneRelocs[]{ 0x00052404 };
-	SaveTilesetParams craneParams{ 16, 164, 0x00599058, craneRelocs, std::size(craneRelocs) };
+	SaveTilesetParams craneParams{ 16, 164, 0x00599058, craneRelocs, std::size(craneRelocs), 0 };
 	if (!SaveCompressedTileset(ta, craneTileset, craneParams, nextPos)) {
 		return false;
 	}
 
 	static const uint32_t catRelocs[]{ 0x0005CFE0, 0x0005D0F8 };
-	SaveTilesetParams catParams{ 16, 1011, 0x0059B990, catRelocs, std::size(catRelocs) };
+	SaveTilesetParams catParams{ 16, 1011, 0x0059B990, catRelocs, std::size(catRelocs), 0 };
 	if (!SaveCompressedTileset(ta, catTileset, catParams, nextPos)) {
+		return false;
+	}
+
+	return true;
+}
+
+static bool InsertChooChooAnimationTiles(FILE *ta, uint32_t &nextPos) {
+	// We only get to use one palette for this one (loaded in an attack script.)
+	Palette pal = LoadPaletteAt(ta, 0x005ed7ec, 0, 1);
+	Tileset tileset;
+
+	// Load the larger tileset, which has the train, DeMille, etc.
+	LoadCompressedTileset(ta, tileset, 0x00577a1c, 5049, 0x180);
+	tileset.LockSize();
+
+	Tileset unorderedTileset(false);
+	Tilemap sign(unorderedTileset);
+	if (!TilemapFromPNG(sign, pal, "images/choochoo_bang_eng.png", false)) {
+		return false;
+	}
+
+	// The tiles are at 13,0, size 5x3, with a stride of 32 tiles.
+	for (int y = 0; y < 3; ++y) {
+		for (int x = 0; x < 5; ++x) {
+			tileset.Free(13 + y * 32 + x);
+			if (tileset.Add(unorderedTileset.At(sign.At(x, y))) == -1) {
+				return false;
+			}
+		}
+	}
+
+	// The tileset is now ready, let's compress.
+	static const uint32_t relocations[]{ 0x0062cc8c };
+	SaveTilesetParams params{ 16, 5049, 0x00577a1c, relocations, std::size(relocations), 1 };
+	if (!SaveCompressedTileset(ta, tileset, params, nextPos)) {
 		return false;
 	}
 
@@ -785,7 +830,7 @@ static bool InsertGimicaCard(FILE *ta, uint32_t &nextPos) {
 
 	// The tileset is now ready, let's compress.
 	static const uint32_t relocations[]{ 0x0007E804, 0x000801C8, 0x000819A0, 0x0008BC14 };
-	SaveTilesetParams params{ 16, 801, 0x004858B4, relocations, std::size(relocations) };
+	SaveTilesetParams params{ 16, 801, 0x004858B4, relocations, std::size(relocations), 0 };
 	if (!SaveCompressedTileset(ta, tileset, params, nextPos)) {
 		return false;
 	}
@@ -829,7 +874,7 @@ static bool InsertShopBanners(FILE *ta, uint32_t &nextPos) {
 
 		// The tileset is now ready, let's compress.
 		const uint32_t relocations[]{ tilesetPtrBase + i * 4 };
-		SaveTilesetParams params{ 16, originalSizes[i], tilesetPtr & ~0x08000000, relocations, std::size(relocations) };
+		SaveTilesetParams params{ 16, originalSizes[i], tilesetPtr & ~0x08000000, relocations, std::size(relocations), 0 };
 		if (!SaveCompressedTileset(ta, tileset, params, nextPos)) {
 			return false;
 		}
@@ -1003,7 +1048,7 @@ static bool InsertHanzoSigns(FILE *ta, uint32_t &nextPos) {
 		const uint32_t relocations[]{
 			0x0015BA3C + 4 * info.id,
 		};
-		SaveTilesetParams params{ 16, info.tilesetSize, info.tilesetPtr, relocations, std::size(relocations) };
+		SaveTilesetParams params{ 16, info.tilesetSize, info.tilesetPtr, relocations, std::size(relocations), 0 };
 		if (!SaveCompressedTileset(ta, tileset, params, nextPos)) {
 			return false;
 		}
@@ -1031,6 +1076,7 @@ bool InsertImages(FILE *ta, uint32_t &nextPos) {
 		{ InsertTitleButtons, "title buttons" },
 		{ InsertGimmickMenuIcons, "gimmick menu icons" },
 		{ InsertGimmickBattleIcons, "gimmick battle icons" },
+		{ InsertChooChooAnimationTiles, "choochoo animation tiles" },
 		{ InsertGimicaCard, "gimica card" },
 		{ InsertShopBanners, "shop banners" },
 		{ InsertHanzoSigns, "hanzo signs" },

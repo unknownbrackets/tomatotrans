@@ -2,5 +2,5 @@ CC_NODEBUG = cl.exe /O2 /DNDEBUG /W3 /MD
 CC_DEBUG = cl.exe /Od /D_DEBUG /RTC1 /Z7 /W3 /MDd
 CFLAGS = /Gd /errorReport:prompt /Zc:wchar_t /Zc:forScope /GR- /arch:SSE2 /EHsc /GS /Gy /Oy- /nologo /W3 /WX- /MP /analyze /D _CRT_SECURE_NO_WARNINGS /D _CRT_NONSTDC_NO_DEPRECATE
 
-all: ta_insert.cpp text.cpp lz77.cpp tiles.cpp images.cpp
+all: ta_insert.cpp text.cpp lz77.cpp rle.cpp tiles.cpp images.cpp
 	$(CC_NODEBUG) $(CFLAGS) $** /link /out:..\a.exe

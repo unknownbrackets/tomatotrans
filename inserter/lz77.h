@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 enum LZ77Flags {
 	LZ77_NORMAL = 0x0000,
 	LZ77_FAST = 0x0001,

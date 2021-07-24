@@ -533,6 +533,10 @@ int Tileset::Add(const Tile &tile) {
 
 void Tileset::Free(int i) {
 	free_[i] = true;
+	if (sizeLocked_) {
+		return;
+	}
+
 	size_t newSize = free_.size();
 	for (size_t j = free_.size(); j > 0; --j) {
 		if (!free_[j - 1]) {
