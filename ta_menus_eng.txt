@@ -378,7 +378,7 @@ BLOCKFIXED 490438 0C 12 08
 0D-E:Hanzo 4
 0E-E:Hanzo 5
 0F-E:Hanzo 6
-10-E:Hanzo's
+10-E:Kaizo's Lab
 11-E:CLEAR
 
 BLOCKFIXED 490440 12 03
@@ -412,29 +412,29 @@ BLOCKFIXED 490448 24 C2
 16-E:DUMMY
 17-E:
 18-E:Gimmick powerup item
-19-E:Timing Gimmick ATK up 1
+19-E:Timing Gimmick Attack up 1
 1A-E:Gimmick powerup item
-1B-E:Tap Gimmick ATK up 1
+1B-E:Tap Gimmick Attack up 1
 1C-E:Gimmick powerup item
-1D-E:Excite Gimmick ATK up 1
+1D-E:Excite Gimmick Attack up 1
 1E-E:Gimmick powerup item
-1F-E:Speed Gimmick ATK up 1
+1F-E:Speed Gimmick Attack up 1
 20-E:Gimmick powerup item
-21-E:Timing Gimmick ATK up 3
+21-E:Timing Gimmick Attack up 3
 22-E:Gimmick powerup item
-23-E:Tap Gimmick ATK up 3
+23-E:Tap Gimmick Attack up 3
 24-E:Gimmick powerup item
-25-E:Excite Gimmick ATK up 3
+25-E:Excite Gimmick Attack up 3
 26-E:Gimmick powerup item
-27-E:Speed Gimmick ATK up 3
+27-E:Speed Gimmick Attack up 3
 28-E:Gimmick powerup item
-29-E:Timing Gimmick ATK up 5
+29-E:Timing Gimmick Attack up 5
 2A-E:Gimmick powerup item
-2B-E:Tap Gimmick ATK up 5
+2B-E:Tap Gimmick Attack up 5
 2C-E:Gimmick powerup item
-2D-E:Excite Gimmick ATK up 5
+2D-E:Excite Gimmick Attack up 5
 2E-E:Gimmick powerup item
-2F-E:Speed Gimmick ATK up 5
+2F-E:Speed Gimmick Attack up 5
 30-E:DUMMY
 31-E:
 32-E:Battle-use healing item
@@ -662,8 +662,8 @@ BLOCKFIXED 490490 0A 01 07
 BLOCKFIXED 490498 06 01 04
 00-E:Uses
 
-BLOCKFIXED 4904A0 04 01
-00-E:ATK
+BLOCKFIXED 4904A0 08 01 05
+00-E:Attack
 
 BLOCKFIXED 4904A8 08 01 06
 00-E:Battery
