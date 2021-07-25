@@ -5443,11 +5443,11 @@ down any further...[SIMPLEWAIT][END]
 
 502-E:[CENTER_HV]You win nothing...[SIMPLEWAIT][END]
 
-503-E:...Well, it looks like[BREAK]
-I still have some.[SIMPLEWAIT][END]
+503-E:...Well, it looks like I still[BREAK]
+have some.[SIMPLEWAIT][END]
 
 504-E:...Hmm. You're stronger[BREAK]
-than I, so I don't have[WAIT]
+than I, so I don't have[CONTINUE]
 to give you a card...[BREAK]
 right?[SIMPLEWAIT][END]
 
@@ -5812,12 +5812,11 @@ the basics of combat...[WAIT]
 
 55C-E:[CENTER_HV]LET'S GO![SIMPLEWAIT][END]
 
-55D-E:Selemo: Pretty[BREAK]
-cool, right?[WAIT]
-That Gear-Yo is[BREAK]
-my master work.[WAIT]
-Do take good[BREAK]
-care of it![SIMPLEWAIT][END]
+55D-E:Selemo: Pretty cool,[BREAK]
+right?[WAIT]
+That Gear-Yo is my[BREAK]
+master work.[WAIT]
+Do take good care of it![SIMPLEWAIT][END]
 
 55E-E:[CENTER_H][NAME1] got the[BREAK]
 [CENTER_H][COLOR_ON]Gear-Yo[COLOR_OFF]![SIMPLEWAIT][END]
@@ -5842,7 +5841,7 @@ I suppose I can forgive[BREAK]
 you just this once.[SIMPLEWAIT][END]
 
 563-E:Pasaran: Right, off to the[BREAK]
-[COLOR_ON]watch tower![COLOR_OFF][WAIT]
+[COLOR_ON]watch tower[COLOR_OFF]![WAIT]
 It's at the top of the[BREAK]
 town, so let's head on up![SIMPLEWAIT][END]
 
@@ -6582,8 +6581,7 @@ octoypon's old spring?[CONTINUE]
 [CENTER_H]back in action![SIMPLEWAIT][END]
 
 619-E:[NAME1]: Thank you![WAIT]
-I'll get good use[BREAK]
-out of it!![SIMPLEWAIT][END]
+I'll get good use out of it!![SIMPLEWAIT][END]
 
 61A-E:I should try stopping by[BREAK]
 Selemo's place soon-ish...[SIMPLEWAIT][END]
@@ -10163,7 +10161,7 @@ realities are dreams.[SIMPLEWAIT][END]
 910-E:[NAME1]: What... ARE you[BREAK]
 on about?[SIMPLEWAIT][END]
 
-911-E:[CENTER_H][SIZE_TALL]O-HOHAHYOKYAHYO![SIMPLEWAIT][END]
+911-E:[CENTER_H][SIZE_TALL]UH-HYUCK-HYUCK![SIMPLEWAIT][END]
 
 912-E:Well... as for me, I am the[BREAK]
 6th of the Super Kids...[WAIT]
@@ -12781,8 +12779,8 @@ BA1-E:[CENTER_HV]Check[SIMPLEWAIT][END]
 
 BA2-E:[CENTER_H]Got [COLOR_ON][ITEM][COLOR_OFF]![SIMPLEWAIT][END]
 
-BA3-E:[CENTER_HV]It's empty. Let's[BREAK]
-go in tomorrow![SIMPLEWAIT][END]
+BA3-E:[CENTER_H]It's empty.[BREAK]
+[CENTER_H]Let's go in tomorrow![SIMPLEWAIT][END]
 
 BA4-E:[CENTER_HV]Ha-ha-ha-ha...[SIMPLEWAIT][END]
 
