@@ -344,7 +344,7 @@
 0D184F-E:Come thee back to life!
 0D1856-E:Fiends born from tomatoes!
 0D185F-E:I grant to you my
-0D1866-E:Come thee back to life!
+0D1866-E:invincible power!
 # A0 Tomato Walker / トマトウォ-カ-
 0D2171-E:End of the line! Ga-ha-ha!
 # A1 Tomato Mecha / トマトリ-ダ-
@@ -357,7 +357,7 @@
 # A9 Gimmick Robo / ギミックロボ
 0D3554-E:GAGAGA GEGEGE GUGAGUGA
 0D3567-E:GA GA GA...
-0D3547-E:     ?????
+0D3547-E:[CENTER]?????
 # AA Gimmick Robo / ギミックロボ
 0D3D56-E:GANGAGAN GAGAGAGA!
 0D3DC2-E:GIGUGUGUGUGUGU!
@@ -411,8 +411,8 @@
 # B1 Left Arm / ひだりうで
 0D301C-E:Pasaran!
 0D3023-E:Come, Pasaran!
-0D3035-E:          What the...
-0D303C-E:A Pasaran puppet appeared!
+0D3035-E:[CENTER]What the...
+0D303C-E:[CENTER]A Pasaran puppet appeared!
 0D3048-E:NOOO! What have you done
 0D304F-E:to Pasaraaaaaaan!!
 0D3085-E:Sing! Sing for me,
@@ -422,10 +422,10 @@
 0D30AA-E:Do you realize the power
 0D30B1-E:of the Pasaran puppet!?
 # B2 Right Arm / スライスシ-ルド
-0D30FB-E:Abira's DEF shot way
-0D3102-E:way down!
-0D3121-E:All effects and statuses
-0D3128-E:on Abira are erased!
+0D30FB-E:[CENTER]Abira's DEF shot way
+0D3102-E:[CENTER]way down!
+0D3121-E:[CENTER]All effects and statuses
+0D3128-E:[CENTER]on Abira are erased!
 # B3 Abiwrath / アビラス, B4 LPacfier / おしゃぶり みぎ, B5 RPacfier / おしゃぶりひだり
 0D4D46-E:YOU... WILL... LOSE!
 0D4BFE-E:IT'S A BUG! PLEASE REPORT IT!
@@ -451,7 +451,7 @@
 0D4AE5-E:GUGGAAAAA!!
 0D4AF9-E:GUGUGU...
 0D4B28-E:GA-GA-GA...
-0D4674-E:   BARRIER!!!
+0D4674-E:[CENTER]BARRIER!!!
 0D467E-E:AND NOW...
 0D4688-E:YOUR ATTACKS
 0D4692-E:WON'T HURT OR ITCH!!

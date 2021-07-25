@@ -497,14 +497,14 @@ BLOCKFIXED 490448 24 C2
 6B-E:
 6C-E:An ordinary, commonplace
 6D-E:pacifier
-6E-E:Gimmick Palace Door Key 1
+6E-E:Gimmick Palace door key #1.
 6F-E:
-70-E:Gimmick Palace Door Key 2
+70-E:Gimmick Palace door key #2.
 71-E:
-72-E:Gimmick Palace Door Key 3
+72-E:Gimmick Palace door key #3.
 73-E:
 74-E:A glimmering golden pot.
-75-E:Would surely please a Pothead.
+75-E:Would surely please a pot lover.
 76-E:An artistic pillow. Why?
 77-E:Who knows! Use it in a bed.
 78-E:Dreco's missing End Hand, found in
@@ -1290,15 +1290,15 @@ DYNPOINTER 04F9E0 1A 04F9BA 04F9C2 #639C40
 TERMSTRING 02ADFC FF 0A #62BF73
 00-E:Times used
 TERMSTRING 02AECC FF 0A #62BF7A
-00-E:Successful
+00-E:Uses
 TERMSTRING 02AED4 FF 06 #62BF7F
 00-E:Attack
-TERMSTRING 02AEF4 FF 04 #62BF84
-00-E:Cell
+TERMSTRING 02AEF4 FF 07 #62BF84
+00-E:Battery
 TERMSTRING 02AEFC FF 0A #62BF88
 00-E:Difficulty
-TERMSTRING 02AF04 FF 04 #62BF8D
-00-E:   [F4]
+TERMSTRING 02AF04 FF 07 #62BF8D
+00-E:      [F4]
 
 RESTRUCT 62C250 08 58 7F001E 10 40 32
 00-E:Gear-Yo
