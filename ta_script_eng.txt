@@ -6431,7 +6431,7 @@ I didn't do anything[BREAK]
 wrong!!![SIMPLEWAIT][END]
 
 5F1-E:Abira: Ho-ho...[WAIT]
-You don't rememer me at[BREAK]
+You don't remember me at[BREAK]
 all, do you Pasaran?[WAIT]
 Such a pity...[SIMPLEWAIT][END]
 
