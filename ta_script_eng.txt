@@ -12075,7 +12075,7 @@ just [NUMBER] Topar![WAIT]
 That's cheaper than[BREAK]
 buying items to recover![WAIT]
 So, will you stay for[BREAK]
-the night?[BREAK]
+the night?[CONTINUE]
  [MENU1]Yes     [MENU2]No[MENU_END][END]
 
 AE2-E:Thank you for your[BREAK]
