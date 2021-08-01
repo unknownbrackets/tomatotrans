@@ -60,4 +60,7 @@
 ; Adjust buttons and replace text drawing routine.
 .include "asm/credits.asm"
 
+; English text makes the dialog speed seems slower, so increase.
+.include "asm/dialog_speed.asm"
+
 .close
