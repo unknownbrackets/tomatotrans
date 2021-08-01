@@ -11399,7 +11399,7 @@ A4A-E:Selemo: Open the[BREAK]
 [COLOR_ON]Menu Screen[COLOR_OFF]![SIMPLEWAIT][END]
 
 A4B-E:Selemo: Using Cells, you[BREAK]
-can really pump up your[WAIT]
+can really pump up your[CONTINUE]
 Gimmicks![SIMPLEWAIT][END]
 
 A4C-E:Selemo: Well then, I'll[BREAK]
