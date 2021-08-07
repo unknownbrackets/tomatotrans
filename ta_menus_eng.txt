@@ -1598,7 +1598,7 @@ RESTRUCT 639784 08 2C 7F19A0 18 48 08
 
 RESTRUCT 63978C 1A 2C 7F19B8 30 48 08
 00-E:Hit all foes, but you fall asleep
-01-E:Sucks enemy HP, healing you
+01-E:Sucks enough HP to heal you
 02-E:Hit all foes, earn 3x the usual Topar
 03-E:May slay all foes in a single hit
 04-E:Attack all foes and get items
