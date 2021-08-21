@@ -4934,7 +4934,7 @@ single one, you'll get[CONTINUE]
  [MENU1]Got it!  [MENU2]Huh?[MENU_END][END]
 
 486-E:Wanna try again?[BREAK]
-[MENU1]Let's go  [MENU2]No thanks[MENU_END][END]
+ [MENU1]Let's go[SET_X 44][MENU2]No thanks[MENU_END][END]
 
 487-E:[CENTER_HV]Let's begin![SIMPLEWAIT][END]
 
@@ -5795,12 +5795,12 @@ try 'em out in battle![SIMPLEWAIT][END]
 
 559-E:Want a quick rundown of[BREAK]
 how battles work?[CONTINUE]
- [MENU1]Sure!  [MENU2]Nope.[MENU_END][END]
+ [MENU1]Sure![SET_X 34][MENU2]Nope.[MENU_END][END]
 
 55A-E:But, it's real[BREAK]
 important stuff![WAIT]
 Try the Gimmicks?[BREAK]
-[MENU1]Sure.  [MENU2]Nah.[MENU_END][END]
+ [MENU1]Sure.[SET_X 34][MENU2]Nah.[MENU_END][END]
 
 55B-E:Selemo: You're really[BREAK]
 gonna turn this down?[WAIT]
@@ -6561,7 +6561,7 @@ And now for the results![WAIT]
 [CENTER_H]You got them all wrong![SIMPLEWAIT][END]
 
 614-E:Wanna try again?[BREAK]
-[MENU1]Let's go  [MENU2]No thanks[MENU_END][END]
+ [MENU1]Let's go[SET_X 44][MENU2]No thanks[MENU_END][END]
 
 615-E:Here's your !!! as promised![SIMPLEWAIT][END]
 
@@ -7126,7 +7126,7 @@ For a measly 10 Topar,[BREAK]
 you can hop on in and[CONTINUE]
 blast off to Rock Isle![WAIT]
 You down?[CONTINUE]
- [MENU1]I'm down  [MENU2]No way[MENU_END][END]
+ [MENU1]I'm down[SET_X 44][MENU2]No way[MENU_END][END]
 
 68F-E:Hey hey![BREAK]
 What's good, brother?[WAIT]
@@ -7136,7 +7136,7 @@ For a measly 10 Topar,[BREAK]
 you can hop on in and[CONTINUE]
 blast off to the beach![BREAK]
 You down?[CONTINUE]
- [MENU1]I'm down [MENU2]No way[MENU_END][END]
+ [MENU1]I'm down[SET_X 44][MENU2]No way[MENU_END][END]
 
 690-E:Heh, thanks![WAIT]
 Stand by for launch![SIMPLEWAIT][END]
@@ -7634,7 +7634,7 @@ Well then, have a[BREAK]
 wonderful time![SIMPLEWAIT][END]
 
 6EC-E:Return to Rock Isle?[BREAK]
- [MENU1]Yes    [MENU2]No[MENU_END][END]
+ [MENU1]Yes[SET_X 2C][MENU2]No[MENU_END][END]
 
 6ED-E:*glub* *glub*[BREAK]
 Once again...[WAIT]
@@ -8147,7 +8147,7 @@ some money![WAIT]
 I just finished cooking up[BREAK]
 this new attraction...[WAIT]
 [COLOR_ON]Pow-Pow Panels![COLOR_OFF][BREAK]
-Care to give em a whirl?[WAIT]
+Care to give 'em a whirl?[WAIT]
 The rules are simple![WAIT]
 All you have to do is step[BREAK]
 on all [COLOR_ON]4 pow-pow panels[COLOR_OFF] in[CONTINUE]
@@ -8326,7 +8326,7 @@ Open it anyway?[BREAK]
 
 781-E:Q1: How many Cap'n[BREAK]
 Garco diaries are there?[CONTINUE]
- [MENU1]4     [MENU2]5[MENU_END][END]
+ [MENU1]4[SET_X 2C][MENU2]5[MENU_END][END]
 
 782-E:Q2: What repeated word[BREAK]
 is used in the name of[CONTINUE]
@@ -8336,12 +8336,12 @@ floors?[CONTINUE]
 
 783-E:Q3: On what date did this[BREAK]
 ship sink?[CONTINUE]
-[MENU1]Dec. 24  [MENU2]Dec. 25[MENU_END][END]
+ [MENU1]Dec. 24[SET_X 44][MENU2]Dec. 25[MENU_END][END]
 
 784-E:Q4: When this ship gets[BREAK]
 turned into a theme park,[CONTINUE]
 what -topia will it be?[CONTINUE]
-[MENU1]Sunk  [MENU2]Jank[MENU_END][END]
+ [MENU1]Sunk[SET_X 34][MENU2]Jank[MENU_END][END]
 
 785-E:Try the quiz?[BREAK]
  [MENU1]Try it  [MENU2]No way[MENU_END][END]
@@ -8361,7 +8361,7 @@ single one, you'll get[CONTINUE]
 788-E:[CENTER_HV]Let's begin![SIMPLEWAIT][END]
 
 789-E:Wanna try again?[BREAK]
-[MENU1]Let's go  [MENU2]No thanks[MENU_END][END]
+ [MENU1]Let's go[SET_X 44][MENU2]No thanks[MENU_END][END]
 
 78A-E:This is the toy cemetery.[WAIT]
 Broken toys... Dead toys...[BREAK]
@@ -11321,14 +11321,14 @@ how to use it?[CONTINUE]
 
 A36-E:Selemo: N-No!?[WAIT]
 Don't be like this![CONTINUE]
- [MENU1]Fine  [MENU2]NO![MENU_END][END
+ [MENU1]Fine[SET_X 2C][MENU2]NO![MENU_END][END]
 
 A37-E:Selemo: I'm gonna ask you[BREAK]
 ONE MORE TIME![WAIT]
 Do you[SIMPLEWAIT] wanna[WAIT]
 [CENTER_HV][SIZE_BIG]KNOW!?[WAIT]
 [SIZE_NORMAL][TICKEROFF]Do you wanna KNOW!?[BREAK]
-[MENU1]OK!  [MENU2]Please![MENU_END][END]
+ [MENU1]OK![SET_X 2C][MENU2]Please![MENU_END][END]
 
 A38-E:Selemo: OK! Push [COLOR_ON]Start[COLOR_OFF][BREAK]
 and open up the menu![END]
@@ -12675,7 +12675,7 @@ Hear me out?[BREAK]
 
 B87-E:Really now...[SIMPLEWAIT] but, I've also[BREAK]
 got a souvenir for you...[CONTINUE]
-[MENU1]OK  [MENU2]Gift only[MENU_END][END]
+ [MENU1]OK[SET_X 24][MENU2]Gift only[MENU_END][END]
 
 B88-E:All right![WAIT]
 This time, let's talk about[BREAK]
@@ -12688,7 +12688,7 @@ Well...[SIMPLEWAIT][END]
 
 B8A-E:Selemo: Got that?[BREAK]
 Need to hear it again?[CONTINUE]
- [MENU1]I'm good  [MENU2]Again[MENU_END][END]
+ [MENU1]I'm good   [MENU2]Again[MENU_END][END]
 
 B8B-E:Well then...[PAUSE 07] I still can't[BREAK]
 believe I made it all the[CONTINUE]
