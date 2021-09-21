@@ -19,7 +19,7 @@ static tableEntry table[500];
 static int tableLen = 0;
 
 static void PrepString(char[], char[], int);
-static unsigned char ConvChar(unsigned char);
+static unsigned char ConvChar(const char *src, int &pos);
 static int ConvComplexString(char *s, size_t availLen, bool stripNewline);
 static int CompileCC(const char *str, int len, int &pos, unsigned char *dest);
 static int DetectScriptLen(const char *str, int maxLen);
@@ -198,7 +198,7 @@ static int ConvComplexString(char *str, size_t availLen, bool stripNewline)
 		else if (str[counter] == ' ')
 			newStr[newLen++] = '\0';
 		else
-			newStr[newLen++] = ConvChar(str[counter]);
+			newStr[newLen++] = ConvChar(str, counter);
 	}
 
 	memcpy(str, newStr, newLen);
@@ -501,65 +501,65 @@ static int CompileCC(const char *str, int totalLength, int &strLoc, unsigned cha
 
 //=================================================================================================
 
-static unsigned char ConvChar(unsigned char ch)
+static unsigned char ConvChar(const char *src, int &pos)
 {
-	unsigned char retVal = 0;
-	char          origChar[100] = "";
-	int           i = 0;
+	// First, let's read the utf-8.
+	uint8_t startByte = ((const uint8_t *)src)[pos];
+	int utflen = startByte >= 0xC0 ? 2 : 1;
+	if (startByte >= 0xE0)
+		utflen = (startByte >> 4) - 11;
 
-	while ((i < tableLen) && (retVal == 0))
+	char lookup[8];
+	memcpy(lookup, src + pos, utflen);
+	lookup[utflen] = '\0';
+
+	pos += utflen - 1;
+
+	for (int i = 0; i < tableLen; ++i)
 	{
-		sprintf(origChar, "%c", ch);
-
-		if (strcmp(origChar, table[i].str) == 0)
-		   retVal = table[i].hexVal;
-		else
-		   i++;
+		if (strcmp(lookup, table[i].str) == 0)
+			return table[i].hexVal;
 	}
 
-	if (retVal == 0)
-		printf("UNABLE TO CONVERT CHARACTER: %c %02X\n", ch, ch);
-
-	return retVal;
+	printf("UNABLE TO CONVERT CHARACTER: %s %02X\n", lookup, startByte);
+	return 0;
 }
 
 //=================================================================================================
 
 void LoadTable()
 {
-   FILE* fin;
-   char  tempStr[500] = "";
-   int i;
+	FILE *fin = fopen("ta_table_eng.txt", "r");
+	if (fin == NULL)
+	{
+		printf("Can't open ta_table_eng.txt!\n");
+		return;
+	}
 
-   fin = fopen("ta_table_eng.txt", "r");
-   if (fin == NULL)
-   {
-	   printf("Can't open ta_table_eng.txt!\n");
-	   return;
-   }
+	char bom[3];
+	bom[0] = fgetc(fin);
+	bom[1] = fgetc(fin);
+	bom[2] = fgetc(fin);
+	if (bom[0] != 0xEF || bom[1] != 0xBB || bom[2] != 0xBF)
+		fseek(fin, 0, SEEK_SET);
 
-   i = fgetc(fin);
-   i = fgetc(fin);
-   i = fgetc(fin);
+	char tempStr[500] = "";
+	fscanf(fin, "%s", tempStr);
+	table[tableLen].hexVal = hstrtoi(tempStr);
+	fscanf(fin, "%s", table[tableLen].str);
+	while (!feof(fin))
+	{
+		tableLen++;
 
+		fscanf(fin, "%s", tempStr);
+		table[tableLen].hexVal = hstrtoi(tempStr);
+		fscanf(fin, "%s", table[tableLen].str);
+	}
 
-   fscanf(fin, "%s", tempStr);
-   table[tableLen].hexVal = hstrtoi(tempStr);
-   fscanf(fin, "%s", table[tableLen].str);
-   while (!feof(fin))
-   {
-	   tableLen++;
+	table[0xEF].str[0] = ' ';
+	table[0xEF].str[1] = '\0';
 
-   	   fscanf(fin, "%s", tempStr);
-   	   table[tableLen].hexVal = hstrtoi(tempStr);
-       fscanf(fin, "%s", table[tableLen].str);
-       //printf("%s\n", table[tableLen].str);
-   }
-
-   table[0xEF].str[0] = ' ';
-   table[0xEF].str[1] = '\0';
-
-   fclose(fin);
+	fclose(fin);
 }
 
 //=================================================================================================
