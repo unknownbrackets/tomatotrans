@@ -1374,7 +1374,7 @@ RESTRUCT 62C258 1A 58 7F002E 30 40 32
 12-E:Grab the trash with [F5] and [F7] taps!
 13-E:Tap the button on the bar to fill it!
 14-E:Tap [F5] to keep the ball in the red zone!
-15-E:Tap [F5] to reach red with [F6] above it!
+15-E:Tap [F5], only touch red with [F6] above it!
 16-E:Fill the bar! Alternate tapping [F5] and [F7]!
 17-E:Tap [F5] when there is no ! mark!
 18-E:Tap [F5]! Keep the bar right of the arrow!
