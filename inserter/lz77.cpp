@@ -1,5 +1,6 @@
 #include <cstdint>
 #include <cstdio>
+#include <cstring>
 #include <unordered_map>
 #include <vector>
 #include "lz77.h"
@@ -222,16 +223,18 @@ void LZ77GBACompressor::CompressReverse(int max_scenarios) {
 	size_t pos = 4;
 	for (size_t i = 0; i < chunks.size(); i += 8) {
 		uint8_t *quadflags = &output_[pos++];
+		uint8_t nowflags = 0;
 		for (int j = 0; j < 8 && i + j < chunks.size(); ++j) {
 			const auto &chunk = chunks[chunks.size() - i - j - 1];
 			if (chunk.size() == 1) {
 				output_[pos++] = chunk[0];
 			} else {
-				*quadflags |= 0x80 >> j;
+				nowflags |= 0x80 >> j;
 				output_[pos++] = chunk[0];
 				output_[pos++] = chunk[1];
 			}
 		}
+		*quadflags = nowflags;
 	}
 }
 
@@ -404,14 +407,14 @@ std::vector<uint8_t> decompress_gba_lz77(const std::vector<uint8_t> &input) {
 		return data;
 	}
 
-	uint32_t sz = input[1] | (input[2] << 8) | (input[3] < 16);
+	uint32_t sz = input[1] | (input[2] << 8) | (input[3] << 16);
 	data.resize(sz);
 
 	uint32_t outpos = 0;
 	size_t inpos = 4;
 	while (outpos < sz && inpos < input.size()) {
 		uint8_t quad = input[inpos++];
-		if (quad == 0) {
+		if (quad == 0 && inpos + 8 <= input.size() && outpos + 8 <= sz) {
 			memcpy(&data[outpos], &input[inpos], 8);
 			inpos += 8;
 			outpos += 8;
@@ -419,7 +422,7 @@ std::vector<uint8_t> decompress_gba_lz77(const std::vector<uint8_t> &input) {
 		}
 
 		for (uint8_t bit = 0x80; bit != 0; bit >>= 1) {
-			if ((quad & bit) != 0) {
+			if ((quad & bit) != 0 && inpos + 1 < input.size()) {
 				uint32_t offset = ((input[inpos + 0] & 0x0F) << 8) | input[inpos + 1];
 				uint32_t len = 3 + (input[inpos + 0] >> 4);
 				inpos += 2;
@@ -432,7 +435,7 @@ std::vector<uint8_t> decompress_gba_lz77(const std::vector<uint8_t> &input) {
 				for (uint32_t i = 0; i < len; ++i) {
 					data[outpos++] = data[srcpos + i];
 				}
-			} else if (outpos < sz) {
+			} else if (outpos < sz && inpos < input.size()) {
 				data[outpos++] = input[inpos++];
 			} else {
 				break;
