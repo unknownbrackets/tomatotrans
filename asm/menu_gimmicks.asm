@@ -91,3 +91,12 @@ bx r0
 .pool
 .endfunc
 .endregion
+
+; The purpose of 080793E8 is to prepare the Gimmick equip slot select screen.
+; For some reason, this reloads the sprite data, even though it's already loaded.
+; That doubles the OAM entries, which after our longer names (which use extra sprites),
+; can sometimes overflow.
+; We simply patch out the duplicate load at 080794DA so we never hit this.
+.org 0x080794DA
+nop
+nop
